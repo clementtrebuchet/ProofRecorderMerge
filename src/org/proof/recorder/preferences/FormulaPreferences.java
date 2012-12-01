@@ -28,7 +28,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 
 	private CheckBoxPreference mp3;
 	private CheckBoxPreference ogg;
-	private CheckBoxPreference ftp;
+	//private CheckBoxPreference ftp;
 	public CheckBoxPreference eula;
 	public CheckBoxPreference hide;
 	private static Context mContext;
@@ -54,8 +54,8 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 				"OFFER_MP3");
 		ogg = (CheckBoxPreference) getPreferenceScreen().findPreference(
 				"OFFER_OGG");
-		ftp = (CheckBoxPreference) getPreferenceScreen().findPreference(
-				"OFFER_FTP");
+		//ftp = (CheckBoxPreference) getPreferenceScreen().findPreference(
+		//		"OFFER_FTP");
 		eula = (CheckBoxPreference) getPreferenceScreen().findPreference(
 				"PREFERENCE_EULA_ACCEPTED");
 		hide = (CheckBoxPreference) getPreferenceScreen().findPreference(
@@ -63,10 +63,10 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 		hide.setEnabled(false);
 		mp3.setOnPreferenceClickListener(mFormulaClick);
 		ogg.setOnPreferenceClickListener(mFormulaClick);
-		ftp.setOnPreferenceClickListener(mFormulaClick);
+		//ftp.setOnPreferenceClickListener(mFormulaClick);
 		eula.setOnPreferenceClickListener(mFormulaClick);
 		assertOgg();
-		assertFtp();
+		//assertFtp();
 		assertMP3();
 		if (!eula.isChecked())
 			eula();
@@ -90,7 +90,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 
 	}
 
-	private void assertFtp() {
+	/*private void assertFtp() {
 		if (Settings.assertPlugExist(2, getApplicationContext())) {
 			ftp.setChecked(true);
 
@@ -99,7 +99,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 			Intent intent = new Intent(this,ProofStore.class);
 			ftp.setIntent(intent);
 		}
-	}
+	}*/
 
 	private void assertMP3() {
 		if (Settings.assertPlugExist(0, getApplicationContext())) {
@@ -132,11 +132,11 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 			if (Settings.isDebug())
 				Log.e(TAG, "" + preference.getKey().toString());
 
-			if (preference.getKey().equals("OFFER_FTP")) {
+			/*if (preference.getKey().equals("OFFER_FTP")) {
 				assertFtp();
 				if(ftp.getIntent() != null)startActivity(ftp.getIntent());
 
-			}
+			}*/
 
 			if (preference.getKey().equals("OFFER_OGG")) {
 				assertOgg();
