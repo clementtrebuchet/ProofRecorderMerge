@@ -14,8 +14,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
@@ -61,6 +63,8 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 		hide = (CheckBoxPreference) getPreferenceScreen().findPreference(
 				"FIRSTINSTALL");
 		hide.setEnabled(false);
+		PreferenceCategory mCategory = (PreferenceCategory) findPreference("EULA");
+		mCategory.removePreference(hide);
 		mp3.setOnPreferenceClickListener(mFormulaClick);
 		ogg.setOnPreferenceClickListener(mFormulaClick);
 		//ftp.setOnPreferenceClickListener(mFormulaClick);
