@@ -212,7 +212,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 					}
 				};
 
-				monRunnable.postDelayed(C2M, 30000);
+				monRunnable.postDelayed(C2M, 3);
 			}
 
 			// Try to use more data here. ANDROID_ID is a single point of
