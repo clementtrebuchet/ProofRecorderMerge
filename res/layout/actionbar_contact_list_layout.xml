@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ActionBarContactsList" >
+ 
+    <ImageView
+        android:id="@+id/dlgmenu"
+        android:contentDescription="@+string/ab_contacts_list_icon_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:clickable="false"
+        android:paddingRight="15dip"
+        android:scaleType="center"
+        android:src="@drawable/icon" />   
+        
+    <TextView 
+        android:id="@+id/dlgmenu_text"
+        android:text="@+string/ab_contacts_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:clickable="false"
+        android:textColor="#7F7F7F" />
+ 
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	android:id="@+id/mLayout"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<RadioGroup
+	android:id="@+id/mRGroup"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_alignParentTop="true"
+	android:layout_alignParentLeft="true">
+<ImageButton
+	android:id="@+id/infoIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/information"
+	android:layout_gravity="center_horizontal" />
+<TextView
+	android:id="@+id/warningMsg"
+	android:layout_width="wrap_content"
+	android:layout_height="45dp"
+	android:text="@string/none_records_dlg_msg"
+	android:layout_gravity="center_horizontal" />
+<Button
+	android:id="@+id/btnOk"
+	android:layout_width="65dp"
+	android:layout_height="wrap_content"
+	android:text="@string/btn_ok"
+	android:layout_gravity="center_horizontal" />
+</RadioGroup>
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:id="@+id/mScroll"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+	android:id="@+id/mLayout"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="10dp">
+<RadioGroup
+	android:id="@+id/mWrapper"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:gravity="center"
+	android:layout_alignParentBottom="true"
+	android:layout_alignParentLeft="true">
+<RadioGroup
+	android:id="@+id/mBtnWrapper"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal">
+<ImageButton
+	android:id="@+id/mShareIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+<ImageButton
+	android:id="@+id/widget64"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+<ImageButton
+	android:id="@+id/widget65"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+</RadioGroup>
+</RadioGroup>
+</RelativeLayout>
+</ScrollView>

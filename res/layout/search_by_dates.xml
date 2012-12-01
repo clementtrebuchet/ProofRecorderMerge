@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:id="@+id/scrollDates"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+	android:id="@+id/relDates"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+<RadioGroup
+	android:id="@+id/rdgDates"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_alignParentTop="true"
+	android:layout_alignParentLeft="true">
+<CheckBox
+	android:id="@+id/preciseDate"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/search_by_date_precise" />
+<CheckBox
+	android:id="@+id/periodDate"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/search_by_date_period" />
+<CheckBox
+	android:id="@+id/startingDate"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:visibility="gone"
+	android:text="@string/search_by_date_period_start" />
+<TextView
+	android:id="@+id/txtStartingDateOrPrecise"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="2dp"
+	android:visibility="gone"
+	android:text="TextView"
+	android:textColor="#ff18aed9"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal" />
+<CheckBox
+	android:id="@+id/endingDate"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:visibility="gone"
+	android:text="@string/search_by_date_period_end" />
+<TextView
+	android:id="@+id/txtEndingDate"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="2dp"
+	android:visibility="gone"
+	android:text="TextView"
+	android:textColor="#ff0ba3f0"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal" />
+<Button
+	android:id="@+id/btnValidateDates"
+	android:layout_width="211dp"
+	android:layout_height="wrap_content"
+	android:text="@string/search_by_date_validate"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal" />
+</RadioGroup>
+</RelativeLayout>
+</ScrollView>

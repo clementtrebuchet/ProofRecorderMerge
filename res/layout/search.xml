@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:id="@+id/scrollView"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+	android:id="@+id/layoutSearch"
+	android:layout_width="match_parent"
+	android:layout_height="fill_parent"
+	android:padding="10dp">
+<ProgressBar
+	android:id="@+id/pgBarSearch"
+	android:layout_width="wrap_content"
+	android:layout_height="46dp"
+	android:visibility="invisible"
+	android:layout_alignParentBottom="true"
+	android:layout_alignParentRight="true" />
+<RadioGroup
+	android:id="@+id/radioGroupSearch"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:gravity="center"
+	android:layout_alignParentTop="true"
+	android:layout_alignParentLeft="true">
+<RadioButton
+	android:id="@+id/rbVoices"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/search_voice_records_choice"
+	android:textColor="#ffe8e9f2" />
+<RadioButton
+	android:id="@+id/rbCalls"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/search_call_records_choice"
+	android:textColor="#ffe8e9f2"
+	android:checked="true" />
+
+<AutoCompleteTextView
+    android:id="@+id/aocSearchText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@+string/search_aoc_default_text"
+    android:textColor="#ffffffff"
+    android:textSize="18sp" />
+
+<CheckBox
+	android:id="@+id/cbByDateSearch"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/search_by_date"
+	android:textColor="#ffe8e9f2" />
+<TextView
+	android:id="@+id/selected_date"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="2dp"
+	android:visibility="gone"
+	android:textStyle="bold"
+	android:textColor="#ff18aed9"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal" />
+<Button
+	android:id="@+id/btnSearch"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/white"
+	android:padding="10dp"
+	android:text="@string/search_run_search"
+	android:textColor="#ff222222" />
+</RadioGroup>
+</RelativeLayout>
+</ScrollView>

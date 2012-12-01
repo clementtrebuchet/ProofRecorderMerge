@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#f8f9fe"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#f8f9fe"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/syncronTEL"
+                    android:layout_width="75dip"
+                    android:layout_height="75dip"
+                    android:layout_marginLeft="6dip"
+                    android:src="@drawable/uploadserver" />
+
+                <TextView
+                    android:id="@+id/reffd"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dip"
+                    android:layout_toRightOf="@+id/syncronTEL"
+                    android:text="@string/syncronTEL"
+                    android:textColor="#10bcc9"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <ImageButton
+                    android:id="@+id/syncronRESTORE"
+                    android:layout_width="75dip"
+                    android:layout_height="75dip"
+                    android:layout_below="@+id/syncronTEL"
+                    android:layout_marginLeft="6dip"
+                    android:src="@drawable/smart_phone_down" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/syncronRESTORE"
+                    android:layout_marginLeft="84dip"
+                    android:text="@string/syncronRESTORE"
+                    android:textColor="#10bcc9"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/SyncronOne"
+                android:name=".syncron.fragment.SyncronUi"
+                android:layout_width="0dip"
+                android:layout_height="0dip"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="top|center_horizontal"
+                android:padding="6dp" >
+            </FrameLayout>
+
+            <!-- Include Footer -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f8f9fe"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/syncDetails"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@layout/playerbox"
+                    android:padding="8dp" >
+
+                    <TextView
+                        android:id="@+id/syncronTextTEL"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#10bcc9"
+                        android:textSize="14dip"
+                        android:textStyle="bold"
+                        android:typeface="sans" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/syncronTextTEL"
+                        android:text="@string/RESTOROK"
+                        android:textSize="13dip"
+                        android:typeface="sans" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:padding="1dip" >
+
+    <LinearLayout
+        android:id="@+id/thumbnaillon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:background="@drawable/image_bg"
+        android:padding="3dip" >
+
+        <ImageView
+            android:id="@+id/list_detail_image"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:contentDescription="@string/list_details_image_cd"
+            android:src="@drawable/telphone" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:drawSelectorOnTop="false" />
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnaillon"
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id"
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/tel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id"
+        android:layout_below="@+id/username"
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:paddingTop="15dip"
+        android:textColor="#040404"
+        android:textSize="18dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/se"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel"
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:paddingTop="15dip"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <ImageView
+        android:id="@+id/sensImage"
+        android:layout_width="36dip"
+        android:layout_height="47dip"
+        android:layout_alignTop="@+id/se"
+        android:layout_marginLeft="152dip"
+        android:contentDescription="@string/list_details_image_cd"
+        android:paddingBottom="15dip"
+        android:src="@drawable/incoming_call" />
+
+    <Button
+        android:id="@+id/lireFlu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sensImage"
+        android:layout_toRightOf="@+id/thumbnaillon" />
+
+    <TextView
+        android:id="@+id/file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lireFlu"
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:paddingTop="15dip"
+        android:textColor="#040404"
+        android:textSize="9dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/taille"
+        style="@style/SimpleListItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/file"
+        android:layout_marginLeft="160dip"
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:paddingTop="15dip"
+        android:textColor="#10bcc9"
+        android:textSize="13dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/htime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/taille"
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:paddingTop="15dip"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+</RelativeLayout>

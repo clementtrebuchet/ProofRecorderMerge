@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:id="@+id/mScroll"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+	android:id="@+id/mLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+<RadioGroup
+	android:id="@+id/mWrapper"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:padding="10dp"
+	android:gravity="center"
+	android:layout_centerVertical="true"
+	android:layout_centerHorizontal="true">
+<ImageButton
+	android:id="@+id/mEditIcon"
+	android:contentDescription="@string/voice_edit_dialog_default_title"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_gravity="center_horizontal"
+	android:src="@drawable/voice_edit_icon" />
+<TextView
+	android:id="@+id/mInfoMsg"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="10dp"
+	android:layout_marginBottom="10dp"
+	android:text="@string/voice_edit_dialog_msg"
+	android:textSize="16sp"
+	android:textStyle="bold"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal" />
+<EditText
+	android:id="@+id/mEdit"
+	android:inputType="text"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/voice_edit_dialog_default_title"
+	android:textSize="18sp"
+	android:gravity="center"
+	android:layout_gravity="center_horizontal" />
+<RadioGroup
+	android:id="@+id/mBtnWrapper"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="10dp"
+	android:orientation="horizontal"
+	android:layout_gravity="center_horizontal">
+<Button
+	android:id="@+id/mBtnEdit"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="@string/alert_dialog_ok"
+	android:gravity="center" />
+<Button
+	android:id="@+id/mBtnLater"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="@string/voice_edit_dialog_later_btn"
+	android:gravity="center"
+	android:layout_gravity="right" />
+</RadioGroup>
+</RadioGroup>
+</RelativeLayout>
+</ScrollView>

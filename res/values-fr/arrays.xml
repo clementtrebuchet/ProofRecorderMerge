@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="options">
+        <item>Professionnelle</item>
+        <item>Intermédiaire</item>
+        <item>Basique</item>
+    </string-array>
+    <string-array name="options_values">
+        <item>FULL</item>
+        <item>MEDIUM</item>
+        <item>SIMPLE</item>
+    </string-array>
+    <string-array name="days_options">
+        <item>Lundi</item>
+        <item>Mardi</item>
+        <item>Mercredi</item>
+        <item>Jeudi</item>
+        <item>Vendredi</item>
+        <item>Samedi</item>
+        <item>Dimanche</item>
+    </string-array>
+    <string-array name="days_options_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="audio_format">
+        <item>3GP</item>
+        <item>WAV</item>
+        <item>MP3</item>
+        <item>OGG</item>
+    </string-array>
+    <string-array name="audio_channel">
+        <item>MONO</item>
+        <item>STEREO</item>
+    </string-array>
+    <string-array name="compress_quality_mp3">
+        <item>64</item>
+        <item>80</item>
+        <item>96</item>
+        <item>112</item>
+        <item>128</item>
+        <item>160</item>
+        <item>192</item>
+        <item>224</item>
+        <item>320</item>
+    </string-array>
+    <string-array name="rec_quality">
+        <item>44100</item>
+        <item>22050</item>
+        <item>11025</item>
+        <item>8000</item>
+    </string-array>
+    <string-array name="rec_quality_ogg">
+        <item>Bonne</item>
+        <item>Très Bonne</item>
+        <item>Excellente</item>
+    </string-array>
+
+</resources>

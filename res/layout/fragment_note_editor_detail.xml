@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/titreNoteDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="2dp"
+        android:ems="25"
+        android:inputType="text"
+        android:maxLines="20"
+        android:scrollHorizontally="true" />
+
+    <EditText
+        android:id="@+id/contenuNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="2dp"
+        android:ems="25"
+        android:inputType="text"
+        android:maxLines="1"
+        android:scrollHorizontally="true" />
+
+
+
+</LinearLayout>

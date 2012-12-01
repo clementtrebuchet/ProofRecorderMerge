@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:id="@+id/mScroll"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+	android:id="@+id/mLayout"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="15dp"
+	android:gravity="center_horizontal">
+<RadioGroup
+	android:id="@+id/mVerticalWrapper"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:gravity="center"
+	android:layout_alignParentBottom="true"
+	android:layout_alignParentRight="true">
+<RadioGroup
+	android:id="@+id/mBtnWrapper"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:gravity="center">
+<ImageButton
+	android:id="@+id/mShareGmailIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/share_gmail_icon"
+	android:layout_gravity="fill" />
+<ImageButton
+	android:id="@+id/mShareMailIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/share_mail_icon" />
+<ImageButton
+	android:id="@+id/mShareBlueToothIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/share_bluetooth" />
+</RadioGroup>
+<RadioGroup
+	android:id="@+id/widget40"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:gravity="center">
+<ImageButton
+	android:id="@+id/mShareDropBoxIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/share_drop_box_icon" />
+<ImageButton
+	android:id="@+id/mShareYouTubeIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/share_yt_icon" />
+<ImageButton
+	android:id="@+id/mShareFaceBookIcon"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/share_fb_icon" />
+</RadioGroup>
+</RadioGroup>
+</RelativeLayout>
+</ScrollView>

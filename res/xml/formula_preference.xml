@@ -1,0 +1,53 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/offers_options" >
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="OFFER_MP3"
+            android:summary="@string/summary_checkbox_OFFER_MP3"
+            android:title="@string/title_checkbox_OFFER_MP3"
+             />
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="OFFER_OGG"
+            android:summary="@string/summary_checkbox_OFFER_OGG"
+            android:title="@string/title_checkbox_OFFER_OGG"
+             />
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="OFFER_FTP"
+            android:summary="@string/summary_checkbox_OFFER_FTP"
+            android:title="@string/title_checkbox_OFFER_FTP"
+             />
+
+        <!--
+           <ListPreference
+           android:title="@string/offers_options_list"
+           android:summary="@string/summary_checkbox_OFFERS"
+           android:key="OFFERS_OPTIONS"
+           android:defaultValue="SIMPLE"
+           android:dialogTitle="@string/offers_dlg_title"
+           android:entries="@array/options"
+           android:entryValues="@array/options_values" />
+        -->
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="EULA"
+        android:title="@string/condition_eula" >
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="PREFERENCE_EULA_ACCEPTED"
+            android:summary="@string/summary_checkbox_EULA_SUM"
+            android:title="@string/title_checkbox_EULA_TITLE" />
+         <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="FIRSTINSTALL"
+          />
+    </PreferenceCategory>
+     
+       
+  
+
+</PreferenceScreen>

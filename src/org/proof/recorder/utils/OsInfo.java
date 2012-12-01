@@ -1,0 +1,71 @@
+package org.proof.recorder.utils;
+
+import java.io.File;
+import java.util.Stack;
+
+import android.os.Environment;
+import android.os.StatFs;
+import android.util.Log;
+
+public class OsInfo {
+	
+	private static final String TAG = "OS INFOS";
+	private static String mExternalPath;
+	private static String mAppPath;
+	
+	public OsInfo() {
+		mExternalPath = Environment.getExternalStorageDirectory()
+	            .getPath();
+		
+		mAppPath = Environment.getExternalStorageDirectory()
+	            .getPath() + "/ProofRecorder/";
+	}
+	
+	private String getFreeSpace(String mPath) {
+		long availableSpace = -1L;
+		
+		try {
+	    	StatFs stat = new StatFs(mPath);
+	        stat.restat(mPath);
+	        availableSpace = (long) stat.getAvailableBlocks() * (long) stat.getBlockSize();
+	    } catch (Exception e) {
+	        Log.e(TAG, "getFreeSpaceOnDevice()->" + e);
+	    }
+
+	    return ServiceAudioHelper.transByteToKo(availableSpace + "");
+	}
+	
+	private String getSizeOfDirectory(String mPath) {
+		long result = 0;
+
+	    Stack<File> dirlist= new Stack<File>();
+	    dirlist.clear();
+
+	    dirlist.push(new File(mPath));
+
+	    while(!dirlist.isEmpty())
+	    {
+	        File dirCurrent = dirlist.pop();
+
+	        File[] fileList = dirCurrent.listFiles();
+	        for (int i = 0; i < fileList.length; i++) {
+
+	            if(fileList[i].isDirectory())
+	                dirlist.push(fileList[i]);
+	            else
+	                result += fileList[i].length();
+	        }
+	    }
+
+	    return ServiceAudioHelper.transByteToKo(result + "");
+	}
+
+	public String getFreeSpaceOnExternalDevice() {		
+	    return getFreeSpace(mExternalPath);
+	}
+
+	public String getSpaceConsumedByApp() {
+		return getSizeOfDirectory(mAppPath);
+	}
+
+}

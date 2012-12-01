@@ -1,0 +1,59 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="serverAccount"
+        android:title="Authentification serveur de sync" >
+        <EditTextPreference
+            android:key="username"
+            android:password="false"
+            android:summary="Entrez votre username"
+            android:title="Nom d\&apos;utilisateur" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:key="password"
+            android:password="true"
+            android:summary="Entrez votre mot de passe"
+            android:title="Mot de passe" >
+        </EditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="SynchroOPtions"
+        android:title="Options de Sync" >
+        <CheckBoxPreference
+            android:key="synchroAllCalls"
+            android:summary="Uploader les fichiers son àprès chaque appel"
+            android:title="Synchro" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="synchroForce"
+            android:summary="Désactiver la syncrhronisation forcée"
+            android:title="Synchronisation force" >
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="syncperiod"
+            android:summary="Plannification des Syncronisations"
+            android:title="Activer la plannification" >
+        </CheckBoxPreference>
+
+        <org.proof.recorder.preferences.TimePickerPreference
+            android:dependency="syncperiod"
+            android:key="timePreference"
+            android:persistent="true"
+            android:summary="Spécifiez l\&apos;heure de la synchro"
+            android:title="Fréquence" />
+
+        <org.proof.recorder.preferences.DayListPreference
+            android:defaultValue="0"
+            android:dependency="syncperiod"
+            android:dialogTitle="choisir la périodicité"
+            android:entries="@array/days_options"
+            android:entryValues="@array/days_options_values"
+            android:key="DayRep"
+            android:summary="Spécifiez la périodicité pour la synchro"
+            android:title="Périodicité" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

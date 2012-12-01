@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ActionBarCompatible" >
+ 
+    <ImageView
+        android:id="@+id/dlgmenu"
+        android:contentDescription="@+string/dlgmenu_img_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:clickable="false"
+        android:paddingLeft="0dip"
+        android:scaleType="center" />  
+        
+    <TextView 
+        android:id="@+id/dlgmenu_text"
+        android:textSize="19dip"
+        android:text="@+string/ab_default_text"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:clickable="false"
+        android:textColor="#333333" />
+    
+    <ImageView
+        android:id="@+id/dlgdashboard"
+        android:contentDescription="@+string/dlgmenu_img_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:clickable="false"
+        android:paddingLeft="0dip"
+        android:scaleType="center"
+        android:src="@drawable/icon" />
+ 
+</LinearLayout>

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="debutRec">Starting recording</string>
+    <string name="finRec">Ending Recording</string>
+    <string name="textrecordVoice">Record the mic</string>
+    <string name="textlistVoice">Mic\'s Records</string>
+    <string name="textlistPhone">Call\'s Records</string>
+    <string name="textstopVoice">Stop Mic</string>
+    <string name="tableId">ID</string>
+    <string name="tableNumero">Number</string>
+    <string name="tableSens">Sense</string>
+    <string name="tableHeure">Date</string>
+
+    <!-- DashBoard Description -->
+
+    <string name="descriptionVoix">Voice Recorder</string>
+    <string name="desriptionListV">Voices\' Records List</string>
+    <string name="descriptionListeP">Calls\' Records List</string>
+    <string name="desriptionListSet">Settings</string>
+    <string name="excludedFromRecordingList_desc">Excluded Contacts from recording\'s service</string>
+
+    <!-- FIN DashBoard Description -->
+
+
+    <!-- TRACKER GOOGLE -->
+    <string name="gdevApiKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlJHQPCfccFjpEBQPG29jnh18AWwDqovEKOOZ4ms2aYWvoUUabaJT3NPCJ9XlgQYhB7wsC9ZYt9jHZBYX+WbMJ1XJs14EoNbWIJYK2urIbNTYGd2yjH4bE0irf7AYmLchuOfO3AJzdUi0LYbY7A+LS+CGSOSTCNGlRFzsWAEqF0phQudbYE4rzyPNxs8wj192sI188GYiPhTAv77yVcqI8ppnaaVCDpq7XY+g4IunoltTg9Xtz6h5m/Upr44kLmjB1FPM0rvAe75EW2uXXjImXQKCxLhZy6Q07uMqSwXpc6shnLr9OifzbQI3zpxfPStoTmmcc3MmfuMdLIoueShPwIDAQAB</string>
+    <string name="google_analytics_ua">UA-33072114-1</string>
+    <string name="unlicensed_dialog_title">You must have a licence</string>
+    <string name="unlicensed_dialog_retry_body">Retry ?</string>
+    <string name="unlicensed_dialog_body">Your Licence has expired!</string>
+    <string name="retry_button">new try</string>
+    <string name="buy_button">Upgrade</string>
+    <string name="quit_button">Quit</string>
+    <string name="checking_license">Checking Licence</string>
+    <string name="application_error">A problem occur</string>
+    <string name="dont_allow">Permission refused</string>
+    <string name="allow">Permission authorized</string>
+
+    <!-- END TRACKER -->
+
+
+    <!-- Action Bars TextView Text -->
+
+    <string name="ab_contacts_list_text">Contacts\' List</string>
+    <string name="ab_contacts_list_icon_desc">Contacts icons</string>
+    <string name="ab_default_text">Frug\'n Frog\'s Apps :)</string>
+    <string name="dlgmenu_img_desc">Action Bar icon (cd)</string>
+
+    <!-- FIN Action Bars -->
+
+
+    <!-- EULA -->
+
+    <string name="eula_title">Licence Contract</string>
+    <string name="eula_accept">Accept</string>
+    <string name="eula_refuse">Refuse</string>
+    <string name="condition_eula">Licence</string>
+    <string name="summary_checkbox_EULA_SUM">Accept the terms of use</string>
+    <string name="title_checkbox_EULA_TITLE">License</string>
+    <!-- END EULA -->
+    <string name="footer">Proof Recorder</string>
+    <string name="app_name">Phone &amp; Voice Recorder</string>
+    <string name="enregistreDebut">recording Starting</string>
+    <string name="enregistreFin">recording ending</string>
+    <string name="title_checkbox_speaker">Speaker Active ?</string>
+    <string name="summary_checkbox_speaker">Needed for a good recording quality</string>
+    <string name="arrow_record">arrow image</string>
+
+    <!-- Settings -->
+
+
+    <!-- Communication -->
+
+    <string name="dialog_based_phonePrefs">Communications</string>
+    <string name="dialog_based_phonePrefs_ergo">Security and Ergonomy</string>
+    <string name="dialog_based_audoiSourcePrefs">Audio Source</string>
+    <string name="dialog_based_audoiSourceBestConf">Set the best configuration</string>
+    <string name="summary_checkbox_NOTIFICATION">Activate / Deactivate application\'s notifications</string>
+    <string name="summary_checkbox_UAC_ASSISTED">Activate / Deactivate control options on deleting actions (alerts dialog)</string>
+    <string name="title_checkbox_NOTIFICATION">Notify main Actions ?</string>
+    <string name="title_checkbox_UAC_ASSISTED">Display Alerts ?</string>
+    <string name="summary_checkbox_OUTCALL">Record Outcomming Calls</string>
+    <string name="summary_checkbox_INCALL">Record Incomming Calls</string>
+    <string name="title_checkbox_OUTCALL">Outcomming Calls</string>
+    <string name="title_checkbox_INCALL">Incomming Calls</string>
+    <string name="summary_checkbox_BESTCONF">Detected:\nBest theorical audio source</string>
+    <string name="title_checkbox_BESTCONF">Discovered Sources</string>
+    <string name="summary_checkbox_MIC">Optimized Source:\nMicrophone</string>
+    <string name="summary_checkbox_VOICE_CALL">Optimized Source:\nVocals Calls</string>
+    <string name="title_checkbox_MIC">Microphone</string>
+    <string name="title_checkbox_VOICE_CALL">Voice</string>
+    <string name="summary_checkbox_VOICE_RECO">Optimized Source:\nVoice Recognition</string>
+    <string name="summary_checkbox_VOICE_COM">Optimized Source:\nPhone Call Conversations</string>
+    <string name="title_checkbox_VOICE_RECO">Reconnaissance Vocale</string>
+    <string name="title_checkbox_VOICE_COM">Conversations</string>
+    <string name="summary_checkbox_VOICE_UP">Optimized Source:\nYour Voice</string>
+    <string name="summary_checkbox_VOICE_DOWN">Optimized Source:\nCaller Voice</string>
+    <string name="title_checkbox_VOICE_UP">Locale Voice (Tx)</string>
+    <string name="title_checkbox_VOICE_DOWN">Caller Voice (Rx)</string>
+    <string name="summary_checkbox_CAM">Optimized Source:\nFrontal Microphone</string>
+    <string name="title_checkbox_CAM">Frontal Microphone</string>
+
+    <!-- Audio -->
+
+    <string name="offers_options">Performances</string>
+    <string name="offers_options_list">Partage</string>
+    <string name="offers_dlg_title">Offres disponibles</string>
+    <string name="summary_checkbox_OFFER_MP3">Plugin son mp3 gratuit(GPL)</string>
+    <string name="summary_checkbox_OFFER_OGG">Plugin son Ogg(module Pro)</string>
+    <string name="summary_checkbox_OFFER_FTP">Plugin Ftp Sauvegarde Perso</string>
+    <string name="summary_checkbox_OFFERS">Offres disponibles</string>
+    <string name="title_checkbox_OFFER_MP3">Plugin son mp3</string>
+    <string name="title_checkbox_OFFER_OGG">Plugin son Ogg</string>
+    <string name="title_checkbox_OFFER_FTP">Plugin Ftp</string>
+    <string name="extra_checkbox_INFORMATION">(peu ne pas fonctionner suivant les capacitées matériels du mobile)</string>
+    <!-- FIN Settings -->
+
+
+    <!-- Notes -->
+
+    <string name="enregistreNote">record</string>
+    <string name="note_sup">delete</string>
+    <string name="note_add">add</string>
+
+    <!-- FIN Notes -->
+
+
+    <!-- Menu Quick Action Dialog Main Menu -->
+
+    <string name="strHome">Home</string>
+    <string name="strCallRecords">Call Records</string>
+    <string name="strVoiceRecords">Voice Records</string>
+    <string name="strVoiceRecorder">Voice Recorder</string>
+    <string name="strContactManager">Contact Manager</string>
+    <string name="strGlobalSettings">Global Settings</string>
+
+    <!-- END Menu Quick Action Dialog Main Menu -->
+
+
+    <!-- Excluded Contacts Tabs' titles -->
+
+    <string name="strExcludedTab">Excluded Contacts</string>
+    <string name="strNotExcludedTab">Contacts List</string>
+
+    <!-- END Excluded Contacts Tabs' titles -->
+    <!-- Calls Records Tabs -->
+
+    <string name="strKnownContactsTab">Known Contacts</string>
+    <string name="strUnKnownContactsTab">Unknown Contacts</string>
+    <string name="strTitledVoicesTab">With Title</string>
+    <string name="strUnTitledVoicesTab">Titleless</string>
+    <string name="strIncommingTab">Incomming Calls</string>
+    <string name="strOutcommingTab">OutGoing Calls</string>
+    <string name="strDetailsRecords">Detail for</string>
+
+    <!-- END Calls Records -->
+
+
+    <!-- Main Action Bar Title View -->
+
+    <string name="strABCallRecords">Calls Records</string>
+    <string name="strABCallRecordDetail">Detail for </string>
+    <string name="strABVoiceRecords">Voices Records</string>
+    <string name="strABVoiceRecorder">Voice Recorder</string>
+    <string name="strABDashBoardPerf">Informations &amp; Performances</string>
+
+    <!-- END Main Action Bar Title View -->
+
+
+    <!-- Settings Tabs' Titles -->
+
+    <string name="strSettingsGlobalServices">Service Configuration</string>
+    <string name="strSettingsDeviceCapabilities">Audio Capabilities</string>
+    <string name="strSettingsOptions">Options</string>
+
+    <!-- END Settings Tabs' Titles -->
+
+
+    <!-- Détails d'un enregistrement -->
+
+    <string name="list_details_image">Contact</string>
+    <string name="list_details_image_cd">Contact</string>
+
+    <!-- Fin Détails -->
+
+
+    <!-- UAC Dialog Alert Msg -->
+
+    <string name="strUACCancelBtn">Cancel</string>
+    <string name="strUACConfirmBtn">Confirm</string>
+    <string name="strUACTitle">Warning!</string>
+    <string name="strUACDeleteFolder">You\'re about to delete \nall records of the selected contact! \nAre you sure ?</string>
+    <string name="strUACDeleteRecord">You\'re about to delete \n the selected Record! \nAre you sure ?</string>
+
+    <!-- END UAC Dialog Alert Msg -->
+
+
+    <!-- Détails d'un enregistrement -->
+
+    <string name="cm_records_list_del_file_txt">Delete</string>
+    <string name="cm_records_list_read_wav_txt">Play</string>
+    <string name="cm_records_list_details_txt">Display details</string>
+    <string name="cm_records_list_sharing_opts_txt">Share</string>
+    <string name="cm_records_list_del_all_file_txt">Delete All</string>
+    <string name="cm_records_list_display_txt">Display</string>
+
+    <!-- Fin Détails -->
+
+
+    <!-- Unknown Contact -->
+
+    <string name="unknownContact">(Unknown Contact)</string>
+
+    <!-- END UnKnown Contact -->
+
+
+    <!-- Note Contextual Menu -->
+
+    <string name="noteContextualMenuUpdate">Save Note</string>
+    <string name="noteContextualMenuDelete">Delete Note</string>
+
+    <!-- END Note Contextual Menu -->
+
+
+    <!-- Note Tabs -->
+
+    <string name="noteTabDetail">Detail</string>
+    <string name="noteTabNote">Note</string>
+
+    <!-- END Note Tabs -->
+
+
+    <!-- Notifications Msg -->
+
+    <string name="notifyEndOfCallOne">PhoneCall (</string>
+    <string name="notifyEndOfCallTwo">) Saved!</string>
+    <string name="notifyEndOfVoice">Voice Record Saved!</string>
+
+    <!-- END Notifications Msg -->
+
+
+    <!-- Ui du VoiceRecorder -->
+
+    <string name="strStartStopRecorder">Record</string>
+    <string name="strStartStopPlayer">Play</string>
+
+    <!-- Fin Ui du VoiceRecorder -->
+
+
+    <!-- Searchable -->
+
+    <string name="search_hint">Quick Search</string>
+
+    <!-- FIN Searchable -->
+    <!-- DEBUT SYNCRON -->
+
+    <string name="syncronTEL">Synchron All</string>
+    <string name="syncronVOX">Synchron Voice</string>
+    <string name="syncronConnectionError">Connection Error, try later</string>
+    <string name="syncronDATA">Synchron DATA</string>
+
+    <!-- FIN SYNCRON -->
+    <!-- GCM -->
+    <string name="ic_stat_gcm"></string>
+    <string name="gcm_recoverable_error"></string>
+    <string name="gcm_error"></string>
+    <string name="gcm_deleted"></string>
+    <string name="gcm_message"></string>
+    <string name="gcm_unregistered"></string>
+    <string name="gcm_registered"></string>
+    <string name="server_registering"></string>
+    <string name="server_registered"></string>
+    <string name="server_register_error"></string>
+    <string name="server_unregistered"></string>
+    <string name="server_unregister_error"></string>
+    <string name="already_registered"></string>
+    <string name="options_clear"></string>
+    <string name="options_exit"></string>
+    <string name="error_config"></string>
+    <!-- Fin GCM -->
+
+
+    <!-- Main Sub Menu -->
+
+    <string name="info_phone">Phone\'s details</string>
+    <string name="stats">Usage Stats</string>
+    <string name="about_us">About Us</string>
+
+    <!-- End Main sub Menu -->
+
+    <string name="search_dialog_title">Search Engine</string>
+    <string name="alert_dlg_datepicker_title">Dates &amp; Calendars</string>
+    <string name="alert_dialog_ok">Validate</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="search_selected_date">Selected date</string>
+    <string name="search_aoc_default_text">Your search</string>
+    <string name="search_none_records_found">None of records matching your search request! \nPlease, try with other criterias.</string>
+    <string name="search_voice_records_choice">Voices Records</string>
+    <string name="search_call_records_choice">Calls Records</string>
+    <string name="search_by_date">By Date</string>
+    <string name="search_run_search">Go Search</string>
+
+    <!-- Calendard month int to string -->
+
+    <string name="jan">January</string>
+    <string name="feb">Febuary</string>
+    <string name="mar">March</string>
+    <string name="apr">April</string>
+    <string name="may">May</string>
+    <string name="jun">June</string>
+    <string name="jul">July</string>
+    <string name="aug">August</string>
+    <string name="sep">September</string>
+    <string name="oct">October</string>
+    <string name="nov">November</string>
+    <string name="dec">December</string>
+    <string name="search_by_date_precise">For a precise date</string>
+    <string name="search_by_date_period">For a period</string>
+    <string name="search_by_date_period_start">Starting date</string>
+    <string name="search_by_date_period_end">Ending date</string>
+    <string name="search_by_date_validate">Validate</string>
+    <!-- None Records Dialog -->
+
+
+    <!-- DashBoard Dialog -->
+
+    <string name="dashboard_dialog_title">DashBoard</string>
+    <string name="dashbord_dialog_network">Network used:</string>
+    <string name="dashbord_dialog_battery_state">Battery state:</string>
+    <string name="dashbord_dialog_calls">Number or recorded calls:</string>
+    <string name="dashbord_dialog_voices">Number or recorded voices:</string>
+    <string name="dashbord_dialog_excluded_contacts">Excluded contacts from service:</string>
+    <string name="dashbord_dialog_non_excluded_contacts">Non-Excluded contacts:</string>
+    <string name="dashbord_dialog_free_space">Free space (on SD card):</string>
+    <string name="dashbord_dialog_app_space">Space occupation by ProofRecorder:</string>
+
+    <!-- END DashBoard Dialog -->
+
+    <string name="none_records_dialog_title">For Information</string>
+    <string name="none_records_dlg_msg">You haven\'t any records yet!</string>
+    <string name="btn_ok">OK</string>
+    <string name="voice_edit_dlg_empty_title">Please, provide a title!</string>
+    <string name="voice_edit_dialog_title">Give a title!</string>
+    <string name="voice_edit_dialog_default_title">Insert a title</string>
+    <string name="voice_edit_dialog_msg">Add a title to this record ? If you wish to do it later, Go in the detail of the record, then in the Note\&apos;s tab!</string>
+    <string name="voice_edit_dialog_later_btn">Later</string>
+    <string name="custom_intent_chooser_subject">Voice Proof Recorder Share</string>
+    <string name="custom_intent_chooser_text">Write a comment with this share</string>
+    <string name="share_intent_chooser_title">Share this record</string>
+
+    <!-- FTP/** -->
+
+    <string name="FTPUPOK">Le fichier a été uploader avec succès</string>
+    <string name="FTPUPKO">Le fichier ne peut pas être uploader !!</string>
+    <string name="FTPDWOK">Le fichier a été downloader avec succès</string>
+    <string name="FTPDWKO">Le fichier ne peut pas être downloader !!</string>
+    <string name="FTPAUTHKO">L\'authentification a échouée !!</string>
+    <string name="FTPAUTHOK">L\'authentification a réussi, bienvenue.</string>
+    <string name="FTPCONOFF">Deconnection</string>
+    <string name="FTPCONON">Connection</string>
+    <string name="FTPFATALERROR">Opération intérrompu, contacter le support technique, svp.</string>
+    <string name="RESTOROK">Synchronisation Réussie !!</string>
+    <string name="STARTOP">Début des opérations de Synchronisation</string>
+
+    <!-- END FTP/** -->
+    <!-- Syncronui -->
+    <string name="SyncronUi_13"></string>
+    <string name="SyncronUi_14">Tips :\r\nVos données sont désynchronisées, faites une sauvegarde \!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
+    <string name="SyncronUi_15">Tips :\r\n Vos données sont deja synchronisées, sauvegarde inutile\!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
+    <string name="SyncronUi_16">Tips :\r\nVos données sont désynchronisées, l\'option force est désactivé\r\n</string>
+    <string name="SyncronUi_17">Vos données sont désynchronisées, l\'option force est désactivé</string>
+    <string name="SyncronUi_18">Erreur la checksum reste à sa valeur initial de 1000</string>
+    <string name="SyncronUi_19">Tips :\r\nVos données étaient désynchronisées,nous avons purger les données\r\nprésentent sur le serveur avant de les sauvegardées\r\n</string>
+    <string name="SyncronUi_20">Tips :\r\nVos données étaient désynchronisées, l\'option force est désactivé\r\n</string>
+    <string name="SyncronUi_21">Vos données sont désynchronisées, l\'option force est désactivé</string>
+    <string name="SyncronUi_22">Tips :\r\n Vos données étaient deja synchronisées\r\n</string>
+    <string name="SyncronUi_23">La sauvegarde des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_24">La sauvegarde des notes des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_25">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_26">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_27">La sauvegarde des appels est ok\r\n</string>
+    <string name="SyncronUi_28">La sauvegarde des notes des appels  est ok\r\n</string>
+    <string name="SyncronUi_29">La sauvegarde des enregistrement  est okr\r\n</string>
+    <string name="SyncronUi_30">La sauvegarde des notes des enregistrement  est ok\r\n</string>
+    <string name="SyncronUi_31">La sauvegarde des appels est ok\r\n</string>
+    <string name="SyncronUi_32">La sauvegarde des notes des appels  est ok\r\n</string>
+    <string name="SyncronUi_33">La sauvegarde des enregistrement  est okr\r\n</string>
+    <string name="SyncronUi_34">La sauvegarde des notes des enregistrement  est ok\r\n</string>
+    <string name="SyncronUi_35">Toutes les opérations ce sont déroulées avec succès\r\n</string>
+    <string name="SyncronUi_36">Toutes les mise à jour ce sont déroulées avec succès\r\n</string>
+    <string name="SyncronUi_37">La sauvegarde des données des appels à échouée\r\n</string>
+    <string name="SyncronUi_38">La sauvegarde des données des notes des appels à échouée\r\n</string>
+    <string name="SyncronUi_39">La sauvegarde des données des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_40">La sauvegarde des données des notes des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_41">La sauvegarde des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_42">La sauvegarde des notes des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_43">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_44">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_45">Toutes les restaurations de données ce sont déroulées avec succès\r\n</string>
+    <string name="SyncronUi_46">La restaurations des données des appels à échouée\r\n</string>
+    <string name="SyncronUi_47">La restaurations des donnéese des notes des appels à échouée\r\n</string>
+    <string name="SyncronUi_48">La restaurations des données des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_49">La restaurations des données des notes des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_54">Bienvenue\r\n</string>
+    <!-- END SYNCRON -->
+    <string name="billing_not_supported_title">Can\'t make purchases</string>
+    <string name="billing_not_supported_message">The Market billing
+     service is not available at this time.  You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string name="subscriptions_not_supported_title">Can\'t purchase subscriptions</string>
+    <string name="subscriptions_not_supported_message">The Market billing
+     service on this device does not support subscriptions at this time.</string>
+    <string name="cannot_connect_title">Can\'t connect to Market</string>
+    <string name="cannot_connect_message">This app cannot connect to Market.
+     Your version of Market may be out of date.
+     You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string name="restoring_transactions">Restoring transactions</string>
+    <string name="learn_more">Learn more</string>
+    <string name="help_url" formatted="false">http://market.android.com/support/bin/answer.py?answer=1050566&amp;hl=%lang%&amp;dl=%region%</string>
+    <string name="buy">Buy</string>
+    <string name="select_item">Select an item</string>
+    <string name="edit_payload">Edit Payload</string>
+    <string name="edit_payload_title">Edit the developer payload associated with this purchase</string>
+    <string name="edit_payload_accept">Set</string>
+    <string name="edit_payload_clear">No Payload</string>
+    <string name="items_for_sale">Items for sale</string>
+    <string name="items_you_own">Items you own</string>
+    <string name="recent_transactions">Recent activity</string>
+    <string name="shakestore">Get recording your friends by checking!</string>
+    <string name="ftpstore">Pluguin FTP (save on your own FTP)</string>
+    <string name="subscription_monthly">Synchro Subscription monthly</string>
+    <string name="subscription_yearly">Synchro Subscription yearly</string>
+
+    <!-- The following are reserved skus defined by Market for testing. -->
+    <string name="android_test_canceled">android.test.canceled</string>
+    <string name="android_test_purchased">android.test.purchased</string>
+    <string name="android_test_item_unavailable">android.test.item unavailable</string>
+    <string name="android_test_refunded">android.test.refunded</string>
+    <string name="edit_subscriptions">Edit Subscriptions</string>
+
+    <!-- XMLRPC FAULT -->
+    <string name="ERROR81">Nom d\'utilisateur et/ou mot de passe incorrect</string>
+    <string name="ERROR82">Permission refusé</string>
+    <string name="ERROR800">Synchronisation echouée</string>
+    <string name="ERROR900">Aucune donnée à synchroniser, merci.</string>
+    <string name="ERROR1">Erreur-RC1, contacter le support</string>
+    <!-- END XMLRPC FAULT -->
+
+
+    <!-- MP3 -->
+    <string name="convdir">Convert to Mp3 format</string>
+    <string name="conversion_ready">MP3 is ready</string>
+    <string name="converting">MP3 is converting</string>
+    <string name="convert_later">Convert later</string>
+    <string name="prog_msg">MP3 is now converting.</string>
+    <string name="Echantillonnage">Echantillonnage</string>
+    <string name="Hz">Hz</string>
+    <string name="bitrate">bitrate</string>
+    <!-- FIN MP3 -->
+    <!-- VerifyContactsApi -->
+    <string name="analysis_over">Analyse terminée</string>
+    <string name="deleted_contact">Contact supprimé: </string>
+    <!-- options son -->
+    <string name="soundopt">Qualitée d\'enregistrement</string>
+    <string name="echantillon">Fréquence d\'échantillonnage</string>
+    <string name="hz">En hertz</string>
+    <string name="vbr">Compression mp3</string>
+    <string name="oggqual">Qualitée Ogg</string>
+    <string name="oggtit">Qualitée du format Ogg</string>
+    <string name="vbru">Kb/s</string>
+    <string name="mp3c">Séléction de la Compression</string>
+    <string name="checc">Séléction de l\'échantillonnage</string>
+    
+    <!-- PLUGUIN -->
+    <string name="REQUIRED">Plugin requis</string>
+
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/long_press"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/cm_records_list_del_file"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/cm_records_list_del_file_txt" />
+
+    <TextView
+        android:id="@+id/cm_records_list_read_wav"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/cm_records_list_read_wav_txt" />
+    
+    <TextView
+        android:id="@+id/cm_records_list_display_details"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/cm_records_list_details_txt" />
+    
+    <TextView
+        android:id="@+id/cm_records_list_display_sharing_opts"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/cm_records_list_sharing_opts_txt" />
+
+</LinearLayout>

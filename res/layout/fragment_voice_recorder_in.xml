@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@+string/desriptionListP"
+        android:scaleType="centerCrop"
+        android:src="@drawable/voicing" />
+
+    <RelativeLayout
+        android:id="@+id/psongDetails"
+        android:layout_width="fill_parent"
+        android:layout_height="130dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="8dp"
+        android:background="@layout/playerbox"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/pinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/psongDetails"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFFFFF"
+            android:textSize="11dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/player_btnrow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@+string/desriptionListP"
+            android:src="@drawable/play"
+            android:text="@+string/desriptionListP" />
+
+        <ImageButton
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@+string/desriptionListP"
+            android:src="@drawable/stop"
+            android:text="@+string/desriptionListP" />
+    </LinearLayout>
+
+</RelativeLayout>

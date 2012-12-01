@@ -1,0 +1,94 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android" >
+<!--  android:entries="@array/audio_format"
+            android:entryValues="@array/audio_format"-->
+    <PreferenceCategory
+        android:key="audioformat"
+        android:title="Formats audio" >
+        <ListPreference
+            android:defaultValue="3GP"
+            android:dialogTitle="Selection du format."
+            
+            android:key="audio_format"
+            android:summary="Format d\&apos;enregistrement."
+            android:title="Format d\&apos;enregistrement" />
+        <ListPreference
+            android:defaultValue="MONO"
+            android:dialogTitle="Selection du Canal."
+            android:entries="@array/audio_channel"
+            android:entryValues="@array/audio_channel"
+            android:key="audio_channel"
+            android:summary="Canaux."
+            android:title="Canaux" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="mp33"
+        android:title="@string/soundopt" >
+        <ListPreference
+            android:defaultValue="8000"
+            android:dialogTitle="@string/checc"
+            android:entries="@array/rec_quality"
+            android:entryValues="@array/rec_quality"
+            android:key="MP3QHH"
+            android:summary="@string/hz"
+            android:title="@string/echantillon" />
+        <ListPreference
+            android:defaultValue="64"
+            android:dialogTitle="@string/mp3c"
+            android:entries="@array/compress_quality_mp3"
+            android:entryValues="@array/compress_quality_mp3"
+            android:key="MP3QUALITY"
+            android:summary="@string/vbru"
+            android:title="@string/vbr" />
+        <ListPreference
+            android:defaultValue="Bonne"
+            android:dialogTitle="@string/oggqual"
+            android:entries="@array/rec_quality_ogg"
+            android:entryValues="@array/rec_quality_ogg"
+            android:key="OGGQUAL"
+            android:summary="@string/oggqual"
+            android:title="@string/oggtit" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="enableBestConf"
+        android:title="@string/dialog_based_audoiSourceBestConf" >
+        <CheckBoxPreference
+            android:defaultValue="True"
+            android:key="BESTCONF"
+            android:summary="@string/summary_checkbox_BESTCONF"
+            android:title="@string/title_checkbox_BESTCONF" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="audio"
+        android:title="@string/dialog_based_audoiSourcePrefs" >
+        <CheckBoxPreference
+            android:key="MIC"
+            android:summary="@string/summary_checkbox_MIC"
+            android:title="@string/title_checkbox_MIC" />
+        <CheckBoxPreference
+            android:key="VOICE_UP"
+            android:summary="@string/summary_checkbox_VOICE_UP"
+            android:title="@string/title_checkbox_VOICE_UP" />
+        <CheckBoxPreference
+            android:key="VOICE_DOWN"
+            android:summary="@string/summary_checkbox_VOICE_DOWN"
+            android:title="@string/title_checkbox_VOICE_DOWN" />
+        <CheckBoxPreference
+            android:key="VOICE_CALL"
+            android:summary="@string/summary_checkbox_VOICE_CALL"
+            android:title="@string/title_checkbox_VOICE_CALL" />
+        <CheckBoxPreference
+            android:key="CAM"
+            android:summary="@string/summary_checkbox_CAM"
+            android:title="@string/title_checkbox_CAM" />
+        <CheckBoxPreference
+            android:key="VOICE_RECO"
+            android:summary="@string/summary_checkbox_VOICE_RECO"
+            android:title="@string/title_checkbox_VOICE_RECO" />
+        <CheckBoxPreference
+            android:key="VOICE_COM"
+            android:summary="@string/summary_checkbox_VOICE_COM"
+            android:title="@string/title_checkbox_VOICE_COM" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

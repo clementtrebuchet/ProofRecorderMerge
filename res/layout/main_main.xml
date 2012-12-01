@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.proof.recorder.graphics.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="#f8f9fe" >
+    
+    <ImageButton
+        android:id="@+id/recordVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:contentDescription="@+string/desriptionListP"
+        android:src="@drawable/microphone"
+        android:text="@+string/desriptionListP" />
+    
+    <ImageButton
+        android:id="@+id/dashBoardPerformances"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right"
+        android:contentDescription="@+string/excludedFromRecording_desc"
+        android:padding="12dip"
+        android:src="@drawable/web_design" />
+
+    <ImageButton
+        android:id="@+id/voiceList"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:contentDescription="@+string/descriptionVoix"
+        android:src="@drawable/voice" />
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/textrecordVoice" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="fill_parent" -->
+    <!-- android:layout_gravity="left" -->
+    <!-- android:text="@+string/textrecordVoice" -->
+    <!-- android:textAllCaps="true" -->
+    <!-- android:textSize="16dip" -->
+    <!-- android:textStyle="bold" /> -->
+
+    <ImageButton
+        android:id="@+id/phoneCallList"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right"
+        android:contentDescription="@+string/desriptionListV"
+        android:padding="12dip"
+        android:src="@drawable/phone" />    
+    
+    <ImageButton
+        android:id="@+id/excludedFromRecordingList"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right"
+        android:contentDescription="@+string/excludedFromRecording_desc"
+        android:padding="12dip"
+        android:src="@drawable/excluded_contacts" />  
+
+    <ImageButton
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:contentDescription="@+string/desriptionListSet"
+        android:src="@drawable/cloud" />
+
+</org.proof.recorder.graphics.DashboardLayout>

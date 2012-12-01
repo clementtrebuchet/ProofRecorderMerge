@@ -1,0 +1,70 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android" >
+
+    <!-- <PreferenceCategory android:title="@string/inline_preferences" > -->
+    <!-- <CheckBoxPreference -->
+    <!-- android:key="checkbox_preferenceGPS" -->
+    <!-- android:summary="@string/summary_checkbox_preference" -->
+    <!-- android:title="@string/title_checkbox_preference" /> -->
+    <!-- </PreferenceCategory> -->
+    <PreferenceCategory android:title="@string/dialog_based_phonePrefs" >
+        <CheckBoxPreference
+            android:key="INCALL"
+            android:summary="@string/summary_checkbox_INCALL"
+            android:title="@string/title_checkbox_INCALL" />
+        <CheckBoxPreference
+            android:key="OUTCALL"
+            android:summary="@string/summary_checkbox_OUTCALL"
+            android:title="@string/title_checkbox_OUTCALL" />
+        <CheckBoxPreference
+            android:key="SPEAK"
+            android:summary="@string/summary_checkbox_speaker"
+            android:title="@string/title_checkbox_speaker" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/dialog_based_phonePrefs_ergo" >
+        <CheckBoxPreference
+            android:key="NOTIFICATION"
+            android:summary="@string/summary_checkbox_NOTIFICATION"
+            android:title="@string/title_checkbox_NOTIFICATION" />
+        <CheckBoxPreference
+            android:key="UAC_ASSISTED"
+            android:summary="@string/summary_checkbox_UAC_ASSISTED"
+            android:title="@string/title_checkbox_UAC_ASSISTED" />
+    </PreferenceCategory>
+    
+    <!-- <PreferenceCategory android:title="@string/dialog_based_preferences" > -->
+    <!-- <EditTextPreference -->
+    <!-- android:dialogTitle="@string/dialog_title_edittext_preference_username" -->
+    <!-- android:key="edittext_preferenceU" -->
+    <!-- android:summary="@string/summary_edittext_preferenceU" -->
+    <!-- android:title="@string/title_edittext_preferenceU" /> -->
+    <!-- <EditTextPreference -->
+    <!-- android:dialogTitle="@string/dialog_title_edittext_preference_password" -->
+    <!-- android:key="edittext_preferenceP" -->
+    <!-- android:summary="@string/summary_edittext_preferenceP" -->
+    <!-- android:title="@string/title_edittext_preferenceP" /> -->
+    <!-- <EditTextPreference -->
+    <!-- android:dialogTitle="@string/dialog_title_edittext_preference_serveur" -->
+    <!-- android:key="edittext_preferenceS" -->
+    <!-- android:summary="@string/summary_edittext_preferenceS" -->
+    <!-- android:title="@string/title_edittext_preferenceS" /> -->
+    <!-- </PreferenceCategory> -->
+    <!-- <PreferenceCategory android:title="@string/dialog_gps_preferences" > -->
+    <!-- <EditTextPreference -->
+    <!-- android:dialogTitle="@string/preference_gpsTime" -->
+    <!-- android:key="gpsTime" -->
+    <!-- android:maxLength="3" -->
+    <!-- android:numeric="integer" -->
+    <!-- android:summary="@string/summary_gpsTime" -->
+    <!-- android:title="@string/title_gpsTime" /> -->
+    <!-- <EditTextPreference -->
+    <!-- android:dialogTitle="@string/preference_gpsDist" -->
+    <!-- android:key="gpsDist" -->
+    <!-- android:maxLength="3" -->
+    <!-- android:numeric="integer" -->
+    <!-- android:summary="@string/summary_gpsDist" -->
+    <!-- android:title="@string/title_gpsDist" /> -->
+    <!-- </PreferenceCategory> -->
+
+</PreferenceScreen>

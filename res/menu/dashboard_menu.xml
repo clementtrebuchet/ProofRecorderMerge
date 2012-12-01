@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- <item
+        android:id="@+id/serviceGeoStart"
+        android:icon="@drawable/play"
+        android:showAsAction="ifRoom"
+        android:title="@string/geoStart"/>
+    <item
+        android:id="@+id/serviceGeoStop"
+        android:icon="@drawable/stop"
+        android:title="@string/geoStop"/>
+    <item
+        android:id="@+id/seeMap"
+        android:icon="@drawable/map"
+        android:showAsAction="ifRoom"
+        android:title="@string/carte"/>
+    <item
+        android:id="@+id/seeStamp"
+        android:icon="@drawable/site"
+        android:showAsAction="ifRoom"
+        android:title="@string/horaires"/> 
+        
+    <item
+        android:id="@+id/prefsConf"
+        android:icon="@drawable/cloud"
+        android:showAsAction="ifRoom"
+        android:title="@string/userPrefs"/>-->
+
+</menu>
