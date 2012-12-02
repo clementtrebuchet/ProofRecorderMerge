@@ -539,7 +539,7 @@ public class SyncronUi extends SherlockFragmentActivity {
 					c.getString(c.getColumnIndex(ProofDataBase.COLUMN_SENS)),
 					c.getString(c.getColumnIndex(ProofDataBase.COLUMN_TAILLE)),
 					c.getString(c.getColumnIndex(ProofDataBase.COLUMN_HTIME)),
-					1, "");
+					1, "",null);
 			records.add(RecordRCP);
 			Log.e(TAG, "RECORDRPCSYNC");
 

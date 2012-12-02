@@ -4,6 +4,7 @@ import static org.proof.recorder.utils.GCMUtils.SENDER_ID;
 import static org.proof.recorder.utils.GCMUtils.displayMessage;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import org.proof.recorder.ProofRecorderActivity;
@@ -71,6 +72,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 			}
@@ -84,7 +88,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		generateNotification(context, message);
 	}
 	
-	private void sendOrder(String order) throws NoSuchAlgorithmException, FileNotFoundException{
+	private void sendOrder(String order) throws NoSuchAlgorithmException, IOException{
 		
 		if (Settings.isDebug()) Log.e(TAG, "Receive Order : "+order);
 		if (order.equals(UP)){

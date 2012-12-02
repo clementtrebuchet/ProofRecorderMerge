@@ -1,6 +1,7 @@
 package org.proof.recorder.syncron;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -93,6 +94,9 @@ public  class OperationBatchController {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}

@@ -1,10 +1,13 @@
 package org.proof.recorder.syncron;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.URI;
 import java.security.MessageDigest;
@@ -15,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64OutputStream;
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.RecordRPC;
 import org.proof.recorder.database.support.ProofDataBase;
@@ -66,12 +71,10 @@ public class OperationBatchTelePhone {
 	/**
 	 * @param context
 	 * @throws NoSuchAlgorithmException
-	 * @throws FileNotFoundException
-	 *             performe une sauvegarde de la table recordsproof et met les
-	 *             entrée à 1(synchronisé) dans la table retourne une string ok
+	 * @throws IOException 
 	 */
 	public OperationBatchTelePhone(Context context, Handler mH, boolean looper)
-			throws NoSuchAlgorithmException, FileNotFoundException {
+			throws NoSuchAlgorithmException, IOException {
 		mHandler = mH;
 		uri = URI.create("https://sd-21117.dedibox.fr:8888");
 		mContext = context;
@@ -371,11 +374,11 @@ public class OperationBatchTelePhone {
 
 	/**
 	 * @throws NoSuchAlgorithmException
-	 * @throws FileNotFoundException
 	 * @return un arraylist mOperationRecord
+	 * @throws IOException 
 	 */
 	private void populateIsyncList() throws NoSuchAlgorithmException,
-			FileNotFoundException {
+			IOException {
 		int i = 0;
 		String md5;
 		Uri urlEntreeNonSync = Uri.withAppendedPath(
@@ -410,7 +413,7 @@ public class OperationBatchTelePhone {
 								.getColumnIndex(ProofDataBase.COLUMN_TAILLE)),
 						c.getString(c
 								.getColumnIndex(ProofDataBase.COLUMN_HTIME)),
-						1, md5);
+						1, md5,this.transWave(c.getString(c.getColumnIndex(ProofDataBase.COLUMN_FILE))));
 				mOperationsRecord.add(RecordRCP);
 				msg = mHandler.obtainMessage();
 				Bundle b = new Bundle();
@@ -433,7 +436,21 @@ public class OperationBatchTelePhone {
 		}
 
 	}
-
+	public byte[] transWave(String filename) throws IOException{
+		
+		FileInputStream fis = new FileInputStream(filename);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int read = -1;
+        while ((read = fis.read(buffer)) > 0) {
+           baos.write(buffer, 0, read);
+        }
+        fis.close();
+		return baos.toByteArray();
+		
+		
+		
+	}
 	/**
 	 * @param id
 	 *            passe les entree sauvegarder a sync 1
