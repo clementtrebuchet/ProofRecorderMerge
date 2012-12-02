@@ -47,7 +47,7 @@ public class ProofStore extends SherlockFragmentActivity implements
 	/**
 	 * Used for storing the log text.
 	 */
-	private static final String LOG_TEXT_KEY = "DUNGEONS_LOG_TEXT";
+	private static final String LOG_TEXT_KEY = "PROOF_STORE";
 
 	/**
 	 * The SharedPreferences key for recording whether we initialized the
