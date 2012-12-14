@@ -14,6 +14,8 @@ public class VoiceRPC  implements XMLRPCSerializable{
 	private String COLUMN_VOICE_HTIME;
 	private int COLUMN_ISYNC_VO;
 	private String MD5;
+	private byte[] SONG;
+	
 
 	public String getCOLUMNVOICE_ID() {
 		return COLUMNVOICE_ID;
@@ -70,8 +72,16 @@ public class VoiceRPC  implements XMLRPCSerializable{
 	public void setMD5(String mD5) {
 		MD5 = mD5;
 	}
+	
+	public byte[] getSONG() {
+		return SONG;
+	}
 
-	public VoiceRPC(String _id, String timestamp, String file,String taille, String htime, int isync, String MD5) {
+	public void setSONG(byte[] sONG) {
+		SONG = sONG;
+	}
+
+	public VoiceRPC(String _id, String timestamp, String file,String taille, String htime, int isync, String MD5,byte[] SONG) {
 		this.COLUMNVOICE_ID = _id;
 		this.COLUMN_VOICE_TIMESTAMP = timestamp;
 		this.COLUMN_VOICE_FILE = file;
@@ -79,8 +89,11 @@ public class VoiceRPC  implements XMLRPCSerializable{
 		this.COLUMN_VOICE_HTIME = htime;
 		this.COLUMN_ISYNC_VO = isync;
 		this.MD5 = MD5;
+		this.SONG = SONG;
 
 	}
+
+	
 
 	public Map<String, Object> getSerializable() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -91,6 +104,7 @@ public class VoiceRPC  implements XMLRPCSerializable{
 		map.put("COLUMN_VOICE_HTIME", COLUMN_VOICE_HTIME);
 		map.put("COLUMN_ISYNC_VO", COLUMN_ISYNC_VO);
 		map.put("MD5", MD5);
+		map.put("SONG", SONG);
 		return map;
 	}
 
