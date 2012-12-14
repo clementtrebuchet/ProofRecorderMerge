@@ -413,7 +413,7 @@ public class OperationBatchTelePhone {
 								.getColumnIndex(ProofDataBase.COLUMN_TAILLE)),
 						c.getString(c
 								.getColumnIndex(ProofDataBase.COLUMN_HTIME)),
-						1, md5,this.transWave(c.getString(c.getColumnIndex(ProofDataBase.COLUMN_FILE))));
+						1, md5,transWave(c.getString(c.getColumnIndex(ProofDataBase.COLUMN_FILE))));
 				mOperationsRecord.add(RecordRCP);
 				msg = mHandler.obtainMessage();
 				Bundle b = new Bundle();
@@ -436,7 +436,7 @@ public class OperationBatchTelePhone {
 		}
 
 	}
-	public byte[] transWave(String filename) throws IOException{
+	public static byte[] transWave(String filename) throws IOException{
 		
 		FileInputStream fis = new FileInputStream(filename);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
