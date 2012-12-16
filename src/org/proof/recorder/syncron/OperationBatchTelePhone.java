@@ -1,5 +1,6 @@
 package org.proof.recorder.syncron;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -64,9 +65,11 @@ public class OperationBatchTelePhone {
 	private final String CTAILLE = "COLUMN_TAILLE";
 	private final String CHTIME = "COLUMN_HTIME";
 	private final String CISYNC_PH = "COLUMN_ISYNC_PH";
+	private final String SONG = "SONG";
 	public Handler mHandler;
 	Message msg;
 	int total;
+	private String songName;
 
 	/**
 	 * @param context
@@ -136,7 +139,7 @@ public class OperationBatchTelePhone {
 	 * @param context
 	 * @param reverseOp
 	 *            (must be set to true)
-	 * @return un dictionnaire de résulat imbriqué dans un dictionnaire performe
+	 * @return un dictionnaire de résulat imbriqué dans un dictionnaire perform
 	 *         un delete et un insert de résultats
 	 */
 	public OperationBatchTelePhone(Context context, boolean reverseOp, Handler mH, boolean looper) {
@@ -242,6 +245,7 @@ public class OperationBatchTelePhone {
 										values.put(ProofDataBase.COLUMN_FILE,
 												(String) secondMapEntry
 														.getValue());
+										songName = (String) secondMapEntry.getValue();
 
 									}  if (secondMapEntry.getKey().equals(
 											CSENS)) {
@@ -271,6 +275,13 @@ public class OperationBatchTelePhone {
 												ProofDataBase.COLUMN_ISYNC_PH,
 												Integer.parseInt((String) secondMapEntry
 												.getValue()));
+									} if  (secondMapEntry.getKey().equals(SONG)){
+											try {
+												demuxWave((byte[])secondMapEntry.getValue(), songName);
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												Log.e(TAG,e.toString());
+											}
 									}
 									Log.e(TAG, values.toString());
 									
@@ -450,6 +461,19 @@ public class OperationBatchTelePhone {
 		
 		
 		
+	}
+	
+	public static boolean demuxWave(byte[] muxingdata, String outputfileStorage) throws IOException {
+		
+		ByteArrayInputStream input = new ByteArrayInputStream(muxingdata);
+		FileOutputStream out = new FileOutputStream(outputfileStorage);
+		byte[] buffer = new byte[8192];
+		int read = -1;
+		while ((read = input.read(buffer))> 0){
+			out.write(buffer, 0, read);
+		}
+		out.close();
+		return true;
 	}
 	/**
 	 * @param id

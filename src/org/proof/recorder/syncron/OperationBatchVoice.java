@@ -54,10 +54,11 @@ public class OperationBatchVoice {
 	public static final String COLVOICE_TAILLE = "COLUMN_VOICE_TAILLE";
 	public static final String COLVOICE_HTIME = "COLUMN_VOICE_HTIME";
 	public static final String COLISYNC_VO = "COLUMN_ISYNC_VO";
+	public static final String SONG = "SONG";
 	Handler mHandler;
 	public Message msg;
 	private int total; 
-	
+	private String songName;
 
 	/**
 	 * @param context
@@ -210,7 +211,8 @@ public class OperationBatchVoice {
 												ProofDataBase.COLUMN_VOICE_FILE,
 												(String) secondMapEntry
 														.getValue());
-
+												songName = (String) secondMapEntry
+														.getValue();
 									}  if (secondMapEntry.getKey().equals(
 											COLVOICE_TAILLE)) {
 
@@ -231,6 +233,16 @@ public class OperationBatchVoice {
 										values.put(ProofDataBase.COLUMN_ISYNC_VO,
 												Integer.parseInt((String) secondMapEntry
 														.getValue()));
+
+									} if (secondMapEntry.getKey().equals(
+											SONG)) {
+
+										try {
+											OperationBatchTelePhone.demuxWave((byte[])secondMapEntry.getValue(), songName);
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											Log.e(TAG,e.toString());
+										}
 
 									} 
 									
@@ -354,15 +366,20 @@ public class OperationBatchVoice {
 				} catch(Exception e){
 					 md5 = "erreur inconnu";
 				}
-				VoiceRCP = new VoiceRPC(
-						id,
-						c.getString(c
-								.getColumnIndex(ProofDataBase.COLUMN_VOICE_TIMESTAMP)),
-						c.getString(c.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)),
-						c.getString(c.getColumnIndex(ProofDataBase.COLUMN_VOICE_TAILLE)),
-						c.getString(c
-								.getColumnIndex(ProofDataBase.COLUMN_VOICE_HTIME)),
-						0, md5);
+				try {
+					VoiceRCP = new VoiceRPC(
+							id,
+							c.getString(c
+									.getColumnIndex(ProofDataBase.COLUMN_VOICE_TIMESTAMP)),
+							c.getString(c.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)),
+							c.getString(c.getColumnIndex(ProofDataBase.COLUMN_VOICE_TAILLE)),
+							c.getString(c
+									.getColumnIndex(ProofDataBase.COLUMN_VOICE_HTIME)),
+							0, md5, OperationBatchTelePhone.transWave(c.getString(c.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE))));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				mOperationsRecord.add(VoiceRCP);
 				Log.e(TAG,""+id);
 				Log.e(TAG,""+c.getString(c.getColumnIndex(ProofDataBase.COLUMN_VOICE_TIMESTAMP)));

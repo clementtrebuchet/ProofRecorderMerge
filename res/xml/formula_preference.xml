@@ -14,12 +14,12 @@
             android:summary="@string/summary_checkbox_OFFER_OGG"
             android:title="@string/title_checkbox_OFFER_OGG"
              />
-        <CheckBoxPreference
+        <!-- <CheckBoxPreference
             android:disableDependentsState="true"
             android:key="OFFER_FTP"
             android:summary="@string/summary_checkbox_OFFER_FTP"
             android:title="@string/title_checkbox_OFFER_FTP"
-             />
+             /> -->
 
         <!--
            <ListPreference
@@ -42,6 +42,8 @@
             android:summary="@string/summary_checkbox_EULA_SUM"
             android:title="@string/title_checkbox_EULA_TITLE" />
          <CheckBoxPreference
+            
+            android:visibility="gone"
             android:disableDependentsState="true"
             android:key="FIRSTINSTALL"
           />
