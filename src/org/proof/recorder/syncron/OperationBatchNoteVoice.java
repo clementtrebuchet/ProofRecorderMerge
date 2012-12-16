@@ -95,17 +95,17 @@ public class OperationBatchNoteVoice {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						//RapatFic.setIsUPLOAD(true);
-						
-						Bundle C = new Bundle();
+						RapatFic.setIsUPLOAD(true);
+						new RapatFic(mContext.getApplicationContext());
+						/*Bundle C = new Bundle();
 						C.putBoolean("AUTO", true);
 						Intent IJ = new Intent("android.intent.action.MAIN");
 						IJ.setComponent(new ComponentName("org.proof.recorderftp", "org.proof.recorderftp.ProofRecorderFtp"));
 						IJ.addCategory("android.intent.category.LAUNCHER");
 						IJ.putExtras(C);
 						IJ.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						mContext.startActivity(IJ);
-						//new RapatFic(mContext.getApplicationContext());
+						mContext.startActivity(IJ);*/
+						
 
 					}
 				}, mHandler);

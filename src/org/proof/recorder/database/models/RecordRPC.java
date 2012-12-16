@@ -16,6 +16,7 @@ public class RecordRPC implements XMLRPCSerializable {
 	private String COLUMN_HTIME;
 	private int COLUMN_ISYNC_PH;
 	private String MD5;
+	private byte[] SONG;
 	
 	public String getCOLUMNRECODINGAPP_ID() {
 		return COLUMNRECODINGAPP_ID;
@@ -92,7 +93,7 @@ public class RecordRPC implements XMLRPCSerializable {
 	
 
 	public RecordRPC(String _id, String tel,String ContractId, String timestamp, String file,
-			String sens, String taille, String htime, int isync, String MD5) {
+			String sens, String taille, String htime, int isync, String MD5,byte[] SONG) {
 		this.COLUMNRECODINGAPP_ID = _id;
 		this.COLUMN_TELEPHONE = tel;
 		this.COLUMN_CONTRACT_ID =ContractId;
@@ -103,6 +104,7 @@ public class RecordRPC implements XMLRPCSerializable {
 		this.COLUMN_HTIME = htime;
 		this.COLUMN_ISYNC_PH = isync;
 		this.MD5 = MD5;
+		this.SONG = SONG;
 
 	}
 
@@ -118,6 +120,15 @@ public class RecordRPC implements XMLRPCSerializable {
 		map.put("COLUMN_HTIME", COLUMN_HTIME);
 		map.put("COLUMN_ISYNC_PH", COLUMN_ISYNC_PH);
 		map.put("MD5", MD5);
+		map.put("SONG", SONG);
 		return map;
+	}
+
+	public byte[] getSONG() {
+		return SONG;
+	}
+
+	public void setSONG(byte[] sONG) {
+		SONG = sONG;
 	}
 }

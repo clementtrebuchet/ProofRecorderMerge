@@ -92,7 +92,7 @@ public class RapatFic {
 			String file = CurREC.getString(CurREC
 					.getColumnIndex(ProofDataBase.COLUMN_FILE));
 			if (Settings.isDebug()) {
-				// Log.e(TAG, "listDbFile()->filesListCalls: " + file);
+				Log.e(TAG, "listDbFile()->filesListCalls: " + file);
 			}
 			File testFile = new File(file);
 
@@ -103,7 +103,7 @@ public class RapatFic {
 				filesListCalls.add(file);
 			} else {
 				if (Settings.isDebug()) {
-					// Log.e(TAG, "This file IS in the phone : " + file);
+					Log.e(TAG, "This file IS in the phone : " + file);
 				}
 			}
 

@@ -1,6 +1,7 @@
 package org.proof.recorder.service;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import org.proof.recorder.Settings;
@@ -39,6 +40,9 @@ public class ServiceSchd extends Service {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

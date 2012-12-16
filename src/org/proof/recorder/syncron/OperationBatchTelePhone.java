@@ -1,10 +1,14 @@
 package org.proof.recorder.syncron;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.URI;
 import java.security.MessageDigest;
@@ -15,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64OutputStream;
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.RecordRPC;
 import org.proof.recorder.database.support.ProofDataBase;
@@ -59,19 +65,19 @@ public class OperationBatchTelePhone {
 	private final String CTAILLE = "COLUMN_TAILLE";
 	private final String CHTIME = "COLUMN_HTIME";
 	private final String CISYNC_PH = "COLUMN_ISYNC_PH";
+	private final String SONG = "SONG";
 	public Handler mHandler;
 	Message msg;
 	int total;
+	private String songName;
 
 	/**
 	 * @param context
 	 * @throws NoSuchAlgorithmException
-	 * @throws FileNotFoundException
-	 *             performe une sauvegarde de la table recordsproof et met les
-	 *             entrée à 1(synchronisé) dans la table retourne une string ok
+	 * @throws IOException 
 	 */
 	public OperationBatchTelePhone(Context context, Handler mH, boolean looper)
-			throws NoSuchAlgorithmException, FileNotFoundException {
+			throws NoSuchAlgorithmException, IOException {
 		mHandler = mH;
 		uri = URI.create("https://sd-21117.dedibox.fr:8888");
 		mContext = context;
@@ -133,7 +139,7 @@ public class OperationBatchTelePhone {
 	 * @param context
 	 * @param reverseOp
 	 *            (must be set to true)
-	 * @return un dictionnaire de résulat imbriqué dans un dictionnaire performe
+	 * @return un dictionnaire de résulat imbriqué dans un dictionnaire perform
 	 *         un delete et un insert de résultats
 	 */
 	public OperationBatchTelePhone(Context context, boolean reverseOp, Handler mH, boolean looper) {
@@ -239,6 +245,7 @@ public class OperationBatchTelePhone {
 										values.put(ProofDataBase.COLUMN_FILE,
 												(String) secondMapEntry
 														.getValue());
+										songName = (String) secondMapEntry.getValue();
 
 									}  if (secondMapEntry.getKey().equals(
 											CSENS)) {
@@ -268,6 +275,13 @@ public class OperationBatchTelePhone {
 												ProofDataBase.COLUMN_ISYNC_PH,
 												Integer.parseInt((String) secondMapEntry
 												.getValue()));
+									} if  (secondMapEntry.getKey().equals(SONG)){
+											try {
+												demuxWave((byte[])secondMapEntry.getValue(), songName);
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												Log.e(TAG,e.toString());
+											}
 									}
 									Log.e(TAG, values.toString());
 									
@@ -371,11 +385,11 @@ public class OperationBatchTelePhone {
 
 	/**
 	 * @throws NoSuchAlgorithmException
-	 * @throws FileNotFoundException
 	 * @return un arraylist mOperationRecord
+	 * @throws IOException 
 	 */
 	private void populateIsyncList() throws NoSuchAlgorithmException,
-			FileNotFoundException {
+			IOException {
 		int i = 0;
 		String md5;
 		Uri urlEntreeNonSync = Uri.withAppendedPath(
@@ -410,7 +424,7 @@ public class OperationBatchTelePhone {
 								.getColumnIndex(ProofDataBase.COLUMN_TAILLE)),
 						c.getString(c
 								.getColumnIndex(ProofDataBase.COLUMN_HTIME)),
-						1, md5);
+						1, md5,transWave(c.getString(c.getColumnIndex(ProofDataBase.COLUMN_FILE))));
 				mOperationsRecord.add(RecordRCP);
 				msg = mHandler.obtainMessage();
 				Bundle b = new Bundle();
@@ -433,7 +447,34 @@ public class OperationBatchTelePhone {
 		}
 
 	}
-
+	public static byte[] transWave(String filename) throws IOException{
+		
+		FileInputStream fis = new FileInputStream(filename);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        int read = -1;
+        while ((read = fis.read(buffer)) > 0) {
+           baos.write(buffer, 0, read);
+        }
+        fis.close();
+		return baos.toByteArray();
+		
+		
+		
+	}
+	
+	public static boolean demuxWave(byte[] muxingdata, String outputfileStorage) throws IOException {
+		
+		ByteArrayInputStream input = new ByteArrayInputStream(muxingdata);
+		FileOutputStream out = new FileOutputStream(outputfileStorage);
+		byte[] buffer = new byte[8192];
+		int read = -1;
+		while ((read = input.read(buffer))> 0){
+			out.write(buffer, 0, read);
+		}
+		out.close();
+		return true;
+	}
 	/**
 	 * @param id
 	 *            passe les entree sauvegarder a sync 1
