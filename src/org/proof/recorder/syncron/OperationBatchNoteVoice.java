@@ -18,12 +18,9 @@ import org.proof.recorder.simplexfb.RapatFic;
 import org.proof.recorder.xmlrpc.XMLRPCClient;
 import org.proof.recorder.xmlrpc.XMLRPCSerializable;
 
-import android.app.Activity;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
@@ -78,6 +75,7 @@ public class OperationBatchNoteVoice {
 		mHandler.sendMessage(msg);
 		XMLRPCMethod method = new XMLRPCMethod("isyncVoiceNote",
 				new XMLRPCMethodCallback() {
+					@Override
 					public void callFinished(Object result) {
 						Bundle b = new Bundle();
 						msg = mHandler.obtainMessage();
@@ -138,6 +136,7 @@ public class OperationBatchNoteVoice {
 		client = new XMLRPCClient(uri, mContext.getApplicationContext());
 		XMLRPCMethod method = new XMLRPCMethod("isyncVoiceNotesReverse",
 				new XMLRPCMethodCallback() {
+					@Override
 					@SuppressWarnings("unchecked")
 					public void callFinished(Object result) {
 						Log.v(TAG, "Retour des données");
@@ -172,7 +171,7 @@ public class OperationBatchNoteVoice {
 								Map<String, Object> secondMap = (Map<String, Object>) firstMap
 										.getValue();
 								ContentValues values = new ContentValues();
-								for (Entry<String, Object> secondMapEntry : ((Map<String, Object>) secondMap)
+								for (Entry<String, Object> secondMapEntry : secondMap
 										.entrySet()) {
 									
 									System.out.println("Key = "
@@ -399,6 +398,7 @@ public class OperationBatchNoteVoice {
 
 		}
 
+		@Override
 		public Map<String, List<NotesVoiceRPC>> getSerializable() {
 			Map<String, List<NotesVoiceRPC>> map = new HashMap<String, List<NotesVoiceRPC>>();
 			map.put("SYNCTABLENOTEVOICE", LIST);

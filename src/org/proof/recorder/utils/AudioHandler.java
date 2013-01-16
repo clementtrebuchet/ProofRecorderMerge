@@ -772,7 +772,7 @@ public class AudioHandler {
 		 */
 		humanreadable = Long.valueOf(getFileName());
 		cal.setTimeInMillis(humanreadable);
-		@SuppressWarnings("deprecation")
+		
 		final String date = cal.getTime().toLocaleString();
 		values.put(ProofDataBase.COLUMN_VOICE_HTIME, date);
 
@@ -979,6 +979,7 @@ public class AudioHandler {
 	public void UploadFile(final String method) {
 		Handler h = new Handler();
 		Runnable t = new Runnable() {
+			@Override
 			public void run() {
 
 				isSync = Settings.isSync(mContext);

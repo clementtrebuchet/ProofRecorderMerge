@@ -203,7 +203,8 @@ public class LicenseChecker implements ServiceConnection {
         public ResultListener(LicenseValidator validator) {
             mValidator = validator;
             mOnTimeout = new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     Log.i(TAG, "Check timed out.");
                     handleServiceConnectionError(mValidator);
                     finishCheck(mValidator);
@@ -218,10 +219,12 @@ public class LicenseChecker implements ServiceConnection {
 
         // Runs in IPC thread pool. Post it to the Handler, so we can guarantee
         // either this or the timeout runs.
-        public void verifyLicense(final int responseCode, final String signedData,
+        @Override
+		public void verifyLicense(final int responseCode, final String signedData,
                 final String signature) {
             mHandler.post(new Runnable() {
-                @SuppressWarnings("deprecation")
+                @Override
+				@SuppressWarnings("deprecation")
 				public void run() {
                     Log.i(TAG, "Received response.");
                     // Make sure it hasn't already timed out.
@@ -275,12 +278,14 @@ public class LicenseChecker implements ServiceConnection {
         }
     }
 
-    public synchronized void onServiceConnected(ComponentName name, IBinder service) {
+    @Override
+	public synchronized void onServiceConnected(ComponentName name, IBinder service) {
         mService = ILicensingService.Stub.asInterface(service);
         runChecks();
     }
 
-    public synchronized void onServiceDisconnected(ComponentName name) {
+    @Override
+	public synchronized void onServiceDisconnected(ComponentName name) {
         // Called when the connection with the service has been
         // unexpectedly disconnected. That is, Market crashed.
         // If there are any checks in progress, the timeouts will handle them.

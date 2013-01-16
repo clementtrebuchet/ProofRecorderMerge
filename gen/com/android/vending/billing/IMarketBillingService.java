@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /home/clement/mergeLABs/git_repository/proofrecorder/ProofRecorderMerge/src/com/android/vending/billing/IMarketBillingService.aidl
+ * Original file: /home/clement/git/ProofRecorderMerge/src/com/android/vending/billing/IMarketBillingService.aidl
  */
 package com.android.vending.billing;
 public interface IMarketBillingService extends android.os.IInterface

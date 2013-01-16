@@ -81,7 +81,7 @@ public class VerifyContactsApi extends AsyncTask<Void, Integer, String> {
 	protected void onProgressUpdate(Integer... progress) {
 		Toast.makeText(
 				mContext, 
-				mContext.getString(R.string.deleted_contact) + (int)progress[0], 
+				mContext.getString(R.string.deleted_contact) + progress[0], 
 				Toast.LENGTH_SHORT)
 				.show();
 	}

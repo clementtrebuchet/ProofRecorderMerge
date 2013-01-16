@@ -66,6 +66,7 @@ public  class OperationBatchController {
 		mHandler.sendMessage(msg);
 		XMLRPCMethod method = new XMLRPCMethod("PREOPS",
 				new XMLRPCMethodCallback() {
+					@Override
 					public void callFinished(Object result) {
 						Bundle b = new Bundle();
 						msg = mHandler.obtainMessage();
@@ -184,6 +185,7 @@ public  class OperationBatchController {
 
 		}
 
+		@Override
 		public Map<String, List<ControllerRPC>> getSerializable() {
 			Map<String, List<ControllerRPC>> map = new HashMap<String, List<ControllerRPC>>();
 			map.put("PREOPS", LIST);

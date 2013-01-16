@@ -114,10 +114,12 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 		}
 		
 		private OnClickListener playCallBack = new OnClickListener() {
-	        public void onClick(View v) {
+	        @Override
+			public void onClick(View v) {
 	        	if(!onRecord) {
 	        		new Thread(new Runnable() {
-	    				public void run() {
+	    				@Override
+						public void run() {
 	    					try {
 	    						startRecording();
 	    						onRecord = true;
@@ -135,7 +137,8 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    }; 
 	    
 	    private OnClickListener stopCallBack = new OnClickListener() {
-	        public void onClick(View v) {
+	        @Override
+			public void onClick(View v) {
 	        	if(onRecord) {
 	        		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
 	        		textI.setText("Fin de l'enregistrement");

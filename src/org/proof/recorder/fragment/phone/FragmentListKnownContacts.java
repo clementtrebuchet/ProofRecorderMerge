@@ -107,21 +107,20 @@ public class FragmentListKnownContacts extends SherlockFragment {
 
 			AdapterContextMenuInfo record = (AdapterContextMenuInfo) item
 					.getMenuInfo();
-			int recordPosition = (int) record.position;	
+			int recordPosition = record.position;	
 			
 			ContactAdapter ca = (ContactAdapter) getListAdapter();				
 			Contact mContact = ca.getItem(recordPosition);
 			
 			if(Settings.isDebug())
 				Log.v(TAG, "" + recordPosition);
-			switch (item.getItemId()) {
-			case R.id.cm_records_list_del_file:
-				MenuActions.deleteContactsFolder(mContact, getActivity(), ca);					
+			if (item.getItemId() == R.id.cm_records_list_del_file) {
+				MenuActions.deleteContactsFolder(mContact, getActivity(), ca);
 				return true;
-			case R.id.cm_records_list_display_details:		
+			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
 				MenuActions.displayCallsFolderDetails(mContact.getContractId(), "android_id", getActivity());
 				if(Settings.isDebug())
-					Log.i("ContextMenu", "Display Item's details");				
+					Log.i("ContextMenu", "Display Item's details");
 				return true;
 			}
 			return super.onContextItemSelected(item);

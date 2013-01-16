@@ -85,7 +85,8 @@ TimePicker.OnTimeChangedListener {
 	   * .widget.TimePicker, int, int)
 	   */
 
-	  public void onTimeChanged(TimePicker view, int hour, int minute) {
+	  @Override
+	public void onTimeChanged(TimePicker view, int hour, int minute) {
 	    result = hour + ":" + minute;
 	    Log.e(TAG, "Heure minute" +result);
 	  }

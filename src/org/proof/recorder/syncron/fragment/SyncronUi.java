@@ -475,10 +475,12 @@ public class SyncronUi extends SherlockFragmentActivity {
 
 		ImageButton buttonTEL = (ImageButton) findViewById(R.id.syncronTEL);
 		buttonTEL.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				SyncronUi.bouton.BUTTONTEL.setValue(true);
 				SyncronUi.bouton.BUTTONRESTORE.setValue(false);
 				new Thread(new Runnable() {
+					@Override
 					public void run() {
 						try {
 							showDialog();
@@ -497,11 +499,13 @@ public class SyncronUi extends SherlockFragmentActivity {
 		
 		ImageButton buttonRESTORE = (ImageButton) findViewById(R.id.syncronRESTORE);
 		buttonRESTORE.setOnClickListener(new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				justTCheck = false;
 				SyncronUi.bouton.BUTTONTEL.setValue(false);
 				SyncronUi.bouton.BUTTONRESTORE.setValue(true);
 				new Thread(new Runnable() {
+					@Override
 					public void run() {
 						try {
 							showDialog();
@@ -553,6 +557,7 @@ public class SyncronUi extends SherlockFragmentActivity {
 	}
 
 	public static Handler handler = new Handler() {
+		@Override
 		public void handleMessage(Message msg) throws NullPointerException {
 			/*
 			 * communication interThread
@@ -571,6 +576,7 @@ public class SyncronUi extends SherlockFragmentActivity {
 				justTCheck = false;
 				Handler fandler = new Handler();
 				fandler.postDelayed(new Runnable() {
+					@Override
 					public void run() {
 						hideDialog();
 					}
@@ -587,6 +593,7 @@ public class SyncronUi extends SherlockFragmentActivity {
 						+ "\r\n"); //$NON-NLS-1$
 				Handler handler = new Handler();
 				handler.postDelayed(new Runnable() {
+					@Override
 					public void run() {
 						hideDialog();
 					}
@@ -619,6 +626,7 @@ public class SyncronUi extends SherlockFragmentActivity {
 
 				Handler handler = new Handler();
 				handler.postDelayed(new Runnable() {
+					@Override
 					public void run() {
 						hideDialog();
 					}
@@ -680,6 +688,7 @@ public class SyncronUi extends SherlockFragmentActivity {
 	}
 
 	public static Handler handlerFTP = new Handler() {
+		@Override
 		public void handleMessage(Message msg) throws NullPointerException {
 			Log.e(TAG, "Taille du handler " + TAG + " " + msg.getData().size()); //$NON-NLS-1$ //$NON-NLS-2$
 			boolean FIN = msg.getData().getBoolean("downloadFIN"); //$NON-NLS-1$

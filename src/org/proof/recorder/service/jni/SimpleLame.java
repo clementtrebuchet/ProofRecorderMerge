@@ -1,7 +1,5 @@
 package org.proof.recorder.service.jni;
 
-import android.util.Log;
-
 public class SimpleLame {
 	
 	private static final String TAG = "SimpleLame";

@@ -140,15 +140,13 @@ public class FragmentListRecordOut extends Fragment {
 
 			AdapterContextMenuInfo record = (AdapterContextMenuInfo) item
 					.getMenuInfo();
-			int recordPosition = (int) record.position;				
+			int recordPosition = record.position;				
 			Record mRecord = recordsAdapter.getItem(recordPosition);		
 			
 			if(Settings.isDebug())
 				Log.v(TAG, "" + recordPosition);
 
-			switch (item.getItemId()) {
-			case R.id.cm_records_list_del_file:
-				
+			if (item.getItemId() == R.id.cm_records_list_del_file) {
 				if(Settings.isDebug())
 					Log.i("ContextMenu", "Suppressed Item");
 				MenuActions.deleteItem(
@@ -161,26 +159,22 @@ public class FragmentListRecordOut extends Fragment {
 						mRecord
 				);
 				return true;
-			case R.id.cm_records_list_read_wav:
-				MenuActions.readPhone(mRecord.getmFilePath());				
+			} else if (item.getItemId() == R.id.cm_records_list_read_wav) {
+				MenuActions.readPhone(mRecord.getmFilePath());
 				if(Settings.isDebug())
 					Log.i("ContextMenu", "Read Item");
 				return true;
-			case R.id.cm_records_list_display_details:				
+			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
 				if(Settings.isDebug())
 					Log.i("ContextMenu", "Display Item's details");
-				
 				MenuActions.displayItemPhoneDetails(mRecord.getmId());
 				return true;
-			case R.id.cm_records_list_display_sharing_opts:
-				
+			} else if (item.getItemId() == R.id.cm_records_list_display_sharing_opts) {
 				if(Settings.isDebug())
 					Log.i("ContextMenu", "Sharing Options Item");
-				
 				String[] mDatas = new String[] {
 						mRecord.getmFilePath()
 				};
-				
 				MenuActions.sharingOptions(mDatas);
 				return true;
 			}

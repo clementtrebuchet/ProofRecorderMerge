@@ -77,6 +77,7 @@ public class OperationBatchNoteTel {
 		mHandler.sendMessage(msg);
 		XMLRPCMethod method = new XMLRPCMethod("isyncNote",
 				new XMLRPCMethodCallback() {
+			@Override
 			public void callFinished(Object result) {
 					Bundle b = new Bundle();
 					msg = mHandler.obtainMessage();
@@ -159,6 +160,7 @@ public class OperationBatchNoteTel {
 		//Looper.prepare();
 		XMLRPCMethod method = new XMLRPCMethod("isyncNotesReverse",
 				new XMLRPCMethodCallback() {
+					@Override
 					@SuppressWarnings("unchecked")
 					public void callFinished(Object result) {
 						Bundle b = new Bundle();
@@ -194,7 +196,7 @@ public class OperationBatchNoteTel {
 								Map<String, Object> secondMap = (Map<String, Object>) firstMap
 										.getValue();
 								ContentValues values = new ContentValues();
-								for (Entry<String, Object> secondMapEntry : ((Map<String, Object>) secondMap)
+								for (Entry<String, Object> secondMapEntry : secondMap
 										.entrySet()) {
 									
 									System.out.println("Key = "
@@ -393,6 +395,7 @@ public class OperationBatchNoteTel {
 
 		}
 
+		@Override
 		public Map<String, List<NotesRecordRPC>> getSerializable() {
 			Map<String, List<NotesRecordRPC>> map = new HashMap<String, List<NotesRecordRPC>>();
 			map.put("SYNCTABLENOTE", LIST);

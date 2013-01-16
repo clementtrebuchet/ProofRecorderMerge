@@ -666,6 +666,7 @@ PutLameVBR(lame_global_flags const *gfp, size_t nMusicLength, uint8_t * pbtStrea
         }
     default:{          /*vbr modes */
             nABRBitrate = gfp->VBR_min_bitrate_kbps;
+		break;
         }
     }
 

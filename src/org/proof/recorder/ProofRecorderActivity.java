@@ -475,6 +475,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 	 * Licence --> Market
 	 */
 
+	@Override
 	protected Dialog onCreateDialog(int id) {
 		final boolean bRetry = id == 1;
 		return new AlertDialog.Builder(this)
@@ -487,6 +488,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 						new DialogInterface.OnClickListener() {
 							boolean mRetry = bRetry;
 
+							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
 								if (mRetry) {
@@ -502,6 +504,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 						})
 				.setNegativeButton(R.string.quit_button,
 						new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
 								finish();
@@ -517,6 +520,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	private void displayResult(final String result) {
 		mHandler.post(new Runnable() {
+			@Override
 			public void run() {
 				Log.e(TAG, "Liscensing Process result : " + result);
 				setProgressBarIndeterminateVisibility(false);
@@ -526,6 +530,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	private void displayDialog(final boolean showRetry) {
 		mHandler.post(new Runnable() {
+			@Override
 			@SuppressWarnings("deprecation")
 			public void run() {
 				setProgressBarIndeterminateVisibility(false);
@@ -536,6 +541,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 	}
 
 	private class MyLicenseCheckerCallback implements LicenseCheckerCallback {
+		@Override
 		public void allow(int policyReason) {
 			if (isFinishing()) {
 				Log.v(TAG, "LISENCE AUTH ok");
@@ -551,6 +557,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			}
 		}
 
+		@Override
 		public void dontAllow(int policyReason) {
 			if (isFinishing()) {
 				Log.v(TAG, "LISENCE AUTH NOok");
@@ -574,6 +581,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			Log.v(TAG, "LISENCE AUTH NOok");
 		}
 
+		@Override
 		public void applicationError(int errorCode) {
 			if (isFinishing()) {
 				Log.v(TAG, String.format(getString(R.string.application_error),

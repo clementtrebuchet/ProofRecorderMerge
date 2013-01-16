@@ -3,7 +3,6 @@ package org.proof.recorder.service;
 import org.proof.recorder.Settings;
 import org.proof.recorder.service.jni.SimpleLame;
 
-import android.content.Context;
 import android.media.AudioFormat;
 import android.util.Log;
 

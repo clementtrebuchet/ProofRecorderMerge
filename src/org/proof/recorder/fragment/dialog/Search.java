@@ -72,7 +72,7 @@ public class Search extends SherlockFragmentActivity {
 		mBtnSearch = (Button) findViewById(R.id.btnSearch);
 
 		mRBtnCalls.setChecked(true);
-		mSelectedDate.setVisibility(TextView.GONE);	
+		mSelectedDate.setVisibility(View.GONE);	
 		
 		mAocSearchText.setText("");		
 		
@@ -151,7 +151,7 @@ public class Search extends SherlockFragmentActivity {
 				}
 				else {
 					mSelectedDate.setText("");
-					mSelectedDate.setVisibility(TextView.GONE);
+					mSelectedDate.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -177,7 +177,7 @@ public class Search extends SherlockFragmentActivity {
 		
 		mDataResult.putExtra("mQuery", search);	
 
-		mPgBar.setVisibility(ProgressBar.VISIBLE);
+		mPgBar.setVisibility(View.VISIBLE);
 
 		if (mDatePicked && mSearchByDate.isChecked()) {			
 			recap += "PAR DATE: OUI" + BR;
@@ -205,7 +205,7 @@ public class Search extends SherlockFragmentActivity {
 			throw new IllegalStateException("");
 		}
 		
-		mPgBar.setVisibility(ProgressBar.INVISIBLE);	
+		mPgBar.setVisibility(View.INVISIBLE);	
 		
 		startActivity(mDataResult);
 	}
@@ -215,6 +215,7 @@ public class Search extends SherlockFragmentActivity {
 		super.onBackPressed();
 	}
 	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
             Intent data) {
         if (requestCode == DATES_PICKED) {
@@ -289,12 +290,12 @@ public class Search extends SherlockFragmentActivity {
                 
                 if(!mAtLeastOne) {
                 	mSearchByDate.setChecked(false);
-                	mSelectedDate.setVisibility(TextView.GONE);
+                	mSelectedDate.setVisibility(View.GONE);
                 }
                 else
                 {
                 	mSearchByDate.setChecked(true);
-                	mSelectedDate.setVisibility(TextView.INVISIBLE);                	
+                	mSelectedDate.setVisibility(View.INVISIBLE);                	
                 	mDatePicked = true;
                 	
                 	String mDate  = "NOT INITIALIZED!";
@@ -312,13 +313,13 @@ public class Search extends SherlockFragmentActivity {
                 	Log.v(TAG, "startingDate: " + mDate);
                 	
                 	mSelectedDate.setText(mDate);
-                	mSelectedDate.setVisibility(TextView.VISIBLE);
+                	mSelectedDate.setVisibility(View.VISIBLE);
                 }
             }
             
             else if(resultCode == RESULT_CANCELED) {
             	mSearchByDate.setChecked(false);
-            	mSelectedDate.setVisibility(TextView.GONE);
+            	mSelectedDate.setVisibility(View.GONE);
             }
         }
     }

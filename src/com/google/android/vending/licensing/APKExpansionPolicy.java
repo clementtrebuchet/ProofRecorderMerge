@@ -126,7 +126,8 @@ public class APKExpansionPolicy implements Policy {
      * @param response the result from validating the server response
      * @param rawData the raw server response data
      */
-    public void processServerResponse(int response,
+    @Override
+	public void processServerResponse(int response,
             com.google.android.vending.licensing.ResponseData rawData) {
 
         // Update retry counter
@@ -356,7 +357,8 @@ public class APKExpansionPolicy implements Policy {
      * the RETRY count or in the RETRY period.
      * </ol>
      */
-    public boolean allowAccess() {
+    @Override
+	public boolean allowAccess() {
         long ts = System.currentTimeMillis();
         if (mLastResponse == Policy.LICENSED) {
             // Check if the LICENSED response occurred within the validity

@@ -101,6 +101,7 @@ public final class MenuActions {
 			mDialog.setNegativeButton(
 					mContext.getString(R.string.strUACCancelBtn),
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							return;
 						}
@@ -109,6 +110,7 @@ public final class MenuActions {
 			mDialog.setPositiveButton(
 					mContext.getString(R.string.strUACConfirmBtn),
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							_deleteContactsFolder(mContact.getPhoneNumber());
 							ca.remove(mContact);
@@ -193,6 +195,7 @@ public final class MenuActions {
 			mDialog.setNegativeButton(
 					mContext.getString(R.string.strUACCancelBtn),
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							return;
 						}
@@ -201,6 +204,7 @@ public final class MenuActions {
 			mDialog.setPositiveButton(
 					mContext.getString(R.string.strUACConfirmBtn),
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							_deleteItem(mId, mType);
 							deleteOnDisk(mFilePath);
@@ -241,6 +245,7 @@ public final class MenuActions {
 			mDialog.setNegativeButton(
 					mContext.getString(R.string.strUACCancelBtn),
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							return;
 						}
@@ -249,6 +254,7 @@ public final class MenuActions {
 			mDialog.setPositiveButton(
 					mContext.getString(R.string.strUACConfirmBtn),
 					new DialogInterface.OnClickListener() {
+						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							_deleteItem(mId, mType);
 							switch (mType) {
@@ -324,7 +330,7 @@ public final class MenuActions {
 
 	public static void displayItemVoiceDetails(Cursor c) {
 		if (c == null)
-			c = ((VoiceListAdapter) getmVoiceAdapter()).getCursor();
+			c = getmVoiceAdapter().getCursor();
 		FragmentListVoice.ID = c.getString(0);
 		StaticIntents intent = StaticIntents.create(getmContext(),
 				FragmentVoiceNoteTabs.class);

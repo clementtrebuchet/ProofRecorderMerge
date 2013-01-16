@@ -62,7 +62,8 @@ public class VoiceDetailAdapter extends SimpleCursorAdapter {
 	
 	
 	public  OnClickListener ButtonOnClickListener = new OnClickListener() {
-        public void onClick(View v) {
+        @Override
+		public void onClick(View v) {
         	Log.v(TAG, "button click");
         	Uri wav = Uri.parse("file://" + f);
 			Intent intent = new Intent(android.content.Intent.ACTION_VIEW);

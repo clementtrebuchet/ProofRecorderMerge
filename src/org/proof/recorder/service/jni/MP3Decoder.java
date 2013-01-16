@@ -208,7 +208,8 @@ public class MP3Decoder {
         }
     }
     
-    public void finalize()
+    @Override
+	public void finalize()
     {
         dispose();
     }

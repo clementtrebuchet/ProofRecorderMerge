@@ -64,6 +64,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		mTrackAnim 	= AnimationUtils.loadAnimation(context, R.anim.rail);
 		
 		mTrackAnim.setInterpolator(new Interpolator() {
+			@Override
 			public float getInterpolation(float t) {
 	              // Pushes past the target area, then snaps back into place.
 	                // Equation for graphing: 1.2-((x*1.6)-1.1)^2
@@ -97,7 +98,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * @param id Layout resource id
 	 */
 	public void setRootViewId(int id) {
-		mRootView	= (ViewGroup) inflater.inflate(id, null);
+		mRootView	= inflater.inflate(id, null);
 		mTrack 		= (ViewGroup) mRootView.findViewById(R.id.tracks);
 
 		mArrowDown 	= (ImageView) mRootView.findViewById(R.id.arrow_down);
@@ -140,7 +141,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		String title 	= action.getTitle();
 		Drawable icon 	= action.getIcon();
 		
-		View container	= (View) inflater.inflate(R.layout.action_item, null);
+		View container	= inflater.inflate(R.layout.action_item, null);
 		
 		ImageView img 	= (ImageView) container.findViewById(R.id.iv_icon);
 		TextView text 	= (TextView) container.findViewById(R.id.tv_title);

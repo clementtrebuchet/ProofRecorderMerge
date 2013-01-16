@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.URI;
 import java.security.MessageDigest;
@@ -19,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Base64OutputStream;
+//import org.apache.commons.codec.binary.Base64;
+//import org.apache.commons.codec.binary.Base64OutputStream;
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.RecordRPC;
 import org.proof.recorder.database.support.ProofDataBase;
@@ -96,6 +95,7 @@ public class OperationBatchTelePhone {
 		mHandler.sendMessage(msg);
 		XMLRPCMethod method = new XMLRPCMethod("isyncRecord",
 				new XMLRPCMethodCallback() {
+					@Override
 					public void callFinished(Object result) {
 						Bundle b = new Bundle();
 						msg = mHandler.obtainMessage();
@@ -156,6 +156,7 @@ public class OperationBatchTelePhone {
 		if (looper){Looper.prepare();}
 		XMLRPCMethod method = new XMLRPCMethod("isyncRecordReverse",
 				new XMLRPCMethodCallback() {
+					@Override
 					@SuppressWarnings("unchecked")
 					public void callFinished(Object result) {
 						Uri uri = Uri.withAppendedPath(PersonnalProofContentProvider.CONTENT_URI, "records");
@@ -201,7 +202,7 @@ public class OperationBatchTelePhone {
 								Map<String, Object> secondMap = (Map<String, Object>) firstMap
 										.getValue();
 								ContentValues values = new ContentValues();
-								for (Entry<String, Object> secondMapEntry : ((Map<String, Object>) secondMap)
+								for (Entry<String, Object> secondMapEntry : secondMap
 										.entrySet()) {
 									System.out.println("Key = "
 											+ secondMapEntry.getKey()
@@ -540,6 +541,7 @@ public class OperationBatchTelePhone {
 
 		}
 
+		@Override
 		public Map<String, List<RecordRPC>> getSerializable() {
 			Map<String, List<RecordRPC>> map = new HashMap<String, List<RecordRPC>>();
 			map.put("SYNCTABLEPHONE", LIST);

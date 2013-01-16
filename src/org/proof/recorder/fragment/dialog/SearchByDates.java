@@ -81,9 +81,9 @@ public class SearchByDates extends SherlockFragmentActivity{
 					
 				}			
 				
-				txtStartingDateOrPrecise.setVisibility(TextView.INVISIBLE);
+				txtStartingDateOrPrecise.setVisibility(View.INVISIBLE);
 				txtStartingDateOrPrecise.setText(selectedDate);
-				txtStartingDateOrPrecise.setVisibility(TextView.VISIBLE);
+				txtStartingDateOrPrecise.setVisibility(View.VISIBLE);
 				mIntentForResult.putExtra("preciseDate", mSqlDate);
 			}
 			else if (mStarting) {
@@ -95,9 +95,9 @@ public class SearchByDates extends SherlockFragmentActivity{
 					
 				}
 				
-				txtStartingDateOrPrecise.setVisibility(TextView.INVISIBLE);
+				txtStartingDateOrPrecise.setVisibility(View.INVISIBLE);
 				txtStartingDateOrPrecise.setText(selectedDate);
-				txtStartingDateOrPrecise.setVisibility(TextView.VISIBLE);
+				txtStartingDateOrPrecise.setVisibility(View.VISIBLE);
 				mIntentForResult.putExtra("startingDate", mSqlDate);
 			}
 			
@@ -110,9 +110,9 @@ public class SearchByDates extends SherlockFragmentActivity{
 					
 				}
 				
-				txtEndingDate.setVisibility(TextView.INVISIBLE);
+				txtEndingDate.setVisibility(View.INVISIBLE);
 				txtEndingDate.setText(selectedDate);
-				txtEndingDate.setVisibility(TextView.VISIBLE);
+				txtEndingDate.setVisibility(View.VISIBLE);
 				mIntentForResult.putExtra("endingDate", mSqlDate);
 			}
 			
@@ -143,6 +143,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 		mDatePickDiag.setButton(DialogInterface.BUTTON_NEGATIVE,
 				getString(R.string.alert_dialog_cancel),
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog,
 							int which) {
 						if (which == DialogInterface.BUTTON_NEGATIVE) {
@@ -184,8 +185,8 @@ public class SearchByDates extends SherlockFragmentActivity{
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(isChecked) {
-					mStartingDate.setVisibility(CheckBox.VISIBLE);
-					mEndingDate.setVisibility(CheckBox.VISIBLE);
+					mStartingDate.setVisibility(View.VISIBLE);
+					mEndingDate.setVisibility(View.VISIBLE);
 					
 					mStartingDate.setChecked(false);
 					mEndingDate.setChecked(false);
@@ -193,11 +194,11 @@ public class SearchByDates extends SherlockFragmentActivity{
 					mPreciseDateChoice.setEnabled(false);
 				}
 				else {
-					txtStartingDateOrPrecise.setVisibility(TextView.GONE);
-					txtEndingDate.setVisibility(TextView.GONE);
+					txtStartingDateOrPrecise.setVisibility(View.GONE);
+					txtEndingDate.setVisibility(View.GONE);
 					
-					mStartingDate.setVisibility(CheckBox.GONE);
-					mEndingDate.setVisibility(CheckBox.GONE);
+					mStartingDate.setVisibility(View.GONE);
+					mEndingDate.setVisibility(View.GONE);
 					
 					mPreciseDateChoice.setEnabled(true);
 				}
@@ -218,7 +219,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 					mDatePickDiag.show();				
 				}
 				else {
-					txtStartingDateOrPrecise.setVisibility(TextView.GONE);
+					txtStartingDateOrPrecise.setVisibility(View.GONE);
 					mPeriodDateChoice.setEnabled(true);
 				}
 			}
@@ -236,7 +237,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 					mDatePickDiag.show();				
 				}
 				else
-					txtStartingDateOrPrecise.setVisibility(TextView.GONE);
+					txtStartingDateOrPrecise.setVisibility(View.GONE);
 			}
 		});
 		
@@ -252,7 +253,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 					mDatePickDiag.show();				
 				}
 				else
-					txtEndingDate.setVisibility(TextView.GONE);
+					txtEndingDate.setVisibility(View.GONE);
 			}
 		});
 		
@@ -269,11 +270,11 @@ public class SearchByDates extends SherlockFragmentActivity{
 					
 					if (!mStartingDate.isChecked()) {
 						txtStartingDateOrPrecise.setText("Veuillez sélectionner une date!");
-						txtStartingDateOrPrecise.setVisibility(TextView.VISIBLE);
+						txtStartingDateOrPrecise.setVisibility(View.VISIBLE);
 					}
 					else if (!mEndingDate.isChecked()) {
 						txtEndingDate.setText("Veuillez sélectionner une date!");
-						txtEndingDate.setVisibility(TextView.VISIBLE);
+						txtEndingDate.setVisibility(View.VISIBLE);
 					}
 					else {}
 					return;

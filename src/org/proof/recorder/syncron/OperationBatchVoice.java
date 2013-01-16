@@ -87,6 +87,7 @@ public class OperationBatchVoice {
 		mHandler.sendMessage(msg);
 		XMLRPCMethod method = new XMLRPCMethod("isyncVoice",
 				new XMLRPCMethodCallback() {
+			@Override
 			public void callFinished(Object result) {
 				Bundle b = new Bundle();
 				msg = mHandler.obtainMessage();
@@ -147,6 +148,7 @@ public class OperationBatchVoice {
 		//Looper.prepare();
 		XMLRPCMethod method = new XMLRPCMethod("isyncVoiceReverse",
 				new XMLRPCMethodCallback() {
+					@Override
 					@SuppressWarnings("unchecked")
 					public void callFinished(Object result) {
 						Uri uri = Uri.withAppendedPath(PersonnalProofContentProvider.CONTENT_URI, "voices");
@@ -183,7 +185,7 @@ public class OperationBatchVoice {
 								Map<String, Object> secondMap = (Map<String, Object>) firstMap
 										.getValue();
 								ContentValues values = new ContentValues();
-								for (Entry<String, Object> secondMapEntry : ((Map<String, Object>) secondMap)
+								for (Entry<String, Object> secondMapEntry : secondMap
 										.entrySet()) {
 									System.out.println("Key = "
 											+ secondMapEntry.getKey()
@@ -474,6 +476,7 @@ public class OperationBatchVoice {
 
 		}
 
+		@Override
 		public Map<String, List<VoiceRPC>> getSerializable() {
 			Map<String, List<VoiceRPC>> map = new HashMap<String, List<VoiceRPC>>();
 			map.put("SYNCTABLEVOICE", LIST);
