@@ -15,6 +15,7 @@ import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.util.Log;
@@ -297,7 +298,7 @@ public final class ContactsDataHelper {
 			Contact contact = new Contact();
 
 			String contactId = cursor.getString(cursor
-					.getColumnIndex(ContactsContract.Contacts._ID));
+					.getColumnIndex(BaseColumns._ID));
 
 			String name = cursor.getString(cursor
 					.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));

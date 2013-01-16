@@ -15,6 +15,7 @@ import android.widget.TextView;
 @SuppressWarnings("deprecation")
 public class SettingsTabs extends TabActivity {
 	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    

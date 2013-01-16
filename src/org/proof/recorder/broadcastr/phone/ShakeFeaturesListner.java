@@ -102,11 +102,13 @@ public class ShakeFeaturesListner extends Service implements SensorEventListener
 
 	}
 
+	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// not used right now
 	}
 
 	// Used to decide if it is a shake
+	@Override
 	@SuppressWarnings("deprecation")
 	public void onSensorChanged(SensorEvent event) {
 		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)

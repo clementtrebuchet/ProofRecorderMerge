@@ -365,11 +365,13 @@ public class FtpCli extends Service {
 		return new CopyStreamListener() {
 			private long megsTotal = 0;
 
+			@Override
 			public void bytesTransferred(CopyStreamEvent event) {
 				bytesTransferred(event.getTotalBytesTransferred(),
 						event.getBytesTransferred(), event.getStreamSize());
 			}
 
+			@Override
 			public void bytesTransferred(long totalBytesTransferred,
 					int bytesTransferred, long streamSize) {
 				long megs = totalBytesTransferred / 1000000;
@@ -448,8 +450,8 @@ public class FtpCli extends Service {
 
 				if (loggedIn) {
 					Log.d(TAG, "downloading file: " + remotePath);
-					ftpS.setFileTransferMode(FTPClient.BINARY_FILE_TYPE);
-					ftpS.setFileType(FTPClient.BINARY_FILE_TYPE);
+					ftpS.setFileTransferMode(FTP.BINARY_FILE_TYPE);
+					ftpS.setFileType(FTP.BINARY_FILE_TYPE);
 					ftpS.enterLocalPassiveMode();
 					// final long fileSize = getFileSize(ftpS, remotePath);
 					FileOutputStream dfile = new FileOutputStream(localFile);
@@ -528,8 +530,8 @@ public class FtpCli extends Service {
 			int reply = ftpS.getReplyCode();
 			if (loggedIn) {
 				//sendMessage(AUTHOK, true);
-				ftpS.setFileTransferMode(FTPClient.BINARY_FILE_TYPE);
-				ftpS.setFileType(FTPClient.BINARY_FILE_TYPE);
+				ftpS.setFileTransferMode(FTP.BINARY_FILE_TYPE);
+				ftpS.setFileType(FTP.BINARY_FILE_TYPE);
 				ftpS.enterLocalPassiveMode();
 
 				for (String fichier : localFile) {

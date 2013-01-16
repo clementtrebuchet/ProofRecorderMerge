@@ -14,11 +14,9 @@ import org.proof.recorder.fragment.phone.FragmentListRecordOut.OutGoingCallsLoad
 import org.proof.recorder.quick.action.ActionItem;
 import org.proof.recorder.quick.action.QuickAction;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.util.Log;
 import android.view.MenuItem;

@@ -108,6 +108,7 @@ public class RecordRPC implements XMLRPCSerializable {
 
 	}
 
+	@Override
 	public Map<String, Object> getSerializable() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("COLUMNRECODINGAPP_ID", COLUMNRECODINGAPP_ID);

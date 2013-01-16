@@ -24,6 +24,8 @@ import org.proof.recorder.billing.vending.Consts.PurchaseState;
 import org.proof.recorder.billing.vending.Consts.ResponseCode;
 import org.proof.recorder.billing.vending.Security.VerifiedPurchase;
 
+import com.android.vending.billing.IMarketBillingService;
+
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
@@ -34,8 +36,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-
-import com.android.vending.billing.IMarketBillingService;
 
 /**
  * This class sends messages to Android Market on behalf of the application by

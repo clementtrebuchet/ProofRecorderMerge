@@ -159,6 +159,7 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 	}
 
 	private OnPreferenceClickListener spinClick = new OnPreferenceClickListener() {
+		@Override
 		public boolean onPreferenceClick(
 				android.preference.Preference preference) {
 			if (Settings.isDebug())
@@ -172,6 +173,7 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 	};
 	private OnPreferenceClickListener micClick = new OnPreferenceClickListener() {
 
+		@Override
 		public boolean onPreferenceClick(
 				android.preference.Preference preference) {
 			ManipulateUi uI = new ManipulateUi();

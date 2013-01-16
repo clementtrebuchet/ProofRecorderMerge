@@ -23,6 +23,7 @@ import org.xmlpull.v1.XmlSerializer;
 class XMLRPCSerializer implements IXMLRPCSerializer {
 	static SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public void serialize(XmlSerializer serializer, Object object) throws IOException {
 		// check for scalar types:
@@ -100,6 +101,7 @@ class XMLRPCSerializer implements IXMLRPCSerializer {
 		}
 	}
 	
+	@Override
 	public Object deserialize(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, null, TAG_VALUE);
 

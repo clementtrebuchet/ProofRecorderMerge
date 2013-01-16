@@ -17,9 +17,6 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.CheckBox;
-
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
 public class FormulaPreferences extends SherlockPreferenceActivity {
@@ -45,6 +42,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 
 		mDialog.setNegativeButton("Annuler",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						return;
 					}
@@ -131,6 +129,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 
 	private OnPreferenceClickListener mFormulaClick = new OnPreferenceClickListener() {
 
+		@Override
 		public boolean onPreferenceClick(
 				android.preference.Preference preference) {
 			if (Settings.isDebug())

@@ -103,5 +103,6 @@ public class VerifyContactsApi extends AsyncTask<Void, Integer, String> {
 				mContext, 
 				mContext.getString(R.string.deleted_contact) + (int)progress[0], 
 				Toast.LENGTH_SHORT).show();
+
 	}
 }
