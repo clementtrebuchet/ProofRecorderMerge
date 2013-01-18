@@ -126,23 +126,15 @@ public class FragmentListNotes extends Fragment {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		/*AdapterContextMenuInfo record = (AdapterContextMenuInfo) item
-				.getMenuInfo();
-		int recordPosition = (int) record.position;
-		Log.v(TAG, "" + recordPosition);*/
-		switch (item.getItemId()) {
-		case R.id.note_add:
-			
+		if (item.getItemId() == R.id.note_add) {
 			if(Settings.isDebug())
 				Log.i(TAG, "Item note_add");
 			enregistrerNote();
 			return true;
-		case R.id.note_sup:
-			
+		} else if (item.getItemId() == R.id.note_sup) {
 			if(Settings.isDebug())
 				Log.i(TAG, "Item note_sup");
 			return true;
-
 		}
 		return super.onContextItemSelected(item);
 	}

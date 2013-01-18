@@ -243,6 +243,7 @@ int attribute_align_arg mpg123_par(mpg123_pars *mp, enum mpg123_parms key, long 
 		break;
 		default:
 			ret = MPG123_BAD_PARAM;
+			/* no break */
 	}
 	return ret;
 }
@@ -371,6 +372,7 @@ int attribute_align_arg mpg123_getstate(mpg123_handle *mh, enum mpg123_state key
 		default:
 			mh->err = MPG123_BAD_KEY;
 			ret = MPG123_ERR;
+			/* no break */
 	}
 
 	if(val  != NULL) *val  = theval;
@@ -836,6 +838,7 @@ int attribute_align_arg mpg123_decode_frame(mpg123_handle *mh, off_t *num, unsig
 			int b = get_next_frame(mh);
 			if(b < 0) return b;
 			debug1("got next frame, %i", mh->to_decode);
+
 		}
 	}
 }

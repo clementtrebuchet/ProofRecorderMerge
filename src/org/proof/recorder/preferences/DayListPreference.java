@@ -74,6 +74,7 @@ public class DayListPreference extends ListPreference {
 				});*/
 		builder.setMultiChoiceItems(entries, mClickedDialogEntryIndices,
 		new DialogInterface.OnMultiChoiceClickListener() {
+			@Override
 			public void onClick(DialogInterface dialog, int which,
 					boolean val) {
 				if (isCheckAllValue(which) == true) {

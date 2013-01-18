@@ -623,6 +623,7 @@ int attribute_align_arg mpg123_info(mpg123_handle *mh, struct mpg123_frameinfo *
 		case 2: mi->mode = MPG123_M_DUAL;   break;
 		case 3: mi->mode = MPG123_M_MONO;   break;
 		default: error("That mode cannot be!");
+		/* no break */
 	}
 	mi->mode_ext = mh->mode_ext;
 	mi->framesize = mh->framesize+4; /* Include header. */
@@ -767,6 +768,7 @@ off_t frame_ins2outs(mpg123_handle *fr, off_t ins)
 		case 3: outs = ntom_ins2outs(fr, ins); break;
 #		endif
 		default: error1("Bad down_sample (%i) ... should not be possible!!", fr->down_sample);
+		/* no break */
 	}
 	return outs;
 }
@@ -829,6 +831,7 @@ off_t frame_offset(mpg123_handle *fr, off_t outs)
 		case 3: num = ntom_frameoff(fr, outs); break;
 #endif
 		default: error("Bad down_sample ... should not be possible!!");
+		/* no break */
 	}
 	return num;
 }

@@ -1,5 +1,7 @@
 package org.proof.recorder.async;
 import org.proof.recorder.R;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
@@ -65,6 +67,24 @@ public class VerifyContactsApi extends AsyncTask<Void, Integer, String> {
 					}
 					
 				}
+				else {
+					String mPhone = mCursor.getString(
+							mCursor.getColumnIndex(
+									ProofDataBase.COLUMN_PHONE_NUMBER
+								));
+					
+					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(mContext, mPhone);
+					if(mContact.getContactName() != "? " + mContext.getString(R.string.unknownContact)) {
+						ContentValues values = new ContentValues();
+						values.put(ProofDataBase.COLUMN_CONTRACT_ID, "null");
+						mContext.getContentResolver().update(
+								mUri,
+								values, 
+								" " + ProofDataBase.COLUMN_CONTRACT_ID + "=?",
+								new String[] { apiId }
+						);
+					}
+				}
 			}while(mCursor.moveToNext());
 		}
 		
@@ -83,5 +103,6 @@ public class VerifyContactsApi extends AsyncTask<Void, Integer, String> {
 				mContext, 
 				mContext.getString(R.string.deleted_contact) + (int)progress[0], 
 				Toast.LENGTH_SHORT).show();
+
 	}
 }

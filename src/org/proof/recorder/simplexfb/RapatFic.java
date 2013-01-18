@@ -51,6 +51,7 @@ public class RapatFic {
 		listDbFile();
 		Handler h = new Handler();
 		Runnable t = new Runnable() {
+			@Override
 			public void run() {
 
 				
@@ -172,6 +173,7 @@ public class RapatFic {
 	private static void downloadFileCalls() {
 		if (!filesListCalls.isEmpty()) {
 			new Thread(new Runnable() {
+				@Override
 				public void run() {
 					try {
 						FtpCli.setHandler(SyncronUi.handlerFTP);
@@ -207,6 +209,7 @@ public class RapatFic {
 	private void downloadFileVoices() {
 		if (!filesListVoices.isEmpty()) {
 			new Thread(new Runnable() {
+				@Override
 				public void run() {
 					try {
 						FtpCli.setHandler(SyncronUi.handlerFTP);

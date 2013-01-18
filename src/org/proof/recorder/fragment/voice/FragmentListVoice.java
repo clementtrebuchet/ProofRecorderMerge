@@ -156,7 +156,7 @@ public class FragmentListVoice extends SherlockFragment {
 			if(Settings.isDebug())
 				Log.v("MA_LISTE_DE_MERDE_AT :", "" + position);
 			
-			QuickActionDlg.showTitledVoiceOptionsDlg(getActivity(),v, c, (VoiceListAdapter) getListAdapter(), getLoaderManager(), this, Settings.mType.VOICE_TITLED);
+			QuickActionDlg.showTitledVoiceOptionsDlg(getActivity(),v, c, getListAdapter(), getLoaderManager(), this, Settings.mType.VOICE_TITLED);
 		}
 
 	}

@@ -52,12 +52,14 @@ public class XMLRPCMethod extends Thread {
 			final Object result = client.callEx(method, params);
 
 			handler.post(new Runnable() {
+				@Override
 				public void run() {
 					callBack.callFinished(result);
 				}
 			});
 		} catch (final XMLRPCFault e) {
 			handler.post(new Runnable() {
+				@Override
 				public void run() {
 					
 					Log.d(TAG, "1 error", e);
@@ -73,6 +75,7 @@ public class XMLRPCMethod extends Thread {
 			});
 		} catch (final XMLRPCException e) {
 			handler.post(new Runnable() {
+				@Override
 				public void run() {
 
 					Throwable couse = e.getCause();

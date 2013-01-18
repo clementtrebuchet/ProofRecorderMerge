@@ -69,7 +69,8 @@ public class AESObfuscator implements Obfuscator {
         }
     }
 
-    public String obfuscate(String original, String key) {
+    @Override
+	public String obfuscate(String original, String key) {
         if (original == null) {
             return null;
         }
@@ -83,7 +84,8 @@ public class AESObfuscator implements Obfuscator {
         }
     }
 
-    public String unobfuscate(String obfuscated, String key) throws ValidationException {
+    @Override
+	public String unobfuscate(String obfuscated, String key) throws ValidationException {
         if (obfuscated == null) {
             return null;
         }

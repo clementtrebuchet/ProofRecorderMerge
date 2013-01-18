@@ -11,7 +11,7 @@ public class SimpleLibmpeg123 extends MP3Decoder{
 	private static final String TAG = "SimpleLibmpeg123";
 	public SimpleLibmpeg123(String filename) {
 		super(filename);
-		for(Encoding mEncoding :SimpleLibmpeg123.getSupportedEncodings())
+		for(Encoding mEncoding :MP3Decoder.getSupportedEncodings())
 			{
 				if(Settings.isDebug())Log.e(TAG,"SupportedEncoding{"+mEncoding+"}");
 			}

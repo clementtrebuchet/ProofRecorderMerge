@@ -57,6 +57,7 @@ public class ServerAccount extends SherlockPreferenceActivity{
 	@Override
 	public void onDestroy(){
 		new Thread(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					AlarmSchd.HandleAlarmStateChange(ServerAccount.this);
