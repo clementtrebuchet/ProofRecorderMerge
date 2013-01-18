@@ -1,5 +1,6 @@
 package org.proof.recorder;
 
+import org.proof.recorder.async.VerifyContactsApi;
 import org.proof.recorder.billing.vending.ProofStore;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.features.SpyRecorder;
@@ -180,6 +181,15 @@ public class ProofRecorderActivity extends SherlockActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.main);
 		ConnectivityInfo.informationConnectivity(this);
+		
+		/*  Update Deleted Contacts to the list of contacts
+		 *  in Excluded and not Excluded Contacts list.
+		 *  Put those deleted Known Contacts in the appropriated 
+		 *  Tab.
+		 **/
+		
+		VerifyContactsApi mContactsChecker = new VerifyContactsApi(mContext);
+		mContactsChecker.execute();
 
 		if (ConnectivityInfo.WIFI || ConnectivityInfo.TROISG) {
 			AnalyticsRecorderProof trackerd = new AnalyticsRecorderProof(
