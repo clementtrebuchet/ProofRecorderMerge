@@ -18,14 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-<<<<<<< HEAD
-//import org.apache.commons.codec.binary.Base64;
-//import org.apache.commons.codec.binary.Base64OutputStream;
-=======
 /*import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Base64OutputStream;*/
 
->>>>>>> master
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.RecordRPC;
 import org.proof.recorder.database.support.ProofDataBase;
