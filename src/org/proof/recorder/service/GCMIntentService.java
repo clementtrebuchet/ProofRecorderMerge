@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
-import org.proof.recorder.syncron.OperationBatchTelePhone;
+
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -93,12 +93,12 @@ public class GCMIntentService extends GCMBaseIntentService {
 		if (Settings.isDebug()) Log.e(TAG, "Receive Order : "+order);
 		if (order.equals(UP)){
 			
-			new OperationBatchTelePhone(getApplicationContext(), handler, true);
+			
 			
 		} else if (order.equals(DOWN)){
 			
 			
-			new OperationBatchTelePhone(getApplicationContext(), true, handler,true);
+			
 			
 		} else {
 			

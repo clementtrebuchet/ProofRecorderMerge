@@ -16,7 +16,7 @@ import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
 import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.service.MpthreeRec;
-import org.proof.recorder.simplexfb.FtpCli;
+
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -937,7 +937,7 @@ public class AudioHandler {
 		switch (type) {
 		case CALL:
 			writeCallToDb();
-			UploadFile("call");
+			
 			/*
 			 * new Thread(new Runnable() { public void run() { try {
 			 * UploadFile("call"); } catch (Exception e) { // TODO
@@ -949,7 +949,7 @@ public class AudioHandler {
 		case VOICE_TITLED:
 		case VOICE_UNTITLED:
 			writeVoiceToDb();
-			UploadFile("voice");
+			
 			/*
 			 * new Thread(new Runnable() { public void run() { try {
 			 * UploadFile("voice"); } catch (Exception e) { // TODO
@@ -976,53 +976,5 @@ public class AudioHandler {
 	 * false; } };
 	 */
 
-	public void UploadFile(final String method) {
-		Handler h = new Handler();
-		Runnable t = new Runnable() {
-			@Override
-			public void run() {
-
-				isSync = Settings.isSync(mContext);
-				if (isSync) {
-					Bundle b = new Bundle();
-					if (method.equals(Settings.methodCALL)) {
-						b.putString("methode", Settings.methodCALL);
-					} else if (method.equals(Settings.methodVOICE)) {
-						b.putString("methode", Settings.methodVOICE);
-					}
-
-					b.putString("hostName", Settings.hostname);
-					b.putString("username", Settings.getUsername(mContext));
-					b.putString("password", Settings.getPassword(mContext));
-					b.putString("location", DEFAULT_FILE);
-					b.putString("action", "UPLOAD");
-
-					switch (format) {
-					case THREE_GP:
-						b.putString("fileExtension", ".3gp");
-						break;
-					case WAV:
-						b.putString("fileExtension", ".wav");
-						break;
-					case MP3:
-						b.putString("fileExtension", ".mp3");
-						break;
-					case OGG:
-						b.putString("fileExtension", ".ogg");
-						break;
-					}
-					b.putString("remoteLocation", getFileName());
-					Intent intent = new Intent(getmContext(), FtpCli.class);
-					intent.putExtras(b);
-					getmContext().startService(intent);
-					Log.e(LOG_TAG, "Start FTP Service isSync : " + isSync);
-				} else {
-					Log.e(LOG_TAG, "No Start FTP Service isSync : " + isSync);
-
-				}
-			}
-		};
-		h.postDelayed(t, 20000);
-	}
-
+	
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import org.proof.recorder.Settings;
-import org.proof.recorder.syncron.OperationBatchTelePhone;
+
 
 import android.app.Service;
 import android.content.Intent;
@@ -34,18 +34,7 @@ public class ServiceSchd extends Service {
 			Log.v(TAG, "Start SeviceSched");
 			
 		}
-		try {
-			new OperationBatchTelePhone(getApplicationContext(), mHandler,false);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		return START_STICKY;
 	}
 

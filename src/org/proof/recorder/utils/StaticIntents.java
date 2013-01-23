@@ -8,7 +8,7 @@ import org.proof.recorder.fragment.phone.FragmentListRecordFoldersTabs;
 import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder;
 import org.proof.recorder.preferences.SettingsTabs;
-import org.proof.recorder.syncron.fragment.SyncronUi;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -74,7 +74,7 @@ public final class StaticIntents extends Intent {
 	
 	public static StaticIntents goPerfsDashBoard(Context origin) 
 	{
-		return create(origin, SyncronUi.class);
+		return create(origin, FragmentVoiceMediaRecorder.class);
 	}
 	
 	public static boolean isIntentAvailable(Context context, String action) {

@@ -16,7 +16,6 @@ import org.proof.recorder.place.de.marche.Eula;
 import org.proof.recorder.preferences.SettingsTabs;
 import org.proof.recorder.service.TestDevice;
 import org.proof.recorder.syncron.fragment.GMCActivity;
-import org.proof.recorder.syncron.fragment.SyncronUi;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.ConnectivityInfo;
 import org.proof.recorder.utils.OsHandler;
@@ -278,9 +277,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			public void onClick(View paramView) {
 
 				if (!Settings.isNotLicensed()) {
-					Intent intent = new Intent(ProofRecorderActivity.this,
-							SyncronUi.class);
-					startActivity(intent);
+					
 				}
 			}
 
