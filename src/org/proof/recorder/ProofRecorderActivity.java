@@ -1,6 +1,5 @@
 package org.proof.recorder;
 
-import org.proof.recorder.async.VerifyContactsApi;
 import org.proof.recorder.billing.vending.ProofStore;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.features.SpyRecorder;
@@ -15,6 +14,7 @@ import org.proof.recorder.place.de.marche.AnalyticsRecorderProof;
 import org.proof.recorder.place.de.marche.Eula;
 import org.proof.recorder.preferences.SettingsTabs;
 import org.proof.recorder.service.TestDevice;
+import org.proof.recorder.service.VerifyContactsApi;
 import org.proof.recorder.syncron.fragment.GMCActivity;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.ConnectivityInfo;
@@ -170,6 +170,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
+		
+		
 		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
@@ -179,16 +181,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.main);
-		ConnectivityInfo.informationConnectivity(this);
+		ConnectivityInfo.informationConnectivity(this);	
 		
-		/*  Update Deleted Contacts to the list of contacts
-		 *  in Excluded and not Excluded Contacts list.
-		 *  Put those deleted Known Contacts in the appropriated 
-		 *  Tab.
-		 **/
-		
-		VerifyContactsApi mContactsChecker = new VerifyContactsApi(mContext);
-		mContactsChecker.execute();
 
 		if (ConnectivityInfo.WIFI || ConnectivityInfo.TROISG) {
 			AnalyticsRecorderProof trackerd = new AnalyticsRecorderProof(
@@ -417,6 +411,16 @@ public class ProofRecorderActivity extends SherlockActivity {
 				}
 			}
 		});
+		
+		/*  Update Deleted Contacts to the list of contacts
+		 *  in Excluded and not Excluded Contacts list.
+		 *  Put those deleted Known Contacts in the appropriated 
+		 *  Tab.
+		 **/
+		
+		Intent checkContacts = new Intent(this, VerifyContactsApi.class); 
+		startService(checkContacts);
+		
 
 	}
 
@@ -514,7 +518,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								finish();
+								//finish();
 							}
 						}).create();
 	}

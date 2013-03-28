@@ -418,11 +418,15 @@
         <service
             android:name=".service.ServiceSchd"
             android:enabled="true" />
+        
         <service android:name=".billing.vending.BillingService" />
+        
+        <service android:name=".service.VerifyContactsApi"
+            android:enabled="true" />
 
         <service
 			android:name=".service.jni.Converter"
-			android:enabled="true" />
+			android:enabled="true" />        
 	
         <!-- Receivers for BroadCasters -->
         <!-- Incoming Calls -->

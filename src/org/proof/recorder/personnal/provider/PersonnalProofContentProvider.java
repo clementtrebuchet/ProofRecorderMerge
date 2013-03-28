@@ -410,8 +410,17 @@ public class PersonnalProofContentProvider extends
 
 	}
 
-	public static int isRecordInDb(String absolutePath, Settings.mType type) {
+	/**
+	 * @param absolutePath: song file's path.
+	 * @param type String
+	 * @return the count of database song(s) matching this path
+	 */
+	public static int isRecordInDb(
+			String absolutePath, Settings.mType type) {
+		
 		String query = "SELECT _id from ";
+		SQLiteDatabase sqlDB;
+		int _count = -2;
 
 		switch (type) {
 		case CALL:
@@ -426,10 +435,26 @@ public class PersonnalProofContentProvider extends
 		}
 
 		query += " WHERE emplacement=?";
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
-		Cursor c = sqlDB.rawQuery(query, new String[] { absolutePath });
-
-		return c.getCount();
+		
+		try {
+			sqlDB = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
+		
+		try {
+			Cursor c = sqlDB.rawQuery(query, new String[] { absolutePath });
+			
+			_count = c.getCount();
+			
+			c.close();
+		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}		
+		
+		return _count;
 	}
 
 
@@ -514,39 +539,57 @@ public class PersonnalProofContentProvider extends
 		default:
 			break;
 		}
+		
+		SQLiteDatabase sqlDB;
 
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
-		Cursor c = sqlDB.rawQuery(query, null);
-
-		while (c != null && c.moveToNext()) {
-			Record mRecord = new Record();
-
-			switch (type) {
-			case CALL:
-				mRecord.setmId(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID)));
-				mRecord.setmFilePath(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMN_FILE)));
-				break;
-
-			case VOICE_TITLED:
-				mRecord.setmId(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
-				mRecord.setmFilePath(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
-				break;
-
-			case VOICE_UNTITLED:
-				mRecord.setmId(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
-				mRecord.setmFilePath(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
-				break;
-			default:
-				break;
-			}
-			list.add(mRecord);
+		try {
+			sqlDB = database.getWritableDatabase();
 		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
+		
+		Cursor c = sqlDB.rawQuery(query, null);		
+		
+		try {			
+
+			while (c != null && c.moveToNext()) {
+				Record mRecord = new Record();
+
+				switch (type) {
+				case CALL:
+					mRecord.setmId(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID)));
+					mRecord.setmFilePath(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMN_FILE)));
+					break;
+
+				case VOICE_TITLED:
+					mRecord.setmId(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
+					mRecord.setmFilePath(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
+					break;
+
+				case VOICE_UNTITLED:
+					mRecord.setmId(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
+					mRecord.setmFilePath(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
+					break;
+				default:
+					break;
+				}
+				list.add(mRecord);
+			}
+		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}
+		finally {
+			c.close();
+		}	
+		
 		return list;
 	}
 

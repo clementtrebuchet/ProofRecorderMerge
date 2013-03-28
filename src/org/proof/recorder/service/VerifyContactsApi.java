@@ -1,41 +1,54 @@
-package org.proof.recorder.async;
+package org.proof.recorder.service;
 import org.proof.recorder.R;
+import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
+import android.app.Service;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.IBinder;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.util.Log;
 import android.widget.Toast;
 
-public class VerifyContactsApi extends AsyncTask<Void, Integer, String> {
-	
+public class VerifyContactsApi extends Service {
+
 	private static final String TAG = "VerifyContactsApi";
 	private Uri mUri;
 	private Context mContext;
+	private Intent mIntent;
 	private Cursor mCursor;
 	
-	public VerifyContactsApi(Context _context) {
-		mContext = _context;
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		mContext = this;
 	}
 
 	@Override
-	protected void onPreExecute() {
+	public int onStartCommand(Intent intent, int flags, int startId) {		
+		super.onStartCommand(intent, flags, startId);
+		mIntent = intent;		
+		if(Settings.isDebug())
+		{
+			Log.i(TAG, "Received start id " + startId + ": " + mIntent.getFlags());
+			Log.v(TAG, "Starting database consistency checks ...");
+			
+		}
+		
 		mUri = Uri.withAppendedPath(
-				PersonnalProofContentProvider.CONTENT_URI, "records");		
-	}
-	
-	@Override
-	protected String doInBackground(Void... _context) {
+				PersonnalProofContentProvider.CONTENT_URI, "records");
 		
 		mCursor = mContext.getContentResolver().query(mUri, null, null, null, null);	
-		int pg = 1;
 		
 		if (mCursor.moveToFirst()) {
 			
@@ -62,10 +75,7 @@ public class VerifyContactsApi extends AsyncTask<Void, Integer, String> {
 								new String[] { apiId }
 						);
 						Log.d(TAG, "CONTACT ACTUALISE: " + apiId);
-						publishProgress(pg);
-						pg++;
 					}
-					
 				}
 				else {
 					String mPhone = mCursor.getString(
@@ -88,23 +98,29 @@ public class VerifyContactsApi extends AsyncTask<Void, Integer, String> {
 			}while(mCursor.moveToNext());
 		}
 		
-		return mContext.getString(R.string.analysis_over);
-	}	
-	
-	@Override
-	protected void onPostExecute(String result) {
-		Toast.makeText(mContext, result, Toast.LENGTH_LONG)
-		.show();
-	}
-	
-	@Override
-	protected void onProgressUpdate(Integer... progress) {
+		mCursor.close();
+		
 		Toast.makeText(
 				mContext, 
-	mContext.getString(R.string.deleted_contact) + (int)progress[0], 
-				Toast.LENGTH_SHORT)
-				.show();
-
-
+				mContext.getString(R.string.analysis_over), 
+				Toast.LENGTH_LONG)
+		.show();
+	
+		return START_STICKY;
 	}
+
+	@Override
+	public void onDestroy() {
+		stopSelf();
+		super.onDestroy();
+	}
+	@Override
+	public IBinder onBind(Intent paramIntent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+
 }
