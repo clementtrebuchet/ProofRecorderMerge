@@ -5,20 +5,42 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Contact implements Serializable {
 	
+	private static final String DEFAULT_VALUE = "null";
+	
 	private String id;
 	private String contactName;
 	private String phoneNumber;
 	private String contractId;
 	
 	public Contact(){
-		this.init();
+		this.defaultInit();
 	}
 	
-	private void init(){
-		this.setId("null");
-		this.setContractId("null");
-		this.setContactName("null");
-		this.setPhoneNumber("null");
+	public Contact(String id, 
+			String apiId, 
+			String name, 
+			String phone){
+		this.fullInit(id, apiId, name, phone);
+	}
+	
+	private void defaultInit(){
+		this.fullInit(null, null, null, null);
+	}
+	
+	private void fullInit(
+			String id, 
+			String apiId, 
+			String name, 
+			String phone){
+		
+		this.setId(
+				id != null ? id : DEFAULT_VALUE);
+		this.setContractId(
+				apiId != null ? apiId : DEFAULT_VALUE);
+		this.setContactName(
+				name != null ? name : DEFAULT_VALUE);
+		this.setPhoneNumber(
+				phone != null ? phone : DEFAULT_VALUE);
 	}
 	
 	public String getContactName() {

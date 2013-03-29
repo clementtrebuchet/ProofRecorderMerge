@@ -21,6 +21,7 @@ import android.content.SearchRecentSuggestionsProvider;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MergeCursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -479,6 +480,8 @@ public class PersonnalProofContentProvider extends
 				i++;
 				Log.e(TAG, "ID CALL DELETED FROM FOLDER: " + c.getString(0));
 			}
+			
+			c.close();
 
 			for (String id : mIds) {
 				query = "SELECT titre from notesproof WHERE RecId='" + id
@@ -489,11 +492,14 @@ public class PersonnalProofContentProvider extends
 							"TITRE CALL'S NOTE DELETED FROM FOLDER: "
 									+ c.getString(0));
 				}
+				
+				c.close();
 			}
 
 		}
 
 		sqlDB.execSQL(" PRAGMA foreign_keys = ON ");
+		
 		mDeletedRows = sqlDB.delete("recordsproof", "telephone=?",
 				new String[] { mPhone.trim() });
 
@@ -511,11 +517,12 @@ public class PersonnalProofContentProvider extends
 						Log.e(TAG, "TITRE CALL'S NOTE DELETED FROM FOLDER: "
 								+ c.getString(0));
 					}
+					
+					c.close();
 				}
 			} catch (Exception e) {
 				Log.e(TAG, "E :: TITRE CALL'S NOTE DELETED FROM FOLDER: " + e);
-			}
-			c.close();
+			}			
 		}
 
 		sqlDB.close();
@@ -545,7 +552,7 @@ public class PersonnalProofContentProvider extends
 		try {
 			sqlDB = database.getWritableDatabase();
 		}
-		catch(Exception e) {
+		catch(SQLException e) {
 			sqlDB = database.getReadableDatabase();
 		}
 		
@@ -588,6 +595,7 @@ public class PersonnalProofContentProvider extends
 		}
 		finally {
 			c.close();
+			sqlDB.close();
 		}	
 		
 		return list;
@@ -729,7 +737,9 @@ public class PersonnalProofContentProvider extends
 				Log.e(TAG,
 						"RECORD_DISTINCT_UNKNOWN_CONTACTS: demande les entrées de façon distinct dans la table enregistrement:"
 								+ uri.getLastPathSegment());
+			
 			sqlDB = database.getWritableDatabase();
+			
 			cursor = sqlDB.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_RECODINGAPP + " WHERE "
 					+ ProofDataBase.COLUMN_CONTRACT_ID + "=? GROUP BY "
@@ -743,7 +753,9 @@ public class PersonnalProofContentProvider extends
 				Log.e(TAG,
 						"demande les entrées de façon distinct dans la table enregistrement:"
 								+ uri.getLastPathSegment());
+			
 			SQLiteDatabase sqlDB1 = database.getWritableDatabase();
+			
 			Cursor cursor1 = sqlDB1.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_RECODINGAPP + " GROUP BY telephone",
 					null);
@@ -754,7 +766,9 @@ public class PersonnalProofContentProvider extends
 				Log.e(TAG,
 						"demande les entrées de façon distinct dans la table enregistrement:"
 								+ uri.getLastPathSegment());
+			
 			SQLiteDatabase sqlDB11 = database.getWritableDatabase();
+			
 			Cursor cursor11 = sqlDB11.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_RECODINGAPP + " WHERE Isync = 0",
 					null);
@@ -794,16 +808,22 @@ public class PersonnalProofContentProvider extends
 			if (Settings.isDebug())
 				Log.e(TAG,
 						"demande les NOTE_NON_SYNC:" + uri.getLastPathSegment());
+			
 			SQLiteDatabase sqlDB111 = database.getWritableDatabase();
+			
 			Cursor cursor111 = sqlDB111.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_NOTES + " WHERE Isync = 0", null);
+			
 			cursor111.setNotificationUri(getContext().getContentResolver(), uri);
+			
 			return cursor111;
 
 			// Voice's Records
 
 		case VOICES:
+			
 			sqlDB = database.getWritableDatabase();
+			
 			cursor = sqlDB
 					.rawQuery(
 							"SELECT voicesproof._id, voicesproof.htime, voicesproof.taille, voicesproof.timestamp, voicesproof.emplacement FROM "
@@ -1100,7 +1120,14 @@ public class PersonnalProofContentProvider extends
 					"Demandes des enregistrements Voices: "
 							+ query);
 		
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
+		SQLiteDatabase sqlDB;
+
+		try {
+			sqlDB = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
 
 		Cursor cursor = sqlDB
 				.rawQuery(
@@ -1137,7 +1164,15 @@ public class PersonnalProofContentProvider extends
 		// int mSizePhone = mPhone.length();
 
 		Cursor[] cursors;
-		SQLiteDatabase db = database.getWritableDatabase();
+		
+		SQLiteDatabase db;
+
+		try {
+			db = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			db = database.getReadableDatabase();
+		}
 
 		if (mPhone.startsWith("+")) {
 			cursors = new Cursor[2];
@@ -1223,7 +1258,15 @@ public class PersonnalProofContentProvider extends
 		String[] tmpQueriesParts = null;
 		tmpQueriesParts = query.split(";");
 		
-		SQLiteDatabase db = database.getWritableDatabase();
+		SQLiteDatabase db;
+
+		try {
+			db = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			db = database.getReadableDatabase();
+		}
+		
 		mFinalQuery = tmpQueriesParts[0].trim();	
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
@@ -1415,9 +1458,17 @@ public class PersonnalProofContentProvider extends
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		int uriType = sURIMatcher.match(uri);
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
 		// int rowsDeleted = 0;
 		long id = 0;
+		
+		SQLiteDatabase sqlDB;
+
+		try {
+			sqlDB = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
 
 		sqlDB.execSQL(" PRAGMA foreign_keys = ON ");
 
@@ -1463,11 +1514,22 @@ public class PersonnalProofContentProvider extends
 		return Uri.parse(BASE_PATH + "/" + id);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.content.SearchRecentSuggestionsProvider#delete(android.net.Uri, java.lang.String, java.lang.String[])
+	 */
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		int uriType = sURIMatcher.match(uri);
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
 		int rowsDeleted = 0;
+		
+		SQLiteDatabase sqlDB;
+
+		try {
+			sqlDB = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
 
 		sqlDB.execSQL(" PRAGMA foreign_keys = ON ");
 
@@ -1607,8 +1669,16 @@ public class PersonnalProofContentProvider extends
 			String[] selectionArgs) {
 
 		int uriType = sURIMatcher.match(uri);
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
 		int rowsUpdated = 0;
+		
+		SQLiteDatabase sqlDB;
+
+		try {
+			sqlDB = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
 
 		sqlDB.execSQL(" PRAGMA foreign_keys = ON ");
 
@@ -1746,7 +1816,6 @@ public class PersonnalProofContentProvider extends
 		String[] available = {
 
 				// Phone Records
-
 				ProofDataBase.COLUMN_TELEPHONE,
 				ProofDataBase.COLUMN_CONTRACT_ID,
 				ProofDataBase.COLUMN_TIMESTAMP,
@@ -1759,7 +1828,6 @@ public class PersonnalProofContentProvider extends
 				ProofDataBase.COLUMN_ISYNC_PH,
 
 				// Phone's Note
-
 				ProofDataBase.COLUMN_NOTE,
 				ProofDataBase.COLUMN_ID_COLUMNRECODINGAPP_ID,
 				ProofDataBase.COLUMNNOTES_ID,
@@ -1767,23 +1835,22 @@ public class PersonnalProofContentProvider extends
 				ProofDataBase.COLUMN_ISYNC_NOP,
 
 				// Voice Records
-
 				ProofDataBase.COLUMNVOICE_ID,
 				ProofDataBase.COLUMN_VOICE_TIMESTAMP,
 				ProofDataBase.COLUMN_VOICE_FILE,
 				ProofDataBase.COLUMN_VOICE_TAILLE,
 				ProofDataBase.COLUMN_VOICE_HTIME,
 				ProofDataBase.COLUMN_ISYNC_VO,
+				
 				// Voice's Note
-
 				ProofDataBase.COLUMNVOICE_ID_COLUMNVOICE_ID,
 				ProofDataBase.COLUMNVOICE_NOTE,
 				ProofDataBase.COLUMNVOICE_NOTES_ID,
 				ProofDataBase.COLUMNVOICE_TITLE,
 				ProofDataBase.COLUMNVOICE_DATE_CREATION,
 				ProofDataBase.COLUMN_ISYNC_NOV,
+				
 				// Excluded Contacts
-
 				ProofDataBase.COLUMN_CONTACT_ID,
 				ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID,
 				ProofDataBase.COLUMN_DISPLAY_NAME,
@@ -1816,27 +1883,56 @@ public class PersonnalProofContentProvider extends
 
 
 	public static int getItemsCount(String mQuery) {
+		
+		SQLiteDatabase mSqlDb;
+		int count;
+		
+		try {
+			mSqlDb = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			mSqlDb = database.getReadableDatabase();
+		}
 
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
-		Cursor c = sqlDB.rawQuery(mQuery, null);
+		Cursor c = mSqlDb.rawQuery(mQuery, null);
 
-		return c.getCount();
+		count =  c.getCount();
+		
+		c.close();
+		
+		return count;
 	}
 
 	public static String getVoiceNoteById(String mId) {
+		
 		String query = "SELECT titre from voicenotesproof WHERE RecId=?";
 		String mTitle = "";
+		SQLiteDatabase mSqlDb;
 
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
-		Cursor c = sqlDB.rawQuery(query, new String[] { mId });
-
-		while (c != null && c.moveToNext()) {
-			mTitle = (c.getString(c
-					.getColumnIndex(ProofDataBase.COLUMNVOICE_TITLE)));
-
-			if (Settings.isDebug())
-				Log.d(TAG, "R.id.idrecord: " + mTitle);
+		try {
+			mSqlDb = database.getWritableDatabase();
 		}
+		catch(Exception e) {
+			mSqlDb = database.getReadableDatabase();
+		}
+		
+		Cursor c = mSqlDb.rawQuery(query, new String[] { mId });
+		
+		try {
+			while (c != null && c.moveToNext()) {
+				mTitle = (c.getString(c
+						.getColumnIndex(ProofDataBase.COLUMNVOICE_TITLE)));
+
+				if (Settings.isDebug())
+					Log.d(TAG, "R.id.idrecord: " + mTitle);
+			}
+		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}
+		finally {
+			c.close();
+		}		
 
 		return mTitle;
 	}
@@ -1845,17 +1941,42 @@ public class PersonnalProofContentProvider extends
 
 		String[] AllCounts = new String[2];
 
-		SQLiteDatabase mSqlDb = database.getWritableDatabase();
+		SQLiteDatabase mSqlDb;
+
+		try {
+			mSqlDb = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			mSqlDb = database.getReadableDatabase();
+		}
+		
 		String query = "SELECT count(*) from recordsproof";
 		Cursor cCalls = mSqlDb.rawQuery(query, null);
+		
+		try {
+			while (cCalls != null && cCalls.moveToNext())
+				AllCounts[0] = cCalls.getString(0);
+		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}
+		finally {
+			cCalls.close();
+		}
+		
 		query = "SELECT count(*) from voicesproof";
-		Cursor cVoice = mSqlDb.rawQuery(query, null);
-
-		while (cCalls != null && cCalls.moveToNext())
-			AllCounts[0] = cCalls.getString(0);
-
-		while (cVoice != null && cVoice.moveToNext())
-			AllCounts[1] = cVoice.getString(0);
+		Cursor cVoice = mSqlDb.rawQuery(query, null);		
+		
+		try {
+			while (cVoice != null && cVoice.moveToNext())
+				AllCounts[1] = cVoice.getString(0);
+		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}
+		finally {
+			cVoice.close();
+		}
 
 		return AllCounts;
 	}
@@ -1863,27 +1984,50 @@ public class PersonnalProofContentProvider extends
 	public static String[] getExContactsAndNotCount(ContentResolver cr) {
 
 		String[] AllCounts = new String[2];
-
-		SQLiteDatabase mSqlDb = database.getWritableDatabase();
-		String query = "SELECT count(*) from excludedcontactsproof";
+		SQLiteDatabase mSqlDb;
+		String query = "SELECT count(*) from excludedcontactsproof";		
+		
+		try {
+			mSqlDb = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			mSqlDb = database.getReadableDatabase();
+		}
+		
 		Cursor cEx = mSqlDb.rawQuery(query, null);
+		
+		try {
+			while (cEx != null && cEx.moveToNext())
+				AllCounts[0] = cEx.getString(0);
 
-		while (cEx != null && cEx.moveToNext())
-			AllCounts[0] = cEx.getString(0);
-
-		Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
-				ContactsContract.Contacts.HAS_PHONE_NUMBER + "=?",
-				new String[] { "1" }, null);
-
-		AllCounts[1] = (cur.getCount() - Integer.parseInt(AllCounts[0])) + "";
+				Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
+						ContactsContract.Contacts.HAS_PHONE_NUMBER + "=?",
+						new String[] { "1" }, null);
+				
+				AllCounts[1] = (cur.getCount() - Integer.parseInt(AllCounts[0])) + "";
+				
+				cur.close();
+		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}
+		finally {
+			cEx.close();
+		}
 
 		return AllCounts;
 	}
 
 
 
+	/**
+	 * @param type
+	 * @return
+	 */
 	public static List<Record> getRecordsFilesList1(Settings.mType type) {
+		
 		List<Record> list = new ArrayList<Record>();
+		SQLiteDatabase mSqlDb;
 		String query = "";
 
 		switch (type) {
@@ -1898,40 +2042,56 @@ public class PersonnalProofContentProvider extends
 			break;
 		default:
 			break;
+		}	
+		
+
+		try {
+			mSqlDb = database.getWritableDatabase();
 		}
+		catch(Exception e) {
+			mSqlDb = database.getReadableDatabase();
+		}
+		
+		Cursor c = mSqlDb.rawQuery(query, null);
+		
+		try {
+			while (c != null && c.moveToNext()) {
+				Record mRecord = new Record();
 
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
-		Cursor c = sqlDB.rawQuery(query, null);
+				switch (type) {
+				case CALL:
+					mRecord.setmId(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID)));
+					mRecord.setmFilePath(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMN_FILE)));
+					break;
 
-		while (c != null && c.moveToNext()) {
-			Record mRecord = new Record();
+				case VOICE_TITLED:
+					mRecord.setmId(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
+					mRecord.setmFilePath(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
+					break;
 
-			switch (type) {
-			case CALL:
-				mRecord.setmId(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID)));
-				mRecord.setmFilePath(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMN_FILE)));
-				break;
-
-			case VOICE_TITLED:
-				mRecord.setmId(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
-				mRecord.setmFilePath(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
-				break;
-
-			case VOICE_UNTITLED:
-				mRecord.setmId(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
-				mRecord.setmFilePath(c.getString(c
-						.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
-				break;
-			default:
-				break;
+				case VOICE_UNTITLED:
+					mRecord.setmId(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMNVOICE_ID)));
+					mRecord.setmFilePath(c.getString(c
+							.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
+					break;
+				default:
+					break;
+				}
+				list.add(mRecord);
 			}
-			list.add(mRecord);
 		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}
+		finally {
+			c.close();
+		}
+		
 		return list;
 	}
 

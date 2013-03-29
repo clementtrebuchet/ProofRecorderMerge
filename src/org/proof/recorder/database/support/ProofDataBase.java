@@ -57,8 +57,8 @@ public class ProofDataBase {
 	public static final String COLUMNVOICE_NOTE = "note";
 	public static final String COLUMNVOICE_DATE_CREATION = "date_cr";
 	public static final String COLUMN_ISYNC_NOV = "Isync";
+	
 	// Mapping excluded Contacts
-
 	public static String TABLE_EXCLUDED_CONTACTS = "excludedcontactsproof";
 	public static final String COLUMN_CONTACT_ID = "_id";
 	public static final String COLUMN_CONTRACT_CONTACTS_ID = "contacts_id";
@@ -75,6 +75,7 @@ public class ProofDataBase {
 
 	public ProofDataBase open() throws SQLException {
 		dbHelper = new ProofDataBaseHelper(this.context);
+		
 		database = dbHelper.getWritableDatabase();
 		return this;
 	}

@@ -23,13 +23,21 @@ import android.util.Log;
 public final class ContactsDataHelper {
 
 	private static enum type {
-		EXCLUDED, PHONE, CALLS_FOLDER_OF_KNOWN, CALLS_FOLDER_OF_UNKNOWN, INCOMMING_CALLS, OUTGOINGS_CALLS
+		EXCLUDED, 
+		PHONE, 
+		CALLS_FOLDER_OF_KNOWN, 
+		CALLS_FOLDER_OF_UNKNOWN, 
+		INCOMMING_CALLS, 
+		OUTGOINGS_CALLS
 	}
 
 	private final static String TAG = "ContactsDataHelper";
 
 	private static Context mContext;
-	private static ArrayList<Contact> mExcludedContacts, mPhoneContacts, mCallsFoldersKnownContacts, mCallsFoldersUnKnownContacts;
+	private static ArrayList<Contact>   mExcludedContacts, 
+										mPhoneContacts, 
+										mCallsFoldersKnownContacts, 
+										mCallsFoldersUnKnownContacts;
 
 	private static ArrayList<Record> mIncommingCalls, mOutGoingCalls;
 
@@ -247,7 +255,6 @@ public final class ContactsDataHelper {
 			else
 				mOutGoingCalls.add(mRecord);
 		}
-		cursor.close();
 	}
 	
 	private static void cursorToCallsFolderAdapter(Context mContext, Cursor cursor, type t) {
@@ -289,7 +296,6 @@ public final class ContactsDataHelper {
 			}
 						
 		}
-		cursor.close();
 	}
 
 	private static void cursorToPhoneAdapter(Cursor cursor) {
@@ -305,25 +311,26 @@ public final class ContactsDataHelper {
 			
 			String phone = "null";
 			
-			try
-			{
-
 			Cursor pCur = mContext.getApplicationContext().getContentResolver().query(
 					CommonDataKinds.Phone.CONTENT_URI, null,
 					CommonDataKinds.Phone.CONTACT_ID + " = ?",
 					new String[] { contactId }, null);
 			
-			while (pCur.moveToNext()) {
-				phone = pCur.getString(pCur
-						.getColumnIndex(CommonDataKinds.Phone.NUMBER));		
-			}
-			
-				pCur.close();
+			try
+			{
+						
+				while (pCur.moveToNext()) {
+					phone = pCur.getString(pCur
+							.getColumnIndex(CommonDataKinds.Phone.NUMBER));		
+				}				
 				//Log.e(TAG, phone);
 			}catch(Exception e)
 			{
 				if(Settings.isDebug())
 					Log.e(TAG, e.getMessage());
+			}
+			finally {
+				pCur.close();
 			}
 
 			contact.setPhoneNumber(phone);
@@ -340,7 +347,6 @@ public final class ContactsDataHelper {
 					mPhoneContacts.remove(contact);
 			}
 		}
-		cursor.close();
 	}
 
 	private static void cursorToExcludedAdapter(Cursor cursor) {
@@ -364,15 +370,16 @@ public final class ContactsDataHelper {
 
 			mExcludedContacts.add(contact);
 		}
-		cursor.close();
 	}
 
 	private static void getContacts(Uri uri, String[] projection,
 			String Selection, String[] selectionArgs, String Sorted, type t) {
+		
+		Cursor cursor = mContext.getContentResolver().query(uri,
+				projection, Selection, selectionArgs, Sorted);
+		
 		try {
-
-			Cursor cursor = mContext.getContentResolver().query(uri,
-					projection, Selection, selectionArgs, Sorted);
+			
 			switch (t) {
 
 			case EXCLUDED:
@@ -408,6 +415,9 @@ public final class ContactsDataHelper {
 			
 			if(Settings.isDebug())
 				Log.e(TAG, e.getMessage());
+		}
+		finally {
+			cursor.close();
 		}
 	}
 

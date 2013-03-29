@@ -26,6 +26,7 @@ public final class AndroidContactsHelper {
 		    String contactId = "null";
 	
 		    ContentResolver contentResolver = context.getContentResolver();
+		    
 		    Cursor contactLookup = contentResolver.query(uri, new String[] {BaseColumns._ID,
 		            ContactsContract.PhoneLookup.DISPLAY_NAME }, null, null, null);
 	
