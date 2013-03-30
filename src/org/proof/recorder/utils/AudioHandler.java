@@ -826,7 +826,7 @@ public class AudioHandler {
 		Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
 				mContext, mNumber);
 
-		values.put(ProofDataBase.COLUMN_TELEPHONE, mNumber);
+		values.put(ProofDataBase.COLUMN_TELEPHONE, mContact.getPhoneNumber());
 		values.put(ProofDataBase.COLUMN_SENS, mSense);
 
 		switch (format) {
@@ -884,7 +884,7 @@ public class AudioHandler {
 		values.put(ProofDataBase.COLUMN_HTIME, date);
 
 		if (Settings.isDebug()) {
-			Log.v(LOG_TAG, mNumber);
+			Log.v(LOG_TAG, mContact.getPhoneNumber());
 			Log.v(LOG_TAG, mFileName);
 			Log.v(LOG_TAG, getFileName());
 			Log.v(LOG_TAG, mSense);

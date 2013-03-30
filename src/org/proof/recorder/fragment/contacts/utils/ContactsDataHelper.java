@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 public final class ContactsDataHelper {
@@ -218,21 +219,15 @@ public final class ContactsDataHelper {
 		//removeRecordsDuplicates(mOutGoingCalls);
 		return mOutGoingCalls;
 	}	
-
+	
 	public static boolean isExcluded(Context context, String phoneNumber) {
 		
 		mContext = context;	
 		
-		_getExcludedList();
-		for (Contact c : mExcludedContacts) {
-			
-			if(Settings.isDebug())
-				Log.e(TAG, "CONTACT " + c.getContactName() + " (" + c.getPhoneNumber() + ") NUMERO RECU: " + phoneNumber);
-			
-			if (phoneNumber.contains(c.getPhoneNumber()))
-				return true;
-		}
-		return false;
+		_getExcludedContact(
+				PhoneNumberUtils.stripSeparators(phoneNumber));
+		
+		return mExcludedContacts.size() > 0;
 	}
 	
 	private static void cursorToInAndOutCallsAdapter(Cursor cursor) {
@@ -381,6 +376,11 @@ public final class ContactsDataHelper {
 			contact.setContractId(contractId);
 			contact.setContactName(name);
 			contact.setPhoneNumber(phone);
+			
+			if(Settings.isDebug()) {
+				Log.d(TAG, 
+						"Excluded contact added to collection: " + contact);
+			}
 
 			mExcludedContacts.add(contact);
 		}

@@ -1003,8 +1003,8 @@ public class PersonnalProofContentProvider extends
 				Log.d(TAG,
 						"(by phone) request for excluded contact: "
 								+ uri.getLastPathSegment());
-			queryBuilder.appendWhere(ProofDataBase.COLUMN_PHONE_NUMBER + "="
-					+ uri.getLastPathSegment());
+			queryBuilder.appendWhere(ProofDataBase.COLUMN_PHONE_NUMBER + "=\""
+					+ uri.getLastPathSegment() + "\"");
 			break;
 
 		case EXCLUDED_CONTACT_ID:
@@ -1034,6 +1034,7 @@ public class PersonnalProofContentProvider extends
 		
 		Cursor c = queryBuilder.query(db, projection, selection, selectionArgs,
 				null, null, sortOrder);
+		
 		// Make sure that potential listeners are getting notified
 		c.setNotificationUri(getContext().getContentResolver(), uri);
 

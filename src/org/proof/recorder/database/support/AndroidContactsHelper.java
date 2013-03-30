@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 
@@ -54,7 +55,7 @@ public final class AndroidContactsHelper {
 	
 		    mContact.setContractId(contactId);
 		    mContact.setContactName(name);
-		    mContact.setPhoneNumber(number);
+		    mContact.setPhoneNumber(PhoneNumberUtils.stripSeparators(number));
 		    
 		    return mContact;
 		}

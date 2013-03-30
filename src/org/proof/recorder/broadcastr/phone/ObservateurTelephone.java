@@ -78,17 +78,29 @@ public class ObservateurTelephone extends PhoneStateListener {
 				excluded = ContactsDataHelper.isExcluded(_context, _outNumber);
 			} catch (Exception e) {
 				if (Settings.isDebug())
-					Log.d(TAG, "ERROR ON 'ContactsDataHelper.isExcluded': " + e);
+					Log.e(TAG, "ERROR ON 'ContactsDataHelper.isExcluded': " + e);
 			}			
 			
 			setExcluded(excluded);
+			
+			if (Settings.isDebug()) {
+				Log.d(TAG,
+						"***********************************************"
+						);
+				Log.d(TAG,
+						"Contact Number: " + _outNumber + " is excluded: " + excluded
+						);
+				Log.d(TAG,
+						"***********************************************"
+						);
+			}				
 			
 			if (excluded) {
 				try {
 					this.finalize();
 				} catch (Throwable e) {
 					if (Settings.isDebug())
-						Log.d(TAG, "ERROR ON FINALIZE: " + e);
+						Log.e(TAG, "ERROR ON FINALIZE: " + e);
 				}
 				return;
 			}

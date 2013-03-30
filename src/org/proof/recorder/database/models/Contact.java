@@ -2,6 +2,8 @@ package org.proof.recorder.database.models;
 
 import java.io.Serializable;
 
+import android.telephony.PhoneNumberUtils;
+
 @SuppressWarnings("serial")
 public class Contact implements Serializable {
 
@@ -59,7 +61,7 @@ public class Contact implements Serializable {
 		return phoneNumber;
 	}
 	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+		this.phoneNumber = PhoneNumberUtils.stripSeparators(phoneNumber);
 	}
 	public String getContractId() {
 		return contractId;
