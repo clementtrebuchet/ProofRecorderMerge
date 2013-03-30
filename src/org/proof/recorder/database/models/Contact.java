@@ -4,35 +4,35 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Contact implements Serializable {
-	
+
 	private static final String DEFAULT_VALUE = "null";
-	
+
 	private String id;
 	private String contactName;
 	private String phoneNumber;
 	private String contractId;
-	
+
 	public Contact(){
 		this.defaultInit();
 	}
-	
+
 	public Contact(String id, 
 			String apiId, 
 			String name, 
 			String phone){
 		this.fullInit(id, apiId, name, phone);
 	}
-	
+
 	private void defaultInit(){
 		this.fullInit(null, null, null, null);
 	}
-	
+
 	private void fullInit(
 			String id, 
 			String apiId, 
 			String name, 
 			String phone){
-		
+
 		this.setId(
 				id != null ? id : DEFAULT_VALUE);
 		this.setContractId(
@@ -42,7 +42,7 @@ public class Contact implements Serializable {
 		this.setPhoneNumber(
 				phone != null ? phone : DEFAULT_VALUE);
 	}
-	
+
 	public String getContactName() {
 		return contactName;
 	}
@@ -64,7 +64,7 @@ public class Contact implements Serializable {
 	public String getContractId() {
 		return contractId;
 	}
-	
+
 	public long getLongContractId() {
 		long id;
 		try {
@@ -74,17 +74,17 @@ public class Contact implements Serializable {
 		}		
 		return id;
 	}
-	
+
 	public void setContractId(String contractId) {
 		this.contractId = contractId;
 	}
-	
+
 	@Override
 	public String toString(){
-		String contactStr = "Id: " + this.getId() + " ContractId: " +
-							this.getContractId() + " ContactName: " +
-							this.getContactName() + " PhoneNumber: " +
-							this.getPhoneNumber();
+		String contactStr = "Id: " + this.getId() + 
+				" ContractId: " + this.getContractId() + 
+				" ContactName: " + this.getContactName() + 
+				" PhoneNumber: " + this.getPhoneNumber();
 		return contactStr;
 	}
 }

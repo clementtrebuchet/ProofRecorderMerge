@@ -92,6 +92,7 @@ public class PersonnalProofContentProvider extends
 	 */
 	private static final int EXCLUDED_CONTACTS = 130;
 	private static final int EXCLUDED_CONTACT_ID = 140;
+	private static final int EXCLUDED_CONTACT_BY_PHONE = 1000;
 
 	// ///////////////////////////////////////////////////////////
 
@@ -209,8 +210,12 @@ public class PersonnalProofContentProvider extends
 
 		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
 				+ "/excluded_contacts";
+		
 		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
 				+ "/excluded_contact_id";
+		
+		public static final String CONTENT_BY_PHONE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+				+ "/excluded_contact_phone";
 	}
 
 	/**
@@ -303,6 +308,9 @@ public class PersonnalProofContentProvider extends
 
 		case EXCLUDED_CONTACT_ID:
 			return excludedContacts.CONTENT_ITEM_TYPE;
+			
+		case EXCLUDED_CONTACT_BY_PHONE:
+			return excludedContacts.CONTENT_BY_PHONE;
 
 		default:
 			throw new UnsupportedOperationException("getType -> Unknown uri: "
@@ -392,21 +400,44 @@ public class PersonnalProofContentProvider extends
 
 		sURIMatcher.addURI(getAuthority(), BASE_PATH + "/excluded_contacts",
 				EXCLUDED_CONTACTS);
+		
 		sURIMatcher.addURI(getAuthority(),
 				BASE_PATH + "/excluded_contact_id/#", EXCLUDED_CONTACT_ID);
+		
+		sURIMatcher.addURI(getAuthority(),
+				BASE_PATH + "/excluded_contact_phone/*", EXCLUDED_CONTACT_BY_PHONE);
 	}
 
 	public static int lastInsertId(String Nondelabase) {
 		int lastId = 0;
+		SQLiteDatabase sqlDB;
+		
 		String query = "SELECT _id from " + Nondelabase
 				+ " order by _id DESC limit 1";
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
-		Cursor c = sqlDB.rawQuery(query, null);
-		if (c != null && c.moveToFirst()) {
-			lastId = c.getInt(0); // The 0 is the column index, we only have 1
-									// column, so the index is 0
-			return lastId;
+		
+		try {
+			sqlDB = database.getWritableDatabase();
 		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
+		
+		Cursor c = sqlDB.rawQuery(query, null);
+		
+		try {
+			if (c != null && c.moveToFirst()) {
+				lastId = c.getInt(0); // The 0 is the column index, we only have 1
+										// column, so the index is 0
+				return lastId;
+			}
+		}
+		catch(Exception e) {
+			Log.e(TAG, "" + e);
+		}
+		finally {
+			c.close();
+		}	
+		
 		return lastId;
 
 	}
@@ -627,6 +658,13 @@ public class PersonnalProofContentProvider extends
 		Cursor cursor;
 		// Check if the caller has requested a column which does not exists
 		checkColumns(projection);
+		
+		try {
+			sqlDB = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
 
 		// Set the table
 
@@ -697,7 +735,7 @@ public class PersonnalProofContentProvider extends
 			String mAndroidId = uri.getLastPathSegment().trim();
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande les entrées avec le ID Android dans la table enregistrement: "
 								+ mAndroidId);
 
@@ -708,7 +746,7 @@ public class PersonnalProofContentProvider extends
 			queryBuilder.setTables(ProofDataBase.TABLE_RECODINGAPP);
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande les entrées avec lenumero de telephone dans la table enregistrement"
 								+ uri.getLastPathSegment());
 			queryBuilder.appendWhere(ProofDataBase.COLUMN_TELEPHONE + " LIKE "
@@ -717,10 +755,10 @@ public class PersonnalProofContentProvider extends
 		case RECORD_DISTINCT_KNOWN_CONTACTS:
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"RECORD_DISTINCT_KNOWN_CONTACTS: demande les entrées de façon distinct dans la table enregistrement:"
 								+ uri.getLastPathSegment());
-			sqlDB = database.getWritableDatabase();
+
 			cursor = sqlDB
 					.rawQuery("SELECT * FROM "
 							+ ProofDataBase.TABLE_RECODINGAPP + " WHERE "
@@ -728,48 +766,46 @@ public class PersonnalProofContentProvider extends
 							+ "!=? GROUP BY "
 							+ ProofDataBase.COLUMN_CONTRACT_ID,
 							new String[] { "null" });
+			
 			cursor.setNotificationUri(getContext().getContentResolver(), uri);
 			return cursor;
 
 		case RECORD_DISTINCT_UNKNOWN_CONTACTS:
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"RECORD_DISTINCT_UNKNOWN_CONTACTS: demande les entrées de façon distinct dans la table enregistrement:"
 								+ uri.getLastPathSegment());
-			
-			sqlDB = database.getWritableDatabase();
 			
 			cursor = sqlDB.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_RECODINGAPP + " WHERE "
 					+ ProofDataBase.COLUMN_CONTRACT_ID + "=? GROUP BY "
 					+ ProofDataBase.COLUMN_TELEPHONE, new String[] { "null" });
 			cursor.setNotificationUri(getContext().getContentResolver(), uri);
+			
 			return cursor;
 			
 		case RECORD_UNIC_TEL:
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande les entrées de façon distinct dans la table enregistrement:"
 								+ uri.getLastPathSegment());
 			
-			SQLiteDatabase sqlDB1 = database.getWritableDatabase();
 			
-			Cursor cursor1 = sqlDB1.rawQuery("SELECT * FROM "
+			Cursor cursor1 = sqlDB.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_RECODINGAPP + " GROUP BY telephone",
 					null);
 			cursor1.setNotificationUri(getContext().getContentResolver(), uri);
+			
 			return cursor1;
 		case RECORD_NON_SYNC:
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande les entrées de façon distinct dans la table enregistrement:"
 								+ uri.getLastPathSegment());
 			
-			SQLiteDatabase sqlDB11 = database.getWritableDatabase();
-			
-			Cursor cursor11 = sqlDB11.rawQuery("SELECT * FROM "
+			Cursor cursor11 = sqlDB.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_RECODINGAPP + " WHERE Isync = 0",
 					null);
 			cursor11.setNotificationUri(getContext().getContentResolver(), uri);
@@ -785,7 +821,7 @@ public class PersonnalProofContentProvider extends
 			// Adding the ID to the original query
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande une entrée par le numéro de l'enregistrement"
 								+ uri.getLastPathSegment());
 			queryBuilder.appendWhere(ProofDataBase.COLUMNNOTES_ID + "="
@@ -796,7 +832,7 @@ public class PersonnalProofContentProvider extends
 			// Adding the ID to the original query
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande une entrée par le numéro de record de l'enregistrement"
 								+ uri.getLastPathSegment());
 			queryBuilder
@@ -806,12 +842,10 @@ public class PersonnalProofContentProvider extends
 
 		case NOTE_NON_SYNC:
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande les NOTE_NON_SYNC:" + uri.getLastPathSegment());
 			
-			SQLiteDatabase sqlDB111 = database.getWritableDatabase();
-			
-			Cursor cursor111 = sqlDB111.rawQuery("SELECT * FROM "
+			Cursor cursor111 = sqlDB.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_NOTES + " WHERE Isync = 0", null);
 			
 			cursor111.setNotificationUri(getContext().getContentResolver(), uri);
@@ -821,8 +855,6 @@ public class PersonnalProofContentProvider extends
 			// Voice's Records
 
 		case VOICES:
-			
-			sqlDB = database.getWritableDatabase();
 			
 			cursor = sqlDB
 					.rawQuery(
@@ -850,11 +882,9 @@ public class PersonnalProofContentProvider extends
 		case VOICE_BY_TITLE:
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande des enregistrements vocaux par le titre de leurs note: "
 								+ uri.getLastPathSegment());
-
-			sqlDB = database.getWritableDatabase();
 
 			cursor = sqlDB
 					.rawQuery(
@@ -879,11 +909,9 @@ public class PersonnalProofContentProvider extends
 		case VOICE_BY_UNTITLED:
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande des enregistrements vocaux par le titre de leurs note: "
 								+ uri.getLastPathSegment());
-
-			sqlDB = database.getWritableDatabase();
 
 			cursor = sqlDB
 					.rawQuery(
@@ -905,11 +933,11 @@ public class PersonnalProofContentProvider extends
 			return cursor;
 		case VOICE_NON_SYNC:
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande les entrées de façon sync dans la table voice:"
 								+ uri.getLastPathSegment());
-			SQLiteDatabase sqlDB12 = database.getWritableDatabase();
-			Cursor cursor12 = sqlDB12.rawQuery("SELECT * FROM "
+
+			Cursor cursor12 = sqlDB.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_VOICES + " WHERE Isync = 0",
 					null);
 			cursor12.setNotificationUri(getContext().getContentResolver(), uri);
@@ -925,7 +953,7 @@ public class PersonnalProofContentProvider extends
 			// Adding the ID to the original query
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande une entrée par le numéro de l'enregistrement"
 								+ uri.getLastPathSegment());
 			queryBuilder.appendWhere(ProofDataBase.COLUMNNOTES_ID + "="
@@ -938,7 +966,7 @@ public class PersonnalProofContentProvider extends
 			// Adding the ID to the original query
 
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande une entrée par le numéro de record de l'enregistrement voice"
 								+ uri.getLastPathSegment());
 			queryBuilder
@@ -948,11 +976,11 @@ public class PersonnalProofContentProvider extends
 		
 		case VOICE_NOTE_NON_SYNC:
 			if (Settings.isDebug())
-				Log.e(TAG,
+				Log.d(TAG,
 						"demande les entrées de façon sync dans la table voice:"
 								+ uri.getLastPathSegment());
-			SQLiteDatabase sqlDB13 = database.getWritableDatabase();
-			Cursor cursor13 = sqlDB13.rawQuery("SELECT * FROM "
+
+			Cursor cursor13 = sqlDB.rawQuery("SELECT * FROM "
 					+ ProofDataBase.TABLE_VOICE_NOTES + " WHERE Isync = 0",
 					null);
 			cursor13.setNotificationUri(getContext().getContentResolver(), uri);
@@ -963,6 +991,21 @@ public class PersonnalProofContentProvider extends
 		case EXCLUDED_CONTACTS:
 			queryBuilder.setTables(ProofDataBase.TABLE_EXCLUDED_CONTACTS);
 			break;
+			
+		// Handle the request for a given phone number
+		// and return the corresponding excluded contact object or default object.
+			
+		case EXCLUDED_CONTACT_BY_PHONE:
+			queryBuilder.setTables(ProofDataBase.TABLE_EXCLUDED_CONTACTS);
+			// Adding the ID to the original query
+
+			if (Settings.isDebug())
+				Log.d(TAG,
+						"(by phone) request for excluded contact: "
+								+ uri.getLastPathSegment());
+			queryBuilder.appendWhere(ProofDataBase.COLUMN_PHONE_NUMBER + "="
+					+ uri.getLastPathSegment());
+			break;
 
 		case EXCLUDED_CONTACT_ID:
 			queryBuilder.setTables(ProofDataBase.TABLE_EXCLUDED_CONTACTS);
@@ -970,7 +1013,7 @@ public class PersonnalProofContentProvider extends
 
 			if (Settings.isDebug())
 				Log.e(TAG,
-						"demande d'une entrée de contact exclu pour l'enregistrement: "
+						"(by id) request for excluded contact: "
 								+ uri.getLastPathSegment());
 			queryBuilder.appendWhere(ProofDataBase.COLUMN_CONTACT_ID + "="
 					+ uri.getLastPathSegment());
@@ -980,7 +1023,15 @@ public class PersonnalProofContentProvider extends
 			throw new IllegalArgumentException("query -> Unknown URI: " + uri);
 		}
 
-		SQLiteDatabase db = database.getWritableDatabase();
+		SQLiteDatabase db;
+		
+		try {
+			db = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			db = database.getReadableDatabase();
+		}
+		
 		Cursor c = queryBuilder.query(db, projection, selection, selectionArgs,
 				null, null, sortOrder);
 		// Make sure that potential listeners are getting notified
@@ -999,7 +1050,15 @@ public class PersonnalProofContentProvider extends
 		String[] tmpQueriesParts = null;
 		tmpQueriesParts = query.split(";");
 		
-		SQLiteDatabase sqlDB = database.getWritableDatabase();
+		SQLiteDatabase sqlDB;
+		
+		try {
+			sqlDB = database.getWritableDatabase();
+		}
+		catch(Exception e) {
+			sqlDB = database.getReadableDatabase();
+		}
+		
 		mFinalQuery = tmpQueriesParts[0].trim();	
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 

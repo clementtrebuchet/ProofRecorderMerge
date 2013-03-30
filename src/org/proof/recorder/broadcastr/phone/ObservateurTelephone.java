@@ -73,24 +73,25 @@ public class ObservateurTelephone extends PhoneStateListener {
 		case TelephonyManager.CALL_STATE_OFFHOOK:
 
 			boolean excluded = false;
+			
 			try {
 				excluded = ContactsDataHelper.isExcluded(_context, _outNumber);
 			} catch (Exception e) {
 				if (Settings.isDebug())
 					Log.d(TAG, "ERROR ON 'ContactsDataHelper.isExcluded': " + e);
-			}
-
+			}			
+			
+			setExcluded(excluded);
+			
 			if (excluded) {
 				try {
-					setExcluded(true);
 					this.finalize();
 				} catch (Throwable e) {
 					if (Settings.isDebug())
 						Log.d(TAG, "ERROR ON FINALIZE: " + e);
 				}
 				return;
-			} else
-				setExcluded(false);
+			}
 
 			if (Settings.isDebug())
 				Log.d(TAG,

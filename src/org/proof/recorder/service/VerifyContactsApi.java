@@ -93,7 +93,8 @@ public class VerifyContactsApi extends Service {
 		Uri mUri = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, "records");
 
-		Cursor mCursor = mContext.getContentResolver().query(mUri, proofProjection, null, null, null);
+		Cursor mCursor = mContext.getContentResolver().query(
+				mUri, proofProjection, null, null, null);
 
 		try {
 			while(mCursor.moveToNext()) {
@@ -102,9 +103,48 @@ public class VerifyContactsApi extends Service {
 						mCursor.getColumnIndex(
 								ProofDataBase.COLUMN_CONTRACT_ID
 								));
+				
 
-				if(!apiId.equals("null")) {
+				if(apiId.equals("null")) { // Unknown contact
+					
+					Log.d(TAG, "Unknown contact (id): " + apiId
+							+ " - type(" + apiId.getClass().getName() + ")");
+					
+					String mPhone = mCursor.getString(
+							mCursor.getColumnIndex(
+									ProofDataBase.COLUMN_TELEPHONE
+									));
+					
+					Log.d(TAG, "Unknown contact (phone): " + mPhone);
 
+					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(mContext, mPhone);
+					
+					Log.d(TAG, "Unknown contact (all): " + mContact);
+					
+					if(!mContact.getContractId().equals("null")) {
+						
+						ContentValues values = new ContentValues();
+						values.put(
+								ProofDataBase.COLUMN_CONTRACT_ID, 
+								mContact.getContractId());
+						
+						Log.d(TAG, 
+								"Unknown contact (all): " + mContact + "\n" +
+								"Uri: " + mUri
+								);
+						
+						mContext.getContentResolver().update(
+								mUri,
+								values, 
+								" " + ProofDataBase.COLUMN_TELEPHONE + "=?",
+								new String[] { mPhone }
+								);
+					}
+				}
+				else { // Known contact
+
+					Log.d(TAG, "Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
+					
 					Cursor pCur = mContext.getApplicationContext().getContentResolver().query(
 							CommonDataKinds.Phone.CONTENT_URI, null,
 							CommonDataKinds.Phone.CONTACT_ID + " = ?",
@@ -121,24 +161,6 @@ public class VerifyContactsApi extends Service {
 								new String[] { apiId }
 								);
 						Log.d(TAG, "CONTACT ACTUALISE: " + apiId);
-					}
-				}
-				else {
-					String mPhone = mCursor.getString(
-							mCursor.getColumnIndex(
-									ProofDataBase.COLUMN_TELEPHONE
-									));
-
-					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(mContext, mPhone);
-					if(mContact.getContactName() != "? " + mContext.getString(R.string.unknownContact)) {
-						ContentValues values = new ContentValues();
-						values.put(ProofDataBase.COLUMN_CONTRACT_ID, mContact.getContractId());
-						mContext.getContentResolver().update(
-								mUri,
-								values, 
-								" " + ProofDataBase.COLUMN_CONTRACT_ID + "=?",
-								new String[] { apiId }
-								);
 					}
 				}				
 			}		

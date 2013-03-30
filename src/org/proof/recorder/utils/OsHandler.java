@@ -18,17 +18,28 @@ public class OsHandler {
 	private static final String TAG = "OsHandler";
 	
 	private static List<Record> calls, voices;
+	
 	private static List<String> filesListVoices, filesListCalls;
 
+	/**
+	 * 
+	 */
 	private OsHandler() {
-
+		Log.d(TAG, "Initialisation: " + this.getClass().getName());
 	}
 
+	/**
+	 * @param mFileName
+	 * @throws IOException
+	 */
 	public static void deleteFileFromDisk(String mFileName) throws IOException {
 		File file = new File(mFileName);
 		file.delete();
 	}
 	
+	/**
+	 * 
+	 */
 	private static void listAppDirs() {
 		
 		filesListVoices = new ArrayList<String>();
@@ -46,7 +57,7 @@ public class OsHandler {
 	        		{
 	        			filesListVoices.add(f.getPath());
 	        			if (Settings.isDebug())
-		        			Log.e(TAG,
+		        			Log.d(TAG,
 									"listAppDirs()->files: "
 											+ f.getPath());
 	        		}
@@ -54,7 +65,7 @@ public class OsHandler {
 	        		{
 	        			filesListCalls.add(f.getPath());
 	        			if (Settings.isDebug())
-		        			Log.e(TAG,
+		        			Log.d(TAG,
 									"listAppDirs()->files: "
 											+ f.getPath());
 	        		}
@@ -64,56 +75,50 @@ public class OsHandler {
 	        }
 		}		
 	}
+	
+	private static void evaluateContext(String absolutePath) {
+		
+		int count = PersonnalProofContentProvider.isRecordInDb(
+				absolutePath, 
+				Settings.mType.CALL);
+		
+		if(count <= 0)
+		{
+			try {
+				deleteFileFromDisk(absolutePath);
+				if (Settings.isDebug())
+					Log.d(TAG,
+							"deleteFileFromDisk(): "
+									+ absolutePath);
+			} catch (IOException e) {
+				if (Settings.isDebug())
+					Log.e(TAG,
+							"checkDirectoriesStructureIntegrity()->calls: "
+									+ e.getMessage());
+			}
+		}
+	}
 
+	/**
+	 * 
+	 */
 	private static void makeAppDirectoriesEqualsToDb() {
 		
 		listAppDirs();
 		
-		for (String absolutePath : filesListCalls) {
-			if(PersonnalProofContentProvider.isRecordInDb(
-					absolutePath, 
-					Settings.mType.CALL) == -1 &&
-					PersonnalProofContentProvider.isRecordInDb(
-							absolutePath, 
-							Settings.mType.CALL) == 0
-			)
-			{
-				try {
-					deleteFileFromDisk(absolutePath);
-					if (Settings.isDebug())
-						Log.e(TAG,
-								"deleteFileFromDisk(): "
-										+ absolutePath);
-				} catch (IOException e) {
-					if (Settings.isDebug())
-						Log.e(TAG,
-								"checkDirectoriesStructureIntegrity()->calls: "
-										+ e.getMessage());
-				}
-			}
+		for (String absolutePath : filesListCalls) {			
+			evaluateContext(absolutePath);
 		}
 		
 		for (String absolutePath : filesListVoices) {
-			if(PersonnalProofContentProvider.isRecordInDb(
-					absolutePath, 
-					Settings.mType.VOICE_TITLED) == -1 &&
-					PersonnalProofContentProvider.isRecordInDb(
-							absolutePath, 
-							Settings.mType.VOICE_TITLED) == 0
-			)
-			{
-				try {
-					deleteFileFromDisk(absolutePath);
-				} catch (IOException e) {
-					if (Settings.isDebug())
-						Log.e(TAG,
-								"checkDirectoriesStructureIntegrity()->calls: "
-										+ e.getMessage());
-				}
-			}
+			evaluateContext(absolutePath);
 		}
 	}
 	
+	/**
+	 * @param mContext
+	 * @param uri
+	 */
 	private static void deleteFromUri(Context mContext, Uri uri) {
 		try {
 			mContext.getContentResolver().delete(uri, null, null);
@@ -123,11 +128,17 @@ public class OsHandler {
 		}
 	}
 
+	/**
+	 * @param mContext
+	 */
 	public static void checkDirectoriesStructureIntegrity(Context mContext) {
+		
 		File tmp = null;
 		String mFile = "";
+		
 		calls = PersonnalProofContentProvider
 				.getRecordsFilesList(Settings.mType.CALL);
+		
 		for (Record call : calls) {
 			mFile = call.getmFilePath().trim();
 			tmp = new File(mFile);
@@ -140,6 +151,7 @@ public class OsHandler {
 
 		voices = PersonnalProofContentProvider
 				.getRecordsFilesList(Settings.mType.VOICE_TITLED);
+		
 		for (Record voice : voices) {
 			mFile = voice.getmFilePath().trim();
 			tmp = new File(mFile);

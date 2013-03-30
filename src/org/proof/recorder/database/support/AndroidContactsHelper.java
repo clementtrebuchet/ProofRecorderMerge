@@ -21,7 +21,10 @@ public final class AndroidContactsHelper {
 			
 			Contact mContact = new Contact();
 			
-		    Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+		    Uri uri = Uri.withAppendedPath(
+		    		ContactsContract.PhoneLookup.CONTENT_FILTER_URI, 
+		    		Uri.encode(number));
+		    
 		    String name = "? " + context.getString(R.string.unknownContact);
 		    String contactId = "null";
 	
@@ -33,8 +36,11 @@ public final class AndroidContactsHelper {
 		    try {
 		        if (contactLookup != null && contactLookup.getCount() > 0) {
 		            contactLookup.moveToNext();
-		            name = contactLookup.getString(contactLookup.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
-		            contactId = contactLookup.getString(contactLookup.getColumnIndex(BaseColumns._ID));
+		            name = contactLookup.getString(
+		            		contactLookup.getColumnIndex(
+		            				ContactsContract.Data.DISPLAY_NAME));
+		            contactId = contactLookup.getString(
+		            		contactLookup.getColumnIndex(BaseColumns._ID));
 		        }
 		    }
 		    catch(Exception e) {

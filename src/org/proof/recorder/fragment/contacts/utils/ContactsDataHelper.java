@@ -69,6 +69,17 @@ public final class ContactsDataHelper {
 	private static void _getExcludedList() {
 		Uri uri = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, "excluded_contacts");
+		
+		getContacts(uri, excludedProjection, null, null,
+				ProofDataBase.COLUMN_DISPLAY_NAME, type.EXCLUDED);
+	}
+	
+	private static void _getExcludedContact(String phone) {
+		
+		Uri uri = Uri.withAppendedPath(
+				PersonnalProofContentProvider.CONTENT_URI, 
+				"excluded_contact_phone/" + phone);
+		
 		getContacts(uri, excludedProjection, null, null,
 				ProofDataBase.COLUMN_DISPLAY_NAME, type.EXCLUDED);
 	}
@@ -94,7 +105,7 @@ public final class ContactsDataHelper {
 				null, null, ProofDataBase.COLUMNRECODINGAPP_ID, type.CALLS_FOLDER_OF_UNKNOWN);
 	}
 	
-	private static void _getIncommingCalls(String mPhone, String mWhere) {
+	private static void _getIncommingCalls(String mPhoneOrId, String mWhere) {
 		String appendPath;
 		
 		if(mWhere.equalsIgnoreCase("phone"))
@@ -102,10 +113,11 @@ public final class ContactsDataHelper {
 		else if (mWhere.equalsIgnoreCase("android_id"))
 			appendPath = "records_by_android_id/";
 		else
-			throw new IllegalStateException("Bad appendPath variable line: 96 in _getIncommingCalls()");
+			throw new IllegalStateException("Bad appendPath variable line: 105 in _getIncommingCalls()");
 		
 		Uri uri = Uri.withAppendedPath(
-				PersonnalProofContentProvider.CONTENT_URI, appendPath + mPhone);		
+				PersonnalProofContentProvider.CONTENT_URI, appendPath + mPhoneOrId);
+		
 		getContacts(uri, InAndOutProjection,
 				null, null, ProofDataBase.COLUMN_HTIME, type.INCOMMING_CALLS);
 	}
@@ -208,7 +220,9 @@ public final class ContactsDataHelper {
 	}	
 
 	public static boolean isExcluded(Context context, String phoneNumber) {
-		mContext = context;
+		
+		mContext = context;	
+		
 		_getExcludedList();
 		for (Contact c : mExcludedContacts) {
 			
