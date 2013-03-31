@@ -58,7 +58,7 @@ public class OsHandler {
 	        			filesListVoices.add(f.getPath());
 	        			if (Settings.isDebug())
 		        			Log.d(TAG,
-									"listAppDirs()->files: "
+									"Voice file: "
 											+ f.getPath());
 	        		}
 	        		else if (f.isFile() && (i == 5 || i == 6))
@@ -66,7 +66,7 @@ public class OsHandler {
 	        			filesListCalls.add(f.getPath());
 	        			if (Settings.isDebug())
 		        			Log.d(TAG,
-									"listAppDirs()->files: "
+									"Call file: "
 											+ f.getPath());
 	        		}
 	        		else
@@ -76,6 +76,10 @@ public class OsHandler {
 		}		
 	}
 	
+	/**
+	 * 
+	 * @param absolutePath the system absolute path to be evaluated.
+	 */
 	private static void evaluateContext(String absolutePath) {
 		
 		int count = PersonnalProofContentProvider.isRecordInDb(
@@ -93,7 +97,7 @@ public class OsHandler {
 			} catch (IOException e) {
 				if (Settings.isDebug())
 					Log.e(TAG,
-							"checkDirectoriesStructureIntegrity()->calls: "
+							"checkDirectoriesStructureIntegrity(): "
 									+ e.getMessage());
 			}
 		}

@@ -78,7 +78,9 @@ public class ObservateurTelephone extends PhoneStateListener {
 				excluded = ContactsDataHelper.isExcluded(_context, _outNumber);
 			} catch (Exception e) {
 				if (Settings.isDebug())
-					Log.e(TAG, "ERROR ON 'ContactsDataHelper.isExcluded': " + e);
+					Log.e(TAG, 
+							"Exception 'ContactsDataHelper.isExcluded(<context>, ': " + _outNumber + "')" +
+							"Details': " + e);
 			}			
 			
 			setExcluded(excluded);
@@ -100,7 +102,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 					this.finalize();
 				} catch (Throwable e) {
 					if (Settings.isDebug())
-						Log.e(TAG, "ERROR ON FINALIZE: " + e);
+						Log.e(TAG, "Exception ObservateurTelephone()->this.finalize(): " + e);
 				}
 				return;
 			}
@@ -111,15 +113,19 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 			Intent Is = new Intent(_context, ServiceAudioRecord.class);
 			Bundle b = new Bundle();
+			
 			b.putString("Number", _outNumber);
 			b.putString("SENS", sENS_COM);
 
-			if (Settings.isDebug())
+			if (Settings.isDebug()){
 				Log.v(TAG, sENS_COM);
+			}				
 
 			Is.addFlags(Intent.FLAG_FROM_BACKGROUND);
 			Is.putExtras(b);
+			
 			_context.startService(Is);
+			
 			break;
 		case TelephonyManager.CALL_STATE_IDLE:
 

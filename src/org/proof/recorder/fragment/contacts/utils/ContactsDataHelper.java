@@ -19,6 +19,7 @@ import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
 import android.util.Log;
 
 public final class ContactsDataHelper {
@@ -218,11 +219,56 @@ public final class ContactsDataHelper {
 		_getOutGoingCalls(mPhone, mWhere);
 		//removeRecordsDuplicates(mOutGoingCalls);
 		return mOutGoingCalls;
-	}	
+	}
+	
+	private static void _print(String message, char level) {
+		
+		switch(level) {
+		
+		case 'v':
+			Log.v(TAG, message);
+			break;
+			
+		case 'i':
+			Log.i(TAG, message);
+			break;
+		
+		case 'e':
+			Log.d(TAG, message);
+			break;
+			
+		default:
+			Log.d(TAG, message);
+			break;
+		}
+		
+	}
+	
+	private static void print(String message) {		
+		_print(message, 'd');		
+	}
 	
 	public static boolean isExcluded(Context context, String phoneNumber) {
 		
 		mContext = context;	
+		
+		String stripped = PhoneNumberUtils.stripSeparators(phoneNumber);
+		
+		String formatNumber = PhoneNumberUtils.formatNumber(phoneNumber);
+		
+		String both = PhoneNumberUtils.formatNumber(stripped);
+		
+		String getStrippedReversed = PhoneNumberUtils.getStrippedReversed(phoneNumber);
+		
+		int toaFromString = PhoneNumberUtils.toaFromString(phoneNumber);
+		
+		print("Phone number original: " + phoneNumber);
+		print("Phone number stripped: " + stripped);
+		print("Phone number formatted: " + formatNumber);
+		print("Phone number formatted and stripped: " + both);
+		
+		print("Phone number getStrippedReversed: " + getStrippedReversed);
+		print("Phone number to TOA (int): " + toaFromString);
 		
 		_getExcludedContact(
 				PhoneNumberUtils.stripSeparators(phoneNumber));
@@ -332,7 +378,7 @@ public final class ContactsDataHelper {
 					phone = pCur.getString(pCur
 							.getColumnIndex(CommonDataKinds.Phone.NUMBER));		
 				}				
-				//Log.e(TAG, phone);
+
 			}catch(Exception e)
 			{
 				if(Settings.isDebug())
@@ -378,8 +424,7 @@ public final class ContactsDataHelper {
 			contact.setPhoneNumber(phone);
 			
 			if(Settings.isDebug()) {
-				Log.d(TAG, 
-						"Excluded contact added to collection: " + contact);
+				print("Excluded contact added to collection: " + contact);
 			}
 
 			mExcludedContacts.add(contact);

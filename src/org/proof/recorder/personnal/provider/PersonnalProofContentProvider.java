@@ -33,6 +33,10 @@ import android.util.Log;
  * @author clement
  * 
  */
+/**
+ * @author devel.machine
+ *
+ */
 public class PersonnalProofContentProvider extends
 		SearchRecentSuggestionsProvider {
 
@@ -408,6 +412,10 @@ public class PersonnalProofContentProvider extends
 				BASE_PATH + "/excluded_contact_phone/*", EXCLUDED_CONTACT_BY_PHONE);
 	}
 
+	/**
+	 * @param Nondelabase
+	 * @return
+	 */
 	public static int lastInsertId(String Nondelabase) {
 		int lastId = 0;
 		SQLiteDatabase sqlDB;
@@ -490,6 +498,10 @@ public class PersonnalProofContentProvider extends
 	}
 
 
+	/**
+	 * @param mPhone
+	 * @return
+	 */
 	public static int deleteContactsFolder(String mPhone) {
 		int mDeletedRows = -1;
 		String query, phone = mPhone.trim();
@@ -560,6 +572,11 @@ public class PersonnalProofContentProvider extends
 
 		return mDeletedRows;
 	}
+	
+	/**
+	 * @param type
+	 * @return
+	 */
 	public static List<Record> getRecordsFilesList(Settings.mType type) {
 		List<Record> list = new ArrayList<Record>();
 		String query = "";
@@ -633,6 +650,11 @@ public class PersonnalProofContentProvider extends
 	}
 
 
+	/**
+	 * @param uriType
+	 * @param mId
+	 * @return
+	 */
 	public static Uri deleteItem(String uriType, String mId) {
 		Uri uri = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, uriType + mId);
@@ -1041,6 +1063,15 @@ public class PersonnalProofContentProvider extends
 		return c;
 	}
 	
+	/**
+	 * @param queryBuilder
+	 * @param uri
+	 * @param projection
+	 * @param selection
+	 * @param selectionArgs
+	 * @param sortOrder
+	 * @return
+	 */
 	private Cursor searchRecordVoicesByDate(SQLiteQueryBuilder queryBuilder, Uri uri,
 			String[] projection, String selection, String[] selectionArgs,
 			String sortOrder) {
@@ -1169,6 +1200,15 @@ public class PersonnalProofContentProvider extends
 	}
 	
 	
+	/**
+	 * @param queryBuilder
+	 * @param uri
+	 * @param projection
+	 * @param selection
+	 * @param selectionArgs
+	 * @param sortOrder
+	 * @return
+	 */
 	private Cursor searchRecordVoices(SQLiteQueryBuilder queryBuilder, Uri uri,
 			String[] projection, String selection, String[] selectionArgs,
 			String sortOrder) {
@@ -1210,7 +1250,17 @@ public class PersonnalProofContentProvider extends
 		return cursor;
 	}
 
-	private Cursor searchRecordTel(SQLiteQueryBuilder queryBuilder, Uri uri, String[] projection, String selection,
+	/**
+	 * @param queryBuilder
+	 * @param uri
+	 * @param projection
+	 * @param selection
+	 * @param selectionArgs
+	 * @param sortOrder
+	 * @return
+	 */
+	private Cursor searchRecordTel(
+			SQLiteQueryBuilder queryBuilder, Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		queryBuilder.setTables(ProofDataBase.TABLE_RECODINGAPP);
 
@@ -1308,7 +1358,17 @@ public class PersonnalProofContentProvider extends
 	}
 	
 	
-	private Cursor searchRecordTelByDate(SQLiteQueryBuilder queryBuilder, Uri uri, String[] projection, String selection,
+	/**
+	 * @param queryBuilder
+	 * @param uri
+	 * @param projection
+	 * @param selection
+	 * @param selectionArgs
+	 * @param sortOrder
+	 * @return The Matching query Cursor object.
+	 */
+	private Cursor searchRecordTelByDate(
+			SQLiteQueryBuilder queryBuilder, Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		queryBuilder.setTables(ProofDataBase.TABLE_RECODINGAPP);
 
@@ -1515,10 +1575,14 @@ public class PersonnalProofContentProvider extends
 		}				
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.content.SearchRecentSuggestionsProvider#insert(android.net.Uri, android.content.ContentValues)
+	 */
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
+		
 		int uriType = sURIMatcher.match(uri);
-		// int rowsDeleted = 0;
+
 		long id = 0;
 		
 		SQLiteDatabase sqlDB;
