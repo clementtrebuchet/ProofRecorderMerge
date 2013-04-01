@@ -86,6 +86,9 @@ public class QuickActionDlg {
 			final InCommingCallsAdapter inAdapter, final Record mRecord) {
 		mContext = c;
 		MenuActions.setmContext(c);
+		
+		setHasSearch(true);
+		
 		injectQuickDlgMenu(c);
 
 		mQuickAction
@@ -107,7 +110,7 @@ public class QuickActionDlg {
 							
 						case ID_SEARCH:
 							Intent intent = new Intent(mContext, Search.class);
-							intent.putExtra("phone", mRecord.getmPhone());
+							intent.putExtra("phone", mRecord.getmDataNumber().get_nationalNumber());
 							mContext.startActivity(intent);
 							break;						
 
@@ -160,6 +163,9 @@ public class QuickActionDlg {
 		mContext = c;
 		MenuActions.setmVoiceAdapter(adapter);
 		MenuActions.setmContext(c);
+		
+		setHasSearch(false);
+		
 		injectQuickDlgMenu(c);
 		// Set listener for action item clicked
 		mQuickAction
@@ -223,6 +229,9 @@ public class QuickActionDlg {
 			final Object mCustomLoader) {
 		mCursor = c;
 		mContext = activity;
+		
+		setHasSearch(false);
+		
 		injectQuickDlgMenu(activity);
 		MenuActions.setmContext(activity);
 
@@ -288,6 +297,9 @@ public class QuickActionDlg {
 		mContext = activity;
 		MenuActions.setmVoiceAdapter(listAdapter);
 		MenuActions.setmContext(activity);
+		
+		setHasSearch(false);
+		
 		injectQuickDlgMenu(activity);
 		// Set listener for action item clicked
 		mQuickAction
@@ -343,6 +355,8 @@ public class QuickActionDlg {
 		mQuickAction.show(v);
 
 	}
+	
+	private static boolean hasSearch = false;
 
 	/**
 	 * Quick Actions Bar facility
@@ -350,6 +364,7 @@ public class QuickActionDlg {
 	 * @param context
 	 */
 	private static void injectQuickDlgMenu(Context context) {
+		
 		ActionItem display = new ActionItem(ID_DISPLAY,
 				mContext.getString(R.string.cm_records_list_display_txt),
 				mContext.getResources().getDrawable(R.drawable.quick_display));
@@ -361,12 +376,7 @@ public class QuickActionDlg {
 				mContext.getResources().getDrawable(R.drawable.quick_share));
 		ActionItem delete = new ActionItem(ID_DELETE,
 				mContext.getString(R.string.cm_records_list_del_file_txt),
-				mContext.getResources().getDrawable(R.drawable.quick_delete));
-		ActionItem search = new ActionItem(ID_SEARCH,
-				mContext.getString(R.string.cm_records_list_display_txt),
-				mContext.getResources().getDrawable(R.drawable.quick_display));
-		
-		
+				mContext.getResources().getDrawable(R.drawable.quick_delete));		
 
 		mQuickAction = new QuickAction(context);
 
@@ -374,7 +384,13 @@ public class QuickActionDlg {
 		mQuickAction.addActionItem(read);
 		mQuickAction.addActionItem(share);
 		mQuickAction.addActionItem(delete);
-		mQuickAction.addActionItem(search);
+		
+		if(hasSearch()) {
+			ActionItem search = new ActionItem(ID_SEARCH,
+					mContext.getString(R.string.search_quick_dlg_msg),
+					mContext.getResources().getDrawable(R.drawable.search));
+			mQuickAction.addActionItem(search);
+		}		
 
 		mQuickAction.setOnDismissListener(new QuickAction.OnDismissListener() {
 			@Override
@@ -561,5 +577,19 @@ public class QuickActionDlg {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return the hasSearch
+	 */
+	public static boolean hasSearch() {
+		return hasSearch;
+	}
+
+	/**
+	 * @param hasSearch the hasSearch to set
+	 */
+	public static void setHasSearch(boolean hasSearch) {
+		QuickActionDlg.hasSearch = hasSearch;
 	}
 }
