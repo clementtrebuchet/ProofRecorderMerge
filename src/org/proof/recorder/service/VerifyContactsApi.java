@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * @author devel.machine
@@ -171,6 +170,7 @@ public class VerifyContactsApi extends Service {
 						Cursor _cursor = mContext.getContentResolver().query(mUriById, null, null, null, null);
 						
 						if(_cursor.getCount() > 0) {
+							
 							String name = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_DISPLAY_NAME));
 							String phone = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_PHONE_NUMBER));
 							print("Found Contact in excluded table! (" + name + " - " + phone + ")");
