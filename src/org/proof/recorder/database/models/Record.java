@@ -3,12 +3,14 @@ package org.proof.recorder.database.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.proof.recorder.Settings;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 public class Record implements DataLayerInterface {
@@ -36,12 +38,13 @@ public class Record implements DataLayerInterface {
 	private static ContentResolver mResolver;
 	private Contact mContact;
 
-	private boolean hasDataLayer = false;
+	private static boolean hasDataLayer = false;
 
 	// Logging wrapping
 
 	protected void print(String message) {
-		Log.d(this.getClass().getName(), message);
+		if(Settings.isDebug())
+			Log.d(this.getClass().getName(), message);
 	}
 
 	protected void print_exception(String message) {
@@ -67,7 +70,7 @@ public class Record implements DataLayerInterface {
 		List<Record> mRecordCollection =  new ArrayList<Record>();
 		Record mRecord;
 
-		Cursor mCursor = Record.getmResolver().query(
+		Cursor mCursor = Record.getResolver().query(
 				mUriRecords, null, null, null, null);
 
 		if(mCursor.moveToFirst()) {
@@ -86,7 +89,7 @@ public class Record implements DataLayerInterface {
 
 		Uri mUri = Uri.withAppendedPath(mUriRecordById, id);
 
-		Cursor mCursor = Record.getmResolver().query(
+		Cursor mCursor = Record.getResolver().query(
 				mUri, null, null, null, null);
 
 		if(mCursor.moveToFirst()) {
@@ -123,7 +126,7 @@ public class Record implements DataLayerInterface {
 		return mUriRecords;
 	}
 
-	public boolean isHasDataLayer() {
+	public static boolean hasDataLayer() {
 		return hasDataLayer;
 	}
 
@@ -131,8 +134,8 @@ public class Record implements DataLayerInterface {
 		Record.mUriRecords = mUriRecords;
 	}
 
-	public void setHasDataLayer(boolean hasDataLayer) {
-		this.hasDataLayer = hasDataLayer;
+	public static void setHasDataLayer(boolean hasDataLayer) {
+		Record.hasDataLayer = hasDataLayer;
 	}
 
 	public Record () {
@@ -142,14 +145,41 @@ public class Record implements DataLayerInterface {
 	public Record (String id, String fileName) {
 		this.initialize(id, fileName);
 	}
-
-	public Record (ContentResolver resolver, String id, String fileName) {
-		this.initialize(id, fileName);
-		this.mDataNumber = new DataPhoneNumber(resolver);
+	
+	public Record (String id, String fileName, String phone) {
+		this.initialize(id, fileName, phone);
+	}
+	
+	public Record (String id, 
+				   String fileName, 
+				   String phone, 
+				   String sense, 
+				   String htime, 
+				   String mAndroidId) {
+		
+		this.initialize(id, fileName, phone);
+		setmSense(sense);
+		setmHtime(htime);
+		setmAndroidId(mAndroidId);
+		
+	}
+	
+	public boolean isIncomingCall() {
+		return this.getmSense().equalsIgnoreCase("e");
 	}
 
 	private void initialize(String id, String fileName) {
 		this.setmContact(new Contact());
+		this.mDataNumber = new DataPhoneNumber();
+		setmId(id);
+		setmFilePath(fileName);
+	}
+	
+	private void initialize(String id, String fileName, String phone) {
+		
+		this.setmContact(new Contact(phone));
+		this.mDataNumber = new DataPhoneNumber(phone);
+		setmPhone(phone);
 		setmId(id);
 		setmFilePath(fileName);
 	}
@@ -162,7 +192,7 @@ public class Record implements DataLayerInterface {
 		return mDataNumber;
 	}
 
-	public static ContentResolver getmResolver() {
+	public static ContentResolver getResolver() {
 		return mResolver;
 	}
 
@@ -170,8 +200,9 @@ public class Record implements DataLayerInterface {
 		this.mDataNumber = mDataNumber;
 	}
 
-	public static void setmResolver(ContentResolver mResolver) {
+	public static void setResolver(ContentResolver mResolver) {
 		Record.mResolver = mResolver;
+		setHasDataLayer(true);
 	}
 
 	public void setmHtime(String mHtime) {
@@ -224,9 +255,13 @@ public class Record implements DataLayerInterface {
 	/**
 	 * @param mPhone the mPhone to set
 	 */
-	public void setmPhone(String mPhone) {		
-		this.mDataNumber.set_originalNumber(mPhone);
-		this.mPhone = mPhone;
+	public void setmPhone(String mPhone) {			
+		this.mPhone = PhoneNumberUtils.stripSeparators(mPhone);
+		
+		if(hasDataLayer()) {
+			this.mContact.setPhoneNumber(this.mPhone);
+			this.mDataNumber.set_originalNumber(this.mPhone);
+		}		
 	}
 
 	/**
@@ -269,9 +304,16 @@ public class Record implements DataLayerInterface {
 	}
 
 	@Override
-	public void save() {		
-		this.mDataNumber.save();
-		this.fillValues();
-		getmResolver().insert(mUriRecords, DataLayerInterface._values);	
+	public void save() {
+		
+		if(hasDataLayer()) {
+			this.mDataNumber.save();
+			this.fillValues();
+			getResolver().insert(mUriRecords, DataLayerInterface._values);	
+		}
+		else {
+			print_exception("No data access (None ContentResolver has been passed)");
+		}
+		
 	}	
 }
