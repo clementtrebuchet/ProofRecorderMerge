@@ -285,6 +285,7 @@
 
     <!-- End Main sub Menu -->
 
+	<string name="search_quick_dlg_msg">Recherche</string>
     <string name="search_dialog_title">Module de Recherche</string>
     <string name="alert_dlg_datepicker_title">Dates &amp; Calendriers</string>
     <string name="alert_dialog_ok">Valider</string>

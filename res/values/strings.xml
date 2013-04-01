@@ -289,6 +289,7 @@
 
     <!-- End Main sub Menu -->
 
+	<string name="search_quick_dlg_msg">Search</string>
     <string name="search_dialog_title">Search Engine</string>
     <string name="alert_dlg_datepicker_title">Dates &amp; Calendars</string>
     <string name="alert_dialog_ok">Validate</string>
