@@ -6,6 +6,7 @@ import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.OsHandler;
 
 import android.app.Service;
 import android.content.ContentValues;
@@ -35,6 +36,8 @@ import android.util.Log;
  *     
  */
 public class VerifyContactsApi extends Service {
+	
+	private static boolean toProcess = true;
 
 	private Context mContext;
 	private Intent mIntent;
@@ -56,15 +59,25 @@ public class VerifyContactsApi extends Service {
 		super.onStartCommand(intent, flags, startId);
 
 		mIntent = intent;	
-
-		print("Received start id " + startId + ": " + mIntent.getFlags());
-		print("Starting database consistency checks ...");
-
-		// check potential deleted contacts from phone API.
-		this.checksDeletedContacts();
 		
-		print("Potential deleted Contacts from Phone API mapped!");
-		print(mContext.getString(R.string.analysis_over));
+		if(isToProcess()) {
+			print("Received start id " + startId + ": " + mIntent.getFlags());
+			print("Starting database consistency checks ...");
+			
+			// Check if all stored record into database really point onto existing 
+			// disk resource, if not delete the db record, on counter part, if a file
+			// has no corresponding db record, it's deleted.
+			
+			OsHandler.checkDirectoriesStructureIntegrity(this);
+
+			// check potential deleted contacts from phone API.
+			
+			this.checksDeletedContacts();
+			
+			print("Potential deleted Contacts from Phone API mapped!");
+			print(mContext.getString(R.string.analysis_over));
+			setToProcess(false);
+		}		
 
 		return START_STICKY;
 	}
@@ -100,6 +113,7 @@ public class VerifyContactsApi extends Service {
 				mUri, proofProjection, null, null, null);
 
 		try {
+			
 			while(mCursor.moveToNext()) {
 
 				String apiId = mCursor.getString(
@@ -145,7 +159,7 @@ public class VerifyContactsApi extends Service {
 
 					print("Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
 					
-					Cursor pCur = mContext.getApplicationContext().getContentResolver().query(
+					Cursor pCur = mContext.getContentResolver().query(
 							CommonDataKinds.Phone.CONTENT_URI, null,
 							CommonDataKinds.Phone.CONTACT_ID + " = ?",
 							new String[] { apiId }, null);
@@ -160,8 +174,8 @@ public class VerifyContactsApi extends Service {
 								" " + ProofDataBase.COLUMN_CONTRACT_ID + "=?", 
 								new String[] { apiId }
 								);
-						print("Updated contact API phone Id: " + apiId);
 						
+						print("Updated contact API phone Id: " + apiId);						
 						print("Checking for into excluded contacts table for match ...");						
 						
 						Uri mUriById = Uri.withAppendedPath(
@@ -178,6 +192,10 @@ public class VerifyContactsApi extends Service {
 							print("Deleted!");
 						}
 					}
+					
+					if( pCur != null && !pCur.isClosed() ) {
+						pCur.close();
+					}						
 				}				
 			}		
 		}
@@ -199,6 +217,20 @@ public class VerifyContactsApi extends Service {
 	public IBinder onBind(Intent paramIntent) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * @return the toProcess
+	 */
+	public static boolean isToProcess() {
+		return toProcess;
+	}
+
+	/**
+	 * @param toProcess the toProcess to set
+	 */
+	public static void setToProcess(boolean toProcess) {
+		VerifyContactsApi.toProcess = toProcess;
 	}
 
 }
