@@ -37,8 +37,6 @@ import android.widget.Toast;
  */
 public class VerifyContactsApi extends Service {
 
-	private static final String TAG = "VerifyContactsApi";
-
 	private Context mContext;
 	private Intent mIntent;
 
@@ -62,14 +60,14 @@ public class VerifyContactsApi extends Service {
 
 		if(Settings.isDebug())
 		{
-			Log.d(TAG, "Received start id " + startId + ": " + mIntent.getFlags());
-			Log.d(TAG, "Starting database consistency checks ...");
+			print("Received start id " + startId + ": " + mIntent.getFlags());
+			print("Starting database consistency checks ...");
 
 		}
 
 		// check potential deleted contacts from phone API.
 		this.checksDeletedContacts();
-		Log.d(TAG, "Potential deleted Contacts from Phone API mapped!");
+		print("Potential deleted Contacts from Phone API mapped!");
 
 
 		Toast.makeText(
@@ -81,6 +79,21 @@ public class VerifyContactsApi extends Service {
 		return START_STICKY;
 	}
 
+	
+	/**
+	 * @param message
+	 */
+	private void print(String message) {
+		if(Settings.isDebug())
+			Log.d(this.getClass().getName(), message);
+	}
+	
+	/**
+	 * @param message
+	 */
+	private void print_exception(String message) {
+		Log.e(this.getClass().getName(), message);
+	}
 
 
 	/**
@@ -107,7 +120,7 @@ public class VerifyContactsApi extends Service {
 
 				if(apiId.equals("null")) { // Unknown contact
 					
-					Log.d(TAG, "Unknown contact (id): " + apiId
+					print("Unknown contact (id): " + apiId
 							+ " - type(" + apiId.getClass().getName() + ")");
 					
 					String mPhone = mCursor.getString(
@@ -115,11 +128,11 @@ public class VerifyContactsApi extends Service {
 									ProofDataBase.COLUMN_TELEPHONE
 									));
 					
-					Log.d(TAG, "Unknown contact (phone): " + mPhone);
+					print("Unknown contact (phone): " + mPhone);
 
 					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(mContext, mPhone);
 					
-					Log.d(TAG, "Unknown contact (all): " + mContact);
+					print("Unknown contact (all): " + mContact);
 					
 					if(!mContact.getContractId().equals("null")) {
 						
@@ -128,10 +141,7 @@ public class VerifyContactsApi extends Service {
 								ProofDataBase.COLUMN_CONTRACT_ID, 
 								mContact.getContractId());
 						
-						Log.d(TAG, 
-								"Unknown contact (all): " + mContact + "\n" +
-								"Uri: " + mUri
-								);
+						print("Unknown contact (all): " + mContact + "\n" + "Uri: " + mUri);
 						
 						mContext.getContentResolver().update(
 								mUri,
@@ -143,7 +153,7 @@ public class VerifyContactsApi extends Service {
 				}
 				else { // Known contact
 
-					Log.d(TAG, "Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
+					print("Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
 					
 					Cursor pCur = mContext.getApplicationContext().getContentResolver().query(
 							CommonDataKinds.Phone.CONTENT_URI, null,
@@ -151,7 +161,7 @@ public class VerifyContactsApi extends Service {
 							new String[] { apiId }, null);
 
 					if(pCur.getCount() == 0) {
-						Log.d(TAG, "CONTACT SUPPRIME: " + apiId);
+						print("Deleted contact API phone Id: " + apiId);
 						ContentValues values = new ContentValues();
 						values.put(ProofDataBase.COLUMN_CONTRACT_ID, "null");
 						mContext.getContentResolver().update(
@@ -160,13 +170,13 @@ public class VerifyContactsApi extends Service {
 								" " + ProofDataBase.COLUMN_CONTRACT_ID + "=?", 
 								new String[] { apiId }
 								);
-						Log.d(TAG, "CONTACT ACTUALISE: " + apiId);
+						print("Updated contact API phone Id: " + apiId);
 					}
 				}				
 			}		
 		}
 		catch(Exception e) {
-			Log.e(TAG, "" + e);
+			print_exception("" + e);
 		}
 		finally {
 			mCursor.close();
