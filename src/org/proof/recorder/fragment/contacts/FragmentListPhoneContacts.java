@@ -196,30 +196,15 @@ public class FragmentListPhoneContacts extends Fragment {
 
 				selectedContacts.append(position, true);
 				
+				Contact.setResolver(
+						getActivity().getApplicationContext().getContentResolver());
+				
 				ContactAdapter ca = (ContactAdapter) getListAdapter();				
-				Contact c = ca.getItem(position);
-
-				ContentValues datas = new ContentValues();
-
-				String msg = "ID: " + c.getContractId() + " -> Name: "
-						+ c.getContactName() + " -> Phone: "
-						+ c.getPhoneNumber();
-
-				datas.put(ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID,
-						c.getContractId());
-				datas.put(ProofDataBase.COLUMN_DISPLAY_NAME, c.getContactName());
-				datas.put(ProofDataBase.COLUMN_PHONE_NUMBER, c.getPhoneNumber());
-
-				Uri uri = Uri.withAppendedPath(
-						PersonnalProofContentProvider.CONTENT_URI,
-						"excluded_contacts");
+				Contact c = ca.getItem(position);				
 
 				try {
-					getActivity().getApplicationContext().getContentResolver()
-							.insert(uri, datas);
-
-					int lastId = PersonnalProofContentProvider.lastInsertId("excludedcontactsproof");
-					c.setId(""+lastId);
+					
+					c.save();					
 					sendEventToExcludedList(c);
 					
 					ca.remove(c);
@@ -229,7 +214,7 @@ public class FragmentListPhoneContacts extends Fragment {
 				} catch (IllegalArgumentException e) {
 					
 					if(Settings.isDebug())
-						Log.e(TAG, msg + "->DETAILS: " + e.getMessage());
+						Log.e(TAG, c + "->DETAILS: " + e.getMessage());
 				}
 			}
 

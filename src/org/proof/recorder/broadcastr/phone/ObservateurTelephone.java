@@ -1,6 +1,4 @@
-package org.proof.recorder.broadcastr.phone;
-
-import org.proof.recorder.Settings;
+import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.service.ServiceAudioRecord;
 
@@ -73,13 +71,15 @@ public class ObservateurTelephone extends PhoneStateListener {
 		case TelephonyManager.CALL_STATE_OFFHOOK:
 
 			boolean excluded = false;
+			Contact contact = new Contact();
 			
 			try {
-				excluded = ContactsDataHelper.isExcluded(_context, _outNumber);
+				contact.setPhoneNumber(_outNumber);
 			} catch (Exception e) {
 				if (Settings.isDebug())
 					Log.e(TAG, 
 							"Exception 'ContactsDataHelper.isExcluded(<context>, ': " + _outNumber + "')" +
+							"Contact info: " + contact + 
 							"Details': " + e);
 			}			
 			

@@ -3,14 +3,21 @@ package org.proof.recorder.fragment.contacts.utils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
 
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -19,7 +26,7 @@ import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.telephony.PhoneNumberUtils;
-import android.text.Editable;
+
 import android.util.Log;
 
 public final class ContactsDataHelper {
@@ -65,8 +72,7 @@ public final class ContactsDataHelper {
 	ProofDataBase.COLUMN_CONTACT_ID };
 
 	// private Constructor -> force to call methods only
-	private ContactsDataHelper() {
-	}
+	private ContactsDataHelper() {}
 
 	private static void _getExcludedList() {
 		Uri uri = Uri.withAppendedPath(
@@ -244,31 +250,20 @@ public final class ContactsDataHelper {
 		
 	}
 	
-	private static void print(String message) {		
-		_print(message, 'd');		
+	private static void print(String message) {	
+		_print(message, 'd');	
+	}
+	
+	private static void print_exception(String message) {		
+		_print(message, 'e');	
 	}
 	
 	public static boolean isExcluded(Context context, String phoneNumber) {
 		
 		mContext = context;	
 		
-		String stripped = PhoneNumberUtils.stripSeparators(phoneNumber);
-		
-		String formatNumber = PhoneNumberUtils.formatNumber(phoneNumber);
-		
-		String both = PhoneNumberUtils.formatNumber(stripped);
-		
-		String getStrippedReversed = PhoneNumberUtils.getStrippedReversed(phoneNumber);
-		
-		int toaFromString = PhoneNumberUtils.toaFromString(phoneNumber);
-		
-		print("Phone number original: " + phoneNumber);
-		print("Phone number stripped: " + stripped);
-		print("Phone number formatted: " + formatNumber);
-		print("Phone number formatted and stripped: " + both);
-		
-		print("Phone number getStrippedReversed: " + getStrippedReversed);
-		print("Phone number to TOA (int): " + toaFromString);
+		SimplePhoneNumber _phoneNumber = new SimplePhoneNumber(phoneNumber);
+		_phoneNumber.toConsole();		
 		
 		_getExcludedContact(
 				PhoneNumberUtils.stripSeparators(phoneNumber));
