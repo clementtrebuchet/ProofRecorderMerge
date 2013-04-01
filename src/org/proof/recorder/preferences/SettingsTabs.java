@@ -44,11 +44,11 @@ public class SettingsTabs extends TabActivity {
 	                  .setContent(intent);	    
 	    tabHost.addTab(spec);
 	    
-	    intent = new Intent(this, ServerAccount.class);
+	    /*intent = new Intent(this, ServerAccount.class);
 	    spec = tabHost.newTabSpec("Secure").setIndicator(prepareTabView(this, "Autentification",
 	                      R.drawable.settings_auth))
 	                  .setContent(intent);	    
-	    tabHost.addTab(spec);
+	    tabHost.addTab(spec);*/
 
 	    tabHost.setCurrentTab(0);
 	}
