@@ -6,46 +6,45 @@ import android.content.ContentResolver;
 import android.net.Uri;
 
 public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterface {
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3370675016676353788L;
+
 	// Attributes
 	
-	private ContentResolver _resolver;
+	private static ContentResolver resolver;
 	
 	private static Uri uri = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "phone_numbers");
 	
 	// Constructors
 	
-	public DataPhoneNumber(ContentResolver _resolver) {
-		this.initialize(_resolver);
+	public DataPhoneNumber() {
+		this.initialize();
 		
 	}
 	
-	public DataPhoneNumber(ContentResolver _resolver, String phoneNumber) {
-		this.initialize(_resolver, phoneNumber);
+	public DataPhoneNumber(String phoneNumber) {
+		this.initialize(phoneNumber);
 	}
 	
 	// Initializing
 	
-	protected void initialize(ContentResolver _resolver) {
+	protected void initialize() {
 		super.initialize();
-		this.set_resolver(_resolver);
 	}
 	
-	protected void initialize(ContentResolver _resolver, String phoneNumber) {
+	protected void initialize(String phoneNumber) {
 		super.initialize(phoneNumber);
-		this.set_resolver(_resolver);
 	}
 	
 	// Methods
 	
 	public void save() {
 		this.fillValues();
-		this._resolver.insert(uri, DataLayerInterface._values);
-	}
-
-	private void set_resolver(ContentResolver _resolver) {
-		this._resolver = _resolver;
+		getResolver().insert(uri, DataLayerInterface._values);
 	}
 
 	@Override
@@ -54,6 +53,20 @@ public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterfa
 		DataLayerInterface._values.put("", this.get_nationalNumber());		
 		DataLayerInterface._values.put("", this.get_fullName());
 		DataLayerInterface._values.put("", this.get_shortName());		
+	}
+
+	/**
+	 * @return the resolver
+	 */
+	public static ContentResolver getResolver() {
+		return resolver;
+	}
+
+	/**
+	 * @param resolver the resolver to set
+	 */
+	public static void setResolver(ContentResolver resolver) {
+		DataPhoneNumber.resolver = resolver;
 	}
 	
 }
