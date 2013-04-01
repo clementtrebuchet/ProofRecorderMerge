@@ -1059,10 +1059,10 @@ public class PersonnalProofContentProvider extends
 			// Adding the ID to the original query
 
 			if (Settings.isDebug())
-				Log.e(TAG,
-						"(by id) request for excluded contact: "
+				Log.d(TAG,
+						"(by ApiId) request for excluded contact: "
 								+ uri.getLastPathSegment());
-			queryBuilder.appendWhere(ProofDataBase.COLUMN_CONTRACT_ID + "="
+			queryBuilder.appendWhere(ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID + "="
 					+ uri.getLastPathSegment());
 			break;
 
@@ -1798,12 +1798,12 @@ public class PersonnalProofContentProvider extends
 			if (TextUtils.isEmpty(selection)) {
 				rowsDeleted = sqlDB.delete(
 						ProofDataBase.TABLE_EXCLUDED_CONTACTS,
-						ProofDataBase.COLUMN_CONTRACT_ID + "=" + idExcluded,
+						ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID + "=" + idExcluded,
 						null);
 			} else {
 				rowsDeleted = sqlDB.delete(
 						ProofDataBase.TABLE_EXCLUDED_CONTACTS,
-						ProofDataBase.COLUMN_CONTRACT_ID + "=" + idExcluded
+						ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID + "=" + idExcluded
 								+ " and " + selection, selectionArgs);
 			}
 			break;

@@ -58,23 +58,14 @@ public class VerifyContactsApi extends Service {
 
 		mIntent = intent;	
 
-		if(Settings.isDebug())
-		{
-			print("Received start id " + startId + ": " + mIntent.getFlags());
-			print("Starting database consistency checks ...");
-
-		}
+		print("Received start id " + startId + ": " + mIntent.getFlags());
+		print("Starting database consistency checks ...");
 
 		// check potential deleted contacts from phone API.
 		this.checksDeletedContacts();
+		
 		print("Potential deleted Contacts from Phone API mapped!");
-
-
-		Toast.makeText(
-				mContext, 
-				mContext.getString(R.string.analysis_over), 
-				Toast.LENGTH_LONG)
-				.show();
+		print(mContext.getString(R.string.analysis_over));
 
 		return START_STICKY;
 	}
@@ -171,6 +162,21 @@ public class VerifyContactsApi extends Service {
 								new String[] { apiId }
 								);
 						print("Updated contact API phone Id: " + apiId);
+						
+						print("Checking for into excluded contacts table for match ...");						
+						
+						Uri mUriById = Uri.withAppendedPath(
+								PersonnalProofContentProvider.CONTENT_URI, "excluded_contract_id/" + apiId);
+						
+						Cursor _cursor = mContext.getContentResolver().query(mUriById, null, null, null, null);
+						
+						if(_cursor.getCount() > 0) {
+							String name = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_DISPLAY_NAME));
+							String phone = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_PHONE_NUMBER));
+							print("Found Contact in excluded table! (" + name + " - " + phone + ")");
+							mContext.getContentResolver().delete(mUriById, null, null);
+							print("Deleted!");
+						}
 					}
 				}				
 			}		
