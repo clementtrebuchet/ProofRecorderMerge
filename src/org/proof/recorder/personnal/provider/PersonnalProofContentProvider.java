@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.database.support.ProofDataBaseHelper;
 
@@ -766,13 +767,15 @@ public class PersonnalProofContentProvider extends
 			break;
 		case RECORD_TEL:
 			queryBuilder.setTables(ProofDataBase.TABLE_RECODINGAPP);
+			
+			SimplePhoneNumber mPhone = new SimplePhoneNumber(uri.getLastPathSegment());
 
 			if (Settings.isDebug())
 				Log.d(TAG,
 						"demande les entrées avec lenumero de telephone dans la table enregistrement"
 								+ uri.getLastPathSegment());
 			queryBuilder.appendWhere(ProofDataBase.COLUMN_TELEPHONE + " LIKE "
-					+ "\"%" + uri.getLastPathSegment() + "%\"");
+					+ "\"%" + mPhone.get_nationalNumber() + "%\"");
 			break;
 		case RECORD_DISTINCT_KNOWN_CONTACTS:
 
