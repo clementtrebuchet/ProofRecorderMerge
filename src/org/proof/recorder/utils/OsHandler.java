@@ -144,7 +144,7 @@ public class OsHandler {
 				.getRecordsFilesList(Settings.mType.CALL);
 		
 		for (Record call : calls) {
-			mFile = call.getmFilePath().trim();
+			mFile = call.getmFilePath();
 			tmp = new File(mFile);
 			if (!tmp.isFile()) {
 				Uri uri = PersonnalProofContentProvider.deleteItem(
@@ -157,11 +157,11 @@ public class OsHandler {
 				.getRecordsFilesList(Settings.mType.VOICE_TITLED);
 		
 		for (Record voice : voices) {
-			mFile = voice.getmFilePath().trim();
+			mFile = voice.getmFilePath();
 			tmp = new File(mFile);
 			if (!tmp.isFile()) {
 				Uri uri = PersonnalProofContentProvider.deleteItem("voice_id/",
-						voice.getmId().trim());
+						voice.getmId());
 				deleteFromUri(mContext, uri);
 			}
 		}
