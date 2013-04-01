@@ -1,11 +1,12 @@
 package org.proof.recorder;
 
-import org.proof.recorder.billing.vending.ProofStore;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.features.SpyRecorder;
 import org.proof.recorder.fragment.contacts.FragmentListPhoneContactsTabs;
+import org.proof.recorder.fragment.dialog.AboutApps;
 import org.proof.recorder.fragment.dialog.ApplicationInformations;
 import org.proof.recorder.fragment.dialog.PhoneInformations;
+
 import org.proof.recorder.fragment.dialog.Search;
 import org.proof.recorder.fragment.phone.FragmentListRecordFoldersTabs;
 import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
@@ -18,7 +19,6 @@ import org.proof.recorder.service.VerifyContactsApi;
 import org.proof.recorder.syncron.fragment.GMCActivity;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.ConnectivityInfo;
-import org.proof.recorder.utils.OsHandler;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.StaticNotifications;
 
@@ -88,8 +88,11 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 		SubMenu sub = menu.addSubMenu("+");
 		sub.add(0, 2, 1, getString(R.string.info_phone));
-		sub.add(0, 3, 2, getString(R.string.stats));
+		
+		//sub.add(0, 3, 2, getString(R.string.stats));
+		
 		sub.add(0, 4, 3, getString(R.string.about_us));
+		
 		sub.getItem().setShowAsAction(
 				MenuItem.SHOW_AS_ACTION_ALWAYS
 						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -152,7 +155,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		case 4:
 			if (!Settings.isNotLicensed()) {
 				Intent intent = new Intent(ProofRecorderActivity.this,
-						ProofStore.class);
+						AboutApps.class);
 				startActivity(intent);
 			}
 			return true;
@@ -243,8 +246,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		} else {
 			eulaChecker();
 		}
-		StaticNotifications.cancelNotification(this);
-		OsHandler.checkDirectoriesStructureIntegrity(this);
+		StaticNotifications.cancelNotification(this);		
 
 		// Microphone DashBoard Icon
 		ImageButton recordVoice = (ImageButton) findViewById(R.id.recordVoice);
