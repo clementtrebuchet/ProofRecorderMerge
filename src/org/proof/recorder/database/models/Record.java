@@ -210,7 +210,7 @@ public class Record implements DataLayerInterface {
 	}
 
 	public String getmSense() {
-		return mSense;
+		return mSense.trim();
 	}
 
 	public void setmSense(String mSense) {
@@ -221,7 +221,7 @@ public class Record implements DataLayerInterface {
 	 * @return the mId
 	 */
 	public String getmId() {
-		return mId;
+		return mId.trim();
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class Record implements DataLayerInterface {
 	 * @return the mFilePath
 	 */
 	public String getmFilePath() {
-		return mFilePath;
+		return mFilePath.trim();
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class Record implements DataLayerInterface {
 	 * @return the mAndroidId
 	 */
 	public String getmAndroidId() {
-		return mAndroidId;
+		return mAndroidId.trim();
 	}
 
 	/**
