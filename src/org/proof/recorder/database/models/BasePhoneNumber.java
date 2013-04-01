@@ -3,6 +3,8 @@ package org.proof.recorder.database.models;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.proof.recorder.Settings;
+
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
@@ -95,7 +97,8 @@ public abstract class BasePhoneNumber implements Serializable {
 	// Logging wrapping
 	
 	protected void print(String message) {
-		Log.d(this.getClass().getName(), message);
+		if(Settings.isDebug())
+			Log.d(this.getClass().getName(), message);
 	}
 	
 	protected void print_exception(String message) {

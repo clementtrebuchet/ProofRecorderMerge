@@ -2,6 +2,7 @@ package org.proof.recorder.database.models;
 
 import java.io.Serializable;
 
+import org.proof.recorder.Settings;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
@@ -13,6 +14,41 @@ import android.util.Log;
 
 @SuppressWarnings("serial")
 public class Contact implements Serializable, DataLayerInterface {
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((sPhoneNumber.get_nationalNumber() == null) ? 0 : sPhoneNumber.get_nationalNumber().hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		
+		Contact other = (Contact) obj;
+		if (sPhoneNumber == null) {
+			if (other.sPhoneNumber != null)
+				return false;
+		} else if (!sPhoneNumber.get_nationalNumber().equals(
+				other.sPhoneNumber.get_nationalNumber()))
+			return false;
+		
+		return true;
+	}
 
 	private static final String DEFAULT_VALUE = "null";
 	
@@ -109,6 +145,13 @@ public class Contact implements Serializable, DataLayerInterface {
 	public Contact(){
 		this.defaultInit();
 	}
+	
+	/**
+	 * @param phone
+	 */
+	public Contact(String phone){
+		this.fullInit(null, null, null, phone);
+	}
 
 	/**
 	 * @param id
@@ -194,6 +237,49 @@ public class Contact implements Serializable, DataLayerInterface {
 		this.phoneNumber = PhoneNumberUtils.stripSeparators(phoneNumber);
 		this.sPhoneNumber.set_originalNumber(this.phoneNumber);
 	}
+	
+	/**
+	 * 
+	 */
+	@SuppressWarnings("unused")
+	private void load() {
+		
+		if(hasDataHandler()) {			
+			
+			Uri uri = Uri.withAppendedPath(
+					mUriByPhone, 
+					this.getsPhoneNumber().get_nationalNumber());
+			
+			Cursor cursor = getResolver().query(uri,
+					null, null, null, null);
+			
+			try {
+				if(cursor.moveToFirst()) {
+					this.setContactName(
+							cursor.getColumnName(
+									cursor.getColumnIndex(
+											ProofDataBase.COLUMN_DISPLAY_NAME)));
+					
+					this.setContractId(
+							cursor.getColumnName(
+									cursor.getColumnIndex(
+											ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID)));
+					
+					this.setId(
+							cursor.getColumnName(
+									cursor.getColumnIndex(
+											ProofDataBase.COLUMN_CONTACT_ID)));
+				}	
+			}
+			catch(Exception e) {
+				this.print_exception(e.getMessage() + "");
+			}
+			finally {
+				cursor.close();	
+			}					
+		}	
+	}
+
 	/**
 	 * @return
 	 */
@@ -218,14 +304,15 @@ public class Contact implements Serializable, DataLayerInterface {
 	 * @param contractId
 	 */
 	public void setContractId(String contractId) {
-		this.contractId = contractId;
+		this.contractId = contractId != null ? contractId : "null";
 	}
 	
 	/**
 	 * @param message
 	 */
 	private void print(String message) {
-		Log.d(this.getClass().getName(), message);
+		if(Settings.isDebug())
+			Log.d(this.getClass().getName(), message);
 	}
 	
 	/**
