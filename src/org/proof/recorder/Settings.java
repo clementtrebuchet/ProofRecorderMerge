@@ -152,7 +152,7 @@ public final class Settings {
 	private static boolean mUAC_ASSISTED = false;
 	private static SharedPreferences mSharedPreferences;
 	private static final boolean TOAST_NOTIFICATIONS = true;
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private static boolean NOT_LICENSED = false;
 
