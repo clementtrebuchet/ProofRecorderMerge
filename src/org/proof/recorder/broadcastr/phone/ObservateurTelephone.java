@@ -71,6 +71,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 				Toast.makeText(_context, info, Toast.LENGTH_SHORT).show();
 			break;
 		case TelephonyManager.CALL_STATE_OFFHOOK:
+			
+			Contact.setResolver(_context.getApplicationContext().getContentResolver());
 
 			boolean excluded = false;
 			Contact contact = new Contact();
@@ -84,6 +86,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 							"Contact info: " + contact + 
 							"Details': " + e);
 			}			
+			
+			excluded = contact.isExcluded();
 			
 			setExcluded(excluded);
 			

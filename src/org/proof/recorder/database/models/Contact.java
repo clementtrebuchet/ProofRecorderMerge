@@ -29,7 +29,11 @@ public class Contact implements Serializable, DataLayerInterface {
 	private String phoneNumber;
 	private String contractId;
 	
-	private SimplePhoneNumber sPhoneNumber;
+	private SimplePhoneNumber sPhoneNumber;	
+		
+		public void toConsole() {
+			this.print(this.toString());
+		}
 	
 	public SimplePhoneNumber getsPhoneNumber() {
 		return sPhoneNumber;
@@ -37,25 +41,29 @@ public class Contact implements Serializable, DataLayerInterface {
 
 	private static ContentResolver resolver;
 	
-	private static boolean hasDataHandler;
+	private static boolean hasDataHandler = false;
 	
 	/**
 	 * @return
 	 */
 	public boolean isExcluded() {
+		int count = 0;
 		
-		int count;
+		if(hasDataHandler()) {			
+			
+			Uri uri = Uri.withAppendedPath(
+					mUriByPhone, 
+					this.getsPhoneNumber().get_nationalNumber());
+			
+			Cursor cursor = getResolver().query(uri,
+					null, null, null, null);
+			
+			count = cursor.getCount();
+			
+			cursor.close();			
+		}
 		
-		Uri uri = Uri.withAppendedPath(
-				mUriByPhone, 
-				this.getsPhoneNumber().get_nationalNumber());
-		
-		Cursor cursor = getResolver().query(uri,
-				null, null, null, null);
-		
-		count = cursor.getCount();
-		
-		cursor.close();
+		this.toConsole();
 		
 		return count > 0;
 	}
@@ -142,8 +150,6 @@ public class Contact implements Serializable, DataLayerInterface {
 				name != null ? name : DEFAULT_VALUE);
 		this.phoneNumber =
 				phone != null ? phone : DEFAULT_VALUE;
-		
-		setHasDataHandler(false);
 		
 		if(phone != null)
 			this.sPhoneNumber = new SimplePhoneNumber(phone);
