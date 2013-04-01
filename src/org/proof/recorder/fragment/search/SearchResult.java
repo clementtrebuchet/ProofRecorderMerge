@@ -30,11 +30,19 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class SearchResult extends SherlockFragmentActivity {
 
-	private static final String SEP_QUERY = ";", BR = "\n", TAG = "SearchResult";
+	private static final String SEP_QUERY = ";", BR = "\n";
 
 	private static boolean mByDate, mPreciseDate, mPeriodDate, mVoices, mCalls;
 	private static String mQuery, mPrecise, mStartingDate, mEndingDate;
 	private static Bundle extraDatas;
+	
+	/**
+	 * @param message
+	 */
+	private static void print(String message) {
+		if(Settings.isDebug())
+			Log.d(SearchResult.class.getName(), message);
+	}
 
 	@Override
 	public void onCreate(Bundle mIcicle) {
@@ -120,7 +128,7 @@ public class SearchResult extends SherlockFragmentActivity {
 
 			mLogMsg += "mQuery: " + mQuery;
 
-			Log.v(TAG, mLogMsg);
+			print(mLogMsg);
 		}
 
 		/**
@@ -167,7 +175,7 @@ public class SearchResult extends SherlockFragmentActivity {
 			setMenuVisibility(true);
 
 			if (Settings.isDebug())
-				Log.v(TAG, "PASS HERE");
+				print("PASS HERE");
 			
 			getLoaderManager().initLoader(LIST_LOADE, null, this);
 

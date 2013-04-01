@@ -212,10 +212,12 @@ public class FragmentListRecordIn extends Fragment {
 					view = vi.inflate(R.layout.listfragmentdroit, null);
 				}
 				Record mRecord = items.get(position);
-				if (mRecord != null) {		
+				if (mRecord != null) {	
+					
+					String origPhone = mRecord.getmPhone();
 					
 					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
-							getActivity(), mRecord.getmPhone());
+							getActivity(), origPhone);
 
 					TextView phTxt = (TextView) view.findViewById(R.id.number);
 					
@@ -236,10 +238,13 @@ public class FragmentListRecordIn extends Fragment {
 						Uri uri = ContentUris.withAppendedId(
 								ContactsContract.Contacts.CONTENT_URI,
 								mContact.getLongContractId());
+						
 						ContentResolver cr = getActivity().getContentResolver();
+						
 						input = ContactsContract.Contacts.openContactPhotoInputStream(cr,
 								uri);
 					}
+					
 					if (input == null) {
 
 					} else {
@@ -250,7 +255,7 @@ public class FragmentListRecordIn extends Fragment {
 						imageView.setImageBitmap(bitmap);
 					}
 
-					phTxt.setText(mRecord.getmPhone());
+					phTxt.setText(origPhone);
 					mHtime.setText(mRecord.getmHtime());
 								
 				}

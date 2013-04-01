@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 
@@ -20,7 +19,7 @@ public final class AndroidContactsHelper {
 
 	public static Contact getContactInfosByNumber(Context context, String number) {
 			
-			Contact mContact = new Contact();
+			Contact mContact = new Contact(number);
 			
 		    Uri uri = Uri.withAppendedPath(
 		    		ContactsContract.PhoneLookup.CONTENT_FILTER_URI, 
@@ -55,7 +54,6 @@ public final class AndroidContactsHelper {
 	
 		    mContact.setContractId(contactId);
 		    mContact.setContactName(name);
-		    mContact.setPhoneNumber(PhoneNumberUtils.stripSeparators(number));
 		    
 		    return mContact;
 		}

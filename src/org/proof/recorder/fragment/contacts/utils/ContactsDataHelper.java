@@ -3,7 +3,6 @@ package org.proof.recorder.fragment.contacts.utils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.TreeSet;
 
 import org.proof.recorder.Settings;
@@ -13,11 +12,6 @@ import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
-import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -69,7 +63,7 @@ public final class ContactsDataHelper {
 	ProofDataBase.COLUMNRECODINGAPP_ID,
 	ProofDataBase.COLUMN_TELEPHONE, ProofDataBase.COLUMN_SENS,
 	ProofDataBase.COLUMN_HTIME, ProofDataBase.COLUMN_FILE, 
-	ProofDataBase.COLUMN_CONTACT_ID };
+	ProofDataBase.COLUMN_CONTRACT_ID };
 
 	// private Constructor -> force to call methods only
 	private ContactsDataHelper() {}
@@ -121,7 +115,7 @@ public final class ContactsDataHelper {
 		else if (mWhere.equalsIgnoreCase("android_id"))
 			appendPath = "records_by_android_id/";
 		else
-			throw new IllegalStateException("Bad appendPath variable line: 105 in _getIncommingCalls()");
+			throw new IllegalStateException("Bad appendPath variable line: 118 in _getIncommingCalls()");
 		
 		Uri uri = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, appendPath + mPhoneOrId);
@@ -138,7 +132,7 @@ public final class ContactsDataHelper {
 		else if (mWhere.equalsIgnoreCase("android_id"))
 			appendPath = "records_by_android_id/";
 		else
-			throw new IllegalStateException("Bad appendPath variable line: 104 in _getOutGoingCalls()");
+			throw new IllegalStateException("Bad appendPath variable line: 135 in _getOutGoingCalls()");
 		
 		Uri uri = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, appendPath + mPhone);
@@ -214,7 +208,8 @@ public final class ContactsDataHelper {
 	}
 	
 	public static ArrayList<Record> getIncommingCalls(Context context, String mWhere, String mPhone) {
-		mContext = context;		
+		mContext = context;	
+		print("mPhone or Id" + mPhone + " mWhere: " + mWhere);
 		_getIncommingCalls(mPhone, mWhere);	
 		//removeRecordsDuplicates(mIncommingCalls);
 		return mIncommingCalls;
@@ -222,6 +217,7 @@ public final class ContactsDataHelper {
 
 	public static ArrayList<Record> getOutGoingCalls(Context context, String mWhere, String mPhone) {
 		mContext = context;
+		print("mPhone or Id" + mPhone + " mWhere: " + mWhere);
 		_getOutGoingCalls(mPhone, mWhere);
 		//removeRecordsDuplicates(mOutGoingCalls);
 		return mOutGoingCalls;
@@ -250,11 +246,18 @@ public final class ContactsDataHelper {
 		
 	}
 	
+	/**
+	 * @param message
+	 */
 	private static void print(String message) {	
 		_print(message, 'd');	
 	}
 	
-	private static void print_exception(String message) {		
+	/**
+	 * @param message
+	 */
+	@SuppressWarnings("unused")
+	private static void print_exception(String message) {
 		_print(message, 'e');	
 	}
 	
@@ -273,14 +276,19 @@ public final class ContactsDataHelper {
 	
 	private static void cursorToInAndOutCallsAdapter(Cursor cursor) {
 		
+		Record.setResolver(mContext.getApplicationContext().getContentResolver());
+		
 		mIncommingCalls = new ArrayList<Record>();
 		mOutGoingCalls = new ArrayList<Record>();
 		
 		while (cursor.moveToNext()) {
-			Record mRecord = new Record();
+			
 			
 			String mId = cursor.getString(cursor
 					.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID));
+			
+			String mAndroidId = cursor.getString(cursor
+					.getColumnIndex(ProofDataBase.COLUMN_CONTRACT_ID));
 			
 			String mPhone = cursor.getString(cursor
 					.getColumnIndex(ProofDataBase.COLUMN_TELEPHONE));
@@ -294,13 +302,10 @@ public final class ContactsDataHelper {
 			String mSense = cursor.getString(cursor
 					.getColumnIndex(ProofDataBase.COLUMN_SENS));
 			
-			mRecord.setmId(mId);
-			mRecord.setmHtime(mHtime);
-			mRecord.setmFilePath(mFile);
-			mRecord.setmSense(mSense);
-			mRecord.setmPhone(mPhone);
+			Record mRecord = new Record(
+					mId, mFile, mPhone, mSense, mHtime, mAndroidId);
 			
-			if(mSense.equalsIgnoreCase("E"))
+			if(mRecord.isIncomingCall())
 				mIncommingCalls.add(mRecord);
 			else
 				mOutGoingCalls.add(mRecord);
@@ -333,11 +338,15 @@ public final class ContactsDataHelper {
 			
 			switch (t) {
 			case CALLS_FOLDER_OF_KNOWN:
-				mCallsFoldersKnownContacts.add(mContact);
+				if(!mCallsFoldersKnownContacts.contains(mContact)) {
+					mCallsFoldersKnownContacts.add(mContact);
+				}				
 				break;
 				
 			case CALLS_FOLDER_OF_UNKNOWN:
-				mCallsFoldersUnKnownContacts.add(mContact);
+				if(!mCallsFoldersUnKnownContacts.contains(mContact)) {
+					mCallsFoldersUnKnownContacts.add(mContact);
+				}
 				break;
 
 			default:
@@ -351,7 +360,7 @@ public final class ContactsDataHelper {
 	private static void cursorToPhoneAdapter(Cursor cursor) {
 		mPhoneContacts = new ArrayList<Contact>();
 		while (cursor.moveToNext()) {
-			Contact contact = new Contact();
+			
 
 			String contactId = cursor.getString(cursor
 					.getColumnIndex(BaseColumns._ID));
@@ -382,8 +391,9 @@ public final class ContactsDataHelper {
 			finally {
 				pCur.close();
 			}
+			
+			Contact contact = new Contact(phone);
 
-			contact.setPhoneNumber(phone);
 			contact.setContractId(contactId);
 			contact.setContactName(name);
 			
@@ -403,7 +413,7 @@ public final class ContactsDataHelper {
 	private static void cursorToExcludedAdapter(Cursor cursor) {
 		mExcludedContacts = new ArrayList<Contact>();
 		while (cursor.moveToNext()) {
-			Contact contact = new Contact();
+			
 
 			String contactId = cursor.getString(cursor
 					.getColumnIndex(ProofDataBase.COLUMN_CONTACT_ID));
@@ -413,11 +423,12 @@ public final class ContactsDataHelper {
 					.getColumnIndex(ProofDataBase.COLUMN_DISPLAY_NAME));
 			String phone = cursor.getString(cursor
 					.getColumnIndex(ProofDataBase.COLUMN_PHONE_NUMBER));
+			
+			Contact contact = new Contact(phone);
 
 			contact.setId(contactId);
 			contact.setContractId(contractId);
 			contact.setContactName(name);
-			contact.setPhoneNumber(phone);
 			
 			if(Settings.isDebug()) {
 				print("Excluded contact added to collection: " + contact);

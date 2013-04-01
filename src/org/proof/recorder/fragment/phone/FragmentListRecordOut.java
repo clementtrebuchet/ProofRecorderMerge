@@ -214,10 +214,12 @@ public class FragmentListRecordOut extends Fragment {
 					view = vi.inflate(R.layout.listfragmentdroit, null);
 				}
 				Record mRecord = items.get(position);
-				if (mRecord != null) {		
+				if (mRecord != null) {
+					
+					String origPhone = mRecord.getmPhone();
 					
 					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
-							getActivity(), mRecord.getmPhone());
+							getActivity(), origPhone);
 
 					TextView phTxt = (TextView) view.findViewById(R.id.number);
 					
@@ -251,7 +253,7 @@ public class FragmentListRecordOut extends Fragment {
 						imageView.setImageBitmap(bitmap);
 					}
 
-					phTxt.setText(mRecord.getmPhone());
+					phTxt.setText(origPhone);
 					mHtime.setText(mRecord.getmHtime());
 								
 				}

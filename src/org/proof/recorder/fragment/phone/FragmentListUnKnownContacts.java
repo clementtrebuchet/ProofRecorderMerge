@@ -39,12 +39,20 @@ import com.actionbarsherlock.app.SherlockFragment;
 public class FragmentListUnKnownContacts extends SherlockFragment {
 	
 	//private final static String TAG = "FragmentListUnKnownContacts";
+	
+	/**
+	 * @param message
+	 */
+	private static void print(String message) {
+		if(Settings.isDebug())
+			Log.d(FragmentListUnKnownContacts.class.getName(), message);
+	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	}	
+	}
 
 	public static class UnKnownContactsLoader extends ListFragment
 	{
@@ -111,16 +119,16 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 			
 			ContactAdapter ca = (ContactAdapter) getListAdapter();				
 			Contact mContact = ca.getItem(recordPosition);
+
+			print("" + recordPosition);
 			
-			if(Settings.isDebug())
-				Log.v(TAG, "" + recordPosition);
 			if (item.getItemId() == R.id.cm_records_list_del_file) {
 				//MenuActions.deleteContactsFolder(mContact, getActivity(), ca);					
 				return true;
 			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
 				MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
-				if(Settings.isDebug())
-					Log.i("ContextMenu", "Display Item's details");
+
+				print("Display Item's details");
 				return true;
 			}
 			return super.onContextItemSelected(item);
@@ -186,8 +194,7 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 					if (input == null) {
 
 					} else {
-						if (Settings.isDebug())
-							Log.v(TAG, "Image is read");
+						print("Image is read");
 
 						Bitmap bitmap = BitmapFactory.decodeStream(input);
 						imageView.setImageBitmap(bitmap);
@@ -210,10 +217,18 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 				Collections.sort(contacts, new Comparator<Contact>() {
 			        @Override
 			        public int compare(Contact s1, Contact s2) {
-			            return s1.getContactName().compareToIgnoreCase(s2.getContactName());
+			        	
+			        	print("Contact 1 object to console: "); s1.toConsole();
+			        	
+			        	print("Contact 2 object to console: "); s2.toConsole();			        	
+			        	
+			            return s1.getsPhoneNumber().get_nationalNumber().compareToIgnoreCase(
+			            		s2.getsPhoneNumber().get_nationalNumber());
 			        }
 			    });
+			
 			setListAdapter(contactAdapter);
+			
 			if(getListView().getCount() > 0)
 				registerForContextMenu(getListView());
 		}
@@ -238,8 +253,7 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 			
 			MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
 			 
-			 if(Settings.isDebug())
-				 Log.v("MA_LISTE_DE_MERDE_AT :", "" + position + "(telephone : " + mContact.getPhoneNumber() +")");			 
+			print("" + position + "(telephone : " + mContact.getPhoneNumber() +")");			 
 		 }
 
 	}
