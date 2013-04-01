@@ -97,6 +97,7 @@ public class PersonnalProofContentProvider extends
 	 */
 	private static final int EXCLUDED_CONTACTS = 130;
 	private static final int EXCLUDED_CONTACT_ID = 140;
+	private static final int EXCLUDED_CONTRACT_ID = 1001;
 	private static final int EXCLUDED_CONTACT_BY_PHONE = 1000;
 
 	// ///////////////////////////////////////////////////////////
@@ -219,6 +220,9 @@ public class PersonnalProofContentProvider extends
 		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
 				+ "/excluded_contact_id";
 		
+		public static final String CONTENT_BY_API_ID = ContentResolver.CURSOR_ITEM_BASE_TYPE
+				+ "/excluded_contract_id";
+		
 		public static final String CONTENT_BY_PHONE = ContentResolver.CURSOR_ITEM_BASE_TYPE
 				+ "/excluded_contact_phone";
 	}
@@ -316,6 +320,9 @@ public class PersonnalProofContentProvider extends
 			
 		case EXCLUDED_CONTACT_BY_PHONE:
 			return excludedContacts.CONTENT_BY_PHONE;
+			
+		case EXCLUDED_CONTRACT_ID:
+			return excludedContacts.CONTENT_BY_API_ID;
 
 		default:
 			throw new UnsupportedOperationException("getType -> Unknown uri: "
@@ -411,6 +418,9 @@ public class PersonnalProofContentProvider extends
 		
 		sURIMatcher.addURI(getAuthority(),
 				BASE_PATH + "/excluded_contact_phone/*", EXCLUDED_CONTACT_BY_PHONE);
+		
+		sURIMatcher.addURI(getAuthority(),
+				BASE_PATH + "/excluded_contract_id/#", EXCLUDED_CONTRACT_ID);
 	}
 
 	/**
@@ -1043,6 +1053,18 @@ public class PersonnalProofContentProvider extends
 			queryBuilder.appendWhere(ProofDataBase.COLUMN_CONTACT_ID + "="
 					+ uri.getLastPathSegment());
 			break;
+			
+		case EXCLUDED_CONTRACT_ID:
+			queryBuilder.setTables(ProofDataBase.TABLE_EXCLUDED_CONTACTS);
+			// Adding the ID to the original query
+
+			if (Settings.isDebug())
+				Log.e(TAG,
+						"(by id) request for excluded contact: "
+								+ uri.getLastPathSegment());
+			queryBuilder.appendWhere(ProofDataBase.COLUMN_CONTRACT_ID + "="
+					+ uri.getLastPathSegment());
+			break;
 
 		default:
 			throw new IllegalArgumentException("query -> Unknown URI: " + uri);
@@ -1648,6 +1670,7 @@ public class PersonnalProofContentProvider extends
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		int uriType = sURIMatcher.match(uri);
 		int rowsDeleted = 0;
+		String idExcluded;
 		
 		SQLiteDatabase sqlDB;
 
@@ -1768,9 +1791,26 @@ public class PersonnalProofContentProvider extends
 			rowsDeleted = sqlDB.delete(ProofDataBase.TABLE_EXCLUDED_CONTACTS,
 					selection, selectionArgs);
 			break;
+			
+		case EXCLUDED_CONTRACT_ID: // API phone Id mapping
+			
+			idExcluded = uri.getLastPathSegment();
+			if (TextUtils.isEmpty(selection)) {
+				rowsDeleted = sqlDB.delete(
+						ProofDataBase.TABLE_EXCLUDED_CONTACTS,
+						ProofDataBase.COLUMN_CONTRACT_ID + "=" + idExcluded,
+						null);
+			} else {
+				rowsDeleted = sqlDB.delete(
+						ProofDataBase.TABLE_EXCLUDED_CONTACTS,
+						ProofDataBase.COLUMN_CONTRACT_ID + "=" + idExcluded
+								+ " and " + selection, selectionArgs);
+			}
+			break;
 
 		case EXCLUDED_CONTACT_ID:
-			String idExcluded = uri.getLastPathSegment();
+			
+			idExcluded = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
 				rowsDeleted = sqlDB.delete(
 						ProofDataBase.TABLE_EXCLUDED_CONTACTS,
