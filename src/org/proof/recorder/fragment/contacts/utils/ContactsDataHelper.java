@@ -393,7 +393,8 @@ public final class ContactsDataHelper {
 			{
 				if(c.getContactName().contains(contact.getContactName()) && 
 						c.getContractId().contains(contact.getContractId()) && 
-						c.getPhoneNumber().contains(contact.getPhoneNumber()))			
+						c.getsPhoneNumber().get_nationalNumber().contains(
+								contact.getsPhoneNumber().get_nationalNumber()))			
 					mPhoneContacts.remove(contact);
 			}
 		}

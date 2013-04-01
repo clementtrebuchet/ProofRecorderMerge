@@ -186,7 +186,7 @@ public class Contact implements Serializable, DataLayerInterface {
 	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = PhoneNumberUtils.stripSeparators(phoneNumber);
-		this.sPhoneNumber.set_originalNumber(phoneNumber);
+		this.sPhoneNumber.set_originalNumber(this.phoneNumber);
 	}
 	/**
 	 * @return
