@@ -271,10 +271,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 			@Override
 			public void onClick(View paramView) {
-
-				if (!Settings.isNotLicensed()) {
-					
-				}
+				mContext.startActivity(StaticIntents.goPlugins(mContext));
 			}
 
 		});
@@ -319,6 +316,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			}
 
 		});
+		
 		recordVoice.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -628,18 +626,14 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	@Override
 	protected void onDestroy() {
-		if (!Settings.getUsername(mContext).equals("username")
-				&& !Settings.getPassword(mContext).equals("password")) {
 			try {
 				unregisterReceiver(GMCActivity.mHandleMessageReceiver);
 			} catch (java.lang.IllegalArgumentException e) {
-				if (Settings.isDebug())
-					Log.e(TAG, "" + e);
-
+				Log.e(TAG, "" + e);
 			}
-		}
-		super.onDestroy();
 		mChecker.onDestroy();
+		super.onDestroy();
+		
 		// Stop the tracker when it is no longer needed.
 	}
 }

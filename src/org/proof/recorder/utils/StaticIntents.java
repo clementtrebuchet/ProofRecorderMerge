@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.fragment.contacts.FragmentListPhoneContactsTabs;
+import org.proof.recorder.fragment.dialog.PluginsInformations;
 import org.proof.recorder.fragment.phone.FragmentListRecordFoldersTabs;
 import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder;
@@ -75,6 +76,11 @@ public final class StaticIntents extends Intent {
 	public static StaticIntents goPerfsDashBoard(Context origin) 
 	{
 		return create(origin, FragmentVoiceMediaRecorder.class);
+	}
+	
+	public static StaticIntents goPlugins(Context origin) 
+	{
+		return create(origin, PluginsInformations.class);
 	}
 	
 	public static boolean isIntentAvailable(Context context, String action) {

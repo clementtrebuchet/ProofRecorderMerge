@@ -49,7 +49,7 @@ public class QuickActionDlg {
 	private static final int ID_VOICE_LIST = 8;
 	private static final int ID_RECORDS_LIST = 9;
 	private static final int ID_VOICE_RECORDER = 10;
-	private static final int ID_PERFS_DASHBOARD = 11;
+	private static final int ID_PLUGINS = 11;
 	private static final int ID_SEARCH = 12;
 
 	/**
@@ -417,8 +417,8 @@ public class QuickActionDlg {
 		sub.add(0, ID_HOME, 0, mContext.getString(R.string.strHome)).setIcon(
 				R.drawable.ic_home_menu);
 
-		sub.add(0, ID_PERFS_DASHBOARD, 0,
-				mContext.getString(R.string.strABDashBoardPerf)).setIcon(
+		sub.add(0, ID_PLUGINS, 0,
+				mContext.getString(R.string.strPlugins)).setIcon(
 				R.drawable.ic_web_design);
 
 		sub.add(0, ID_RECORDS_LIST, 0,
@@ -563,8 +563,8 @@ public class QuickActionDlg {
 			mContext.startActivity(StaticIntents.goVoiceRecorder(mContext));
 			break;
 
-		case ID_PERFS_DASHBOARD:
-			mContext.startActivity(StaticIntents.goPerfsDashBoard(mContext));
+		case ID_PLUGINS:
+			mContext.startActivity(StaticIntents.goPlugins(mContext));
 			break;
 
 		default:
