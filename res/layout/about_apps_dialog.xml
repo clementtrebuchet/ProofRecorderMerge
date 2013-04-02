@@ -1,41 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-	android:id="@+id/mScroll"
+<LinearLayout
+	android:id="@+id/about_linear"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
+	android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout
-	android:id="@+id/mLayout"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:padding="10dp">
-<RadioGroup
-	android:id="@+id/mWrapper"
+<TableLayout
+	android:id="@+id/tablelayout_about"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+<TableRow
+	android:id="@+id/row_clement"
+	android:padding="10dp"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:gravity="center"
-	android:layout_alignParentBottom="true"
-	android:layout_alignParentLeft="true">
-<RadioGroup
-	android:id="@+id/mBtnWrapper"
+	android:orientation="horizontal">
+<ImageView
+	android:id="@+id/img_clement"
+	android:padding="6dp"
+	android:contentDescription="@string/about_clement"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:orientation="horizontal"
+	android:src="@drawable/img_clement" />
+<TextView
+	android:id="@+id/txt_clement"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
 	android:gravity="center"
-	android:layout_gravity="center_horizontal">
-<ImageButton
-	android:id="@+id/mShareIcon"
+	android:ellipsize="none"  
+	android:maxLines="100"  
+	android:scrollHorizontally="false"
+	android:text="@string/about_clement" />
+</TableRow>
+<TableRow
+	android:id="@+id/row_namgyal"
+	android:padding="10dp"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+<ImageView
+	android:id="@+id/img_namgyal"
+	android:padding="6dp"
+	android:contentDescription="@string/about_namgyal"
 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content" />
-<ImageButton
-	android:id="@+id/widget64"
+	android:layout_height="wrap_content"
+	android:src="@drawable/img_namgyal" />
+<TextView
+	android:id="@+id/txt_namgyal"
 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content" />
-<ImageButton
-	android:id="@+id/widget65"
+	android:layout_height="wrap_content"
+	android:gravity="center"
+	android:layout_weight="1"  
+	android:ellipsize="none"  
+	android:maxLines="100"  
+	android:scrollHorizontally="false"
+	android:text="@string/about_namgyal" />
+</TableRow>
+<TextView
+	android:id="@+id/some_links"
 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content" />
-</RadioGroup>
-</RadioGroup>
-</RelativeLayout>
-</ScrollView>
+	android:layout_height="wrap_content"
+	android:text="@string/about_some_links" />
+<ListView
+	android:id="@+id/some_links_list"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="5dp" />
+</TableLayout>
+</LinearLayout>
