@@ -26,14 +26,14 @@
     <!-- DashBoard Dialog -->
 
     <string name="dashboard_dialog_title">Tableau de Bord</string>
-    <string name="dashbord_dialog_network">Réseau utilisé:</string>
+    <string name="dashbord_dialog_network">Réseau:</string>
     <string name="dashbord_dialog_battery_state">Charge de la Batterie:</string>
-    <string name="dashbord_dialog_calls">Nombre d\'appels enregistrés:</string>
-    <string name="dashbord_dialog_voices">Nombre de voix enregistrées:</string>
-    <string name="dashbord_dialog_excluded_contacts">Contact(s) exclu(s) du service:</string>
-    <string name="dashbord_dialog_non_excluded_contacts">Contact(s) non-exclu(s):</string>
+    <string name="dashbord_dialog_calls">Enregistrements d\'appel:</string>
+    <string name="dashbord_dialog_voices">Enregistrements voix:</string>
+    <string name="dashbord_dialog_excluded_contacts">Contact(s) non-enregistré(s):</string>
+    <string name="dashbord_dialog_non_excluded_contacts">Contact(s) enregistré(s):</string>
     <string name="dashbord_dialog_free_space">Espace libre (carte SD):</string>
-    <string name="dashbord_dialog_app_space">Espace occupé par l\'application:</string>
+    <string name="dashbord_dialog_app_space">Espace utilisé:</string>
 
     <!-- END DashBoard Dialog -->
 
@@ -149,6 +149,7 @@
     <!-- Menu Quick Action Dialog Main Menu -->
 
     <string name="strHome">Accueil</string>
+    <string name="strPlugins">Plugins</string>
     <string name="strCallRecords">Enregistrements Téléphoniques</string>
     <string name="strVoiceRecords">Enregistrements Vocaux</string>
     <string name="strVoiceRecorder">Enregistreur Vocal</string>
@@ -170,8 +171,8 @@
 
     <string name="strKnownContactsTab">Connus</string>
     <string name="strUnKnownContactsTab">Inconnus</string>
-    <string name="strTitledVoicesTab">Notes Editées</string>
-    <string name="strUnTitledVoicesTab">Notes à éditer</string>
+    <string name="strTitledVoicesTab">Avec Titre</string>
+    <string name="strUnTitledVoicesTab">Sans Titre</string>
     <string name="strIncommingTab">Appels Entrants</string>
     <string name="strOutcommingTab">Appels Sortants</string>
     <string name="strDetailsRecords">Détail pour le</string>
@@ -282,6 +283,15 @@
     <string name="info_phone">Infos Téléphone</string>
     <string name="stats">Statistiques d\'utilisation</string>
     <string name="about_us">A propos</string>
+    
+	<!-- About Us texts -->
+    
+    <string name="about_clement">Clément Trébuchet \nDéveloppeur Android / Java / Python / Php.</string>
+    <string name="about_namgyal">Namgyal Brisson \nDéveloppeur Android / Java / Python / Javascript.</string>
+    <string name="about_some_links">Quelques liens:</string>
+    <string name="contact_subject">Proof and Voice Recorder: Une question?</string>
+    <string name="contact_body">Ici votre message ...</string> 
+     
 
     <!-- End Main sub Menu -->
 
