@@ -290,11 +290,24 @@
     
     <!-- About Us texts -->
     
-    <string name="about_clement">Clément Trébuchet \nAndroid / Java / Python / Php Software Developer.</string>
-    <string name="about_namgyal">Namgyal Brisson \nAndroid / Java / Python / Javascript Software Developer.</string>
+    <string name="about_app">
+        <![CDATA[
+        <p>
+	        This software allows you to:
+	        <ul>
+		        <li><u>Record</u> in different format (mp3, wav, ogg, ...)<br> your phone calls or simply your voice.</li><br><br>
+		        <li><u>Associate</u> a note and title to each record of any kind.</li><br><br>
+		        <li><u>Filter</u> recorder service based on your own Contacts list.</li><br><br>
+	        </ul>
+	        And more ...
+        </p>
+        ]]>
+    </string>
     <string name="about_some_links">Some links:</string>
     <string name="contact_subject">Proof and Voice Recorder: A Question?</string>
-    <string name="contact_body">Here your message ...</string>   
+    <string name="contact_body">Here your message &#46;&#46;&#46;</string>
+    <string name="contact_uri">Contact</string> 
+    <string name="site_uri">Phone &amp; voice Recorder</string>    
 
     <!-- End Main sub Menu -->
 
