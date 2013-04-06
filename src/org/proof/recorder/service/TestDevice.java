@@ -15,6 +15,8 @@ import android.util.Log;
  *
  */
 public class TestDevice  extends AsyncTask<Void ,Integer, Void>{
+	
+	private static boolean toProcess = true;
 
 	private static final String TAG = "TestDevice";
 	private int bufferSize = 0;
@@ -104,11 +106,28 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void>{
 
 	@Override
 	protected Void doInBackground(Void... arg0) {
-		makeDirectoriesStructure();		 
-		testAll(capabiltiesHw.all, all);
+		
+		if(isToProcess()) {
+			makeDirectoriesStructure();		 
+			testAll(capabiltiesHw.all, all);
+			setToProcess(false);
+		}
+		
 		return null;
+	}
 
+	/**
+	 * @return the toProcess
+	 */
+	public static boolean isToProcess() {
+		return toProcess;
+	}
 
+	/**
+	 * @param toProcess the toProcess to set
+	 */
+	public static void setToProcess(boolean toProcess) {
+		TestDevice.toProcess = toProcess;
 	}
 
 }
