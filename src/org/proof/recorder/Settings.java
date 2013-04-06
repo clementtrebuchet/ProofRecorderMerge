@@ -32,12 +32,15 @@ public final class Settings {
 	public static String mBasePath = Environment.getExternalStorageDirectory()
 			.getAbsolutePath();
 	public static String[] DEFAULT_FILE_PATHS = new String[] {
-			mBasePath + "/proofRecorder/", mBasePath + "/proofRecorder/calls/",
+			mBasePath + "/proofRecorder/", 
+			mBasePath + "/proofRecorder/calls/",
 			mBasePath + "/proofRecorder/voices/",
 			mBasePath + "/proofRecorder/calls/wav/",
 			mBasePath + "/proofRecorder/voices/wav/",
 			mBasePath + "/proofRecorder/calls/3gp/",
 			mBasePath + "/proofRecorder/voices/3gp/" };
+	
+	public static String mAppPath = mBasePath + "/proofRecorder/";
 
 	public static enum mFormat {
 		THREE_GP, WAV, MP3, OGG;
@@ -152,7 +155,7 @@ public final class Settings {
 	private static boolean mUAC_ASSISTED = false;
 	private static SharedPreferences mSharedPreferences;
 	private static final boolean TOAST_NOTIFICATIONS = true;
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private static boolean NOT_LICENSED = false;
 
