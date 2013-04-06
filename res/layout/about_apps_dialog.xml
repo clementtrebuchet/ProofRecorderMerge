@@ -28,15 +28,9 @@
 	android:maxLines="100"  
 	android:scrollHorizontally="false" />
 </TableRow>
-<TextView
-	android:id="@+id/some_links"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="@string/about_some_links" />
 <ListView
 	android:id="@+id/some_links_list"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:padding="5dp" />
 </LinearLayout>
-
