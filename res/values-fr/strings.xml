@@ -36,6 +36,35 @@
     <string name="dashbord_dialog_app_space">Espace utilisé:</string>
 
     <!-- END DashBoard Dialog -->
+    
+    
+    <!-- START Plugins Dialog -->
+    
+    <string name="plug_mp3_link">mp3_link</string>
+    <string name="plug_ogg_link">ogg_link</string>
+    <string name="plug_ftp_link">ftp_link</string>
+    
+    <string name="plug_mp3_title">Moteur Audio MP3</string>
+    <string name="plug_ogg_title">Moteur Audio OGG</string>
+    <string name="plug_ftp_title">Transfert de données (FTP)</string>
+    
+    <string name="plug_mp3_txt">
+        Ce plugin vous permet d\'enregistrer au format MP3.
+        Le flux de vos enregistrements conservent compression et haute qualité.
+    </string>
+    
+    <string name="plug_ogg_txt">
+		Ce plugin vous permet d\'enregistrer au format OGG.
+        Le flux de vos enregistrements conservent compression et haute qualité.
+	</string>
+    <string name="plug_ftp_txt">
+        Ce plugin vous permet de synchroniser 
+        vos enregistrements téléphoniques ou voix vers votre propre serveur
+        via FTP transport.
+	</string>
+    
+    <!-- END Plugins Dialog -->
+    
 
 
     <!-- TRACKER GOOGLE -->

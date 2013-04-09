@@ -21,7 +21,36 @@
     <string name="excludedFromRecordingList_desc">Excluded Contacts from recording\'s service</string>
 
     <!-- FIN DashBoard Description -->
-
+    
+    <!-- START Plugins Dialog -->
+    
+    <string name="plug_mp3_link">mp3_link</string>
+    <string name="plug_ogg_link">ogg_link</string>
+    <string name="plug_ftp_link">ftp_link</string>
+    
+    <string name="plug_mp3_title">MP3 Audio Engine</string>
+    <string name="plug_ogg_title">OGG Audio Engine</string>
+    <string name="plug_ftp_title">FTP Data Transport</string>
+    
+    <string name="plug_mp3_txt">
+        This plugins allows you to record 
+        through high quality and compressed audio stream
+        via MP3 codec implementation.
+    </string>
+    
+    <string name="plug_ogg_txt">
+		This plugins allows you to record 
+        through high quality and compressed audio stream
+        via OGG codec implementation.
+	</string>
+    <string name="plug_ftp_txt">
+        This plugins allows you to synchronize 
+        your voice and call records to your own server 
+        via FTP transport.
+        All records with embbed information ensuring complete transparency.
+	</string>
+    
+    <!-- END Plugins Dialog -->
 
     <!-- TRACKER GOOGLE -->
     <string name="gdevApiKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlJHQPCfccFjpEBQPG29jnh18AWwDqovEKOOZ4ms2aYWvoUUabaJT3NPCJ9XlgQYhB7wsC9ZYt9jHZBYX+WbMJ1XJs14EoNbWIJYK2urIbNTYGd2yjH4bE0irf7AYmLchuOfO3AJzdUi0LYbY7A+LS+CGSOSTCNGlRFzsWAEqF0phQudbYE4rzyPNxs8wj192sI188GYiPhTAv77yVcqI8ppnaaVCDpq7XY+g4IunoltTg9Xtz6h5m/Upr44kLmjB1FPM0rvAe75EW2uXXjImXQKCxLhZy6Q07uMqSwXpc6shnLr9OifzbQI3zpxfPStoTmmcc3MmfuMdLIoueShPwIDAQAB</string>
