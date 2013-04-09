@@ -14,7 +14,6 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
@@ -39,28 +38,18 @@ import android.util.Log;
  *     by the user, our db must map info.
  *     
  */
-/**
- * @author devel.machine
- *
- */
-/**
- * @author devel.machine
- *
- */
 public class VerifyContactsApi extends Service {
 
 	private static boolean toProcess = false;
 	private static boolean mExternalStorageAvailable = false;
 	private static boolean mExternalStorageWriteable = false;
 	
-	private static final String PREFS_NAME = "ProofRecordsInfo";
-	
 	private static final int DELTA_COUNT = 3;
 	private static int START_ID = 0;
 
 	private static Context mContext;
 	private static Cursor mCursor;
-	private static Intent mIntent;
+
 	private static Uri mUri = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "records");
 
@@ -76,6 +65,8 @@ public class VerifyContactsApi extends Service {
 	private void print(String message) {
 		if(Settings.isDebug())
 			Log.d(this.getClass().getName(), "" + message);
+		else
+			Log.i(this.getClass().getName(), "" + message);
 	}
 
 	/**
@@ -131,19 +122,15 @@ public class VerifyContactsApi extends Service {
 	/**
 	 * @param count
 	 */
-	private void setNewCount(int count) {
-	      SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-	      SharedPreferences.Editor editor = settings.edit();
-	      editor.putInt("count", count);
-	      editor.commit();		
+	private void setNewCount(int count) {	      
+	      Settings.setRecordsCount(count);
 	}	
 
 	/**
 	 * @return
 	 */
 	private int getPreviousCount() {
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		return settings.getInt("count", 0);
+		return Settings.getRecordsCount();
 	}
 
 	/**
@@ -213,19 +200,22 @@ public class VerifyContactsApi extends Service {
 
 				if(apiId.equals("null")) { // Unknown contact
 
-					print("Unknown contact (id): " + apiId
+					if(Settings.isDebug())
+						print("Unknown contact (id): " + apiId
 							+ " - type(" + apiId.getClass().getName() + ")");
 
 					String mPhone = mCursor.getString(
 							mCursor.getColumnIndex(
 									ProofDataBase.COLUMN_TELEPHONE
 									));
-
-					print("Unknown contact (phone): " + mPhone);
+					
+					if(Settings.isDebug())
+						print("Unknown contact (phone): " + mPhone);
 
 					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(mContext, mPhone);
 
-					print("Unknown contact (all): " + mContact);
+					if(Settings.isDebug())
+						print("Unknown contact (all): " + mContact);
 
 					if(!mContact.getContractId().equals("null")) {
 
@@ -233,8 +223,9 @@ public class VerifyContactsApi extends Service {
 						values.put(
 								ProofDataBase.COLUMN_CONTRACT_ID, 
 								mContact.getContractId());
-
-						print("Unknown contact (all): " + mContact + "\n" + "Uri: " + mUri);
+						
+						if(Settings.isDebug())
+							print("Unknown contact (all): " + mContact + "\n" + "Uri: " + mUri);
 
 						mContext.getContentResolver().update(
 								mUri,
@@ -245,8 +236,9 @@ public class VerifyContactsApi extends Service {
 					}
 				}
 				else { // Known contact
-
-					print("Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
+					
+					if(Settings.isDebug())
+						print("Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
 
 					Cursor pCur = mContext.getContentResolver().query(
 							CommonDataKinds.Phone.CONTENT_URI, null,
@@ -263,9 +255,11 @@ public class VerifyContactsApi extends Service {
 								" " + ProofDataBase.COLUMN_CONTRACT_ID + "=?", 
 								new String[] { apiId }
 								);
-
-						print("Updated contact API phone Id: " + apiId);						
-						print("Checking for into excluded contacts table for match ...");						
+						
+						if(Settings.isDebug()) {
+							print("Updated contact API phone Id: " + apiId);	
+							print("Checking for into excluded contacts table for match ...");
+						}					
 
 						Uri mUriById = Uri.withAppendedPath(
 								PersonnalProofContentProvider.CONTENT_URI, "excluded_contract_id/" + apiId);
@@ -276,9 +270,14 @@ public class VerifyContactsApi extends Service {
 
 							String name = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_DISPLAY_NAME));
 							String phone = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_PHONE_NUMBER));
-							print("Found Contact in excluded table! (" + name + " - " + phone + ")");
+							
+							if(Settings.isDebug())
+								print("Found Contact in excluded table! (" + name + " - " + phone + ")");
+							
 							mContext.getContentResolver().delete(mUriById, null, null);
-							print("Deleted!");
+							
+							if(Settings.isDebug())
+								print("Deleted!");
 						}
 					}
 
@@ -300,12 +299,15 @@ public class VerifyContactsApi extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mContext = this;	
+		Settings.setSettingscontext(this);
+		mContext = this;
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {		
 		super.onStartCommand(intent, flags, startId);
+		
+		print("Checks on database contacts and directories state starting ...");
 		
 		START_ID = startId;
 		
@@ -322,14 +324,11 @@ public class VerifyContactsApi extends Service {
 				print_exception(e.getMessage());
 			}			
 
-			mIntent = intent;
-
 			initializeDbConnection();			
 			evaluateContext();
 
 			if(isToProcess()) {
 
-				print("Received start id " + startId + ": " + mIntent.getFlags());
 				print("Starting database consistency checks ...");
 
 				// Check if all stored record into database really point onto existing 
@@ -346,21 +345,36 @@ public class VerifyContactsApi extends Service {
 				print(mContext.getString(R.string.analysis_over));
 
 				setToProcess(false);
+				
+				print("Database consistency checks processed!");
+			}
+			
+			else {
+				print("No need to process!");
 			}
 		}
+		else {
+			print("Service already running no need to run!");
+		}
 		
-		return startId;
+		return START_STICKY;
 	}
 	
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		
+		if(Settings.isDebug())
+			print("Destroyed!");
+		
 		stopSelf(START_ID);
 	}
 
 	@Override
 	public IBinder onBind(Intent paramIntent) {
+		if(Settings.isDebug())
+			print("bind!");
 		return null;
 	}
 

@@ -1,5 +1,7 @@
 package org.proof.recorder;
 
+import java.util.Calendar;
+
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.features.SpyRecorder;
 import org.proof.recorder.fragment.contacts.FragmentListPhoneContactsTabs;
@@ -14,8 +16,8 @@ import org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder;
 import org.proof.recorder.place.de.marche.AnalyticsRecorderProof;
 import org.proof.recorder.place.de.marche.Eula;
 import org.proof.recorder.preferences.SettingsTabs;
+import org.proof.recorder.scheduling.VerifyContactsApiReceiver;
 import org.proof.recorder.service.TestDevice;
-import org.proof.recorder.service.VerifyContactsApi;
 import org.proof.recorder.syncron.fragment.GMCActivity;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.ConnectivityInfo;
@@ -25,8 +27,10 @@ import org.proof.recorder.utils.StaticNotifications;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -68,8 +72,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	// Generate your own 20 random bytes, and put them here.
 	private static final byte[] SALT = new byte[] { -46, 65, 30, -128, -103,
-			-57, 74, -64, 51, 88, -95, -12, 77, -107, -36, -113, -11, 32, -64,
-			89 };
+		-57, 74, -64, 51, 88, -95, -12, 77, -107, -36, -113, -11, 32, -64,
+		89 };
 	LicenseCheckerCallback mLicenseCheckerCallback;
 	LicenseChecker mChecker;
 	// A handler on the UI thread.
@@ -83,19 +87,19 @@ public class ProofRecorderActivity extends SherlockActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		menu.add(0, 1, 0, getString(R.string.search_hint))
-				.setIcon(R.drawable.ic_action_search)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		.setIcon(R.drawable.ic_action_search)
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		SubMenu sub = menu.addSubMenu("+");
 		sub.add(0, 2, 1, getString(R.string.info_phone));
-		
+
 		//sub.add(0, 3, 2, getString(R.string.stats));
-		
+
 		sub.add(0, 4, 3, getString(R.string.about_us));
-		
+
 		sub.getItem().setShowAsAction(
 				MenuItem.SHOW_AS_ACTION_ALWAYS
-						| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+				| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
 		return true;
 	}
@@ -115,12 +119,12 @@ public class ProofRecorderActivity extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (Settings.isDebug()) {
-			
+
 			String msg = "=== ITEM INFO ===" + BR;
 			msg += "STRING: " + item.toString() + BR;
 			msg += "ID    : " + item.getItemId() + BR;
 			msg += "GROUP : " + item.getGroupId() + BR;
-			
+
 			Log.d(TAG, msg);
 		}			
 
@@ -151,7 +155,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 				startActivity(intent);
 			}
 			return true;
-			
+
 		case 4:
 			if (!Settings.isNotLicensed()) {
 				Intent intent = new Intent(ProofRecorderActivity.this,
@@ -172,12 +176,15 @@ public class ProofRecorderActivity extends SherlockActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		mContext = this;
-		
-		
+
+		Settings.setSettingscontext(mContext);
+
+
 		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-					.permitAll().build();
+			.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
 		new SpyRecorder().startIntercepting();
@@ -185,7 +192,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.main);
 		ConnectivityInfo.informationConnectivity(this);	
-		
+
 
 		if (ConnectivityInfo.WIFI || ConnectivityInfo.TROISG) {
 			AnalyticsRecorderProof trackerd = new AnalyticsRecorderProof(
@@ -316,7 +323,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			}
 
 		});
-		
+
 		recordVoice.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -410,19 +417,74 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 				}
 			}
-		});
-		
-		/*  Update Deleted Contacts to the list of contacts
-		 *  in Excluded and not Excluded Contacts list.
-		 *  Put those deleted Known Contacts in the appropriated 
-		 *  Tab.
-		 **/
-		
-		Intent checkContacts = new Intent(this, VerifyContactsApi.class); 
-		startService(checkContacts);
-		
+		});	
+
+		if(!Settings.isAlarm()) {			
+			print("Alarm for Contacts Api checks is not set");
+			
+			final boolean isTesting = true;
+			
+			Intent alarmIntent = new Intent(mContext, VerifyContactsApiReceiver.class);
+			
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(
+					mContext, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			
+			AlarmManager alarmManager = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+			
+			Calendar date = Calendar.getInstance();
+			date.setTimeInMillis(System.currentTimeMillis());
+
+			Calendar midnight = Calendar.getInstance();
+			
+			if(isTesting)
+				midnight.set(
+						date.get(Calendar.YEAR), 
+						date.get(Calendar.MONTH), 
+						date.get(Calendar.DAY_OF_MONTH),
+						19, 
+						33
+				);
+			else
+				midnight.set(
+						date.get(Calendar.YEAR), 
+						date.get(Calendar.MONTH), 
+						date.get(Calendar.DAY_OF_MONTH), 
+						0, 
+						0
+				);
+			
+			if(date.equals(midnight)) {
+				midnight.add(Calendar.MINUTE, 5);
+			}
+
+			long minutesBetween = 0;  
+			while (date.before(midnight)) {
+				date.add(Calendar.MINUTE, 1);
+				minutesBetween++;
+			}
+
+			if(Settings.isDebug())
+				print("Count of minutes from now to midnight: " + minutesBetween);
+			
+			alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);	
+
+			Settings.setAlarm(true);
+		}
+
+		else {
+			print("Alarm for Contacts Api checks is set!");
+		}
 
 	}
+
+	private static void print(String message) {
+		if(Settings.isDebug()) {
+			Log.d(TAG, message);
+		}
+		else {
+			Log.i(TAG, message);
+		}
+	}	
 
 	/*
 	 * @Override protected void onActivityResult(int requestCode, int
@@ -490,37 +552,37 @@ public class ProofRecorderActivity extends SherlockActivity {
 	protected Dialog onCreateDialog(int id) {
 		final boolean bRetry = id == 1;
 		return new AlertDialog.Builder(this)
-				.setTitle(R.string.unlicensed_dialog_title)
-				.setMessage(
-						bRetry ? R.string.unlicensed_dialog_retry_body
-								: R.string.unlicensed_dialog_body)
-				.setPositiveButton(
-						bRetry ? R.string.retry_button : R.string.buy_button,
-						new DialogInterface.OnClickListener() {
-							boolean mRetry = bRetry;
+		.setTitle(R.string.unlicensed_dialog_title)
+		.setMessage(
+				bRetry ? R.string.unlicensed_dialog_retry_body
+						: R.string.unlicensed_dialog_body)
+						.setPositiveButton(
+								bRetry ? R.string.retry_button : R.string.buy_button,
+										new DialogInterface.OnClickListener() {
+									boolean mRetry = bRetry;
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								if (mRetry) {
-									doCheck();
-								} else {
-									Intent marketIntent = new Intent(
-											Intent.ACTION_VIEW,
-											Uri.parse("http://market.android.com/details?id="
-													+ getPackageName()));
-									startActivity(marketIntent);
-								}
-							}
-						})
-				.setNegativeButton(R.string.quit_button,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								//finish();
-							}
-						}).create();
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										if (mRetry) {
+											doCheck();
+										} else {
+											Intent marketIntent = new Intent(
+													Intent.ACTION_VIEW,
+													Uri.parse("http://market.android.com/details?id="
+															+ getPackageName()));
+											startActivity(marketIntent);
+										}
+									}
+								})
+								.setNegativeButton(R.string.quit_button,
+										new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										//finish();
+									}
+								}).create();
 	}
 
 	private void doCheck() {
@@ -612,8 +674,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 	}
 
 	/*
-     * 
-     */
+	 * 
+	 */
 	/**
 	 * stop the recreation of the activity on Orientation Change the
 	 * MediaRecorder, is therefore not recreated and keep recording on
@@ -626,14 +688,14 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	@Override
 	protected void onDestroy() {
-			try {
-				unregisterReceiver(GMCActivity.mHandleMessageReceiver);
-			} catch (java.lang.IllegalArgumentException e) {
-				Log.e(TAG, "" + e);
-			}
+		try {
+			unregisterReceiver(GMCActivity.mHandleMessageReceiver);
+		} catch (java.lang.IllegalArgumentException e) {
+			Log.e(TAG, "" + e);
+		}
 		mChecker.onDestroy();
 		super.onDestroy();
-		
+
 		// Stop the tracker when it is no longer needed.
 	}
 }

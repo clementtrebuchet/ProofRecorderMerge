@@ -439,6 +439,14 @@
 			android:enabled="true" />        
 	
         <!-- Receivers for BroadCasters -->
+        
+        
+        <receiver
+            android:name=".scheduling.VerifyContactsApiReceiver"
+            android:process=":remote" >
+            <action android:name="android.intent.action.CHECK_CONTACTS_ALARM" />
+        </receiver>
+        
         <!-- Incoming Calls -->
         <receiver android:name=".broadcastr.phone.AppelsEntrants" >
             <intent-filter>
@@ -476,6 +484,7 @@
             android:process=":remote" android:permission="org.proof.recorder.XFBSIMPLE">
             <action android:name="android.intent.action.ALERT_SCHD" />
         </receiver>
+        
         <receiver android:name=".billing.vending.BillingReceiver" >
             <intent-filter>
                 <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />

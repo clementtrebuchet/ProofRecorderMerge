@@ -3,9 +3,12 @@
  */
 package org.proof.recorder;
 
+import java.util.Set;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.os.Environment;
@@ -25,6 +28,31 @@ public final class Settings {
 	 * @author appconceptlab
 	 * 
 	 */
+	
+	public static enum update {
+		
+		COMPONENTS;
+		
+		public static class Alarm {
+			
+			private static boolean ChecksContacts = true;
+
+			/**
+			 * @return the checksContacts
+			 */
+			public static boolean isChecksContacts() {
+				return ChecksContacts;
+			}
+
+			/**
+			 * @param checksContacts the checksContacts to set
+			 */
+			public static void setChecksContacts(boolean checksContacts) {
+				ChecksContacts = checksContacts;
+			}
+		}
+	}
+	
 	public final static String APP_KEY = "q66vtgg2zeodm45";
 	public final static String APP_SECRET = "9t0wm8zrp7kwlu4";
 	public final static String BREAK = "\n";
@@ -161,11 +189,53 @@ public final class Settings {
 
 	private static final FORMULA mFORMULA = FORMULA.BASIC;
 	private static final String TAG = "SettingsProofRecorder";
+	
+	private static Context SettingsContext = null;
 
 	private static void initSharedPreferences(Context mContext) {
 		mSharedPreferences = null;
 		mSharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(mContext);
+	}
+	
+	@SuppressWarnings("unused")
+	private static void setSharedPrefs(String arg0, Set<String> arg1) {
+		Editor editor = mSharedPreferences.edit();
+		editor.putStringSet(arg0, arg1);
+		editor.commit();
+	}
+	
+	@SuppressWarnings("unused")
+	private static void setSharedPrefs(String key, String value) {
+		Editor editor = mSharedPreferences.edit();
+		editor.putString(key, value);
+		editor.commit();
+	}
+	
+	private static void setSharedPrefs(String key, boolean value) {
+		Editor editor = mSharedPreferences.edit();
+		editor.putBoolean(key, value);
+		editor.commit();
+	}
+	
+	@SuppressWarnings("unused")
+	private static void setSharedPrefs(String key, float value) {
+		Editor editor = mSharedPreferences.edit();
+		editor.putFloat(key, value);
+		editor.commit();
+	}
+	
+	@SuppressWarnings("unused")
+	private static void setSharedPrefs(String key, long value) {
+		Editor editor = mSharedPreferences.edit();
+		editor.putLong(key, value);
+		editor.commit();
+	}
+	
+	private static void setSharedPrefs(String key, int value) {
+		Editor editor = mSharedPreferences.edit();
+		editor.putInt(key, value);
+		editor.commit();
 	}
 
 	/**
@@ -392,4 +462,43 @@ public final class Settings {
 	public static void setNOT_LICENSED(boolean nOT_LICENSED) {
 		NOT_LICENSED = nOT_LICENSED;
 	}
+
+	public static boolean isAlarm() {
+		
+		if(update.Alarm.isChecksContacts()) {
+			setSharedPrefs("checksServiceAlarm", false);
+			update.Alarm.setChecksContacts(false);
+		}
+		
+		initSharedPreferences(getSettingscontext());
+		return mSharedPreferences.getBoolean("checksServiceAlarm", false);
+	}
+
+	public static void setAlarm(boolean b) {
+		setSharedPrefs("checksServiceAlarm", b);
+	}
+	
+	public static int getRecordsCount() {
+		initSharedPreferences(getSettingscontext());
+		return mSharedPreferences.getInt("recordsCount", 0);
+	}
+	
+	public static void setRecordsCount(int count) {
+		setSharedPrefs("recordsCount", count);
+	}	
+
+	/**
+	 * @return the settingscontext
+	 */
+	public static Context getSettingscontext() {
+		return SettingsContext;
+	}
+	
+	/**
+	 * @return the settingscontext
+	 */
+	public static void setSettingscontext(Context _Context) {
+		Settings.SettingsContext = _Context;
+	}
+
 }
