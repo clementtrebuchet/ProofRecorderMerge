@@ -19,11 +19,18 @@ import android.util.Log;
 public class AlarmSchd extends BroadcastReceiver 
 {    
 	private static final String TAG = "AlarmSchd";
+	
 	private static int requestCode = 0x06;
+	
 	private static boolean manyDate;
+	
 	static int[] reps ;
+	
 	static int Rep;
+	
 	static String jour;
+	
+	
 	public static void HandleAlarmStateChange(Context context)
     {
     	//SharedPreferences settings = getPreferences(0);		
@@ -108,10 +115,9 @@ public class AlarmSchd extends BroadcastReceiver
 	    		}
     	}
     	    	
-    		Intent intent  = new Intent(context, AlarmSchd.class);
-    		
-    		
-    		PendingIntent sender = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    		Intent intent  = new Intent(context, AlarmSchd.class);  		
+    		PendingIntent sender = PendingIntent.getBroadcast(
+    				context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     		
     		//Cancel the current alarm since it may have been changed
     		am.cancel(sender);

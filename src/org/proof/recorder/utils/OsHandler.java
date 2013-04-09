@@ -14,18 +14,33 @@ import android.net.Uri;
 import android.util.Log;
 
 public class OsHandler {
-
-	private static final String TAG = "OsHandler";
 	
 	private static List<Record> calls, voices;
 	
 	private static List<String> filesListVoices, filesListCalls;
+	
+	/**
+	 * @param message
+	 */
+	private static void print(String message) {
+		if(Settings.isDebug())
+			Log.d(OsHandler.class.getName(), "" + message);
+		else
+			Log.i(OsHandler.class.getName(), "" + message);
+	}
+
+	/**
+	 * @param message
+	 */
+	private static void print_exception(String message) {
+		Log.e(OsHandler.class.getName(), "" + message);
+	}
 
 	/**
 	 * 
 	 */
 	private OsHandler() {
-		Log.d(TAG, "Initialisation: " + this.getClass().getName());
+		print("Initialisation ...");
 	}
 
 	/**
@@ -56,18 +71,12 @@ public class OsHandler {
 	        		if(f.isFile() && (i == 3 || i == 4))
 	        		{
 	        			filesListVoices.add(f.getPath());
-	        			if (Settings.isDebug())
-		        			Log.d(TAG,
-									"Voice file: "
-											+ f.getPath());
+	        			print("Voice file: " + f.getPath());
 	        		}
 	        		else if (f.isFile() && (i == 5 || i == 6))
 	        		{
 	        			filesListCalls.add(f.getPath());
-	        			if (Settings.isDebug())
-		        			Log.d(TAG,
-									"Call file: "
-											+ f.getPath());
+	        			print("Call file: "	+ f.getPath());
 	        		}
 	        		else
 	        			continue;
@@ -90,14 +99,9 @@ public class OsHandler {
 		{
 			try {
 				deleteFileFromDisk(absolutePath);
-				if (Settings.isDebug())
-					Log.d(TAG,
-							"deleteFileFromDisk(): "
-									+ absolutePath);
+				print("deleteFileFromDisk(): " + absolutePath);
 			} catch (IOException e) {
-				if (Settings.isDebug())
-					Log.e(TAG,
-							"checkDirectoriesStructureIntegrity(): "
+				print_exception("checkDirectoriesStructureIntegrity(): "
 									+ e.getMessage());
 			}
 		}
@@ -127,8 +131,7 @@ public class OsHandler {
 		try {
 			mContext.getContentResolver().delete(uri, null, null);
 		} catch (Exception e) {
-			if (Settings.isDebug())
-				Log.e(TAG, e.getMessage());
+			print_exception(e.getMessage());
 		}
 	}
 
