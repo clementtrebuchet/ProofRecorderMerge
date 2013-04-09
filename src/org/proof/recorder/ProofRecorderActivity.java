@@ -422,7 +422,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		if(!Settings.isAlarm()) {			
 			print("Alarm for Contacts Api checks is not set");
 			
-			final boolean isTesting = true;
+			final boolean isTesting = false;
 			
 			Intent alarmIntent = new Intent(mContext, VerifyContactsApiReceiver.class);
 			
