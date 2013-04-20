@@ -1,5 +1,9 @@
-.classpath
-.class
-.idea
+*.iml
+*.classpath
+*.class
+*.idea
+*.project
+.settings/
 bin/
 gen/
+
