@@ -112,7 +112,7 @@ public abstract class BasePhoneNumber implements Serializable {
 	 */
 	private void fillAttributesFromNumberStr(String phoneNumber) {
 		try {
-			this.print(_platformLocale.getCountry());
+			//print(_platformLocale.getCountry());
 			
 			this._nativeModel = this._libHelper.parse(phoneNumber, 
 					_platformLocale.getCountry());
@@ -135,7 +135,7 @@ public abstract class BasePhoneNumber implements Serializable {
 	}
 	
 	public void toConsole() {
-		this.print(this.toString());
+		print(toString());
 	}
 	
 	// Getters and Setters

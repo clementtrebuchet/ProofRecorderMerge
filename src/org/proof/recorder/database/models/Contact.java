@@ -38,7 +38,7 @@ public class Contact implements Serializable, DataLayerInterface {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		
+
 		Contact other = (Contact) obj;
 		if (sPhoneNumber == null) {
 			if (other.sPhoneNumber != null)
@@ -46,16 +46,16 @@ public class Contact implements Serializable, DataLayerInterface {
 		} else if (!sPhoneNumber.get_nationalNumber().equals(
 				other.sPhoneNumber.get_nationalNumber()))
 			return false;
-		
+
 		return true;
 	}
 
 	private static final String DEFAULT_VALUE = "null";
-	
+
 	private static Uri mUri = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI,
 			"excluded_contacts");
-	
+
 	private static Uri mUriByPhone = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, 
 			"excluded_contact_phone/");
@@ -64,46 +64,46 @@ public class Contact implements Serializable, DataLayerInterface {
 	private String contactName;
 	private String phoneNumber;
 	private String contractId;
-	
+
 	private SimplePhoneNumber sPhoneNumber;	
-		
-		public void toConsole() {
-			this.print(this.toString());
-		}
-	
+
+	public void toConsole() {
+		print(toString());
+	}
+
 	public SimplePhoneNumber getsPhoneNumber() {
 		return sPhoneNumber;
 	}
 
 	private static ContentResolver resolver;
-	
+
 	private static boolean hasDataHandler = false;
-	
+
 	/**
 	 * @return
 	 */
 	public boolean isExcluded() {
 		int count = 0;
-		
+
 		if(hasDataHandler()) {			
-			
+
 			Uri uri = Uri.withAppendedPath(
 					mUriByPhone, 
 					this.getsPhoneNumber().get_nationalNumber());
-			
+
 			Cursor cursor = getResolver().query(uri,
 					null, null, null, null);
-			
+
 			count = cursor.getCount();
-			
+
 			cursor.close();			
 		}
-		
+
 		this.toConsole();
-		
+
 		return count > 0;
 	}
-	
+
 	@Override
 	public void fillValues() {
 		DataLayerInterface._values.put(
@@ -145,7 +145,7 @@ public class Contact implements Serializable, DataLayerInterface {
 	public Contact(){
 		this.defaultInit();
 	}
-	
+
 	/**
 	 * @param phone
 	 */
@@ -193,7 +193,7 @@ public class Contact implements Serializable, DataLayerInterface {
 				name != null ? name : DEFAULT_VALUE);
 		this.phoneNumber =
 				phone != null ? phone : DEFAULT_VALUE;
-		
+
 		if(phone != null)
 			this.sPhoneNumber = new SimplePhoneNumber(phone);
 		else
@@ -237,34 +237,34 @@ public class Contact implements Serializable, DataLayerInterface {
 		this.phoneNumber = PhoneNumberUtils.stripSeparators(phoneNumber);
 		this.sPhoneNumber.set_originalNumber(this.phoneNumber);
 	}
-	
+
 	/**
 	 * 
 	 */
 	@SuppressWarnings("unused")
 	private void load() {
-		
+
 		if(hasDataHandler()) {			
-			
+
 			Uri uri = Uri.withAppendedPath(
 					mUriByPhone, 
 					this.getsPhoneNumber().get_nationalNumber());
-			
+
 			Cursor cursor = getResolver().query(uri,
 					null, null, null, null);
-			
+
 			try {
 				if(cursor.moveToFirst()) {
 					this.setContactName(
 							cursor.getColumnName(
 									cursor.getColumnIndex(
 											ProofDataBase.COLUMN_DISPLAY_NAME)));
-					
+
 					this.setContractId(
 							cursor.getColumnName(
 									cursor.getColumnIndex(
 											ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID)));
-					
+
 					this.setId(
 							cursor.getColumnName(
 									cursor.getColumnIndex(
@@ -306,7 +306,7 @@ public class Contact implements Serializable, DataLayerInterface {
 	public void setContractId(String contractId) {
 		this.contractId = contractId != null ? contractId : "null";
 	}
-	
+
 	/**
 	 * @param message
 	 */
@@ -314,7 +314,7 @@ public class Contact implements Serializable, DataLayerInterface {
 		if(Settings.isDebug())
 			Log.d(this.getClass().getName(), message);
 	}
-	
+
 	/**
 	 * @param message
 	 */
@@ -335,7 +335,7 @@ public class Contact implements Serializable, DataLayerInterface {
 	public static void setHasDataHandler(boolean hasDataHandler) {
 		Contact.hasDataHandler = hasDataHandler;
 	}
-	
+
 	/**
 	 * @return
 	 */
