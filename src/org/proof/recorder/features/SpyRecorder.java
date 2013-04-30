@@ -51,8 +51,6 @@ public class SpyRecorder implements Runnable, InputEventInterceptor {
     public SpyRecorder() {
         mLastPower = MIN_SILENCE;
         mLastMax = 0;
-        
-        //mAudio = new AudioHandler(null, null, null);
     }
     
     @Override
@@ -83,8 +81,7 @@ public class SpyRecorder implements Runnable, InputEventInterceptor {
     @Override
     public void startIntercepting() {
         if (mStop || mSamplingThread == null || !mSamplingThread.isAlive()) {
-            //mAudio.startRecording();
-            Log.e(TAG,"start intercepting");
+
             if (mSamplingThread != null) {
                 mStop = true;
                 while (mSamplingThread.isAlive()) {
@@ -104,9 +101,7 @@ public class SpyRecorder implements Runnable, InputEventInterceptor {
 
     @Override
     public void stopIntercepting() {
-    	Log.e(TAG,"stop intercepting");
         mStop = true;
-        //mAudio.stopRecording();
     }
 
     
@@ -148,7 +143,8 @@ public class SpyRecorder implements Runnable, InputEventInterceptor {
      * 
      * @param   sdata       Buffer containing the input samples to process.
      */
-    private final static double calculatePowerDb(short[] sdata) {
+    @SuppressWarnings("unused")
+	private final static double calculatePowerDb(short[] sdata) {
         // Calculate the sum of the values, and the sum of the squared values.
         // We need longs to avoid running out of bits.
         double sum = 0;
