@@ -3,8 +3,6 @@
  */
 package org.proof.recorder;
 
-import java.util.Set;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,29 +27,8 @@ public final class Settings {
 	 * 
 	 */
 	
-	public static enum update {
-		
-		COMPONENTS;
-		
-		public static class Alarm {
-			
-			private static boolean ChecksContacts = true;
-
-			/**
-			 * @return the checksContacts
-			 */
-			public static boolean isChecksContacts() {
-				return ChecksContacts;
-			}
-
-			/**
-			 * @param checksContacts the checksContacts to set
-			 */
-			public static void setChecksContacts(boolean checksContacts) {
-				ChecksContacts = checksContacts;
-			}
-		}
-	}
+	public static boolean OVERRIDE_MODE;
+	
 	
 	public final static String APP_KEY = "q66vtgg2zeodm45";
 	public final static String APP_SECRET = "9t0wm8zrp7kwlu4";
@@ -183,7 +160,7 @@ public final class Settings {
 	private static boolean mUAC_ASSISTED = false;
 	private static SharedPreferences mSharedPreferences;
 	private static final boolean TOAST_NOTIFICATIONS = true;
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private static boolean NOT_LICENSED = false;
 
@@ -196,13 +173,6 @@ public final class Settings {
 		mSharedPreferences = null;
 		mSharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(mContext);
-	}
-	
-	@SuppressWarnings("unused")
-	private static void setSharedPrefs(String arg0, Set<String> arg1) {
-		Editor editor = mSharedPreferences.edit();
-		editor.putStringSet(arg0, arg1);
-		editor.commit();
 	}
 	
 	@SuppressWarnings("unused")
@@ -462,12 +432,21 @@ public final class Settings {
 	public static void setNOT_LICENSED(boolean nOT_LICENSED) {
 		NOT_LICENSED = nOT_LICENSED;
 	}
+	
+	public static boolean isOverrideMode() {		
+		initSharedPreferences(getSettingscontext());
+		return mSharedPreferences.getBoolean("OVERRIDE_MODE", true);
+	}
+
+	public static void setOverrideMode(boolean b) {
+		setSharedPrefs("OVERRIDE_MODE", b);
+	}
 
 	public static boolean isAlarm() {
 		
-		if(update.Alarm.isChecksContacts()) {
-			setSharedPrefs("checksServiceAlarm", false);
-			update.Alarm.setChecksContacts(false);
+		if(isOverrideMode()) {			
+			setAlarm(false);
+			setOverrideMode(false);
 		}
 		
 		initSharedPreferences(getSettingscontext());
