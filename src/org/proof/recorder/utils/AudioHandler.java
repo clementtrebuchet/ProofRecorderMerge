@@ -27,7 +27,6 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 
 public class AudioHandler {
@@ -52,7 +51,6 @@ public class AudioHandler {
 	private AudioRecord audioWav;
 	private static Context mContext;
 	private static int mAudioSource;
-	private static boolean isSync;
 	Intent mIntent;
 	private String DEFAULT_FILE;
 
@@ -773,6 +771,7 @@ public class AudioHandler {
 		humanreadable = Long.valueOf(getFileName());
 		cal.setTimeInMillis(humanreadable);
 		
+		@SuppressWarnings("deprecation")
 		final String date = cal.getTime().toLocaleString();
 		values.put(ProofDataBase.COLUMN_VOICE_HTIME, date);
 
