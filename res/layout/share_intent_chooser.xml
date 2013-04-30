@@ -40,28 +40,6 @@
 	android:layout_height="wrap_content"
 	android:src="@drawable/share_bluetooth" />
 </RadioGroup>
-<RadioGroup
-	android:id="@+id/widget40"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal"
-	android:gravity="center">
-<ImageButton
-	android:id="@+id/mShareDropBoxIcon"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:src="@drawable/share_drop_box_icon" />
-<ImageButton
-	android:id="@+id/mShareYouTubeIcon"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:src="@drawable/share_yt_icon" />
-<ImageButton
-	android:id="@+id/mShareFaceBookIcon"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:src="@drawable/share_fb_icon" />
-</RadioGroup>
 </RadioGroup>
 </RelativeLayout>
 </ScrollView>

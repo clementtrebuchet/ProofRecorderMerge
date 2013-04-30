@@ -22,10 +22,21 @@
 
     <!-- FIN DashBoard Description -->
     
+    <string name="loading">Fetching data, please wait&#46;&#46;&#46;</string>   
+    
+    <!-- START Google Play -->    
+    
+    <string name="gplay_title">Google Play</string>
+    <string name="gplay_no_match">No match found!</string>
+    <string name="ok">OK</string>
+    
+    <!-- END Google Play -->
+    
     <!-- START Plugins Dialog -->
     
-    <string name="plug_mp3_link">mp3_link</string>
-    <string name="plug_ogg_link">ogg_link</string>
+    <string name="plug_mp3_link">org.proofs.recorder.codec.mp3</string>
+    <string name="plug_ogg_link">org.proofs.recorder.codec.ogg</string>
+    
     <string name="plug_ftp_link">ftp_link</string>
     
     <string name="plug_mp3_title">MP3 Audio Engine</string>
@@ -54,7 +65,7 @@
 
     <!-- TRACKER GOOGLE -->
     <string name="gdevApiKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlJHQPCfccFjpEBQPG29jnh18AWwDqovEKOOZ4ms2aYWvoUUabaJT3NPCJ9XlgQYhB7wsC9ZYt9jHZBYX+WbMJ1XJs14EoNbWIJYK2urIbNTYGd2yjH4bE0irf7AYmLchuOfO3AJzdUi0LYbY7A+LS+CGSOSTCNGlRFzsWAEqF0phQudbYE4rzyPNxs8wj192sI188GYiPhTAv77yVcqI8ppnaaVCDpq7XY+g4IunoltTg9Xtz6h5m/Upr44kLmjB1FPM0rvAe75EW2uXXjImXQKCxLhZy6Q07uMqSwXpc6shnLr9OifzbQI3zpxfPStoTmmcc3MmfuMdLIoueShPwIDAQAB</string>
-    <string name="google_analytics_ua">UA-33072114-1</string>
+    <string name="google_analytics_ua">UA\-33072114\-1</string>
     <string name="unlicensed_dialog_title">You must have a licence</string>
     <string name="unlicensed_dialog_retry_body">Retry ?</string>
     <string name="unlicensed_dialog_body">Your Licence has expired!</string>
@@ -334,8 +345,8 @@
     </string>
     <string name="about_some_links">Some links:</string>
     <string name="contact_subject">Proof and Voice Recorder: A Question?</string>
-    <string name="contact_body">Here your message &#46;&#46;&#46;</string>
-    <string name="contact_uri">Contact</string> 
+    <string name="contact_body">Here your message&#46;&#46;&#46;</string>
+    <string name="contact_uri">Contact</string>
     <string name="site_uri">Phone &amp; voice Recorder</string>    
 
     <!-- End Main sub Menu -->
@@ -347,7 +358,7 @@
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="search_selected_date">Selected date</string>
     <string name="search_aoc_default_text">Your search</string>
-    <string name="search_none_records_found">None of records matching your search request! \nPlease, try with other criterias.</string>
+    <string name="search_none_records_found">None of records matching your search request! \nPlease, try with other criteria.</string>
     <string name="search_voice_records_choice">Voices Records</string>
     <string name="search_call_records_choice">Calls Records</string>
     <string name="search_by_date">By Date</string>
@@ -356,7 +367,7 @@
     <!-- Calendard month int to string -->
 
     <string name="jan">January</string>
-    <string name="feb">Febuary</string>
+    <string name="feb">February</string>
     <string name="mar">March</string>
     <string name="apr">April</string>
     <string name="may">May</string>

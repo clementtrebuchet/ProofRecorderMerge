@@ -21,6 +21,9 @@
     <string name="excludedFromRecordingList_desc">Contact exclus de service d\'enregistrement</string>
 
     <!-- FIN DashBoard Description -->
+    
+    
+    <string name="loading">Récupération des données, patientez svp&#46;&#46;&#46;</string>
 
 
     <!-- DashBoard Dialog -->
@@ -37,11 +40,20 @@
 
     <!-- END DashBoard Dialog -->
     
+    <!-- START Google Play -->    
+    
+    <string name="gplay_title">Google Play</string>
+    <string name="gplay_no_match">Aucune correspondance trouvée!</string>
+    <string name="ok">Ok</string>
+    
+    <!-- END Google Play -->
+    
     
     <!-- START Plugins Dialog -->
     
-    <string name="plug_mp3_link">mp3_link</string>
-    <string name="plug_ogg_link">ogg_link</string>
+    <string name="plug_mp3_link">org.proofs.recorder.codec.mp3</string>
+    <string name="plug_ogg_link">org.proofs.recorder.codec.ogg</string>
+    
     <string name="plug_ftp_link">ftp_link</string>
     
     <string name="plug_mp3_title">Moteur Audio MP3</string>
@@ -69,7 +81,7 @@
 
     <!-- TRACKER GOOGLE -->
     <string name="gdevApiKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlJHQPCfccFjpEBQPG29jnh18AWwDqovEKOOZ4ms2aYWvoUUabaJT3NPCJ9XlgQYhB7wsC9ZYt9jHZBYX+WbMJ1XJs14EoNbWIJYK2urIbNTYGd2yjH4bE0irf7AYmLchuOfO3AJzdUi0LYbY7A+LS+CGSOSTCNGlRFzsWAEqF0phQudbYE4rzyPNxs8wj192sI188GYiPhTAv77yVcqI8ppnaaVCDpq7XY+g4IunoltTg9Xtz6h5m/Upr44kLmjB1FPM0rvAe75EW2uXXjImXQKCxLhZy6Q07uMqSwXpc6shnLr9OifzbQI3zpxfPStoTmmcc3MmfuMdLIoueShPwIDAQAB</string>
-    <string name="google_analytics_ua">UA-33072114-1</string>
+    <string name="google_analytics_ua">UA\-33072114\-1</string>
     <string name="unlicensed_dialog_title">Vous devez avoir une lisence</string>
     <string name="unlicensed_dialog_retry_body">Recommencer ?</string>
     <string name="unlicensed_dialog_body">Votre License a expirée</string>
@@ -330,7 +342,9 @@
     </string>
     <string name="about_some_links">Quelques liens:</string>
     <string name="contact_subject">Proof and Voice Recorder: Une question?</string>
-    <string name="contact_body">Ici votre message ...</string> 
+    <string name="contact_body">Ici votre message&#46;&#46;&#46;</string>
+    <string name="contact_uri">Contact</string>
+    <string name="site_uri">Phone &amp; voice Recorder</string>
      
 
     <!-- End Main sub Menu -->
