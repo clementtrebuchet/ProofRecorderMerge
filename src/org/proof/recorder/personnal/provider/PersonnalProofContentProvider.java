@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Record;
@@ -39,9 +40,11 @@ import android.util.Log;
  *
  */
 public class PersonnalProofContentProvider extends
+
 		SearchRecentSuggestionsProvider {
 
 	private static ProofDataBaseHelper database;
+	private static Locale mLocal = Locale.getDefault();
 
 	// Used for the UriMacher
 
@@ -455,6 +458,7 @@ public class PersonnalProofContentProvider extends
 		}
 		finally {
 			c.close();
+			sqlDB.close();
 		}	
 		
 		return lastId;
@@ -500,6 +504,7 @@ public class PersonnalProofContentProvider extends
 			_count = c.getCount();
 			
 			c.close();
+			sqlDB.close();
 		}
 		catch(Exception e) {
 			Log.e(TAG, "" + e);
@@ -908,12 +913,14 @@ public class PersonnalProofContentProvider extends
 			cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
 			return cursor;
+			
 		case VOICE_ID:
 			queryBuilder.setTables(ProofDataBase.TABLE_VOICES);
 			// Adding the ID to the original query
 			queryBuilder.appendWhere(ProofDataBase.COLUMNVOICE_ID + "="
 					+ uri.getLastPathSegment());
 			break;
+			
 		case VOICE_BY_TITLE:
 
 			if (Settings.isDebug())
@@ -956,16 +963,17 @@ public class PersonnalProofContentProvider extends
 									+ ProofDataBase.TABLE_VOICE_NOTES
 									+ " ON "
 									+ ProofDataBase.TABLE_VOICES
-									+ "._id = "
+									+ "._id="
 									+ ProofDataBase.TABLE_VOICE_NOTES
 									+ ".RecId WHERE "
 									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ ".titre LIKE \"%Insérer une note%\"",
+									+ ".titre==\"Insérer une note\"",
 							null);
 
 			cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
 			return cursor;
+			
 		case VOICE_NON_SYNC:
 			if (Settings.isDebug())
 				Log.d(TAG,
@@ -976,6 +984,7 @@ public class PersonnalProofContentProvider extends
 					+ ProofDataBase.TABLE_VOICES + " WHERE Isync = 0",
 					null);
 			cursor12.setNotificationUri(getContext().getContentResolver(), uri);
+			
 			return cursor12;
 
 		// Voice Notes
@@ -983,6 +992,7 @@ public class PersonnalProofContentProvider extends
 		case VOICE_NOTES:
 			queryBuilder.setTables(ProofDataBase.TABLE_VOICE_NOTES);
 			break;
+			
 		case VOICE_NOTE_ID:
 			queryBuilder.setTables(ProofDataBase.TABLE_VOICE_NOTES);
 			// Adding the ID to the original query
@@ -1118,7 +1128,7 @@ public class PersonnalProofContentProvider extends
 		
 		mFinalQuery = tmpQueriesParts[0].trim();	
 		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", mLocal); 
 		Date date=null;
 		
 		
@@ -1414,7 +1424,7 @@ public class PersonnalProofContentProvider extends
 		
 		mFinalQuery = tmpQueriesParts[0].trim();	
 		
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", mLocal); 
 		Date date=null;
 		
 		
@@ -2067,6 +2077,8 @@ public class PersonnalProofContentProvider extends
 		
 		c.close();
 		
+		mSqlDb.close();
+		
 		return count;
 	}
 
@@ -2099,6 +2111,7 @@ public class PersonnalProofContentProvider extends
 		}
 		finally {
 			c.close();
+			mSqlDb.close();
 		}		
 
 		return mTitle;
@@ -2143,6 +2156,7 @@ public class PersonnalProofContentProvider extends
 		}
 		finally {
 			cVoice.close();
+			mSqlDb.close();
 		}
 
 		return AllCounts;
@@ -2180,6 +2194,7 @@ public class PersonnalProofContentProvider extends
 		}
 		finally {
 			cEx.close();
+			mSqlDb.close();
 		}
 
 		return AllCounts;
@@ -2257,6 +2272,7 @@ public class PersonnalProofContentProvider extends
 		}
 		finally {
 			c.close();
+			mSqlDb.close();
 		}
 		
 		return list;

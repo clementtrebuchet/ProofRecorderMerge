@@ -2,14 +2,13 @@ package org.proof.recorder.preferences;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
-import org.proof.recorder.billing.vending.ProofStore;
 import org.proof.recorder.place.de.marche.Eula;
 import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.StaticIntents;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -108,9 +107,8 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 			mp3.setChecked(true);
 
 		} else {
-			mp3.setChecked(false);
-			Intent intent = new Intent(this,ProofStore.class);
-			mp3.setIntent(intent);
+			mp3.setChecked(false);			
+			mp3.setIntent(StaticIntents.goPlugins(mContext));
 		}
 	}
 
@@ -120,8 +118,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 
 		} else {
 			ogg.setChecked(false);
-			Intent intent = new Intent(this,ProofStore.class);
-			ogg.setIntent(intent);
+			ogg.setIntent(StaticIntents.goPlugins(mContext));
 			
 			
 		}

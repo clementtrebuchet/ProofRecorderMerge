@@ -1,15 +1,9 @@
 package org.proof.recorder.service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 import org.proof.recorder.Settings;
-
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -18,7 +12,7 @@ public class ServiceSchd extends Service {
 	public static final int ALARM_START = 0x012;
 	private static final String TAG = null;
 	private Intent mIntent;
-	private Handler mHandler = new Handler();
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
