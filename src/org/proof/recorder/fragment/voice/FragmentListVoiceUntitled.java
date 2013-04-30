@@ -7,6 +7,7 @@ import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -77,6 +78,7 @@ public class FragmentListVoiceUntitled extends SherlockFragment {
 		 * End of Contextual Menu
 		 */
 
+		@SuppressLint("InlinedApi")
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
@@ -152,12 +154,18 @@ public class FragmentListVoiceUntitled extends SherlockFragment {
 		public void onListItemClick(ListView l, View v, int position, long id) {
 
 			super.onListItemClick(l, v, position, id);
-			Cursor c = ((VoiceListAdapter) getListAdapter()).getCursor();
 			
-			if(Settings.isDebug())
-				Log.v("MA_LISTE_DE_MERDE_AT :", "" + position);		
+			Cursor c = ((VoiceListAdapter) getListAdapter()).getCursor();	
 			
-			QuickActionDlg.showUnTitledVoiceOptionsDlg(getActivity(),v, c, (VoiceListAdapter) getListAdapter(), getLoaderManager(), this, Settings.mType.VOICE_UNTITLED);
+			QuickActionDlg.showUnTitledVoiceOptionsDlg(
+					getActivity(),
+					v, 
+					c, 
+					(VoiceListAdapter) getListAdapter(), 
+					getLoaderManager(), 
+					this, 
+					Settings.mType.VOICE_UNTITLED
+			);
 		}
 
 	}

@@ -1,22 +1,20 @@
 package org.proof.recorder.fragment.voice;
 
+import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
-import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.TabsPagerAdapter;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class FragmentListVoiceTabs extends SherlockFragmentActivity {
-
-	private static final String TAG = "FragmentListRecordFoldersTabs";
 
 	private TabHost mTabHost;
 	private ViewPager mViewPager;
@@ -30,8 +28,10 @@ public class FragmentListVoiceTabs extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
-		
 		setContentView(R.layout.fragment_inout_records_tabs);
+		
+		bTitled = ProofRecorderActivity.bTitled;
+		bUntitled = ProofRecorderActivity.bUntitled;
 		
 		clsTitledVoices = FragmentListVoice.VoiceListLoader.class;
 		clsUnTitledVoices = FragmentListVoiceUntitled.VoiceListLoader.class;
@@ -48,28 +48,7 @@ public class FragmentListVoiceTabs extends SherlockFragmentActivity {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
 
-		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
-
-		int titled, untitled;		
-
-		titled = AndroidContactsHelper.getTitledVoiceCount();
-		untitled = AndroidContactsHelper.getUnTitledVoiceCount();
-		
-		Log.v(TAG, "TITLED: " + titled + " " + "UNTITLED: " + untitled);
-
-		if (titled > 0) {
-			bTitled = true;
-		}
-		else
-			bTitled = false;
-
-		if (untitled > 0) {
-			bUntitled = true;
-		}
-		else
-			bUntitled = false;		
-
-		
+		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);		
 		
 		if (bTitled && !bUntitled) {
 			
@@ -110,9 +89,7 @@ public class FragmentListVoiceTabs extends SherlockFragmentActivity {
 			mTabsAdapter.addTab(
 					mBar.newTab().setText(
 							this.getString(R.string.strUnTitledVoicesTab)),
-					clsUnTitledVoices, null);
-
-			
+					clsUnTitledVoices, null);		
 
 		}
 		
@@ -124,6 +101,8 @@ public class FragmentListVoiceTabs extends SherlockFragmentActivity {
 		}
 
 		QuickActionDlg.setmContext(this);
+		
+		AlertDialogHelper.hideProgressDialog();
 	}
 
 	@Override

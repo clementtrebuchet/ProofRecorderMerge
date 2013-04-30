@@ -236,9 +236,6 @@ public class FragmentListKnownContacts extends SherlockFragment {
 			Contact mContact = ca.getItem(position);
 			
 			MenuActions.displayCallsFolderDetails(mContact.getContractId(), "android_id", getActivity());
-			 
-			 if(Settings.isDebug())
-				 Log.v("MA_LISTE_DE_MERDE_AT :", "" + position + "(telephone : " + mContact.getPhoneNumber() +")");			 
 		 }
 
 	}

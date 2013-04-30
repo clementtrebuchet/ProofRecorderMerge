@@ -80,7 +80,8 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    
 	    @Override
 	    public void onCreate(Bundle icicle) {
-	        super.onCreate(icicle); 	        
+	        super.onCreate(icicle); 
+	        AlertDialogHelper.setContext(getActivity());
 	    }
 
 		@Override
@@ -178,7 +179,7 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	   
 
 	    private void stopRecording() {
-	    	AlertDialogHelper.openVoiceEditDialog(getActivity());
+	    	AlertDialogHelper.openVoiceEditDialog();
 	    	mRecorder.stopRecording();
 	        mRecorder = null;	        
 	    }	    	    

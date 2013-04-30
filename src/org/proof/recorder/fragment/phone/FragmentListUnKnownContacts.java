@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
@@ -37,16 +36,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class FragmentListUnKnownContacts extends SherlockFragment {
-	
-	//private final static String TAG = "FragmentListUnKnownContacts";
-	
-	/**
-	 * @param message
-	 */
-	private static void print(String message) {
-		if(Settings.isDebug())
-			Log.d(FragmentListUnKnownContacts.class.getName(), message);
-	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -119,16 +108,12 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 			
 			ContactAdapter ca = (ContactAdapter) getListAdapter();				
 			Contact mContact = ca.getItem(recordPosition);
-
-			print("" + recordPosition);
 			
 			if (item.getItemId() == R.id.cm_records_list_del_file) {
 				//MenuActions.deleteContactsFolder(mContact, getActivity(), ca);					
 				return true;
 			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
 				MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
-
-				print("Display Item's details");
 				return true;
 			}
 			return super.onContextItemSelected(item);
@@ -140,9 +125,7 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 				if(uiOn)
 					getActivity().runOnUiThread(returnRes);
 			} catch (Exception e) {
-				
-				if(Settings.isDebug())
-					Log.e(TAG, "E" + e.getMessage());
+					Log.e(TAG, "" + e.getMessage());
 			}
 		}
 
@@ -194,7 +177,6 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 					if (input == null) {
 
 					} else {
-						print("Image is read");
 
 						Bitmap bitmap = BitmapFactory.decodeStream(input);
 						imageView.setImageBitmap(bitmap);
@@ -216,11 +198,7 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 			if(!contacts.isEmpty())
 				Collections.sort(contacts, new Comparator<Contact>() {
 			        @Override
-			        public int compare(Contact s1, Contact s2) {
-			        	
-			        	print("Contact 1 object to console: "); s1.toConsole();
-			        	
-			        	print("Contact 2 object to console: "); s2.toConsole();			        	
+			        public int compare(Contact s1, Contact s2) {	        	
 			        	
 			            return s1.getsPhoneNumber().get_nationalNumber().compareToIgnoreCase(
 			            		s2.getsPhoneNumber().get_nationalNumber());
@@ -251,9 +229,7 @@ public class FragmentListUnKnownContacts extends SherlockFragment {
 			ContactAdapter ca = (ContactAdapter) getListAdapter();				
 			Contact mContact = ca.getItem(position);
 			
-			MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
-			 
-			print("" + position + "(telephone : " + mContact.getPhoneNumber() +")");			 
+			MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());		 
 		 }
 
 	}

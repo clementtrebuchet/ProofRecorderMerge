@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.utils.AlertDialogHelper;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class PluginsInformations extends SherlockFragmentActivity {
 
+	protected static final String GPLAY = "market://search?q=pname:";
 	private static Context mContext;
 	private static ListView plugs;
 
@@ -62,6 +65,7 @@ public class PluginsInformations extends SherlockFragmentActivity {
 		setContentView(R.layout.plugins_dialog);
 
 		setContext(this);
+		AlertDialogHelper.setContext(this);
 
 		print("onCreate");
 
@@ -69,7 +73,7 @@ public class PluginsInformations extends SherlockFragmentActivity {
 		String[] titles = new String[] {
 				getString(R.string.plug_mp3_title),
 				getString(R.string.plug_ogg_title),
-				getString(R.string.plug_ftp_title)
+				//getString(R.string.plug_ftp_title)
 		};
 
 
@@ -78,20 +82,20 @@ public class PluginsInformations extends SherlockFragmentActivity {
 		String[] texts = new String[]{
 				getString(R.string.plug_mp3_txt),
 				getString(R.string.plug_ogg_txt),
-				getString(R.string.plug_ftp_txt),
+				//getString(R.string.plug_ftp_txt),
 		};
 
 		// Array of integers points to images stored in /res/drawable-ldpi/
 		int[] icons = new int[]{
 				R.drawable.plug_mp3,
 				R.drawable.plug_ogg,
-				R.drawable.plug_ftp
+				//R.drawable.plug_ftp
 		};
 
-		String[] mLinks = new String[] {
+		String[] mLinksIds = new String[] {
 				getString(R.string.plug_mp3_link),
 				getString(R.string.plug_ogg_link),
-				getString(R.string.plug_ftp_link)
+				//getString(R.string.plug_ftp_link)
 		};
 
 		// Keys used in Hashmap
@@ -119,7 +123,7 @@ public class PluginsInformations extends SherlockFragmentActivity {
 			hm.put("icon", Integer.toString(icons[i]) );
 			hm.put("title", titles[i]);
 			hm.put("full_desc", texts[i]);
-			hm.put("glink", mLinks[i]);
+			hm.put("gId", mLinksIds[i]);
 
 			mPlugs.add(hm);
 		}
@@ -141,14 +145,18 @@ public class PluginsInformations extends SherlockFragmentActivity {
 				@SuppressWarnings("unchecked")
 				HashMap<String, String> info = (HashMap<String, String>) plugs.getItemAtPosition(position);
 
-				String mLink = cleanString(info.get("glink"));
+				String mId = cleanString(info.get("gId"));
 
-				Intent browserIntent = new Intent(
+				Intent marketIntent = new Intent(
 						"android.intent.action.VIEW", 
-						Uri.parse("http://www." + mLink)
+						Uri.parse(GPLAY + mId)
 				);
 				
-				startActivity(browserIntent);
+				try {
+                    startActivity(marketIntent);
+                } catch (ActivityNotFoundException ex) {
+                	AlertDialogHelper.openSimpleNoMatchDialog();
+                }
 			}
 		});
 	}

@@ -1,22 +1,20 @@
 package org.proof.recorder.fragment.phone;
 
+import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
-import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.TabsPagerAdapter;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class FragmentListRecordFoldersTabs extends SherlockFragmentActivity {
-
-	private static final String TAG = "FragmentListRecordFoldersTabs";
 
 	private TabHost mTabHost;
 	private ViewPager mViewPager;
@@ -30,6 +28,9 @@ public class FragmentListRecordFoldersTabs extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		bKnown = ProofRecorderActivity.bKnown;
+		bUnKnown = ProofRecorderActivity.bUnknown;
 
 		clsknownContacts = FragmentListKnownContacts.KnownContactsLoader.class;
 		clsUnknownContacts = FragmentListUnKnownContacts.UnKnownContactsLoader.class;
@@ -50,26 +51,6 @@ public class FragmentListRecordFoldersTabs extends SherlockFragmentActivity {
 		}
 
 		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
-		
-		int known, unknown;		
-
-		known = AndroidContactsHelper.getKnownFolderContactsCount();
-		unknown = AndroidContactsHelper.getUnKnownFolderContactsCount();
-		
-		Log.v(TAG, "TITLED: " + known + " " + "UNTITLED: " + unknown);
-
-		if (known > 0) {
-			bKnown = true;
-		}
-		else
-			bKnown = false;
-
-		if (unknown > 0) {
-			bUnKnown = true;
-		}
-		else
-			bUnKnown = false;		
-
 		
 		
 		if (bKnown && !bUnKnown) {
@@ -110,7 +91,9 @@ public class FragmentListRecordFoldersTabs extends SherlockFragmentActivity {
 			startActivity(StaticIntents.goHome(this));		
 		}
 
-		QuickActionDlg.setmContext(this);
+		QuickActionDlg.setmContext(this);		
+		
+		AlertDialogHelper.hideProgressDialog();
 	}
 
 	@Override
