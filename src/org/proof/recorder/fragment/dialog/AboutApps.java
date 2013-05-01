@@ -1,14 +1,13 @@
 package org.proof.recorder.fragment.dialog;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -39,14 +38,6 @@ public class AboutApps extends SherlockFragmentActivity {
 	 */
 	public static void setContext(Context mContext) {
 		AboutApps.mContext = mContext;
-	}
-
-	/**
-	 * @param message
-	 */
-	private static void print(String message) {
-		if(Settings.isDebug())
-			Log.d(AboutApps.class.getName(), message);
 	}
 	
 	/**
@@ -89,14 +80,14 @@ public class AboutApps extends SherlockFragmentActivity {
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
 				String link = (String)mListView.getItemAtPosition(position);
 				String mLink = cleanString(link);
-				String phoneandvoice = "phoneandvoice-recorder.com";
+				String phoneandvoice = "frugandfrog.com";
 				String webMatch = "phone&voicerecorder";
 				
-				print("mLink:" + mLink);
+				Console.print_debug("mLink:" + mLink);
 				
 				if(mLink.equals("contact")) {
 					
-					print("mLink clicked!");
+					Console.print_debug("mLink clicked!");
 					
 					String email = mLink + "@" + phoneandvoice;
 					String subject = getContext().getString(R.string.contact_subject);
@@ -116,7 +107,7 @@ public class AboutApps extends SherlockFragmentActivity {
 				
 				if(mLink.equals(webMatch)) {
 					
-					print("mLink clicked!");
+					Console.print_debug("mLink clicked!");
 					
 					Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www." + phoneandvoice));
 					startActivity(browserIntent);
