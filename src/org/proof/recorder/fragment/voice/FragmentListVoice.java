@@ -6,8 +6,8 @@ import org.proof.recorder.adapter.voice.VoiceListAdapter;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.Log.Console;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,6 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class FragmentListVoice extends SherlockFragment {
-
-	//private static final String TAG = "FragmentListVoice";
 	
 	public static String ID;
 	
@@ -39,7 +36,6 @@ public class FragmentListVoice extends SherlockFragment {
 			LoaderManager.LoaderCallbacks<Cursor> {
 
 		private static final int LIST_LOADE = 0x01;
-		private static final String TAG = "FragmentListOfVoice";
 		boolean mDualPane;
 		int mCursorPos = -1;
 		
@@ -80,16 +76,7 @@ public class FragmentListVoice extends SherlockFragment {
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-			int[] to = { R.id.idrecord, R.id.timehumanreadable, R.id.sens,
-					 };
-
-			//setEmptyText("Pas d\'enregistrement");		
-			
-			
-			/*QuickActionDlg.mainDlgClickableMenu(
-					getActivity(), 
-					getString(R.string.strABVoiceRecords)
-			);*/
+			int[] to = { R.id.idrecord, R.id.timehumanreadable, R.id.sens, };
 
 			mAdapter = new VoiceListAdapter(getActivity(),
 					R.layout.listfragmentdroit, null, from, to,
@@ -100,10 +87,7 @@ public class FragmentListVoice extends SherlockFragment {
 			setHasOptionsMenu(true);
 			setMenuVisibility(true);
 
-			if(Settings.isDebug())
-				Log.v(TAG, "PASS HERE");
-			// Prepare the loader. Either re-connect with an existing one,
-			// or start a new one.
+			Console.print_exception("PASS HERE");
 			getLoaderManager().initLoader(LIST_LOADE, null, this);
 
 			registerForContextMenu(getListView());

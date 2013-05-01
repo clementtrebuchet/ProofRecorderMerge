@@ -1991,10 +1991,17 @@ public class PersonnalProofContentProvider extends
 			Console.print_exception(e);
 		}
 		finally {
+			
 			if(dataCursor != null) {
 				dataCursor.close();
+			}
+			
+			try {
+				databaseAccess.close();
+			}
+			catch(Exception e) {
+				Console.print_exception(e);
 			}			
-			databaseAccess.close();
 		}		
 
 		return mTitle;
