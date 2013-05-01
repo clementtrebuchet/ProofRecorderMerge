@@ -1,5 +1,7 @@
 package org.proof.recorder.utils.Log;
 
+import org.proof.recorder.Settings;
+
 import android.util.Log;
 
 public class Console {
@@ -52,7 +54,9 @@ public class Console {
 	}
 	
 	public static void print_debug(Object message) {
-		print('d', message);
+		if(Settings.isDebug()) {
+			print('d', message);
+		}		
 	}
 	
 	public static void print_exception(Object message) {

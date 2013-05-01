@@ -1,11 +1,9 @@
-package org.proof.recorder.syncron.fragment;
+package org.proof.recorder.utils;
 import android.content.Context;
 
 public class Messages {
 
-
-	private Messages() {
-	}
+	private Messages() {}
 
 	public static int getStringResource(Context context, String name) {
 		
