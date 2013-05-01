@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-public class VoiceListAdapter extends SimpleCursorAdapter implements SectionIndexer{
+public class VoiceListAdapter extends SimpleCursorAdapter {
 
 	private static final String TAG = "VoiceListAdpater";
 
@@ -40,29 +40,10 @@ public class VoiceListAdapter extends SimpleCursorAdapter implements SectionInde
 		Date date = new Date(Long.parseLong(timeStamp));
 		return date;
 	}*/
-
-	@Override
-	public int getPositionForSection(int arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getSectionForPosition(int arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Object[] getSections() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	/**
 	 * End of Separator Logic
-	 */
-	
+	 */	
 	
 
 	@Override
