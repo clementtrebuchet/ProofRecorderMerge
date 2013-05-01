@@ -77,7 +77,6 @@ public class FragmentListVoice extends SherlockFragment {
 		 * End of Contextual Menu
 		 */
 
-		@SuppressLint("InlinedApi")
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
@@ -94,7 +93,7 @@ public class FragmentListVoice extends SherlockFragment {
 
 			mAdapter = new VoiceListAdapter(getActivity(),
 					R.layout.listfragmentdroit, null, from, to,
-					CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+					CursorAdapter.IGNORE_ITEM_VIEW_TYPE);
 
 			setListAdapter(mAdapter);
 			setListShown(true);

@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.proof.recorder.Settings;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,10 +38,20 @@ public class ProofDataBaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	
+	@SuppressLint("NewApi")
 	@Override
 	public void onConfigure(SQLiteDatabase db) {
-		db.enableWriteAheadLogging();
+		
+		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		
+		if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB){
+			db.enableWriteAheadLogging();			
+		}
+		else if(currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+			db.setForeignKeyConstraintsEnabled(true);
+		}
+		
 		db.setLocale(Locale.getDefault());
 	}
 
