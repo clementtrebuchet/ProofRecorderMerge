@@ -17,7 +17,6 @@ import org.proof.recorder.place.de.marche.Eula;
 import org.proof.recorder.preferences.SettingsTabs;
 import org.proof.recorder.scheduling.VerifyContactsApiReceiver;
 import org.proof.recorder.service.TestDevice;
-import org.proof.recorder.syncron.fragment.GMCActivity;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.ConnectivityInfo;
 import org.proof.recorder.utils.StaticIntents;
@@ -700,11 +699,6 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	@Override
 	protected void onDestroy() {
-		try {
-			unregisterReceiver(GMCActivity.mHandleMessageReceiver);
-		} catch (java.lang.IllegalArgumentException e) {
-			Console.print_exception(e);
-		}
 		//mChecker.onDestroy();
 		AlertDialogHelper.closeProgressDialog();
 		super.onDestroy();
