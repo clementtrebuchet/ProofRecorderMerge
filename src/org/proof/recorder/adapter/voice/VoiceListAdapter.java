@@ -12,12 +12,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class VoiceListAdapter extends SimpleCursorAdapter {
+	
+	private static final String[] from = new String[] {
+		ProofDataBase.COLUMNVOICE_TITLE, 
+		ProofDataBase.COLUMNVOICE_NOTES_ID
+	};
 
 	public VoiceListAdapter(Context context, int layout, Cursor c,
 			String[] from, int[] to, int flag) {
@@ -42,7 +48,32 @@ public class VoiceListAdapter extends SimpleCursorAdapter {
 		
 		TextView mTitreVoice = (TextView) view.findViewById(R.id.number);
 		
-		String mTitle = PersonnalProofContentProvider.getVoiceNoteById(id);
+		Uri uri = Uri.withAppendedPath(
+				PersonnalProofContentProvider.CONTENT_URI, "vnote_recordid/"
+						+ id);
+		
+		String mTitle = "";
+		Cursor dataCursor = null;
+		
+		try {
+			dataCursor = context.getContentResolver().query(uri, from, null, null, null);
+			while (dataCursor.moveToNext()){
+				mTitle = (dataCursor.getString(dataCursor
+						.getColumnIndex(
+								ProofDataBase.COLUMNVOICE_TITLE)));
+				
+			}			
+		}
+		catch(Exception e) {
+			Console.print_exception(e);
+		}
+		finally {
+			if(dataCursor != null) {
+				dataCursor.close();
+			}
+		}
+		
+		
 		mTitreVoice.setText(mTitle);
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.list_image);
