@@ -1,5 +1,6 @@
 package org.proof.recorder.database.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,12 @@ import android.net.Uri;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
-public class Record implements DataLayerInterface {
+public class Record implements DataLayerInterface, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7792014800935229041L;
 
 	// Uris 
 
@@ -315,5 +321,11 @@ public class Record implements DataLayerInterface {
 			print_exception("No data access (None ContentResolver has been passed)");
 		}
 		
+	}
+
+	@Override
+	public boolean fillFromDataBase() {
+		// TODO Auto-generated method stub
+		return false;
 	}	
 }

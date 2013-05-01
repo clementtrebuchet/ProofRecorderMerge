@@ -6,8 +6,9 @@ public interface DataLayerInterface {
 	
 	ContentValues _values = new ContentValues();
 	
+	boolean fillFromDataBase();
+	
 	void fillValues();
 	
 	void save();
-
 }

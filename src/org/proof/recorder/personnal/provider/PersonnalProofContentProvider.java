@@ -1968,18 +1968,17 @@ public class PersonnalProofContentProvider extends
 	/**
 	 * @param mId
 	 * @return
-	 */
+	 *//*
 	public static String getVoiceNoteById(String mId) {
 		
 		String query = "SELECT titre from voicenotesproof WHERE RecId=?";
 		String mTitle = "";
 		
 		Cursor dataCursor = null;
-		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
-		
-		dataCursor = databaseAccess.rawQuery(query, new String[] { mId });
+		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();		
 		
 		try {
+			dataCursor = databaseAccess.rawQuery(query, new String[] { mId });
 			while (dataCursor != null && dataCursor.moveToNext()) {
 				mTitle = (dataCursor.getString(dataCursor
 						.getColumnIndex(ProofDataBase.COLUMNVOICE_TITLE)));
@@ -2005,7 +2004,7 @@ public class PersonnalProofContentProvider extends
 		}		
 
 		return mTitle;
-	}
+	}*/
 
 	/**
 	 * @return
