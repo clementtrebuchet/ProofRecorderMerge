@@ -1,24 +1,20 @@
 package org.proof.recorder.fragment.voice;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.adapter.voice.VoiceListAdapter;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.utils.Log.Console;
 
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -32,31 +28,80 @@ public class FragmentListVoice extends SherlockFragment {
 		super.onCreate(savedInstanceState);
 	}
 
-	public static class VoiceListLoader extends ListFragment implements
-			LoaderManager.LoaderCallbacks<Cursor> {
-
-		private static final int LIST_LOADE = 0x01;
+	public static class VoiceListLoader extends ListFragment {
+		
+		private static ArrayList<Voice> voices = null;
+		private static VoiceAdapter voicesAdapter = null;
+		private static Runnable viewVoices = null;
+		private static boolean uiOn = false;
 		boolean mDualPane;
 		int mCursorPos = -1;
 		
 		private static Bundle extraDatas;
+		
+		private Runnable returnRes = new Runnable() {
 
-		private String[] from = new String[] {
-				ProofDataBase.COLUMNVOICE_ID,
-				ProofDataBase.COLUMN_VOICE_HTIME, 
-				ProofDataBase.COLUMN_VOICE_TAILLE,
-				ProofDataBase.COLUMN_VOICE_TIMESTAMP,
-				ProofDataBase.COLUMN_VOICE_FILE
+			@Override
+			public void run() {
+				
+				((VoiceAdapter) getListAdapter()).notifyDataSetChanged();
+			}
 		};
+		
+		private void getVoices() {
+			try {
+				voices = null;
+				if(uiOn)
+					getActivity().runOnUiThread(returnRes);
+			} catch (Exception e) {				
+				Console.print_exception(e);
+			}
+		}
 
-		//private static Cursor c;
+		public class VoiceAdapter extends ArrayAdapter<Voice> {
 
-		private VoiceListAdapter mAdapter;
+			private ArrayList<Voice> items;
+
+			public VoiceAdapter(Context context, int textViewResourceId,
+					ArrayList<Voice> items) {
+				super(context, textViewResourceId, items);
+				this.items = items;
+			}
+
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View view = convertView;
+				if (view == null) {
+					LayoutInflater vi = (LayoutInflater) getActivity()
+							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					view = vi.inflate(R.layout.listfragmentdroit, null);
+				}
+				Voice voice = items.get(position);
+				if (voice != null) {					
+								
+				}
+				return view;
+			}
+		}		
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			extraDatas = getActivity().getIntent().getExtras();
+			
+			viewVoices = new Runnable() {
+				@Override
+				public void run() {
+					uiOn = true;
+					getVoices();
+					uiOn = false;
+				}
+			};
+			
+			getActivity().runOnUiThread(viewVoices);			
+			
+			voicesAdapter = new VoiceAdapter(getActivity(),
+					R.layout.listfragmentdroit, voices);
 		}
 
 		/**
@@ -76,24 +121,20 @@ public class FragmentListVoice extends SherlockFragment {
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-			int[] to = { R.id.idrecord, R.id.timehumanreadable, R.id.sens, };
-
-			mAdapter = new VoiceListAdapter(getActivity(),
-					R.layout.listfragmentdroit, null, from, to,
-					CursorAdapter.IGNORE_ITEM_VIEW_TYPE);
-
-			setListAdapter(mAdapter);
-			setListShown(true);
-			setHasOptionsMenu(true);
-			setMenuVisibility(true);
-
-			Console.print_exception("PASS HERE");
-			getLoaderManager().initLoader(LIST_LOADE, null, this);
-
-			registerForContextMenu(getListView());
+			
+			if(!voices.isEmpty())
+				Collections.sort(voices, new Comparator<Voice>() {
+			        @Override
+			        public int compare(Voice s1, Voice s2) {
+			            return s1.getId().compareToIgnoreCase(s2.getId());
+			        }
+			    });
+			setListAdapter(voicesAdapter);
+			if(getListView().getCount() > 0)
+				registerForContextMenu(getListView());
 		}
 
-		@Override
+/*		@Override
 		public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 			Uri uri;
 			String mQuery;
@@ -120,23 +161,13 @@ public class FragmentListVoice extends SherlockFragment {
 			}			
 			
 			return cursorLoader;
-		}
-
-		@Override
-		public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
-			mAdapter.swapCursor(arg1);
-		}
-
-		@Override
-		public void onLoaderReset(Loader<Cursor> arg0) {
-			mAdapter.swapCursor(null);
-		}
+		}*/
 
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
 
 			super.onListItemClick(l, v, position, id);
-			Cursor c = ((VoiceListAdapter) getListAdapter()).getCursor();
+			/*Cursor c = ((VoiceListAdapter) getListAdapter()).getCursor();
 			
 			QuickActionDlg.showTitledVoiceOptionsDlg(
 					getActivity(),
@@ -146,7 +177,7 @@ public class FragmentListVoice extends SherlockFragment {
 					getLoaderManager(), 
 					this, 
 					Settings.mType.VOICE_TITLED
-			);
+			);*/
 		}
 
 	}
