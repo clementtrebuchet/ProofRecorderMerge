@@ -1,12 +1,16 @@
 package org.proof.recorder.database.support;
 
 
+import java.util.Locale;
+
 import org.proof.recorder.Settings;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 
 //Database open/upgrade helper
@@ -22,6 +26,7 @@ public class ProofDataBaseHelper extends SQLiteOpenHelper {
     
     private static final String DATABASE_NAME = "proofdatabase.db";
 	private static final int DATABASE_VERSION = 18;
+	
 	public ProofDataBaseHelper(Context context) {		
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -30,6 +35,13 @@ public class ProofDataBaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		ProofDataBase.onCreate(db);
 		
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	public void onConfigure(SQLiteDatabase db) {
+		db.enableWriteAheadLogging();
+		db.setLocale(Locale.getDefault());
 	}
 
 	@Override
