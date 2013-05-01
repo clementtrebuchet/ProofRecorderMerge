@@ -444,9 +444,28 @@ public final class Settings {
 
 	public static boolean isAlarm() {
 		
-		if(isOverrideMode()) {			
+		// Each time we want it to be executed
+		// just inverse condition of OverrideMode
+		// Like this:
+		
+		// Either,
+		
+		// if(!isOverrideMode()) {			
+		//	 setAlarm(false);
+		//	 setOverrideMode(true);
+		// }
+		
+		// Or,
+		
+		// if(isOverrideMode()) {
+		//   setAlarm(false);
+		//   setOverrideMode(false);
+		// }
+		
+		
+		if(!isOverrideMode()) {			
 			setAlarm(false);
-			setOverrideMode(false);
+			setOverrideMode(true);
 		}
 		
 		initSharedPreferences(getSettingscontext());

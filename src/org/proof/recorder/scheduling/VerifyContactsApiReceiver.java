@@ -42,8 +42,7 @@ public class VerifyContactsApiReceiver extends BroadcastReceiver {
 		
 		am.cancel(sender);
 		
-		//updateTime.add(Calendar.DAY_OF_WEEK, 1);
-		updateTime.add(Calendar.MINUTE, 5);
+		updateTime.add(Calendar.DAY_OF_WEEK, 1);
 		
 		am.set(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), sender);
 	}
