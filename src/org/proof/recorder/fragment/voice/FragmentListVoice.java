@@ -5,16 +5,21 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.adapter.voice.VoiceAdapter;
+import org.proof.recorder.database.collections.VoicesList;
 import org.proof.recorder.database.models.Voice;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -39,54 +44,48 @@ public class FragmentListVoice extends SherlockFragment {
 		
 		private static Bundle extraDatas;
 		
-		private Runnable returnRes = new Runnable() {
-
-			@Override
-			public void run() {
-				
-				((VoiceAdapter) getListAdapter()).notifyDataSetChanged();
-			}
-		};
-		
 		private void getVoices() {
+			
+			Uri uri;
+			String mQuery = null;
+			
 			try {
-				voices = null;
-				if(uiOn)
-					getActivity().runOnUiThread(returnRes);
+				
+				mQuery = (String) extraDatas.get("search");
+				
+				if(mQuery != null)
+					throw new Exception();
+				
+				uri = Uri.withAppendedPath(
+						PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + mQuery);
+			}
+			catch(Exception e) {
+				
+				uri = Uri.withAppendedPath(
+						PersonnalProofContentProvider.CONTENT_URI, "voices");
+			}
+			
+			try {			
+				
+				Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+				
+				VoicesList mList = new VoicesList(cursor);
+				
+				voices = mList.getCollection();
+				
 			} catch (Exception e) {				
 				Console.print_exception(e);
+				e.printStackTrace();
 			}
-		}
-
-		public class VoiceAdapter extends ArrayAdapter<Voice> {
-
-			private ArrayList<Voice> items;
-
-			public VoiceAdapter(Context context, int textViewResourceId,
-					ArrayList<Voice> items) {
-				super(context, textViewResourceId, items);
-				this.items = items;
-			}
-
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View view = convertView;
-				if (view == null) {
-					LayoutInflater vi = (LayoutInflater) getActivity()
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.listfragmentdroit, null);
-				}
-				Voice voice = items.get(position);
-				if (voice != null) {					
-								
-				}
-				return view;
-			}
-		}		
+		}	
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			
+			Console.setTagName(this.getClass().getSimpleName());
+			Voice.setResolver(getActivity().getContentResolver());
+			
 			extraDatas = getActivity().getIntent().getExtras();
 			
 			viewVoices = new Runnable() {
@@ -99,9 +98,6 @@ public class FragmentListVoice extends SherlockFragment {
 			};
 			
 			getActivity().runOnUiThread(viewVoices);			
-			
-			voicesAdapter = new VoiceAdapter(getActivity(),
-					R.layout.listfragmentdroit, voices);
 		}
 
 		/**
@@ -122,64 +118,43 @@ public class FragmentListVoice extends SherlockFragment {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 			
-			if(!voices.isEmpty())
+			try{
 				Collections.sort(voices, new Comparator<Voice>() {
 			        @Override
 			        public int compare(Voice s1, Voice s2) {
-			            return s1.getId().compareToIgnoreCase(s2.getId());
+			            return s1.getTimestamp().compareToIgnoreCase(s2.getTimestamp());
 			        }
 			    });
-			setListAdapter(voicesAdapter);
-			if(getListView().getCount() > 0)
-				registerForContextMenu(getListView());
-		}
-
-/*		@Override
-		public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-			Uri uri;
-			String mQuery;
-			CursorLoader cursorLoader;
-			
-			try {
-				
-				mQuery = (String) extraDatas.get("search");
-				
-				if(mQuery == null)
-					throw new Exception();
-				
-				uri = Uri.withAppendedPath(
-						PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + mQuery);
-				cursorLoader = new CursorLoader(getActivity(), uri,
-						from, null, null, null);
 			}
 			catch(Exception e) {
-				
-				uri = Uri.withAppendedPath(
-						PersonnalProofContentProvider.CONTENT_URI, "voices");
-				cursorLoader = new CursorLoader(getActivity(), uri,
-						from, null, null, null);
-			}			
+				setEmptyText("");
+			}
 			
-			return cursorLoader;
-		}*/
+			voicesAdapter = new VoiceAdapter(getActivity(),
+					R.layout.listfragmentdroit, voices);			
+
+			setListAdapter(voicesAdapter);
+			
+			if(getListView().getCount() > 0) {
+				registerForContextMenu(getListView());
+			}			
+		}
 
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
 
 			super.onListItemClick(l, v, position, id);
-			/*Cursor c = ((VoiceListAdapter) getListAdapter()).getCursor();
+			Voice voice = voices.get(position);
 			
 			QuickActionDlg.showTitledVoiceOptionsDlg(
 					getActivity(),
 					v, 
-					c, 
-					getListAdapter(), 
-					getLoaderManager(), 
+					voice, 
+					voicesAdapter, 
+					voices, 
 					this, 
 					Settings.mType.VOICE_TITLED
-			);*/
+			);
 		}
-
 	}
-
 }

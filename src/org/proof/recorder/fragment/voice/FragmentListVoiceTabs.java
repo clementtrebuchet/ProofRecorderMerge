@@ -28,7 +28,7 @@ public class FragmentListVoiceTabs extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
-		setContentView(R.layout.fragment_inout_records_tabs);
+		setContentView(R.layout.fragment_inout_records_tabs);		
 		
 		bTitled = ProofRecorderActivity.bTitled;
 		bUntitled = ProofRecorderActivity.bUntitled;
@@ -58,19 +58,7 @@ public class FragmentListVoiceTabs extends SherlockFragmentActivity {
 					clsTitledVoices, null);
 		}
 		
-		else if (!bTitled && bUntitled) {
-			
-			/*setContentView(R.layout.fragmentdroit);
-			FragmentManager fm = getSupportFragmentManager();
-			
-			ActionBar mBar = getSupportActionBar();
-			mBar.setHomeButtonEnabled(true);
-
-			// Create the list fragment and add it as our sole content.
-			if (fm.findFragmentById(R.id.Content_FragmentOne) == null) {
-				FragmentListVoiceUntitled.VoiceListLoader list = new FragmentListVoiceUntitled.VoiceListLoader();
-				fm.beginTransaction().add(R.id.Content_FragmentOne, list).commit();
-			}*/		
+		else if (!bTitled && bUntitled) {	
 			
 			mTabsAdapter.addTab(
 					mBar.newTab().setText(
