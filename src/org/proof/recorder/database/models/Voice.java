@@ -110,7 +110,7 @@ public class Voice implements DataLayerInterface, Serializable {
 	/**
 	 * 
 	 */
-	protected Voice() {
+	public Voice() {
 		super();
 		setId(null);
 		this._humanTime = null;
@@ -125,7 +125,7 @@ public class Voice implements DataLayerInterface, Serializable {
 	 * @param _timestamp
 	 * @param _filePath
 	 */
-	protected Voice(String _id, String _humanTime, String _fileSize,
+	public Voice(String _id, String _humanTime, String _fileSize,
 			String _timestamp, String _filePath) {
 		super();
 		setId(_id);
@@ -145,7 +145,9 @@ public class Voice implements DataLayerInterface, Serializable {
 	 */
 	public void setId(String _id) {
 		this._id = _id;
-		this.setNote(new Note(_id));
+		
+		if(_id != null)
+			this.setNote(new Note(_id));
 	}
 	/**
 	 * @return the _humanTime
