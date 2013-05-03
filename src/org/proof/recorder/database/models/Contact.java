@@ -350,4 +350,10 @@ public class Contact implements Serializable, DataLayerInterface {
 		Contact.resolver = resolver;
 		setHasDataHandler(true);
 	}
+
+	@Override
+	public boolean fillFromDataBase() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

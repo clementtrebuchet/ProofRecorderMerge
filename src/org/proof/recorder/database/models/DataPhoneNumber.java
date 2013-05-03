@@ -68,5 +68,11 @@ public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterfa
 	public static void setResolver(ContentResolver resolver) {
 		DataPhoneNumber.resolver = resolver;
 	}
+
+	@Override
+	public boolean fillFromDataBase() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
