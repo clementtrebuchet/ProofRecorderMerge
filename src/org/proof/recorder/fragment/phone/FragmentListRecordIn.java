@@ -2,6 +2,8 @@ package org.proof.recorder.fragment.phone;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
@@ -153,8 +155,7 @@ public class FragmentListRecordIn extends Fragment {
 						mRecord.getmId(),
 						Settings.mType.CALL, 
 						null, 
-						null, 
-						null, 
+						null,  
 						recordsAdapter, 
 						mRecord
 				);
@@ -267,23 +268,27 @@ public class FragmentListRecordIn extends Fragment {
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-			/*if(!records.isEmpty())
+			
+			try {
 				Collections.sort(records, new Comparator<Record>() {
 			        @Override
 			        public int compare(Record s1, Record s2) {
 			            return s1.getmHtime().compareToIgnoreCase(s2.getmHtime());
 			        }
 			    });
-			else
-				setEmptyText("Aucun Enregistrements d'appels");*/
+			}
+			catch(Exception e) {
+				setEmptyText("Aucun Enregistrements d'appels");
+			}
 			
 			recordsAdapter = new InCommingCallsAdapter(getActivity(),
-					R.layout.listfragmentdroit, records);
+					R.layout.listfragmentdroit, records);			
 			
 			setListAdapter(recordsAdapter);
 			
-			/*if(getListView().getCount() > 0)
-				registerForContextMenu(getListView());*/
+			if(getListView().getCount() > 0) {
+				registerForContextMenu(getListView());
+			}				
 		}
 		
 		private Runnable returnRes = new Runnable() {

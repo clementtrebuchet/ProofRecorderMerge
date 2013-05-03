@@ -1,12 +1,14 @@
 package org.proof.recorder.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceListAdapter;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.fragment.dialog.ShareIntentChooser;
 import org.proof.recorder.fragment.notes.FragmentNoteTabs;
 import org.proof.recorder.fragment.phone.FragmentListKnownContacts.KnownContactsLoader.ContactAdapter;
@@ -15,9 +17,9 @@ import org.proof.recorder.fragment.phone.FragmentListRecordOut.OutGoingCallsLoad
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
 import org.proof.recorder.fragment.search.SearchResult.SearchListLoader;
 import org.proof.recorder.fragment.voice.FragmentListVoice;
-import org.proof.recorder.fragment.voice.FragmentListVoiceUntitled;
 import org.proof.recorder.fragment.voice.notes.FragmentVoiceNoteTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -28,6 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 public final class MenuActions {
@@ -230,10 +233,22 @@ public final class MenuActions {
 		}		
 	}
 
-	public static void deleteItem(final String mId, final Settings.mType mType,
-			final LoaderManager lm, final Object mCustomLoader,
-			final Object mOutAdapter, final Object mInAdapter,
-			final Record mRecord) {
+	/**
+	 * @param mId
+	 * @param mType
+	 * @param collection
+	 * @param mOutAdapter
+	 * @param mInAdapter
+	 * @param mItem
+	 */
+	@SuppressWarnings("unchecked")
+	public static void deleteItem(
+			final String mId, 
+			final Settings.mType mType,
+			final ArrayList<Voice> collection,
+			final Object mOutAdapter, 
+			final Object mInAdapter,
+			final Object mItem) {
 
 		if (Settings.isUAC_ASSISTED(mContext)) {
 
@@ -254,30 +269,29 @@ public final class MenuActions {
 			mDialog.setPositiveButton(
 					mContext.getString(R.string.strUACConfirmBtn),
 					new DialogInterface.OnClickListener() {
+
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							_deleteItem(mId, mType);
 							switch (mType) {
 							case CALL:
-								deleteOnDisk(mRecord.getmFilePath());
+								deleteOnDisk(((Record) mItem).getmFilePath());
 								refreshListOfRecords(
 										(OutGoingCallsAdapter) mOutAdapter,
 										(InCommingCallsAdapter) mInAdapter,
-										mRecord);
+										(Record) mItem);
 								break;
 
 							case VOICE_UNTITLED:
-								lm.restartLoader(
-										0x01,
-										null,
-										(FragmentListVoiceUntitled.VoiceListLoader) mCustomLoader);
+								((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
+								collection.remove((Voice) mItem);
+								((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
 								break;
 
 							case VOICE_TITLED:
-								lm.restartLoader(
-										0x01,
-										null,
-										(FragmentListVoice.VoiceListLoader) mCustomLoader);
+								((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
+								collection.remove((Voice) mItem);
+								((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
 								break;
 
 							default:
@@ -292,21 +306,21 @@ public final class MenuActions {
 
 			switch (mType) {
 			case CALL:
-				deleteOnDisk(mRecord.getmFilePath());
+				deleteOnDisk(((Record) mItem).getmFilePath());
 				refreshListOfRecords((OutGoingCallsAdapter) mOutAdapter,
-						(InCommingCallsAdapter) mInAdapter, mRecord);
+						(InCommingCallsAdapter) mInAdapter, (Record) mItem);
 				break;
 
 			case VOICE_UNTITLED:
-				lm.restartLoader(
-						0x01,
-						null,
-						(FragmentListVoiceUntitled.VoiceListLoader) mCustomLoader);
+				((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
+				collection.remove((Voice) mItem);
+				((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
 				break;
 
 			case VOICE_TITLED:
-				lm.restartLoader(0x01, null,
-						(FragmentListVoice.VoiceListLoader) mCustomLoader);
+				((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
+				collection.remove((Voice) mItem);
+				((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
 				break;
 
 			default:
@@ -322,9 +336,7 @@ public final class MenuActions {
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			getmContext().startActivity(intent);
 		} catch (Exception e) {
-
-			if (Settings.isDebug())
-				Log.e(TAG, e.getMessage());
+			Console.print_exception(e);
 		}
 	}
 
@@ -336,6 +348,16 @@ public final class MenuActions {
 				FragmentVoiceNoteTabs.class);
 		Bundle b = new Bundle();
 		b.putString("id", c.getString(0));
+		displayItemDetails(intent, b);
+	}
+	
+	public static void displayItemVoiceDetails(String id) {
+
+		FragmentListVoice.ID = id;
+		StaticIntents intent = StaticIntents.create(getmContext(),
+				FragmentVoiceNoteTabs.class);
+		Bundle b = new Bundle();
+		b.putString("id", id);
 		displayItemDetails(intent, b);
 	}
 

@@ -1,25 +1,25 @@
 package org.proof.recorder.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
-import org.proof.recorder.adapter.voice.VoiceListAdapter;
 import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.fragment.dialog.Search;
 import org.proof.recorder.fragment.phone.FragmentListRecordIn.InCommingCallsLoader.InCommingCallsAdapter;
 import org.proof.recorder.fragment.phone.FragmentListRecordOut.OutGoingCallsLoader.OutGoingCallsAdapter;
 import org.proof.recorder.quick.action.ActionItem;
 import org.proof.recorder.quick.action.QuickAction;
+import org.proof.recorder.utils.Log.Console;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.LoaderManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -58,7 +58,6 @@ public class QuickActionDlg {
 	 */
 	private static Context mContext;
 	private static QuickAction mQuickAction;
-	private static Cursor mCursor;
 
 	private QuickActionDlg() {
 
@@ -123,7 +122,7 @@ public class QuickActionDlg {
 
 				case ID_DELETE:
 					MenuActions.deleteItem(mRecord.getmId(),
-							Settings.mType.CALL, null, null,
+							Settings.mType.CALL, null,
 							outAdapter, inAdapter, mRecord);
 					break;
 				default:
@@ -147,7 +146,7 @@ public class QuickActionDlg {
 	 * 
 	 * @param c
 	 * @param v
-	 * @param cursor
+	 * @param voice
 	 * @param adapter
 	 * @param lm
 	 * @param voiceListLoader
@@ -155,12 +154,12 @@ public class QuickActionDlg {
 	public static void showTitledVoiceOptionsDlg(
 			Context c,
 			View v,
-			Cursor cursor,
-			Object adapter,
-			final LoaderManager lm,
+			final Voice voice,
+			final Object adapter,
+			final ArrayList<Voice> collection,
 			final org.proof.recorder.fragment.voice.FragmentListVoice.VoiceListLoader voiceListLoader,
 			final Settings.mType mType) {
-		mCursor = cursor;
+		
 		mContext = c;
 		MenuActions.setmVoiceAdapter(adapter);
 		MenuActions.setmContext(c);
@@ -178,28 +177,25 @@ public class QuickActionDlg {
 				switch (actionId) {
 
 				case ID_DISPLAY:
-					MenuActions.displayItemVoiceDetails(mCursor);
+					MenuActions.displayItemVoiceDetails(voice.getId());
 					break;
 
 				case ID_READ:
-					MenuActions.readVoice(mCursor.getString(4));
+					MenuActions.readVoice(voice.getFilePath());
 					break;
 
 				case ID_SHARE:
-					String[] mDatas = new String[] { mCursor
-							.getString(4) };
+					String[] mDatas = new String[] { voice.getFilePath() };
 					MenuActions.sharingOptions(mDatas);
 					break;
 
 				case ID_DELETE:
-					MenuActions.deleteItem(mCursor.getString(0), mType,
-							lm, voiceListLoader, null, null, null);
+					MenuActions.deleteItem(voice.getId(), mType,
+							collection, adapter, null, voice);
 					try {
-						OsHandler.deleteFileFromDisk(mCursor.getString(mCursor
-								.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
+						OsHandler.deleteFileFromDisk(voice.getFilePath());
 					} catch (IOException e) {
-						if (Settings.isDebug())
-							Log.v(TAG,
+						Console.print_exception(
 									"showVoiceOptionsDlg()->ID_DELETE : "
 											+ e.getMessage());
 					}
@@ -228,7 +224,6 @@ public class QuickActionDlg {
 			final Settings.mType mType,
 			final LoaderManager lm,
 			final Object mCustomLoader) {
-		mCursor = c;
 		mContext = activity;
 
 		setHasSearch(false);
@@ -288,13 +283,12 @@ public class QuickActionDlg {
 	public static void showUnTitledVoiceOptionsDlg(
 			Context activity,
 			View v,
-			Cursor c,
-			VoiceListAdapter listAdapter,
-			final LoaderManager loaderManager,
+			final Voice voice,
+			final Object listAdapter,
+			final ArrayList<Voice> collection,
 			final org.proof.recorder.fragment.voice.FragmentListVoiceUntitled.VoiceListLoader voiceListLoader,
 			final Settings.mType mType) {
 
-		mCursor = c;
 		mContext = activity;
 		MenuActions.setmVoiceAdapter(listAdapter);
 		MenuActions.setmContext(activity);
@@ -312,29 +306,25 @@ public class QuickActionDlg {
 				switch (actionId) {
 
 				case ID_DISPLAY:
-					MenuActions.displayItemVoiceDetails(mCursor);
+					MenuActions.displayItemVoiceDetails(voice.getId());
 					break;
 
 				case ID_READ:
-					MenuActions.readVoice(mCursor.getString(4));
+					MenuActions.readVoice(voice.getFilePath());
 					break;
 
 				case ID_SHARE:
-					String[] mDatas = new String[] { mCursor
-							.getString(4) };
+					String[] mDatas = new String[] { voice.getFilePath() };
 					MenuActions.sharingOptions(mDatas);
 					break;
 
 				case ID_DELETE:
-					MenuActions.deleteItem(mCursor.getString(0), mType,
-							loaderManager, voiceListLoader, null, null,
-							null);
+					MenuActions.deleteItem(voice.getId(), mType,
+							collection, listAdapter, null, voice);
 					try {
-						OsHandler.deleteFileFromDisk(mCursor.getString(mCursor
-								.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE)));
+						OsHandler.deleteFileFromDisk(voice.getFilePath());
 					} catch (IOException e) {
-						if (Settings.isDebug())
-							Log.v(TAG,
+						Console.print_exception(
 									"showVoiceOptionsDlg()->ID_DELETE : "
 											+ e.getMessage());
 					}
@@ -465,7 +455,7 @@ public class QuickActionDlg {
 			msg += "ID    : " + item.getItemId() + BR;
 			msg += "GROUP : " + item.getGroupId() + BR;
 
-			Log.d(TAG, msg);
+			Console.print_debug(msg);
 		}
 
 		int id = item.getItemId();
@@ -500,7 +490,7 @@ public class QuickActionDlg {
 			titled = AndroidContactsHelper.getTitledVoiceCount();
 			untitled = AndroidContactsHelper.getUnTitledVoiceCount();
 
-			Log.v(TAG, "TITLED: " + titled + " " + "UNTITLED: " + untitled);
+			Console.print_debug("TITLED: " + titled + " " + "UNTITLED: " + untitled);
 
 			if (titled > 0) {
 				bTitled = true;
@@ -534,7 +524,7 @@ public class QuickActionDlg {
 			known = AndroidContactsHelper.getKnownFolderContactsCount();
 			unknown = AndroidContactsHelper.getUnKnownFolderContactsCount();
 
-			Log.e(TAG, "TITLED: " + known + " " + "UNTITLED: " + unknown);
+			Console.print_debug("TITLED: " + known + " " + "UNTITLED: " + unknown);
 
 			if (known > 0) {
 				bKnown = true;
