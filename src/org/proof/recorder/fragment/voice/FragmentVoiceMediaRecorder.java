@@ -8,6 +8,7 @@ import org.proof.recorder.utils.AudioHandler;
 import org.proof.recorder.utils.QuickActionDlg;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -31,7 +32,10 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	private static mFormat forma;
 	@Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle); 
+        super.onCreate(icicle);
+        
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        
         mContext = this;
         setContentView(R.layout.fragment_voice_recorder);
         FragmentManager fm = getSupportFragmentManager();
