@@ -61,5 +61,6 @@ public class Console {
 	
 	public static void print_exception(Object message) {
 		print('e', message);
+		((Exception) message).printStackTrace();
 	}
 }
