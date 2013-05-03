@@ -19,11 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class VoiceListAdapter extends SimpleCursorAdapter {
-	
-	private static final String[] from = new String[] {
-		ProofDataBase.COLUMNVOICE_TITLE, 
-		ProofDataBase.COLUMNVOICE_NOTES_ID
-	};
 
 	public VoiceListAdapter(Context context, int layout, Cursor c,
 			String[] from, int[] to, int flag) {
@@ -42,8 +37,7 @@ public class VoiceListAdapter extends SimpleCursorAdapter {
 		tailleTxt.setText(ServiceAudioHelper.transByteToKo(recordSize));
 		
 		TextView mId = (TextView) view.findViewById(R.id.idrecord);
-		String id = (String) mId.getText();
-		Console.print_debug("R.id.idrecord: " + id);
+		String id = (String) mId.getText();		
 		mId.setVisibility(View.INVISIBLE);
 		
 		TextView mTitreVoice = (TextView) view.findViewById(R.id.number);
@@ -52,17 +46,20 @@ public class VoiceListAdapter extends SimpleCursorAdapter {
 				PersonnalProofContentProvider.CONTENT_URI, "vnote_recordid/"
 						+ id);
 		
-		String mTitle = "";
 		Cursor dataCursor = null;
+		String mTitle = null;
 		
 		try {
-			dataCursor = context.getContentResolver().query(uri, from, null, null, null);
+			
+			dataCursor = context.getContentResolver().query(uri, null, null, null, null);
+			
 			while (dataCursor.moveToNext()){
 				mTitle = (dataCursor.getString(dataCursor
 						.getColumnIndex(
-								ProofDataBase.COLUMNVOICE_TITLE)));
-				
-			}			
+								ProofDataBase.COLUMNVOICE_TITLE)));				
+			}
+			
+			mTitreVoice.setText(mTitle);
 		}
 		catch(Exception e) {
 			Console.print_exception(e);
@@ -72,9 +69,6 @@ public class VoiceListAdapter extends SimpleCursorAdapter {
 				dataCursor.close();
 			}
 		}
-		
-		
-		mTitreVoice.setText(mTitle);
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.list_image);
 		Bitmap defaultBite = BitmapFactory.decodeResource(context.getResources(), R.drawable.mic_48);
