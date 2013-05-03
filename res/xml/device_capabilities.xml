@@ -12,14 +12,14 @@
             android:key="audio_format"
             android:summary="Format d\&apos;enregistrement."
             android:title="Format d\&apos;enregistrement" />
-        <ListPreference
+<!--         <ListPreference
             android:defaultValue="MONO"
             android:dialogTitle="Selection du Canal."
             android:entries="@array/audio_channel"
             android:entryValues="@array/audio_channel"
             android:key="audio_channel"
             android:summary="Canaux."
-            android:title="Canaux" />
+            android:title="Canaux" /> -->
     </PreferenceCategory>
     <PreferenceCategory
         android:key="mp33"

@@ -69,9 +69,11 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 				"MP3QUALITY");
 		mQual = (ListPreference) getPreferenceScreen()
 				.findPreference("OGGQUAL");
-		mChan = (ListPreference) getPreferenceScreen().findPreference(
+		
+		/*mChan = (ListPreference) getPreferenceScreen().findPreference(
 				"audio_channel");
-		mChan.setEnabled(false);
+		mChan.setEnabled(false);*/
+		
 		mic.setOnPreferenceClickListener(micClick);
 		voice_up.setOnPreferenceClickListener(micClick);
 		voice_down.setOnPreferenceClickListener(micClick);
