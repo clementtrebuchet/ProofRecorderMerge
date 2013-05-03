@@ -7,6 +7,7 @@ import org.proof.recorder.adapter.voice.VoiceListAdapter;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.Log.Console;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -174,8 +175,7 @@ public class SearchResult extends SherlockFragmentActivity {
 			setHasOptionsMenu(true);
 			setMenuVisibility(true);
 
-			if (Settings.isDebug())
-				print("PASS HERE");
+			Console.print_debug("PASS HERE");
 			
 			getLoaderManager().initLoader(LIST_LOADE, null, this);
 
