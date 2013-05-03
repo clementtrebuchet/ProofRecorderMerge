@@ -6,6 +6,7 @@ import android.util.Log;
 
 public class Console {
 	
+	private static final boolean isDebug = Settings.isDebug();
 	public static String tagName = null;
 
 	/**
@@ -54,13 +55,18 @@ public class Console {
 	}
 	
 	public static void print_debug(Object message) {
-		if(Settings.isDebug()) {
+		if(isDebug) {
 			print('d', message);
 		}		
 	}
 	
 	public static void print_exception(Object message) {
 		print('e', message);
-		((Exception) message).printStackTrace();
+		try {
+			((Exception) message).printStackTrace();
+		}
+		catch(ClassCastException e) {
+			print(e);
+		}		
 	}
 }
