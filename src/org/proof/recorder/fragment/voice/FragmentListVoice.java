@@ -27,10 +27,12 @@ import com.actionbarsherlock.app.SherlockFragment;
 public class FragmentListVoice extends SherlockFragment {
 	
 	public static String ID;
+	private static boolean isNotify = false;
+	private static String voiceId = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 	}
 
 	public static class VoiceListLoader extends ListFragment {
@@ -38,7 +40,7 @@ public class FragmentListVoice extends SherlockFragment {
 		private static ArrayList<Voice> voices = null;
 		private static VoiceAdapter voicesAdapter = null;
 		private static Runnable viewVoices = null;
-		private static boolean uiOn = false;
+
 		boolean mDualPane;
 		int mCursorPos = -1;
 		
@@ -49,21 +51,27 @@ public class FragmentListVoice extends SherlockFragment {
 			Uri uri;
 			String mQuery = null;
 			
-			try {
-				
-				mQuery = (String) extraDatas.get("search");
-				
-				if(mQuery != null)
-					throw new Exception();
-				
+			if(isNotify) {
 				uri = Uri.withAppendedPath(
-						PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + mQuery);
+						PersonnalProofContentProvider.CONTENT_URI, "voice_id/" + voiceId);
 			}
-			catch(Exception e) {
-				
-				uri = Uri.withAppendedPath(
-						PersonnalProofContentProvider.CONTENT_URI, "voices");
-			}
+			else {
+				try {
+					
+					mQuery = (String) extraDatas.get("search");
+					
+					if(mQuery != null)
+						throw new Exception();
+					
+					uri = Uri.withAppendedPath(
+							PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + mQuery);
+				}
+				catch(Exception e) {
+					
+					uri = Uri.withAppendedPath(
+							PersonnalProofContentProvider.CONTENT_URI, "voices");
+				}
+			}			
 			
 			try {			
 				
@@ -86,14 +94,15 @@ public class FragmentListVoice extends SherlockFragment {
 			Console.setTagName(this.getClass().getSimpleName());
 			Voice.setResolver(getActivity().getContentResolver());
 			
+			isNotify = FragmentListVoiceTabs.isNotify();
+			voiceId = FragmentListVoiceTabs.getVoiceId();
+			
 			extraDatas = getActivity().getIntent().getExtras();
 			
 			viewVoices = new Runnable() {
 				@Override
 				public void run() {
-					uiOn = true;
 					getVoices();
-					uiOn = false;
 				}
 			};
 			

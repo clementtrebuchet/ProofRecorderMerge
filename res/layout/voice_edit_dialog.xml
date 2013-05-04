@@ -18,7 +18,7 @@
 	android:layout_centerHorizontal="true">
 <ImageButton
 	android:id="@+id/mEditIcon"
-	android:contentDescription="@string/voice_edit_dialog_default_title"
+	android:contentDescription="@string/default_note_title"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:layout_gravity="center_horizontal"
@@ -39,7 +39,7 @@
 	android:inputType="text"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:text="@string/voice_edit_dialog_default_title"
+	android:text="@string/default_note_title"
 	android:textSize="18sp"
 	android:gravity="center"
 	android:layout_gravity="center_horizontal" />

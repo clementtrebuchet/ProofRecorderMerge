@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 public class AlertDialogHelper {
 
@@ -20,6 +21,14 @@ public class AlertDialogHelper {
 	
 	public static void openVoiceEditDialog() {		
 		Intent mIntent = new Intent(mContext, VoiceEditDialog.class);
+		mContext.startActivity(mIntent);
+	}
+	
+	public static void openVoiceEditDialog(Bundle bundle) {		
+		Intent mIntent = new Intent(mContext, VoiceEditDialog.class);
+		if(bundle != null) {
+			mIntent.putExtras(bundle);
+		}
 		mContext.startActivity(mIntent);
 	}
 

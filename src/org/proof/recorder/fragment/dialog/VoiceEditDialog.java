@@ -1,10 +1,15 @@
 package org.proof.recorder.fragment.dialog;
 
+import java.util.ArrayList;
+
 import org.proof.recorder.R;
 import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
+import org.proof.recorder.utils.StaticNotifications;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,8 +24,29 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class VoiceEditDialog extends SherlockFragmentActivity {
 	
+	private static String DEFAULT_TITLE;
+	
 	private Button mEdit, mLater;
 	private TextView mTitleNote;
+	private Bundle mBundle = null;
+	private static Context mContext = null;
+	
+	private String mTitle;
+	private long mVoiceId;
+
+	/**
+	 * @return the mContext
+	 */
+	public static Context getHoldContext() {
+		return mContext;
+	}
+
+	/**
+	 * @param mContext the mContext to set
+	 */
+	public static void setHoldContext(Context mContext) {
+		VoiceEditDialog.mContext = mContext;
+	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -31,6 +57,15 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.voice_edit_dialog);
+		
+		setHoldContext(this);
+		
+		DEFAULT_TITLE = getHoldContext().getString(
+				R.string.default_note_title);
+		
+		mTitle = DEFAULT_TITLE;
+		
+		mBundle = getIntent().getExtras();
 		
 		mTitleNote = (TextView) findViewById(R.id.mEdit);
 		
@@ -56,7 +91,8 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 
 		@Override
 		public void onClick(View arg0) {
-			saveVoiceTitleNote();			
+			saveVoiceTitleNote(true);
+			notifyUser();
 		}
 
 	};
@@ -65,39 +101,105 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 		
 		@Override
 		public void onClick(View arg0) {
-			onBackPressed();
+			saveVoiceTitleNote(false);
+			notifyUser();
 		}
 	};
 	
-	private void saveVoiceTitleNote() {
-		
-		String mTitle = mTitleNote.getText().toString();
-		
-		if (!mTitle.equals("") && 
-				!mTitle.equals(getString(R.string.voice_edit_dlg_empty_title)) &&
-				!mTitle.equals(getString(R.string.voice_edit_dialog_default_title))) {
-
-			Uri uriNotes = Uri
-					.withAppendedPath(
-							PersonnalProofContentProvider.CONTENT_URI,
-							"vnotes");
-			String Nomdelabase = ProofDataBase.TABLE_VOICES;
-			ContentValues valuesNote = new ContentValues();
-			int lastId = PersonnalProofContentProvider
-					.lastInsertId(Nomdelabase);
-
-			valuesNote.put(ProofDataBase.COLUMNVOICE_TITLE,
-					mTitle);
-
-			getContentResolver().update(uriNotes, valuesNote,
-					" recId=?", new String[] { lastId + "" });
+	private void notifyUser() {
+		String title, info, text;
+		Bundle extraNotification = new Bundle();
+		Class<?> destination;
 			
-			onBackPressed();
-		}
+		title = getHoldContext().getString(R.string.app_name);
 		
+		destination = FragmentListVoiceTabs.class;
+		
+		extraNotification.putBoolean("isNotify", true);
+		extraNotification.putLong("voiceId", mVoiceId);
+		
+		info = "";
+		if(mTitle != DEFAULT_TITLE) {
+			text = mTitle + " - " + getHoldContext().getString(R.string.notifyEndOfVoice);
+			extraNotification.putBoolean("hasTitle", true);
+		}
 		else {
-			mTitleNote.setText(getString(R.string.voice_edit_dlg_empty_title));
+			text = getHoldContext().getString(R.string.notifyEndOfVoice);
+			extraNotification.putBoolean("hasTitle", false);
+		}		
+		
+		StaticNotifications.show(getHoldContext(), destination, extraNotification,
+				title, info, text, StaticNotifications.ICONS.DEFAULT, true,
+				true, 0);
+	}
+	
+	private void saveVoiceTitleNote(boolean edited) {
+		
+		if(edited) {
+			mTitle = mTitleNote.getText().toString();
+			
+			if (!mTitle.equals("") && 
+					!mTitle.equals(
+							getString(
+									R.string.voice_edit_dlg_empty_title)) &&
+					!mTitle.equals(
+							getString(
+									R.string.default_note_title))) {			
+				save();				
+			}
+			
+			else {
+				mTitleNote.setText(getString(R.string.voice_edit_dlg_empty_title));
+			}
+		}
+		else {
+			save();
 		}
 	}
 	
+	private void save() {
+		
+		ArrayList<String> voice = null;
+		ArrayList<String> voiceNote = null;		
+		
+		String noteText = getHoldContext().getString(R.string.default_note_text);
+		
+		if(mBundle != null) {			
+			voice = mBundle.getStringArrayList("voice");
+			voiceNote = mBundle.getStringArrayList("voiceNote");			
+		}
+		
+		if(voice != null) {
+			ContentValues values = new ContentValues();
+			String creationTime = voice.get(4);
+			
+			Uri uriVoice = Uri.parse(voice.get(0));				
+			
+			values.put(ProofDataBase.COLUMN_VOICE_FILE, voice.get(1));
+			values.put(ProofDataBase.COLUMN_VOICE_TIMESTAMP, voice.get(2));
+			values.put(ProofDataBase.COLUMN_VOICE_TAILLE, voice.get(3));				
+			values.put(ProofDataBase.COLUMN_VOICE_HTIME, creationTime);
+			
+			Uri rowId = getHoldContext().getContentResolver().insert(uriVoice, values);
+			
+			Console.print_exception(rowId.toString());
+			
+			if(voiceNote != null) {
+				ContentValues voiceValues = new ContentValues();
+				
+				Uri uriVoiceNote = Uri.parse(voiceNote.get(0));
+	
+					mVoiceId = Long.parseLong(rowId.toString());
+					voiceValues.put(ProofDataBase.COLUMNVOICE_ID_COLUMNVOICE_ID, mVoiceId);
+					voiceValues.put(ProofDataBase.COLUMNVOICE_TITLE, mTitle);
+					voiceValues.put(ProofDataBase.COLUMNVOICE_NOTE, noteText);
+					voiceValues.put(ProofDataBase.COLUMNVOICE_DATE_CREATION, creationTime);
+					
+					getHoldContext().getContentResolver().insert(uriVoiceNote, voiceValues);
+								
+			}
+		}
+		
+		onBackPressed();
+	}
 }

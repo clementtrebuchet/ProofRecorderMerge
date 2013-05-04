@@ -148,13 +148,13 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	        		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
 	        		textI.setText("Fin de l'enregistrement");
 	        		stopRecording();
-					onRecord = false;
-	        		
+					onRecord = false;	        		
 	        	}
 	        }
 	    };     
 
 	    private void startRecording() {
+	    	
 	    	String mFormat = Settings.getAudioFormat(mContext);
 	    	
 			if (mFormat.equals("3GP")) {
@@ -182,8 +182,7 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    }
 	   
 
-	    private void stopRecording() {
-	    	AlertDialogHelper.openVoiceEditDialog();
+	    private void stopRecording() {	    	
 	    	mRecorder.stopRecording();
 	        mRecorder = null;	        
 	    }	    	    
@@ -192,8 +191,11 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    public void onPause() {
 	        super.onPause();
 	        if (mRecorder != null) {
-	        	if(forma == Settings.mFormat.THREE_GP )mRecorder.releaseThreeGpRecording();
+	        	
+	        	if(forma == Settings.mFormat.THREE_GP ) 
+	        		mRecorder.releaseThreeGpRecording();
 	            mRecorder = null;
+	            
 	        }
 	    }
 	}

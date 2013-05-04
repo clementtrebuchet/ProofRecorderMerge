@@ -13,7 +13,6 @@ import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ public class FragmentListVoiceUntitled extends SherlockFragment {
 		private static ArrayList<Voice> voices = null;
 		private static VoiceAdapter voicesAdapter = null;
 		private static Runnable viewVoices = null;
-		private static boolean uiOn = false;
+		
 		boolean mDualPane;
 		int mCursorPos = -1;
 		
@@ -94,9 +93,7 @@ public class FragmentListVoiceUntitled extends SherlockFragment {
 			viewVoices = new Runnable() {
 				@Override
 				public void run() {
-					uiOn = true;
 					getVoices();
-					uiOn = false;
 				}
 			};
 			
@@ -117,7 +114,6 @@ public class FragmentListVoiceUntitled extends SherlockFragment {
 		 * End of Contextual Menu
 		 */
 
-		@SuppressLint("InlinedApi")
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
