@@ -167,8 +167,8 @@
     <string name="offers_options">Performances</string>
     <string name="offers_options_list">Partage</string>
     <string name="offers_dlg_title">Offres disponibles</string>
-    <string name="summary_checkbox_OFFER_MP3">Plugin son mp3 gratuit(GPL)</string>
-    <string name="summary_checkbox_OFFER_OGG">Plugin son Ogg(module Pro)</string>
+    <string name="summary_checkbox_OFFER_MP3">Plugin son mp3 gratuit (Gratuit)</string>
+    <string name="summary_checkbox_OFFER_OGG">Plugin son Ogg (Gratuit)</string>
     <string name="summary_checkbox_OFFER_FTP">Plugin Ftp Sauvegarde Perso</string>
     <string name="summary_checkbox_OFFERS">Offres disponibles</string>
     <string name="title_checkbox_OFFER_MP3">Plugin son mp3</string>
@@ -392,7 +392,7 @@
     <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
     <string name="abs__searchview_description_voice">Voice search</string>
     <!-- DEBUT SYNCRON -->
-
+    
     <string name="syncronTEL">Synchroniser sur le serveur</string>
     <string name="syncronVOX">Synchroniser Voix</string>
     <string name="syncronConnectionError">Erreur de connection</string>
@@ -425,7 +425,8 @@
     <string name="btn_ok">OK</string>
     <string name="voice_edit_dlg_empty_title">Veuillez saisir un titre!</string>
     <string name="voice_edit_dialog_title">Donnez un titre!</string>
-    <string name="voice_edit_dialog_default_title">Ins&#233;rez un titre</string>
+    <string name="default_note_title">Insérer un titre</string>
+    <string name="default_note_text">Aucune note pour cet enregistrement Vocal</string>
     <string name="voice_edit_dialog_msg">Ajouter un titre &#224; cet enregistrement ? Si vous souhaitez le faire plus tard, Allez dans le d&#233;tail de l\&apos;enregistrement, puis dans l\&apos;onglet Note!</string>
     <string name="voice_edit_dialog_later_btn">Plus Tard</string>
     <string name="custom_intent_chooser_subject">Voice Proof Recorder Partage</string>

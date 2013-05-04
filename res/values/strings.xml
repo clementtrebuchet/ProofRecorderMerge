@@ -146,8 +146,8 @@
     <string name="offers_options">Performances</string>
     <string name="offers_options_list">Partage</string>
     <string name="offers_dlg_title">Offres disponibles</string>
-    <string name="summary_checkbox_OFFER_MP3">Plugin son mp3 gratuit(GPL)</string>
-    <string name="summary_checkbox_OFFER_OGG">Plugin son Ogg(module Pro)</string>
+    <string name="summary_checkbox_OFFER_MP3">Plugin son mp3 gratuit(Free)</string>
+    <string name="summary_checkbox_OFFER_OGG">Plugin son Ogg(Free)</string>
     <string name="summary_checkbox_OFFER_FTP">Plugin Ftp Sauvegarde Perso</string>
     <string name="summary_checkbox_OFFERS">Offres disponibles</string>
     <string name="title_checkbox_OFFER_MP3">Plugin son mp3</string>
@@ -155,7 +155,6 @@
     <string name="title_checkbox_OFFER_FTP">Plugin Ftp</string>
     <string name="extra_checkbox_INFORMATION">(peu ne pas fonctionner suivant les capacitées matériels du mobile)</string>
     <!-- FIN Settings -->
-
 
     <!-- Notes -->
 
@@ -405,7 +404,8 @@
     <string name="btn_ok">OK</string>
     <string name="voice_edit_dlg_empty_title">Please, provide a title!</string>
     <string name="voice_edit_dialog_title">Give a title!</string>
-    <string name="voice_edit_dialog_default_title">Insert a title</string>
+    <string name="default_note_title">Insert a title note</string>
+    <string name="default_note_text">No text note for this record</string>
     <string name="voice_edit_dialog_msg">Add a title to this record ? If you wish to do it later, Go in the detail of the record, then in the Note\&apos;s tab!</string>
     <string name="voice_edit_dialog_later_btn">Later</string>
     <string name="custom_intent_chooser_subject">Voice Proof Recorder Share</string>
