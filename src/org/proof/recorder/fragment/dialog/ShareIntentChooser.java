@@ -1,16 +1,11 @@
 package org.proof.recorder.fragment.dialog;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.utils.Log.Console;
 
-import com.google.android.youtube.player.YouTubeIntents;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
@@ -18,7 +13,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.MediaStore.Video;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,14 +21,17 @@ import android.widget.ImageButton;
 public class ShareIntentChooser extends
 		FragmentActivity {
 	
-	private static final int SELECT_VIDEO_REQUEST = 1000;
-	private static final String EXTRA_LOCAL_ONLY = "android.intent.extra.LOCAL_ONLY";
+//	private static final int SELECT_VIDEO_REQUEST = 1000;
+//	private static final String EXTRA_LOCAL_ONLY = "android.intent.extra.LOCAL_ONLY";
 
+	/**
+	 * 
+	 */
 	private ImageButton mShareBlueToothIcon, 
 						mShareMailIcon, 
-						mShareYouTubeIcon, 
-						mShareFaceBookIcon, 
-						mShareDropBoxIcon, 
+//						mShareYouTubeIcon, 
+//						mShareFaceBookIcon, 
+//						mShareDropBoxIcon, 
 						mShareGmailIcon;
 	
 	private static Bundle mBundle;
@@ -117,13 +114,13 @@ public class ShareIntentChooser extends
 		}
 	};
 	
-	private final OnClickListener mShareDropBoxAction = new OnClickListener() {
+/*	private final OnClickListener mShareDropBoxAction = new OnClickListener() {
 
 		@Override
 		public void onClick(View arg0) {
 			onBackPressed();
 		}
-	};
+	};*/
 	
 	public String getRealPathFromURI(Uri contentUri) {
 		
@@ -154,11 +151,11 @@ public class ShareIntentChooser extends
         return path;
     }
 
-	private final OnClickListener mShareYouTubeAction = new OnClickListener() {
+/*	private final OnClickListener mShareYouTubeAction = new OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
-			/*Intent intent = new Intent(Intent.ACTION_PICK, null).setType("video/*");	        
-	        startActivityForResult(intent, SELECT_VIDEO_REQUEST);*/
+			Intent intent = new Intent(Intent.ACTION_PICK, null).setType("video/*");	        
+	        startActivityForResult(intent, SELECT_VIDEO_REQUEST);
 			
 			ContentValues content = new ContentValues(4);
 			content.put(Video.VideoColumns.DATE_ADDED,
@@ -174,15 +171,15 @@ public class ShareIntentChooser extends
 	        
 	        startActivity(Intent.createChooser(intent, "Youtube"));	        
 		}
-	};
+	};*/
 
-	private final OnClickListener mShareFaceBookAction = new OnClickListener() {
+/*	private final OnClickListener mShareFaceBookAction = new OnClickListener() {
 
 		@Override
 		public void onClick(View arg0) {
 			startMailIntent("facebook");
 		}
-	};
+	};*/
 
 	private void startMailIntent(String mType) {
 

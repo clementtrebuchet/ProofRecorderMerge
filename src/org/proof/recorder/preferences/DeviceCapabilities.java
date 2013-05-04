@@ -37,7 +37,7 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 	private ListPreference mFormat;
 	private ListPreference mCompression;
 	private ListPreference mQual;
-	private ListPreference mChan;
+	//private ListPreference mChan;
 	private String bestOption;
 
 	// SharedPreferences pref;
