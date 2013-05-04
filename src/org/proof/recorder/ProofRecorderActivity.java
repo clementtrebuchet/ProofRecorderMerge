@@ -27,15 +27,11 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,8 +49,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 //import com.google.android.vending.licensing.AESObfuscator;
-import com.google.android.vending.licensing.LicenseChecker;
-import com.google.android.vending.licensing.LicenseCheckerCallback;
+//import com.google.android.vending.licensing.LicenseChecker;
+//import com.google.android.vending.licensing.LicenseCheckerCallback;
 //import com.google.android.vending.licensing.Policy;
 //import com.google.android.vending.licensing.ServerManagedPolicy;
 
@@ -74,8 +70,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 //	private static final byte[] SALT = new byte[] { -46, 65, 30, -128, -103,
 //		-57, 74, -64, 51, 88, -95, -12, 77, -107, -36, -113, -11, 32, -64,
 //		89 };
-	LicenseCheckerCallback mLicenseCheckerCallback;
-	LicenseChecker mChecker;
+	/*LicenseCheckerCallback mLicenseCheckerCallback;
+	LicenseChecker mChecker;*/
 	// A handler on the UI thread.
 	Handler mHandler;
 
@@ -559,7 +555,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 	 * Licence --> Market
 	 */
 
-	@Override
+	/*@Override
 	protected Dialog onCreateDialog(int id) {
 		final boolean bRetry = id == 1;
 		return new AlertDialog.Builder(this)
@@ -600,7 +596,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		Log.v(TAG, "Liscensing go for checking result");
 		setProgressBarIndeterminateVisibility(true);
 		mChecker.checkAccess(mLicenseCheckerCallback);
-	}
+	}*/
 
 /*	private void displayResult(final String result) {
 		mHandler.post(new Runnable() {

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.proof.recorder"
     android:installLocation="preferExternal"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="3"
+    android:versionName="1.2" >
 
     <uses-sdk
-       android:targetSdkVersion="14"
+       android:targetSdkVersion="17"
       android:minSdkVersion="8"  /> 
 
     <uses-permission android:name="android.permission.READ_CONTACTS" ></uses-permission>
@@ -24,33 +25,40 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission>
     <uses-permission android:name="android.permission.USE_CREDENTIALS" ></uses-permission>
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" ></uses-permission>
-    <!-- Required permission to check licensing. -->
-    <uses-permission android:name="com.android.vending.CHECK_LICENSE" ></uses-permission>
-    <!-- Required permission to GCM -->
-    <permission
-        android:name="org.proof.recorder.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+    
+<!--     Required permission to check licensing. -->
+<!--     <uses-permission android:name="com.android.vending.CHECK_LICENSE" ></uses-permission> -->
+    
+<!--     Required permission to GCM -->
+<!--     <permission -->
+<!--         android:name="org.proof.recorder.permission.C2D_MESSAGE" -->
+<!--         android:protectionLevel="signature" /> -->
 
-    <uses-permission android:name="org.proof.recorder.permission.C2D_MESSAGE" ></uses-permission>
-    <!-- Others Required permission for GCM -->
-    <!-- App receives GCM messages. -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" ></uses-permission>
-    <!-- GCM connects to Google Services. -->
-    <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
-    <!-- GCM requires a Google account. -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission>
-    <!-- Keeps the processor from sleeping when a message is received. -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" ></uses-permission>
-    <!-- Required permission to use in-app billing. -->
-    <uses-permission android:name="com.android.vending.BILLING" ></uses-permission>
+<!--     <uses-permission android:name="org.proof.recorder.permission.C2D_MESSAGE" ></uses-permission> -->
+<!--     Others Required permission for GCM -->
+<!--     App receives GCM messages. -->
+<!--     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" ></uses-permission> -->
+<!--     GCM connects to Google Services. -->
+<!--     <uses-permission android:name="android.permission.INTERNET" ></uses-permission> -->
+<!--     GCM requires a Google account. -->
+<!--     <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission> -->
+    
+<!--     Keeps the processor from sleeping when a message is received. -->
+<!--     <uses-permission android:name="android.permission.WAKE_LOCK" ></uses-permission> -->
+<!--     Required permission to use in-app billing. -->
+<!--     <uses-permission android:name="com.android.vending.BILLING" ></uses-permission> -->
+
+<!--     <permission android:name="org.proof.recorder.XFBSIMPLE" android:protectionLevel="signature"></permission> -->
+<!--     <uses-permission android:name="org.proof.recorder.XFBSIMPLE"></uses-permission> -->
+
     <permission android:name="org.proof.recorder.DBPERM" android:label="Provider Permissions" android:protectionLevel="signature"></permission>
-    <permission android:name="org.proof.recorder.XFBSIMPLE" android:protectionLevel="signature"></permission>
-    <uses-permission android:name="org.proof.recorder.XFBSIMPLE"></uses-permission>
     <uses-permission android:name="org.proof.recorder.DBPERM"></uses-permission>
+    
     <uses-permission android:name="org.proofs.recorder.codec.ogg.OGG_SECURE_PG"></uses-permission>
 
     <application
         android:icon="@drawable/ic_launcher"
+        android:allowBackup="true"
         android:label="@string/app_name" android:name="MonApp">
         <activity
             android:name=".ProofRecorderActivity"
@@ -66,7 +74,7 @@
         </activity>
         <!-- IN APP BILLING -->
 
-        <activity
+        <!-- <activity
             android:name=".billing.vending.ProofStore"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sherlock.Light" >
@@ -77,7 +85,7 @@
             </intent-filter>
         </activity>
 
-        <!-- END APP BILLING -->
+        END APP BILLING
         
          <activity android:name=".simplexfb.FtpFragment"
                   android:label="@string/app_name"
@@ -87,7 +95,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.FtpFragment"/>
             </intent-filter>
-        </activity>
+        </activity> -->
         
         <activity
             android:name=".fragment.dialog.VoiceEditDialog"
@@ -104,7 +112,7 @@
             android:name=".fragment.dialog.ShareIntentChooser"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/share_intent_chooser_title"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@style/Theme.Sherlock.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -227,7 +235,7 @@
                 <category android:name="android.intent.category.DeviceCapabilities" />
             </intent-filter>
         </activity>
-        <activity
+        <!-- <activity
             android:name=".syncron.fragment.SyncronUi"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
@@ -238,7 +246,7 @@
 
                 <category android:name="android.intent.category.SyncronUi" />
             </intent-filter>
-        </activity>
+        </activity> -->
         <activity
             android:name=".preferences.FormulaPreferences"
             android:label="@string/app_name"
@@ -249,7 +257,7 @@
                 <category android:name="android.intent.category.FormulaPreferences" />
             </intent-filter>
         </activity>
-        <activity
+        <!-- <activity
             android:name=".preferences.ServerAccount"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sherlock.Light" >
@@ -258,7 +266,7 @@
 
                 <category android:name="android.intent.category.ServerAccount" />
             </intent-filter>
-        </activity>
+        </activity> -->
         <activity
             android:name=".fragment.voice.FragmentListVoiceTabs"
             android:label="@string/app_name"
@@ -421,15 +429,18 @@
         <service
             android:name=".service.ServiceAudioRecord"
             android:enabled="true" />
-        <service
-            android:name=".simplexfb.FtpCli"
-            android:enabled="true" android:permission="org.proof.recorder.XFBSIMPLE"/>
-        <service android:name=".service.GCMIntentService" />
+        
         <service
             android:name=".service.ServiceSchd"
             android:enabled="true" />
         
-        <service android:name=".billing.vending.BillingService" />
+        <!-- <service
+            android:name=".simplexfb.FtpCli"
+            android:enabled="true" android:permission="org.proof.recorder.XFBSIMPLE"/>
+        
+        <service android:name=".service.GCMIntentService" />
+        
+        <service android:name=".billing.vending.BillingService" /> -->
         
         <service android:name=".service.VerifyContactsApi"
             android:enabled="true" />
@@ -467,7 +478,8 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-        <!-- GCM -->
+        
+        <!--GCM
         <receiver
             android:name=".broadcastr.phone.GCMPersonnal"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -477,21 +489,21 @@
 
                 <category android:name="org.proof.recorder" />
             </intent-filter>
-        </receiver>
+        </receiver> -->
         <!-- Alarm manager receiver -->
-        <receiver
+<!--         <receiver
             android:name=".broadcastr.phone.AlarmSchd"
             android:process=":remote" android:permission="org.proof.recorder.XFBSIMPLE">
             <action android:name="android.intent.action.ALERT_SCHD" />
-        </receiver>
+        </receiver> -->
         
-        <receiver android:name=".billing.vending.BillingReceiver" >
+        <!-- <receiver android:name=".billing.vending.BillingReceiver" >
             <intent-filter>
                 <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
                 <action android:name="com.android.vending.billing.RESPONSE_CODE" />
                 <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
             </intent-filter>
-        </receiver>
+        </receiver> -->
         <!--
         Place the following after the Activity
 	     Definition
