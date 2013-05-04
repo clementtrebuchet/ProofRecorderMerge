@@ -427,52 +427,6 @@ public class PersonnalProofContentProvider extends
 	}
 
 	/**
-	 * @param Nondelabase
-	 * @return
-	 */
-	public static int lastInsertId(String Nondelabase) {
-		
-		SQLiteDatabase databaseAccess = null;
-		Cursor dataCursor = null;
-		
-		int lastId = 0;
-		
-		String query = "SELECT _id from " + Nondelabase
-				+ " order by _id DESC limit 1";		
-		
-		try {
-			
-			databaseAccess = databaseHelper.getReadableDatabase();			
-			
-			try {
-				dataCursor = databaseAccess.rawQuery(query, null);
-				if (dataCursor != null && dataCursor.moveToFirst()) {
-					lastId = dataCursor.getInt(0);
-					return lastId;
-				}
-			}
-			catch(Exception e) {
-				Console.print_exception(e);
-			}
-			finally {
-				if(dataCursor != null) {
-					dataCursor.close();
-				}			
-			}
-		}
-		catch(Exception e) {
-			Console.print_exception(e);
-		}
-		finally {
-			if(databaseAccess != null) {
-				databaseAccess.close();
-			}
-		}			
-		
-		return lastId;
-	}
-
-	/**
 	 * @param absolutePath: song file's path.
 	 * @param type String
 	 * @return the count of databaseHelper song(s) matching this path
@@ -856,7 +810,7 @@ public class PersonnalProofContentProvider extends
 									+ ProofDataBase.TABLE_VOICE_NOTES
 									+ ".RecId WHERE "
 									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ ".titre !=\"Insérer une note\"", null);
+									+ ".titre !=\"Insérer un titre\"", null);
 
 			dataCursor.setNotificationUri(getContext().getContentResolver(), uri);
 
@@ -911,7 +865,7 @@ public class PersonnalProofContentProvider extends
 									+ ProofDataBase.TABLE_VOICE_NOTES
 									+ ".RecId WHERE "
 									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ ".titre==\"Insérer une note\"",
+									+ ".titre==\"Insérer un titre\"",
 							null);
 
 			dataCursor.setNotificationUri(getContext().getContentResolver(), uri);
@@ -1520,33 +1474,33 @@ public class PersonnalProofContentProvider extends
 			// Phone Records
 
 		case RECORDS:
-			id = databaseAccess.insertOrThrow(ProofDataBase.TABLE_RECODINGAPP, null,
+			id = databaseAccess.insert(ProofDataBase.TABLE_RECODINGAPP, null,
 					values);
 			break;
 
 		// Phone's Note
 
 		case NOTES:
-			id = databaseAccess.insertOrThrow(ProofDataBase.TABLE_NOTES, null, values);
+			id = databaseAccess.insert(ProofDataBase.TABLE_NOTES, null, values);
 			break;
 
 		// Voice Records
 
 		case VOICES:
-			id = databaseAccess.insertOrThrow(ProofDataBase.TABLE_VOICES, null, values);
+			id = databaseAccess.insert(ProofDataBase.TABLE_VOICES, null, values);
 			break;
 
 		// Voice's Note
 
 		case VOICE_NOTES:
-			id = databaseAccess.insertOrThrow(ProofDataBase.TABLE_VOICE_NOTES, null,
+			id = databaseAccess.insert(ProofDataBase.TABLE_VOICE_NOTES, null,
 					values);
 			break;
 
 		// Excluded Contacts
 
 		case EXCLUDED_CONTACTS:
-			id = databaseAccess.insertOrThrow(ProofDataBase.TABLE_EXCLUDED_CONTACTS,
+			id = databaseAccess.insert(ProofDataBase.TABLE_EXCLUDED_CONTACTS,
 					null, values);
 			break;
 
@@ -1554,7 +1508,8 @@ public class PersonnalProofContentProvider extends
 			throw new IllegalArgumentException("insert -> Unknown URI: " + uri);
 		}
 		getContext().getContentResolver().notifyChange(uri, null);
-		return Uri.parse(BASE_PATH + "/" + id);
+		
+		return Uri.parse("" + id);
 	}
 
 	/* (non-Javadoc)

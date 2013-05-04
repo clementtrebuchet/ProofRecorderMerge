@@ -118,10 +118,8 @@ public class Contact implements Serializable, DataLayerInterface {
 	public void save() {
 		if(hasDataHandler()) {
 			this.fillValues();
-			getResolver().insert(mUri, DataLayerInterface._values);
-			int lastId = PersonnalProofContentProvider.lastInsertId(
-					"excludedcontactsproof");
-			this.setId("" + lastId);
+			Uri rowId = getResolver().insert(mUri, DataLayerInterface._values);
+			this.setId(rowId.toString());
 		}
 		else {
 			print_exception("No ContentResolver has been set via Contact" +

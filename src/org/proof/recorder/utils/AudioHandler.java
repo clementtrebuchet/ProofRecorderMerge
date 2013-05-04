@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.proof.recorder.R;
@@ -13,10 +14,8 @@ import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
-import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.service.MpthreeRec;
-
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -68,7 +67,7 @@ public class AudioHandler {
 	static int mp3Compression;
 	private Thread recordingThread = null;
 	private boolean isRecording = false;
-	private static int lastId;
+	private static long lastId;
 
 	private long totalAudioLen = 0;
 	private long totalDataLen = totalAudioLen + 36;
@@ -207,7 +206,7 @@ public class AudioHandler {
 
 		case WAV:
 			setDefaultFilePath(".wav");
-			startWavRecording(false);
+			startWavRecording();
 			break;
 
 		case MP3:
@@ -240,7 +239,7 @@ public class AudioHandler {
 
 		default:
 			setDefaultFilePath(".wav");
-			startWavRecording(false);
+			startWavRecording();
 			break;
 		}
 	}
@@ -384,19 +383,15 @@ public class AudioHandler {
 	/**
 	 * 
 	 */
-	private void startWavRecording(boolean MP3) {
-		final boolean MPP = MP3;
+	private void startWavRecording() {
 		try {
-
-			if (MPP) {
-				if (NODOUBLONS <= 0) {
-					MpthreeRec.Mpthree(Settings.getMP3Hertz(getmContext()));
-					MpthreeRec
-							.lameInit(mp3Compression, Settings.defaultQuality);
-					NODOUBLONS++;
-				}
-
+			if (NODOUBLONS <= 0) {
+				MpthreeRec.Mpthree(Settings.getMP3Hertz(getmContext()));
+				MpthreeRec
+				.lameInit(mp3Compression, Settings.defaultQuality);
+				NODOUBLONS++;
 			}
+
 			audioWav.startRecording();
 		} catch (Exception e) {
 
@@ -408,9 +403,7 @@ public class AudioHandler {
 		recordingThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				if (MPP)
-					android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
-				writeAudioDataToFile(MPP);
+				writeAudioDataToFile();
 
 			}
 		}, "AudioRecorder Thread");
@@ -420,95 +413,42 @@ public class AudioHandler {
 	/**
 	 * 
 	 */
-	private void writeAudioDataToFile(boolean MP3) {
-		if (!MP3) {
-			byte data[] = new byte[minBufferSize];
-			String filename = getTempFilename();
-			FileOutputStream os = null;
+	private void writeAudioDataToFile() {
 
-			try {
-				os = new FileOutputStream(filename);
-			} catch (FileNotFoundException e) {
+		byte data[] = new byte[minBufferSize];
+		String filename = getTempFilename();
+		FileOutputStream os = null;
 
-				if (Settings.isDebug())
-					Log.e(LOG_TAG, e.getMessage());
-			}
+		try {
+			os = new FileOutputStream(filename);
+		} catch (FileNotFoundException e) {
 
-			int read = 0;
+			if (Settings.isDebug())
+				Log.e(LOG_TAG, e.getMessage());
+		}
 
-			if (null != os) {
-				while (isRecording) {
-					read = audioWav.read(data, 0, minBufferSize);
+		int read = 0;
 
-					if (AudioRecord.ERROR_INVALID_OPERATION != read) {
-						try {
-							os.write(data);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+		if (null != os) {
+			while (isRecording) {
+				read = audioWav.read(data, 0, minBufferSize);
+
+				if (AudioRecord.ERROR_INVALID_OPERATION != read) {
+					try {
+						os.write(data);
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
-
-				try {
-					os.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			}
-		} else if (MP3) {
-			/**
-			 * MP3 write
-			 */
-			/*
-			 * 
-			 * short[] buffer = MpthreeRec.getBuffer(); byte[] mp3buffer =
-			 * MpthreeRec.getMp3Buffer(buffer); String filename1 = DEFAULT_FILE;
-			 * FileOutputStream os1 = null;
-			 * 
-			 * try { os1 = new FileOutputStream(filename1); } catch
-			 * (FileNotFoundException e) {
-			 * 
-			 * if (Settings.isDebug()) Log.e(LOG_TAG, e.getMessage()); }
-			 * 
-			 * int read1 = 0;
-			 * 
-			 * if (null != os1) { while (isRecording) { read1 =
-			 * audioWav.read(buffer, 0, minBufferSize);
-			 * 
-			 * if (AudioRecord.ERROR_INVALID_OPERATION != read1 &&
-			 * AudioRecord.ERROR_BAD_VALUE != read1 ) {
-			 * 
-			 * int encResult = MpthreeRec.lameEncodeResult(buffer,read1,
-			 * mp3buffer); if(Settings.isDebug()) Log.e(LOG_TAG,
-			 * "Taille de read1 :"+read1+" Taille de encResult :"+encResult); if
-			 * (encResult < 0) { if(Settings.isDebug())Log.e(LOG_TAG,
-			 * "Error encResult < 0"+encResult);
-			 * 
-			 * }
-			 * 
-			 * try { os1.write(mp3buffer, 0, encResult); } catch (IOException e)
-			 * { if(Settings.isDebug())Log.e(LOG_TAG, "Error " + e.toString());
-			 * break; }
-			 * 
-			 * 
-			 * 
-			 * } else { if(Settings.isDebug())Log.e(LOG_TAG,
-			 * "ERROR AudioRecord{"+read1+"}"); } } int flushResult =
-			 * MpthreeRec.flush(mp3buffer);
-			 * 
-			 * if (flushResult < 0) { if(Settings.isDebug())Log.e(LOG_TAG,
-			 * "flushResult " +flushResult); } if (flushResult != 0) { try {
-			 * os1.write(mp3buffer, 0, flushResult); } catch (IOException e) {
-			 * if(Settings.isDebug())Log.e(LOG_TAG, "Error " + e.toString()); }
-			 * } try { os1.close(); mp3length = new File(filename1).length();
-			 * return; } catch (IOException e) {
-			 * if(Settings.isDebug())Log.e(LOG_TAG, "Error " + e.toString());
-			 * 
-			 * } }
-			 *//**
-			 * 
-			 */
+
+			try {
+				os.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 	/**
@@ -592,14 +532,6 @@ public class AudioHandler {
 
 			in.close();
 			out.close();
-			/*
-			 * if(MP3){ Log.d(LOG_TAG, "MP3 was set to :"+MP3); Intent
-			 * MP3Convertion = new Intent(getmContext(), Converter.class);
-			 * Bundle b = new Bundle(); b.putString("convertFile",
-			 * DEFAULT_FILE); b.putInt("sampleRate", 44100); b.putInt("bitRate",
-			 * 64);//TODO array compress quality MP3Convertion.putExtras(b);
-			 * getmContext().startService(MP3Convertion); }
-			 */
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -680,6 +612,8 @@ public class AudioHandler {
 		Bundle extraNotification = new Bundle();
 		Class<?> destination;
 
+		title = getmContext().getString(R.string.app_name);
+
 		switch (type) {
 		case CALL:
 			Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
@@ -696,25 +630,15 @@ public class AudioHandler {
 				mFrom = mNumber;
 			}
 
-			destination = FragmentListRecordTabs.class;
-			title = "Proof Recorder";
-			info = "CALL INFO";
+			destination = FragmentListRecordTabs.class;			
+			info = "";
 			text = getmContext().getString(R.string.notifyEndOfCallOne) + " "
 					+ mFrom + " "
 					+ getmContext().getString(R.string.notifyEndOfCallTwo);
 			break;
 
-		case VOICE_TITLED:
-		case VOICE_UNTITLED:
-			destination = FragmentListVoiceTabs.class;
-			title = "Proof Recorder";
-			info = "VOICE INFO";
-			text = getmContext().getString(R.string.notifyEndOfVoice);
-			break;
-
 		default:
-			throw new IllegalArgumentException(
-					"notifyOnEndingCall()->LE TYPE SPECIFIé EST INCONNU!");
+			return;
 		}
 
 		StaticNotifications.show(getmContext(), destination, extraNotification,
@@ -730,13 +654,14 @@ public class AudioHandler {
 		return fileNameWithoutExtn;
 	}
 
-	private void writeVoiceToDb() {
+	private void prepareSendingData() {		
 
-		ContentValues values = new ContentValues();
+		Long humanreadable = Long.valueOf(getFileName());
+
 		final Calendar cal = Calendar.getInstance();
-
-		Long humanreadable;
-		String mFileName = DEFAULT_FILE.toString();
+		cal.setTimeInMillis(humanreadable);		
+		@SuppressWarnings("deprecation")
+		final String date = cal.getTime().toLocaleString();		
 		String mSize;
 
 		switch (format) {
@@ -758,60 +683,36 @@ public class AudioHandler {
 
 		default:
 			throw new IllegalArgumentException(
-					"writeVoiceToDb()->LE FORMAT SPECIFIé EST INCONNU!");
+					"-> writeVoiceToDb(): Unknown format !");
 
-		}
-
-		values.put(ProofDataBase.COLUMN_VOICE_FILE, mFileName);
-		values.put(ProofDataBase.COLUMN_VOICE_TIMESTAMP, getFileName());
-		values.put(ProofDataBase.COLUMN_VOICE_TAILLE, mSize);
-		/*
-		 * human readable date
-		 */
-		humanreadable = Long.valueOf(getFileName());
-		cal.setTimeInMillis(humanreadable);
-		
-		@SuppressWarnings("deprecation")
-		final String date = cal.getTime().toLocaleString();
-		values.put(ProofDataBase.COLUMN_VOICE_HTIME, date);
-
-		if (Settings.isDebug()) {
-			Log.v(LOG_TAG, DEFAULT_FILE);
-			Log.v(LOG_TAG, getFileName());
-			Log.v(LOG_TAG, mSize);
-			Log.v(LOG_TAG, date);
-		}
+		}		
 
 		/*
 		 * @@Params MyRecordingContentProvider.CONTENT_URI for store info in db
 		 */
 		Uri uri = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, "voices");
-		getmContext().getContentResolver().insert(uri, values);
 
 		Uri uriNotes = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, "vnotes");
-		/*
-		 * make a default note
-		 */
-		String Nomdelabase = ProofDataBase.TABLE_VOICES;
-		String defaultNote = "Aucune note pour cet enregistrement Vocal";
-		String defaultTitleNote = "Insérer une note";
 
-		ContentValues valuesNote = new ContentValues();
-		int lastId = PersonnalProofContentProvider.lastInsertId(Nomdelabase);
-		valuesNote.put(ProofDataBase.COLUMNVOICE_ID_COLUMNVOICE_ID, lastId);
-		valuesNote.put(ProofDataBase.COLUMNVOICE_TITLE, defaultTitleNote);
-		valuesNote.put(ProofDataBase.COLUMNVOICE_NOTE, defaultNote);
-		valuesNote.put(ProofDataBase.COLUMNVOICE_DATE_CREATION, date);
-		getmContext().getContentResolver().insert(uriNotes, valuesNote);
+		ArrayList<String> voice = new ArrayList<String>();
+		ArrayList<String> voiceNote = new ArrayList<String>();
 
-		if (Settings.isDebug()) {
-			Log.v(LOG_TAG, "Voice Note last insert id :" + lastId);
-			Log.v(LOG_TAG, "Voice Note :" + defaultTitleNote);
-			Log.v(LOG_TAG, "Voice Note :" + defaultNote);
-			Log.v(LOG_TAG, "Voice Note :" + date);
-		}
+		voice.add(uri.toString());
+
+		voice.add(DEFAULT_FILE.toString());
+		voice.add(getFileName());
+		voice.add(mSize);
+		voice.add(date);
+
+		voiceNote.add(uriNotes.toString());
+
+		Bundle extra_data = new Bundle();
+		extra_data.putStringArrayList("voice", voice);
+		extra_data.putStringArrayList("voiceNote", voiceNote);		
+
+		AlertDialogHelper.openVoiceEditDialog(extra_data);
 	}
 
 	private void writeCallToDb() {
@@ -899,24 +800,18 @@ public class AudioHandler {
 		Uri uri = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, "records");
 
-		getmContext().getContentResolver().insert(uri, values);
+		Uri rowId = getmContext().getContentResolver().insert(uri, values);
 
 		Uri uriNotes = Uri.withAppendedPath(
 				PersonnalProofContentProvider.CONTENT_URI, "notes");
 
-		// * make a default note
-
-		String Nomdelabase = ProofDataBase.TABLE_RECODINGAPP;
 		ContentValues valuesNote = new ContentValues();
 
 		// NOTE'S INSERT
 
-		lastId = PersonnalProofContentProvider.lastInsertId(Nomdelabase);
+		lastId = Long.parseLong(rowId.toString());
 
 		valuesNote.put(ProofDataBase.COLUMN_ID_COLUMNRECODINGAPP_ID, lastId);
-		// valuesNote.put(ProofDataBase.COLUMN_TITLE, "Insérer une note");
-		// valuesNote.put(ProofDataBase.COLUMN_NOTE,
-		// "Aucune note pour cet appel");
 		valuesNote.put(ProofDataBase.COLUMN_DATE_LAST_MODIF, date);
 		getmContext().getContentResolver().insert(uriNotes, valuesNote);
 
@@ -936,44 +831,16 @@ public class AudioHandler {
 		switch (type) {
 		case CALL:
 			writeCallToDb();
-			
-			/*
-			 * new Thread(new Runnable() { public void run() { try {
-			 * UploadFile("call"); } catch (Exception e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); } } }).start();
-			 */
-
 			break;
 
 		case VOICE_TITLED:
 		case VOICE_UNTITLED:
-			writeVoiceToDb();
-			
-			/*
-			 * new Thread(new Runnable() { public void run() { try {
-			 * UploadFile("voice"); } catch (Exception e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); } } }).start();
-			 */
-
+			prepareSendingData();
 			break;
 
 		default:
 			throw new IllegalArgumentException(
 					"writeToDb()->LE TYPE SPECIFIé EST INCONNU!");
 		}
-	}
-
-	/*
-	 * private ServiceConnection mConnection = new ServiceConnection() {
-	 * 
-	 * public void onServiceConnected(ComponentName className, IBinder service)
-	 * { // We've bound to LocalService, cast the IBinder and get //
-	 * LocalService instance LocalBinder binder = (LocalBinder) service; FtpCli
-	 * mService = binder.getService(); boolean mBound = true; }
-	 * 
-	 * public void onServiceDisconnected(ComponentName arg0) { boolean mBound =
-	 * false; } };
-	 */
-
-	
+	}	
 }
