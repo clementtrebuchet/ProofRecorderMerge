@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import org.proof.recorder.R;
 import org.proof.recorder.utils.DateUtils;
+import org.proof.recorder.utils.Log.Console;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -12,7 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,8 +26,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class SearchByDates extends SherlockFragmentActivity{
-	
-	private final static String TAG = "CUSTOM_SEARCH_MODULE_DATES";
 	
 	private Context mContext;
 	
@@ -44,7 +43,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 	
 	private Button btnValidateDates;
 	
-	private DatePickerDialog mDatePickDiag;
+	private DatePickerDialog mDatePickDiag = null;
 	private Calendar mCal;
 	
 	private boolean mPrecise, mStarting, mEnding;
@@ -60,7 +59,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 		public void onDateSet(DatePicker arg0, int year, int month,
 				int dayOfMonth) {
 
-			Log.i(TAG, "The date is " + dayOfMonth + "/" + month + "/"
+			Console.print_debug("The date is " + dayOfMonth + "/" + month + "/"
 					+ year + " pointeur(ref): " + arg0);
 
 			mDay = dayOfMonth;
@@ -117,7 +116,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 			}
 			
 			else {
-				Log.v(TAG, "NONE of mPrecise | mStarting | mEnding");
+				Console.print_debug("NONE of mPrecise | mStarting | mEnding");
 			}
 			
 			
@@ -129,45 +128,48 @@ public class SearchByDates extends SherlockFragmentActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_by_dates);
-		
+		Console.setTagName(this.getClass().getSimpleName());
 		mContext = this;
 		
 		mIntentForResult = new Intent();
 		
 		mCal = Calendar.getInstance();
-		mDatePickDiag = new DatePickerDialog(
-				SearchByDates.this, odsl, mCal.get(Calendar.YEAR), mCal
-						.get(Calendar.MONTH), mCal
-						.get(Calendar.DAY_OF_MONTH));
+		
+		if(mDatePickDiag == null) {
+			mDatePickDiag = new DatePickerDialog(
+					SearchByDates.this, odsl, mCal.get(Calendar.YEAR), mCal
+							.get(Calendar.MONTH), mCal
+							.get(Calendar.DAY_OF_MONTH));
 
-		mDatePickDiag.setButton(DialogInterface.BUTTON_NEGATIVE,
-				getString(R.string.alert_dialog_cancel),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog,
-							int which) {
-						if (which == DialogInterface.BUTTON_NEGATIVE) {
-							
-							dialog.dismiss();
-							if(mPrecise) {
-								mPreciseDateChoice.setChecked(false);
-							}
-							else if (mStarting) {
-								mStartingDate.setChecked(false);
-							}
-							
-							else if (mEnding) {
-								mEndingDate.setChecked(false);
-							}
-							
-							else {
-								Log.v(TAG, "NONE of mPrecise | mStarting | mEnding");
+			mDatePickDiag.setButton(DialogInterface.BUTTON_NEGATIVE,
+					getString(R.string.alert_dialog_cancel),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int which) {
+							if (which == DialogInterface.BUTTON_NEGATIVE) {
+								
+								dialog.dismiss();
+								if(mPrecise) {
+									mPreciseDateChoice.setChecked(false);
+								}
+								else if (mStarting) {
+									mStartingDate.setChecked(false);
+								}
+								
+								else if (mEnding) {
+									mEndingDate.setChecked(false);
+								}
+								
+								else {
+									Console.print_debug("NONE of mPrecise | mStarting | mEnding");
+								}
 							}
 						}
-					}
-				});
-		
-		mDatePickDiag.setCancelable(false);
+					});
+			
+			mDatePickDiag.setCancelable(false);
+		}		
 		
 		mPreciseDateChoice = (CheckBox) findViewById(R.id.preciseDate);
 		mPeriodDateChoice = (CheckBox) findViewById(R.id.periodDate);
@@ -216,7 +218,10 @@ public class SearchByDates extends SherlockFragmentActivity{
 					mPrecise = true;
 					mStarting = false;
 					mEnding = false;
-					mDatePickDiag.show();				
+					
+					if(mDatePickDiag != null & !mDatePickDiag.isShowing()) {
+						mDatePickDiag.show();
+					}										
 				}
 				else {
 					txtStartingDateOrPrecise.setVisibility(View.GONE);
@@ -234,7 +239,9 @@ public class SearchByDates extends SherlockFragmentActivity{
 					mPrecise = false;
 					mStarting = true;
 					mEnding = false;
-					mDatePickDiag.show();				
+					if(mDatePickDiag != null & !mDatePickDiag.isShowing()) {
+						mDatePickDiag.show();
+					}				
 				}
 				else
 					txtStartingDateOrPrecise.setVisibility(View.GONE);
@@ -250,7 +257,9 @@ public class SearchByDates extends SherlockFragmentActivity{
 					mPrecise = false;
 					mStarting = false;
 					mEnding = true;
-					mDatePickDiag.show();				
+					if(mDatePickDiag != null & !mDatePickDiag.isShowing()) {
+						mDatePickDiag.show();
+					}				
 				}
 				else
 					txtEndingDate.setVisibility(View.GONE);

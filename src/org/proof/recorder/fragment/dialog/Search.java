@@ -3,13 +3,14 @@ package org.proof.recorder.fragment.dialog;
 import org.proof.recorder.R;
 import org.proof.recorder.fragment.search.SearchResult;
 import org.proof.recorder.utils.DateUtils;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +30,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class Search extends SherlockFragmentActivity {
 
-	private final static String TAG = "CUSTOM_SEARCH_MODULE";
 	private final static String BR = "\n";
 	private final static int DATES_PICKED = 100;
 	
@@ -58,6 +58,10 @@ public class Search extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
+		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
+		Console.setTagName(this.getClass().getSimpleName());
 		
 		mContext = this;		
 		mDataResult = new Intent(Search.this, SearchResult.class);
@@ -90,7 +94,7 @@ public class Search extends SherlockFragmentActivity {
 				) {			
 			@Override
 			public void onCheckedChanged(CompoundButton ref, boolean isSelected) {
-				Log.i(TAG, "@ref: " + ref + " isSelected: " + isSelected);
+				Console.print_debug("@ref: " + ref + " isSelected: " + isSelected);
 				
 				int mInputType = mAocSearchText.getInputType();
 				mAocSearchText.setText("");
@@ -116,7 +120,7 @@ public class Search extends SherlockFragmentActivity {
 			
 			@Override
 			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-				Log.i(TAG, "TextView: " + arg0 + " int: " + arg1 + " KeyEvent: " + arg2);				
+				Console.print_debug("TextView: " + arg0 + " int: " + arg1 + " KeyEvent: " + arg2);				
 				return false;
 			}
 		});
@@ -146,7 +150,9 @@ public class Search extends SherlockFragmentActivity {
 					boolean isChecked) {
 				if (isChecked) {
 					mDatePicked = false;					
-					Intent intent = new Intent(Search.this, SearchByDates.class);					
+					Intent intent = new Intent(Search.this, SearchByDates.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					
 					startActivityForResult(intent, DATES_PICKED);
 				}
 				else {
@@ -190,14 +196,16 @@ public class Search extends SherlockFragmentActivity {
 		recap += "RECHERCHE: " + search + BR;
 
 		if (mRBtnVoices.isChecked()) {
+			
 			recap += "VOIX: OUI" + BR;
-			Log.v(TAG, recap);
+			Console.print_debug(recap);
 			mDataResult.putExtra("mCalls", false);
 			mDataResult.putExtra("mVoices", true);
 			
 		} else if (mRBtnCalls.isChecked()) {
+			
 			recap += "APPELS: OUI" + BR;
-			Log.v(TAG, recap);
+			Console.print_debug(recap);
 			mDataResult.putExtra("mVoices", false);
 			mDataResult.putExtra("mCalls", true);
 			
@@ -238,10 +246,10 @@ public class Search extends SherlockFragmentActivity {
                 	else
                 		mPreciseDate = false;
                 	
-                	Log.i(TAG, mData);
+                	Console.print_debug(mData);
                 }
                 catch (Exception e) {
-                	Log.e(TAG, "data.getStringExtra(\"preciseDate\") INEXISTANT!");
+                	Console.print_debug("data.getStringExtra(\"preciseDate\") INEXISTANT!");
                 	mPreciseDate = false;
                 }
                 
@@ -259,10 +267,10 @@ public class Search extends SherlockFragmentActivity {
                 	else
                 		mStartingDate = false;
                 	
-                	Log.i(TAG, mData);
+                	Console.print_debug(mData);
                 }
                 catch (Exception e) {
-                	Log.e(TAG, "data.getStringExtra(\"startingDate\") INEXISTANT!");
+                	Console.print_exception(e);
                 	mStartingDate = false;
                 }
                 
@@ -278,11 +286,11 @@ public class Search extends SherlockFragmentActivity {
                 	else
                 		mEndingDate = false;
                 	
-                	Log.i(TAG, mData);
+                	Console.print_debug(mData);
                 	
                 }
                 catch (Exception e) {
-                	Log.e(TAG, "data.getStringExtra(\"endingDate\") INEXISTANT!");
+                	Console.print_exception(e);
                 	mEndingDate = false;
                 }
                 
@@ -310,7 +318,7 @@ public class Search extends SherlockFragmentActivity {
                 		mDate  = "Date sélectionnée: " + DateUtils.reOrderDate(mContext, mData);
                 	}
                 	
-                	Log.v(TAG, "startingDate: " + mDate);
+                	Console.print_debug("startingDate: " + mDate);
                 	
                 	mSelectedDate.setText(mDate);
                 	mSelectedDate.setVisibility(View.VISIBLE);
