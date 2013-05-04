@@ -43,7 +43,7 @@ public class ProofDataBaseHelper extends SQLiteOpenHelper {
 			db.enableWriteAheadLogging();			
 		}
 		
-		else if(currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+		if(currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			db.setForeignKeyConstraintsEnabled(true);
 		}
 		
