@@ -92,7 +92,7 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 		@Override
 		public void onClick(View arg0) {
 			saveVoiceTitleNote(true);
-			notifyUser();
+			notifyUser(true);
 		}
 
 	};
@@ -102,11 +102,11 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 		@Override
 		public void onClick(View arg0) {
 			saveVoiceTitleNote(false);
-			notifyUser();
+			notifyUser(false);
 		}
 	};
 	
-	private void notifyUser() {
+	private void notifyUser(boolean edited) {
 		String title, info, text;
 		Bundle extraNotification = new Bundle();
 		Class<?> destination;
@@ -119,7 +119,7 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 		extraNotification.putLong("voiceId", mVoiceId);
 		
 		info = "";
-		if(mTitle != DEFAULT_TITLE) {
+		if(edited) {
 			text = mTitle + " - " + getHoldContext().getString(R.string.notifyEndOfVoice);
 			extraNotification.putBoolean("hasTitle", true);
 		}
