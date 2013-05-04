@@ -60,15 +60,16 @@ public final class AndroidContactsHelper {
 	
 	
 	public static int getTitledVoiceCount() {
+		
 		int count;
-		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_VOICE_NOTES + " WHERE " + ProofDataBase.COLUMN_TITLE + " != \"Insérer une note\"";
+		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_VOICE_NOTES + " WHERE " + ProofDataBase.COLUMN_TITLE + " != \"Insérer un titre\"";
 		count = PersonnalProofContentProvider.getItemsCount(mQuery);
 		return count;
 	}
 	
 	public static int getUnTitledVoiceCount() {
 		int count;
-		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_VOICE_NOTES + " WHERE " + ProofDataBase.COLUMN_TITLE + " LIKE \"%Insérer une note%\"";
+		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_VOICE_NOTES + " WHERE " + ProofDataBase.COLUMN_TITLE + " LIKE \"%Insérer un titre%\"";
 		count = PersonnalProofContentProvider.getItemsCount(mQuery);
 		return count;
 	}
