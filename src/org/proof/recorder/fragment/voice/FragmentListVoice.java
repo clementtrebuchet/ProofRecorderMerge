@@ -104,9 +104,7 @@ public class FragmentListVoice extends SherlockFragment {
 				public void run() {
 					getVoices();
 				}
-			};
-			
-			getActivity().runOnUiThread(viewVoices);			
+			};						
 		}
 
 		/**
@@ -127,6 +125,8 @@ public class FragmentListVoice extends SherlockFragment {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 			
+			getActivity().runOnUiThread(viewVoices);
+			
 			try{
 				Collections.sort(voices, new Comparator<Voice>() {
 			        @Override
@@ -134,15 +134,16 @@ public class FragmentListVoice extends SherlockFragment {
 			            return s1.getTimestamp().compareToIgnoreCase(s2.getTimestamp());
 			        }
 			    });
+				
+				voicesAdapter = new VoiceAdapter(getActivity(),
+						R.layout.listfragmentdroit, voices);			
+
+				setListAdapter(voicesAdapter);
 			}
 			catch(Exception e) {
+				Console.print_exception(e);
 				setEmptyText("");
-			}
-			
-			voicesAdapter = new VoiceAdapter(getActivity(),
-					R.layout.listfragmentdroit, voices);			
-
-			setListAdapter(voicesAdapter);
+			}			
 			
 			if(getListView().getCount() > 0) {
 				registerForContextMenu(getListView());
