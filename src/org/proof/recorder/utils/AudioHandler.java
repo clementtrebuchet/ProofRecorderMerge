@@ -15,18 +15,18 @@ import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.service.MpthreeRec;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioFormat;
+
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+
 
 public class AudioHandler {
 
@@ -34,9 +34,8 @@ public class AudioHandler {
 	 * Hanlde Audio Multiple Formats
 	 */
 
-	private final static String LOG_TAG = "UTILS_AUDIO_HANDLER";
 	private static String DEFAULT_FILE_DIR;
-	private int NODOUBLONS;
+	//private int NODOUBLONS;
 	private MediaRecorder audio;
 
 	public MediaRecorder getAudio() {
@@ -50,7 +49,7 @@ public class AudioHandler {
 	private AudioRecord audioWav;
 	private static Context mContext;
 	private static int mAudioSource;
-	Intent mIntent;
+	private static Intent mMP3Intent, mOggIntent;
 	private String DEFAULT_FILE;
 
 	/**
@@ -73,6 +72,7 @@ public class AudioHandler {
 	private long totalDataLen = totalAudioLen + 36;
 
 	private String mNumber, mSense;
+	private String wavFileSize;
 
 	public void setmNumber(String mNumber) {
 		this.mNumber = mNumber;
@@ -85,16 +85,13 @@ public class AudioHandler {
 	/**
 	 * 
 	 */
-	private void inititialzeWavRecording(boolean MP3) {
+	private void inititialzeWavRecording() {
 		int channel;
 		int quality;
-		if (MP3) {
-			channel = AudioFormat.CHANNEL_IN_MONO;
-			quality = Settings.getMP3Hertz(getmContext());
-		} else {
+
 			channel = Settings.RECORDER_CHANNELS;
 			quality = Settings.RECORDER_SAMPLERATE;
-		}
+
 		minBufferSize = AudioRecord.getMinBufferSize(quality, channel,
 				Settings.RECORDER_AUDIO_ENCODING);
 	}
@@ -150,6 +147,8 @@ public class AudioHandler {
 	 * 
 	 */
 	private void initialize() {
+		
+		Console.setTagName(this.getClass().getSimpleName());
 
 		mAudioSource = new ServiceAudioHelper(getmContext()).maConfAudio();
 		String externalStorage = Environment.getExternalStorageDirectory()
@@ -180,7 +179,7 @@ public class AudioHandler {
 
 		case WAV:
 			DEFAULT_FILE_DIR = appBaseStorage + "wav/";
-			inititialzeWavRecording(false);
+			inititialzeWavRecording();
 			audioWav = new AudioRecord(mAudioSource,
 					Settings.RECORDER_SAMPLERATE, Settings.RECORDER_CHANNELS,
 					Settings.RECORDER_AUDIO_ENCODING, minBufferSize);
@@ -210,31 +209,46 @@ public class AudioHandler {
 			break;
 
 		case MP3:
+			
 			setDefaultFilePath(".mp3");
-			mIntent = new Intent(
+			
+			mMP3Intent = new Intent(
 					"org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
+			
 			Bundle B = new Bundle();
 			B.putString("FileName", DEFAULT_FILE);
 			B.putInt("mSampleRate", Settings.getMP3Hertz(getmContext()));
 			B.putInt("mp3Channel", 1);
 			B.putInt("audioSource", mAudioSource);
 			B.putInt("outBitrate", mp3Compression);
-			mIntent.putExtras(B);
-			getmContext().startService(mIntent);
+			
+			mMP3Intent.putExtras(B);
+			mMP3Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			
+			getmContext().startService(mMP3Intent);
 			break;
+			
 		case OGG:
+			
 			setDefaultFilePath(".ogg");
-			mIntent = new Intent(
+			
+			mOggIntent = new Intent(
 					"org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");
+			
 			Bundle B1 = new Bundle();
 			B1.putString("file", DEFAULT_FILE);
 			B1.putInt("sampleRate", Settings.getMP3Hertz(getmContext()));
 			B1.putInt("channel", 1);
 			B1.putInt("audioSource", mAudioSource);
 			B1.putFloat("quality", Settings.getOGGQual(getmContext()));
-			mIntent.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");
-			mIntent.putExtras(B1);
-			getmContext().startService(mIntent);
+			
+			// TODO: check the need to setAction whereas MP3 not ?!!
+			// mOggIntent.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");
+			
+			mOggIntent.putExtras(B1);
+			mOggIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			
+			getmContext().startService(mOggIntent);
 			break;
 
 		default:
@@ -251,15 +265,13 @@ public class AudioHandler {
 			break;
 
 		case WAV:
-			stopWavRecording(false);
+			stopWavRecording();
 			break;
 		case MP3:
-			getmContext().stopService(mIntent);
-			// stopWavRecording(true);
+			getmContext().stopService(mMP3Intent);
 			break;
 		case OGG:
-			getmContext().stopService(mIntent);
-			// stopWavRecording(true);
+			getmContext().stopService(mOggIntent);
 			break;
 		default:
 			break;
@@ -269,8 +281,7 @@ public class AudioHandler {
 			writeToDb();
 			notifyOnEndingCall();
 		} catch (IllegalArgumentException e) {
-			Log.e(LOG_TAG, "writeToDb()->IllegalArgumentException()->e() \n"
-					+ e);
+			Console.print_exception(e);
 		}
 
 	}
@@ -302,40 +313,29 @@ public class AudioHandler {
 
 		} catch (IllegalStateException e) {
 
-			if (Settings.isDebug())
-				Log.e(LOG_TAG, "IllegalStateException->setAudioSource("
-						+ mAudioSource + ") not registered \n" + e);
+			Console.print_exception(e);
 		}
 
 		try {
 			audio.setOutputFile(DEFAULT_FILE);
 		} catch (IllegalStateException e) {
 
-			if (Settings.isDebug())
-				Log.e(LOG_TAG, "IllegalStateException->setOutputFile("
-						+ DEFAULT_FILE + ") failed \n" + e);
+			Console.print_exception(e);
 		}
 
 		try {
 			audio.prepare();
 		} catch (IOException e) {
-
-			if (Settings.isDebug())
-				Log.e(LOG_TAG, "IOException->prepare() failed");
+			Console.print_exception(e);
+			
 		} catch (IllegalStateException e) {
-
-			if (Settings.isDebug())
-				Log.e(LOG_TAG, "IllegalStateException->prepare() failed\n" + e);
+			Console.print_exception(e);
 		}
 
 		try {
 			audio.start();
 		} catch (IllegalStateException e) {
-
-			if (Settings.isDebug())
-				Log.e(LOG_TAG,
-						"IllegalStateException->start() Attempt 1 failed \n"
-								+ e);
+			Console.print_exception(e);
 		}
 
 	}
@@ -354,9 +354,7 @@ public class AudioHandler {
 				releaseThreeGpRecording();
 
 			} catch (IllegalStateException e) {
-				if (Settings.isDebug())
-					Log.e(LOG_TAG, "IllegalStateException->stop() failed \n"
-							+ e);
+				Console.print_exception(e);
 			}
 
 		}
@@ -385,18 +383,16 @@ public class AudioHandler {
 	 */
 	private void startWavRecording() {
 		try {
-			if (NODOUBLONS <= 0) {
+/*			if (NODOUBLONS <= 0) {
 				MpthreeRec.Mpthree(Settings.getMP3Hertz(getmContext()));
 				MpthreeRec
 				.lameInit(mp3Compression, Settings.defaultQuality);
 				NODOUBLONS++;
-			}
+			}*/
 
 			audioWav.startRecording();
 		} catch (Exception e) {
-
-			if (Settings.isDebug())
-				Log.e(LOG_TAG, "" + e);
+			Console.print_exception(e);
 		}
 
 		isRecording = true;
@@ -422,9 +418,7 @@ public class AudioHandler {
 		try {
 			os = new FileOutputStream(filename);
 		} catch (FileNotFoundException e) {
-
-			if (Settings.isDebug())
-				Log.e(LOG_TAG, e.getMessage());
+			Console.print_exception(e);
 		}
 
 		int read = 0;
@@ -454,23 +448,39 @@ public class AudioHandler {
 	/**
 	 * 
 	 */
-	private void stopWavRecording(boolean MP3) {
-		if (null != audioWav) {
+	private void stopWavRecording() {
+		
+		if (audioWav != null) {
 			isRecording = false;
 
 			audioWav.stop();
 			audioWav.release();
 
-			if (MP3)
-				MpthreeRec.close();
-
 			audioWav = null;
 			recordingThread = null;
-		}
-
-		if (!MP3)
-			copyWaveFile(DEFAULT_FILE_DIR + Settings.AUDIO_RECORDER_TEMP_FILE);
-		deleteTempFile();
+			
+			// TODO: check if running copy on thread is efficient !!!
+			
+			File tempAudio = new File(DEFAULT_FILE_DIR + 
+					Settings.AUDIO_RECORDER_TEMP_FILE);	
+			
+			wavFileSize = Long.valueOf(tempAudio.length()).toString();
+			
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					copyWaveFile(
+							DEFAULT_FILE_DIR + 
+							Settings.AUDIO_RECORDER_TEMP_FILE
+					);
+					
+					deleteTempFile();
+					
+				}
+			}).start();		
+		}		
 	}
 
 	/**
@@ -495,8 +505,7 @@ public class AudioHandler {
 			OsHandler.deleteFileFromDisk(DEFAULT_FILE_DIR
 					+ Settings.AUDIO_RECORDER_TEMP_FILE);
 		} catch (IOException e) {
-			if (Settings.isDebug())
-				Log.v(LOG_TAG, "->deleteTempFile()" + e.getMessage());
+			Console.print_exception(e);
 		}
 	}
 
@@ -506,6 +515,7 @@ public class AudioHandler {
 	 * @param outFilename
 	 */
 	private void copyWaveFile(String inFilename) {
+		
 		FileInputStream in = null;
 		FileOutputStream out = null;
 		long longSampleRate = Settings.RECORDER_SAMPLERATE;
@@ -616,17 +626,18 @@ public class AudioHandler {
 
 		switch (type) {
 		case CALL:
+			
 			Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
 					getmContext(), mNumber);
+			
+			extraNotification.putBoolean("isNotify", true);
+			extraNotification.putString("Sense", mSense);
+			extraNotification.putLong("RecordId", lastId);
+			
 			String mFrom;
 			if (!mContact.getContractId().equalsIgnoreCase("null")) {
-				extraNotification.putString("mWhereClause", "android_id");
-				extraNotification.putString("mIdOrTelephone",
-						mContact.getContractId());
 				mFrom = mContact.getContactName();
 			} else {
-				extraNotification.putString("mWhereClause", "phone");
-				extraNotification.putString("mIdOrTelephone", mNumber);
 				mFrom = mNumber;
 			}
 
@@ -659,33 +670,30 @@ public class AudioHandler {
 		Long humanreadable = Long.valueOf(getFileName());
 
 		final Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(humanreadable);		
+		cal.setTimeInMillis(humanreadable);	
+		
 		@SuppressWarnings("deprecation")
-		final String date = cal.getTime().toLocaleString();		
+		final String date = cal.getTime().toLocaleString();	
+		
 		String mSize;
-
 		switch (format) {
-		case THREE_GP:
-			Uri threegp = Uri.parse("file://" + DEFAULT_FILE);
-			File f = new File(threegp.getPath());
-			long size = f.length();
-			mSize = Long.valueOf(size).toString();
-			break;
+
 		case WAV:
-			mSize = Long.valueOf(totalDataLen).toString();
+			mSize = wavFileSize;
 			break;
+		
+		case THREE_GP:
 		case MP3:
-			mSize = Long.valueOf(new File(DEFAULT_FILE).length()).toString();
-			break;
 		case OGG:
-			mSize = Long.valueOf(new File(DEFAULT_FILE).length()).toString();
+			mSize = Long.valueOf(new File(DEFAULT_FILE).length()).toString();		
 			break;
 
 		default:
 			throw new IllegalArgumentException(
-					"-> writeVoiceToDb(): Unknown format !");
-
-		}		
+					"writeCallToDb()->LE FORMAT SPECIFIé EST INCONNU!");
+		}
+		
+		Console.print_debug("File size: " + mSize);
 
 		/*
 		 * @@Params MyRecordingContentProvider.CONTENT_URI for store info in db
@@ -730,40 +738,23 @@ public class AudioHandler {
 		values.put(ProofDataBase.COLUMN_SENS, mSense);
 
 		switch (format) {
-		case THREE_GP:
-			Uri threegp = Uri.parse("file://" + DEFAULT_FILE);
-			File f = new File(threegp.getPath());
-			long size = f.length();
-			mSize = Long.valueOf(size).toString();
-			break;
 
 		case WAV:
-
-			if (Settings.isDebug()) {
-				Log.v(LOG_TAG, "File size: " + totalDataLen);
-			}
-			mSize = Long.valueOf(totalDataLen).toString();
+			mSize = wavFileSize;			
 			break;
-
+		
+		case THREE_GP:
 		case MP3:
-
-			mSize = Long.valueOf(new File(DEFAULT_FILE).length()).toString();
-			if (Settings.isDebug()) {
-				Log.v(LOG_TAG, "File size: " + mSize);
-			}
-			break;
 		case OGG:
-
-			mSize = Long.valueOf(new File(DEFAULT_FILE).length()).toString();
-			if (Settings.isDebug()) {
-				Log.v(LOG_TAG, "File size: " + mSize);
-			}
+			mSize = Long.valueOf(new File(DEFAULT_FILE).length()).toString();			
 			break;
 
 		default:
 			throw new IllegalArgumentException(
 					"writeCallToDb()->LE FORMAT SPECIFIé EST INCONNU!");
 		}
+		
+		Console.print_debug("File size: " + mSize);
 
 		values.put(ProofDataBase.COLUMN_TIMESTAMP, getFileName());
 		values.put(ProofDataBase.COLUMN_FILE, mFileName);
@@ -783,17 +774,14 @@ public class AudioHandler {
 
 		values.put(ProofDataBase.COLUMN_HTIME, date);
 
-		if (Settings.isDebug()) {
-			Log.v(LOG_TAG, mContact.getPhoneNumber());
-			Log.v(LOG_TAG, mFileName);
-			Log.v(LOG_TAG, getFileName());
-			Log.v(LOG_TAG, mSense);
-			Log.v(LOG_TAG, mSize);
-			Log.v(LOG_TAG, date);
-			Log.v(LOG_TAG,
-					ProofDataBase.COLUMN_CONTRACT_ID + ": "
+		Console.print_debug(mContact.getPhoneNumber());
+		Console.print_debug(mFileName);
+		Console.print_debug(getFileName());
+		Console.print_debug(mSense);
+		Console.print_debug(mSize);
+		Console.print_debug(date);
+		Console.print_debug(ProofDataBase.COLUMN_CONTRACT_ID + ": "
 							+ mContact.getContractId());
-		}
 		/*
 		 * @@Params MyRecordingContentProvider.CONTENT_UR for store info in db
 		 */
@@ -815,12 +803,10 @@ public class AudioHandler {
 		valuesNote.put(ProofDataBase.COLUMN_DATE_LAST_MODIF, date);
 		getmContext().getContentResolver().insert(uriNotes, valuesNote);
 
-		if (Settings.isDebug()) {
-			Log.v(LOG_TAG, "Note last insert id :" + lastId);
-			Log.v(LOG_TAG, "Note :" + "Insérer une note");
-			Log.v(LOG_TAG, "Note :" + "Aucune note pour cet appel");
-			Log.v(LOG_TAG, "Note :" + date);
-		}
+		Console.print_debug("Note last insert id :" + lastId);
+		Console.print_debug("Note :" + "Insérer une note");
+		Console.print_debug("Note :" + "Aucune note pour cet appel");
+		Console.print_debug("Note :" + date);
 	}
 
 	/**

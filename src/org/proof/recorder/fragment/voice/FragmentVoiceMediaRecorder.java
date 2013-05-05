@@ -6,6 +6,7 @@ import org.proof.recorder.Settings.mFormat;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.AudioHandler;
 import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -86,6 +87,8 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    public void onCreate(Bundle icicle) {
 	        super.onCreate(icicle); 
 	        AlertDialogHelper.setContext(getActivity());
+	        
+	        setRetainInstance(true); // TODO: check efficiency of it!!!
 	    }
 
 		@Override
@@ -94,15 +97,14 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 			
 			textI = (TextView) getView().findViewById(R.id.pinfo);
 			backG = (ImageView) getView().findViewById(R.id.background);
+			
 			btnStartRecorder = (ImageButton) getView().findViewById(R.id.play);
 			btnStopRecorder = (ImageButton) getView().findViewById(R.id.stop);
 			
 			btnStartRecorder.setOnClickListener(playCallBack);
 			btnStopRecorder.setOnClickListener(stopCallBack);
 			
-		}
-		
-		
+		}		
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,20 +124,10 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	        @Override
 			public void onClick(View v) {
 	        	if(!onRecord) {
-	        		new Thread(new Runnable() {
-	    				@Override
-						public void run() {
-	    					try {
-	    						startRecording();
-	    						onRecord = true;
-	    					} catch (Exception e) {
-	    						// TODO Auto-generated catch block
-	    						e.printStackTrace();
-	    					}
-	    				}
-	    			}).start();
+	        		startRecording();
+					onRecord = true;
 	        		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicingrec));
-	        		textI.setText("Début de l'enregistrement");
+	        		textI.setText(getString(R.string.start_recording));
 	        		
 	        	}
 	        }
@@ -146,7 +138,7 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 			public void onClick(View v) {
 	        	if(onRecord) {
 	        		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
-	        		textI.setText("Fin de l'enregistrement");
+	        		textI.setText(getString(R.string.stop_recording));
 	        		stopRecording();
 					onRecord = false;	        		
 	        	}
@@ -158,7 +150,6 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    	String mFormat = Settings.getAudioFormat(mContext);
 	    	
 			if (mFormat.equals("3GP")) {
-
 				forma = Settings.mFormat.THREE_GP;
 
 			} else if (mFormat.equals("WAV")) {
@@ -182,21 +173,29 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    }
 	   
 
-	    private void stopRecording() {	    	
-	    	mRecorder.stopRecording();
-	        mRecorder = null;	        
+	    private void stopRecording() {
+	    	try {
+	    		mRecorder.stopRecording();
+		        mRecorder = null;
+	    	}
+	    	catch(NullPointerException e) {
+	    		Console.print_exception(e);
+	    	}	        
 	    }	    	    
 
 	    @Override
 	    public void onPause() {
-	        super.onPause();
-	        if (mRecorder != null) {
+	        super.onPause();	        
+	        Console.print_debug("onPause");
+	        
+/*	        if (mRecorder != null) {
 	        	
 	        	if(forma == Settings.mFormat.THREE_GP ) 
 	        		mRecorder.releaseThreeGpRecording();
+	        	
 	            mRecorder = null;
 	            
-	        }
+	        }*/
 	    }
 	}
 }

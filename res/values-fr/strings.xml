@@ -25,7 +25,11 @@
     
     <string name="loading">Récupération des données, patientez svp&#46;&#46;&#46;</string>
 
+	<!-- Voice Media Recorder -->
 
+    <string name="start_recording">Début de l\'enregistrement</string>
+    <string name="stop_recording">Fin de l\'enregistrement</string>
+    
     <!-- DashBoard Dialog -->
 
     <string name="dashboard_dialog_title">Tableau de Bord</string>

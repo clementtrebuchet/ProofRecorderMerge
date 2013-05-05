@@ -11,6 +11,11 @@
     <string name="tableNumero">Number</string>
     <string name="tableSens">Sense</string>
     <string name="tableHeure">Date</string>
+    
+    <!-- Voice Media Recorder -->
+
+    <string name="start_recording">Starting Recording</string>
+    <string name="stop_recording">Stopping Recording</string>
 
     <!-- DashBoard Description -->
 
