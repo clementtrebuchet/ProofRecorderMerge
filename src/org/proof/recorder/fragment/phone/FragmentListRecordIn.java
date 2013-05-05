@@ -10,10 +10,13 @@ import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -21,6 +24,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -56,7 +60,7 @@ public class FragmentListRecordIn extends Fragment {
 		private static final String TAG = "FragmentPhoneCallDossier";
 		boolean mDualPane;
 		int mCursorPos = -1;
-		private static Bundle b;
+		private static Bundle mBundle;
 		
 		// ArrayList<Contact>() Variables
 		
@@ -97,17 +101,16 @@ public class FragmentListRecordIn extends Fragment {
 			
 			MenuActions.setmContext(getActivity());		
 			
-			b = getActivity().getIntent().getExtras();
+			mBundle = getActivity().getIntent().getExtras();
 			
 			setRetainInstance(true);
+			
 			viewRecords = new Runnable() {
 				@Override
 				public void run() {
 					getContacts();
 				}
-			};
-			
-			getActivity().runOnUiThread(viewRecords);			
+			};						
 		}
 
 		/**
@@ -183,15 +186,64 @@ public class FragmentListRecordIn extends Fragment {
 		}		
 		
 		private void getContacts() {
-			try {
-				String mIdOrTelephone = b.getString("mIdOrTelephone");
-				String mWhere = b.getString("mWhereClause");
-				records = ContactsDataHelper.getIncommingCalls(getActivity(), mWhere, mIdOrTelephone);
-				getActivity().runOnUiThread(returnRes);
-			} catch (Exception e) {				
-				if(Settings.isDebug())
-					Log.e(TAG, "E" + e.getMessage());
+			
+			if(FragmentListRecordTabs.isNotify()) {
+				Uri callUri = Uri.withAppendedPath(
+						PersonnalProofContentProvider.CONTENT_URI, "record_id/" + 
+				FragmentListRecordTabs.getRecordId());
+				
+				Cursor cursor = null;
+				records = null;
+				records = new ArrayList<Record>();
+				
+				try {
+					cursor = getActivity().getContentResolver().query(
+							callUri, null, null, null, null);
+					
+					while (cursor.moveToNext()) {
+						
+						String mId = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID));
+						
+						String mAndroidId = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_CONTRACT_ID));
+						
+						String mPhone = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_TELEPHONE));
+						
+						String mFile = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_FILE));
+						
+						String mHtime = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_HTIME));
+						
+						String mSense = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_SENS));
+						
+						Record mRecord = new Record(
+								mId, mFile, mPhone, mSense, mHtime, mAndroidId);
+						
+						records.add(mRecord);
+					}
+				}
+				catch(Exception e) {
+					Console.print_exception("TOTO: " + e);
+				}
+				finally {
+					if(cursor != null) {
+						cursor.close();
+					}
+				}
 			}
+			else {
+				try {
+					String mIdOrTelephone = mBundle.getString("mIdOrTelephone");
+					String mWhere = mBundle.getString("mWhereClause");
+					records = ContactsDataHelper.getIncommingCalls(getActivity(), mWhere, mIdOrTelephone);
+				} catch (Exception e) {				
+					Console.print_exception(e);
+				}
+			}			
 		}
 
 		public class InCommingCallsAdapter extends ArrayAdapter<Record> {
@@ -269,6 +321,8 @@ public class FragmentListRecordIn extends Fragment {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 			
+			getActivity().runOnUiThread(viewRecords);
+			
 			try {
 				Collections.sort(records, new Comparator<Record>() {
 			        @Override
@@ -276,28 +330,20 @@ public class FragmentListRecordIn extends Fragment {
 			            return s1.getmHtime().compareToIgnoreCase(s2.getmHtime());
 			        }
 			    });
+				
+				recordsAdapter = new InCommingCallsAdapter(getActivity(),
+						R.layout.listfragmentdroit, records);			
+				
+				setListAdapter(recordsAdapter);
 			}
 			catch(Exception e) {
 				setEmptyText("Aucun Enregistrements d'appels");
-			}
-			
-			recordsAdapter = new InCommingCallsAdapter(getActivity(),
-					R.layout.listfragmentdroit, records);			
-			
-			setListAdapter(recordsAdapter);
+			}			
 			
 			if(getListView().getCount() > 0) {
 				registerForContextMenu(getListView());
 			}				
 		}
-		
-		private Runnable returnRes = new Runnable() {
-
-			@Override
-			public void run() {				
-								
-			}
-		};
 
 		 @Override
 		 public void onListItemClick(ListView l, final View v, int position,
@@ -311,10 +357,7 @@ public class FragmentListRecordIn extends Fragment {
 			QuickActionDlg.showPhoneOptionsDlg(getActivity(), v, null, inCommingCallsAdapter, mRecord);
 			
 			if(recordsAdapter.getCount() == 0)
-				sendEventToFolderList();
-			 
-			 if(Settings.isDebug())
-				 Log.v("MA_LISTE_DE_MERDE_AT :", "" + position + "(telephone : " + mRecord.getmPhone() +")");		 
+				sendEventToFolderList();		 
 			 
 		 }
 

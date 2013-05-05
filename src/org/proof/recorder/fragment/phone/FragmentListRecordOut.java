@@ -63,7 +63,6 @@ public class FragmentListRecordOut extends Fragment {
 		private static ArrayList<Record> records = null;
 		private static OutGoingCallsAdapter recordsAdapter = null;
 		private static Runnable viewRecords = null;
-		private static boolean uiOn = false;
 		
 		private void sendEventToFolderList() {
 			if(Settings.isDebug())
@@ -102,13 +101,9 @@ public class FragmentListRecordOut extends Fragment {
 			viewRecords = new Runnable() {
 				@Override
 				public void run() {
-					uiOn = true;
 					getContacts();
-					uiOn = false;
 				}
-			};
-			
-			getActivity().runOnUiThread(viewRecords);		
+			};					
 		}
 
 		/**
@@ -187,8 +182,6 @@ public class FragmentListRecordOut extends Fragment {
 				String mIdOrTelephone = b.getString("mIdOrTelephone");
 				String mWhere = b.getString("mWhereClause");
 				records = ContactsDataHelper.getOutGoingCalls(getActivity(), mWhere, mIdOrTelephone);
-				if(uiOn)
-					getActivity().runOnUiThread(returnRes);
 			} catch (Exception e) {
 				
 				if(Settings.isDebug())
@@ -267,6 +260,8 @@ public class FragmentListRecordOut extends Fragment {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 			
+			getActivity().runOnUiThread(viewRecords);
+			
 			try {
 				Collections.sort(records, new Comparator<Record>() {
 			        @Override
@@ -274,28 +269,20 @@ public class FragmentListRecordOut extends Fragment {
 			            return s1.getmHtime().compareToIgnoreCase(s2.getmHtime());
 			        }
 			    });
+				
+				recordsAdapter = new OutGoingCallsAdapter(getActivity(),
+						R.layout.listfragmentdroit, records);
+				
+				setListAdapter(recordsAdapter);
 			}
 			catch(Exception e) {
 				setEmptyText("Aucun Enregistrements d'appels");
-			}
-			
-			recordsAdapter = new OutGoingCallsAdapter(getActivity(),
-					R.layout.listfragmentdroit, records);
-			setListAdapter(recordsAdapter);
+			}		
 			
 			if(getListView().getCount() > 0) {
 				registerForContextMenu(getListView());
 			}
 		}
-		
-		private Runnable returnRes = new Runnable() {
-
-			@Override
-			public void run() {
-				
-				((OutGoingCallsAdapter) getListAdapter()).notifyDataSetChanged();
-			}
-		};
 
 		 @Override
 		 public void onListItemClick(ListView l, final View v, int position,
