@@ -167,7 +167,6 @@ public final class Settings {
 	private static boolean NOT_LICENSED = false;
 
 	private static final FORMULA mFORMULA = FORMULA.BASIC;
-	private static final String TAG = "SettingsProofRecorder";
 	
 	private static Context SettingsContext = null;
 
@@ -285,6 +284,10 @@ public final class Settings {
 
 	public static float getOGGQual(Context mContext) {
 		initSharedPreferences(mContext);
+		
+		// TODO: Very dangerous: don't use HARD-CODED string !!
+		// TODO: MUST BE REPLACED WITH Context.getString(int)
+		
 		String quality = mSharedPreferences.getString("OGGQUAL", "Bonne");
 		float qual = 0.4f;
 		if (quality.equals("Bonne") || quality.equals("Good")) {
@@ -304,6 +307,8 @@ public final class Settings {
 	 */
 
 	public static boolean assertPlugExist(int plugId, Context mContext) {
+		
+		Console.setTagName(Settings.class.getSimpleName());
 
 		PackageManager mPackageManager = mContext.getPackageManager();
 		String plugIntent;
@@ -336,6 +341,8 @@ public final class Settings {
 
 	}
 	public static boolean assertOthersPlugExist(String plugIntent, Context mContext) {
+		Console.setTagName(Settings.class.getSimpleName());
+		
 		PackageManager mPackageManager = mContext.getPackageManager();
 		try {
 			Intent mIntent = mPackageManager.getLaunchIntentForPackage(plugIntent);
@@ -369,6 +376,9 @@ public final class Settings {
 	}
 
 	public static String getAudioFormat(Context mContext) {
+		
+		Console.setTagName(Settings.class.getSimpleName());
+		
 		initSharedPreferences(mContext);
 		String result = "3GP"; 
 		String f = mSharedPreferences.getString("audio_format", "3GP");
