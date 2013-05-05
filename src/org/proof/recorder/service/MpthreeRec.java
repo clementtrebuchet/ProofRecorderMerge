@@ -35,7 +35,7 @@ public class MpthreeRec {
 	}
 	
 	public static byte[] getMp3Buffer(short[] buffer){
-		if(Settings.isDebug())Log.e(TAG, " getMp3Buffer()");
+		if(Settings.isDebug())Log.d(TAG, " getMp3Buffer()");
 		byte[] mp3buffer = new byte[(int) (7200 + buffer.length * 2 * 1.25)];
 		return mp3buffer;
 	}
@@ -68,7 +68,7 @@ public class MpthreeRec {
 		return lameEncodeResult;
 	}
 	
-	public static int  flush(byte[] mp3buf){
+	public static int flush(byte[] mp3buf){
 		if(Settings.isDebug())Log.e(TAG, "flush mp3buf to lame");
 		return SimpleLame.flush(mp3buf);
 	}

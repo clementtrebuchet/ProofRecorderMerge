@@ -3,6 +3,8 @@
  */
 package org.proof.recorder;
 
+import org.proof.recorder.utils.Log.Console;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +14,7 @@ import android.media.AudioFormat;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+//import android.util.Log;
 
 /**
  * @author namgyal.brisson
@@ -322,13 +324,13 @@ public final class Settings {
 		try {
 			Intent mIntent = mPackageManager.getLaunchIntentForPackage(plugIntent);
 			if (mIntent != null) {
-				Log.e(TAG, "Pluguin exist :" + plugIntent);
+				Console.print_debug("Pluguin exist :" + plugIntent);
 				return true;
 			}
-			Log.e(TAG, "Pluguin dont't exist :" + plugIntent + " Intent:" + mIntent);
+			Console.print_debug("Pluguin dont't exist :" + plugIntent + " Intent:" + mIntent);
 			return false;
 		} catch (Exception e) {
-			Log.e(TAG, "Pluguin dont't exist :" + plugIntent);
+			Console.print_debug("Pluguin dont't exist :" + plugIntent);
 			return false;
 		}
 
@@ -338,13 +340,13 @@ public final class Settings {
 		try {
 			Intent mIntent = mPackageManager.getLaunchIntentForPackage(plugIntent);
 			if (mIntent != null) {
-				Log.e(TAG, "Pluguin exist :" + plugIntent);
+				Console.print_debug("Pluguin exist :" + plugIntent);
 				return true;
 			}
-			Log.e(TAG, "Pluguin dont't exist :" + plugIntent + " Intent:" + mIntent);
+			Console.print_debug("Pluguin dont't exist :" + plugIntent + " Intent:" + mIntent);
 			return false;
 		} catch (Exception e) {
-			Log.e(TAG, "Pluguin dont't exist :" + plugIntent);
+			Console.print_debug("Pluguin dont't exist :" + plugIntent);
 			return false;
 		}
 
@@ -379,8 +381,10 @@ public final class Settings {
 		} else if (f.equals("3")){
 			result = "OGG";
 		}
-		Log.e(TAG, "result: " + result);
-		Log.e(TAG, "getAudioFormat id : " + f);
+		
+		Console.print_debug("result: " + result);
+		Console.print_debug("getAudioFormat id : " + f);
+		
 		return result;
 	}
 
