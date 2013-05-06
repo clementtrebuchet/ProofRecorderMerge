@@ -179,6 +179,7 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 		        mRecorder = null;
 	    	}
 	    	catch(NullPointerException e) {
+	    		// TODO: add User dialog info.
 	    		Console.print_exception(e);
 	    	}	        
 	    }	    	    
@@ -188,7 +189,7 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	        super.onPause();	        
 	        Console.print_debug("onPause");
 	        
-/*	        if (mRecorder != null) {
+	        /*if (mRecorder != null) {
 	        	
 	        	if(forma == Settings.mFormat.THREE_GP ) 
 	        		mRecorder.releaseThreeGpRecording();

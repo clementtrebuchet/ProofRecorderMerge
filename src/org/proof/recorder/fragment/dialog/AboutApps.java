@@ -5,6 +5,8 @@ import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -58,10 +60,27 @@ public class AboutApps extends SherlockFragmentActivity {
 		mAboutApp = (TextView) findViewById(R.id.txt_app);
 		mAboutApp.setText(Html.fromHtml((String) getText(R.string.about_app)));
 		
-		mLinks = new String[]{			
-				(String) getText(R.string.contact_uri),
-				(String) getText(R.string.site_uri)
-		};
+		PackageInfo pInfo = null;
+		
+		try {
+			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			
+			String appVersion = (String) getText(R.string.app_name) + "(" + pInfo.versionName + ")";
+			
+			mLinks = new String[]{			
+					(String) getText(R.string.contact_uri),
+					(String) getText(R.string.site_uri),
+					appVersion
+			};
+			
+		} catch (NameNotFoundException e) {
+			Console.print_exception(e);
+			
+			mLinks = new String[]{			
+					(String) getText(R.string.contact_uri),
+					(String) getText(R.string.site_uri)
+			};
+		}	
 		
 		mListView = (ListView) findViewById(R.id.some_links_list);
 		
