@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.dialog;
 
 import org.proof.recorder.R;
+import org.proof.recorder.Settings;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
@@ -58,28 +59,16 @@ public class AboutApps extends SherlockFragmentActivity {
 		setContext(this);
 		
 		mAboutApp = (TextView) findViewById(R.id.txt_app);
-		mAboutApp.setText(Html.fromHtml((String) getText(R.string.about_app)));
+		mAboutApp.setText(Html.fromHtml((String) getText(R.string.about_app)));		
 		
-		PackageInfo pInfo = null;
+		mLinks = new String[]{			
+				(String) getText(R.string.contact_uri),
+				(String) getText(R.string.site_uri)
+		};
 		
-		try {
-			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-			
-			String appVersion = (String) getText(R.string.app_name) + "(" + pInfo.versionName + ")";
-			
-			mLinks = new String[]{			
-					(String) getText(R.string.contact_uri),
-					(String) getText(R.string.site_uri),
-					appVersion
-			};
-			
-		} catch (NameNotFoundException e) {
-			Console.print_exception(e);
-			
-			mLinks = new String[]{			
-					(String) getText(R.string.contact_uri),
-					(String) getText(R.string.site_uri)
-			};
+		String versionName = Settings.getpInfo().versionName;
+		if(versionName != null) {
+			mLinks[2] = (String) getText(R.string.app_name) + "(" + versionName + ")";
 		}	
 		
 		mListView = (ListView) findViewById(R.id.some_links_list);

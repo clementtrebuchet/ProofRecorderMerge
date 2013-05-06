@@ -9,7 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.AudioFormat;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -29,8 +31,10 @@ public final class Settings {
 	 * 
 	 */
 	
-	public static boolean OVERRIDE_MODE;
+	private static String OVERRIDE_MODE;
 	
+	
+	private static PackageInfo pInfo = null;
 	
 	public final static String APP_KEY = "q66vtgg2zeodm45";
 	public final static String APP_SECRET = "9t0wm8zrp7kwlu4";
@@ -150,10 +154,7 @@ public final class Settings {
 		return device_id;
 
 	}
-
-	public static String hostname = "sd-21117.dedibox.fr";
-	public static String user = "clement";
-	public static String pass = "sonyaltec";
+	
 	public static String methodCALL = "call";
 	public static String methodVOICE = "voice";
 	public static int defaultQuality = 7;
@@ -162,7 +163,7 @@ public final class Settings {
 	private static boolean mUAC_ASSISTED = false;
 	private static SharedPreferences mSharedPreferences;
 	private static final boolean TOAST_NOTIFICATIONS = true;
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private static boolean NOT_LICENSED = false;
 
@@ -174,6 +175,8 @@ public final class Settings {
 		mSharedPreferences = null;
 		mSharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(mContext);
+		
+		OVERRIDE_MODE = "OVERRIDE_MODE_" + getpInfo().versionName;
 	}
 	
 	@SuppressWarnings("unused")
@@ -448,36 +451,17 @@ public final class Settings {
 	}
 	
 	public static boolean isOverrideMode() {		
-		initSharedPreferences(getSettingscontext());
-		return mSharedPreferences.getBoolean("OVERRIDE_MODE", true);
+		initSharedPreferences(getSettingscontext());		
+		return mSharedPreferences.getBoolean(OVERRIDE_MODE, true);
 	}
 
 	public static void setOverrideMode(boolean b) {
-		setSharedPrefs("OVERRIDE_MODE", b);
+		setSharedPrefs(OVERRIDE_MODE, b);
 	}
 
 	public static boolean isAlarm() {
 		
-		// Each time we want it to be executed
-		// just inverse condition of OverrideMode
-		// Like this:
-		
-		// Either,
-		
-		// if(!isOverrideMode()) {			
-		//	 setAlarm(false);
-		//	 setOverrideMode(true);
-		// }
-		
-		// Or,
-		
-		// if(isOverrideMode()) {
-		//   setAlarm(false);
-		//   setOverrideMode(false);
-		// }
-		
-		
-		if(!isOverrideMode()) {			
+		if(!isOverrideMode()) {	
 			setAlarm(false);
 			setOverrideMode(true);
 		}
@@ -511,6 +495,28 @@ public final class Settings {
 	 */
 	public static void setSettingscontext(Context _Context) {
 		Settings.SettingsContext = _Context;
+	}
+
+	/**
+	 * @return the pInfo
+	 */
+	public static PackageInfo getpInfo() {
+		if(pInfo == null) {
+			try {
+				setpInfo(getSettingscontext().getPackageManager().getPackageInfo(
+						getSettingscontext().getPackageName(), 0));				
+			} catch (NameNotFoundException e) {
+				Console.print_exception(e);
+			}
+		}		
+		return pInfo;
+	}
+
+	/**
+	 * @param pInfo the pInfo to set
+	 */
+	private static void setpInfo(PackageInfo pInfo) {
+		Settings.pInfo = pInfo;
 	}
 
 }

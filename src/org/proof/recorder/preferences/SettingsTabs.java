@@ -15,6 +15,38 @@ import android.widget.TextView;
 @SuppressWarnings("deprecation")
 public class SettingsTabs extends TabActivity {
 	
+	/*private FragmentTabHost mTabHost;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.tabs_settings);
+
+        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        
+        mTabHost.setup(this, getSupportFragmentManager());
+
+        mTabHost.addTab(mTabHost.newTabSpec("global_service").setIndicator(
+        		prepareTabView(this, getString(R.string.strSettingsGlobalServices),
+                R.drawable.settings_calls)),
+        		Preference.class, null);
+        
+                mTabHost.addTab(mTabHost.newTabSpec("device_capabilities").setIndicator(prepareTabView(this, getString(R.string.strSettingsDeviceCapabilities),
+                R.drawable.settings_audio)),
+                DeviceCapabilities.class, null);
+        
+        mTabHost.addTab(mTabHost.newTabSpec("options").setIndicator(prepareTabView(this, getString(R.string.strSettingsOptions),
+                R.drawable.settings_infos)),
+        		FormulaPreferences.class, null);
+        
+        mTabHost.addTab(mTabHost.newTabSpec("Secure").setIndicator(
+ * 			prepareTabView(this, "Autentification", R.drawable.settings_auth)),
+                ServerAccount.class, null);
+        
+        mTabHost.setCurrentTab(0);
+    }*/
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -44,7 +76,7 @@ public class SettingsTabs extends TabActivity {
 	                  .setContent(intent);	    
 	    tabHost.addTab(spec);
 	    
-	    /*intent = new Intent(this, ServerAccount.class);
+/*	    intent = new Intent(this, ServerAccount.class);
 	    spec = tabHost.newTabSpec("Secure").setIndicator(prepareTabView(this, "Autentification",
 	                      R.drawable.settings_auth))
 	                  .setContent(intent);	    
