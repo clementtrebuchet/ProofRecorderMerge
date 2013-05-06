@@ -1,5 +1,5 @@
 *.iml
-*.classpath
+.classpath
 *.class
 *.idea
 *.project
