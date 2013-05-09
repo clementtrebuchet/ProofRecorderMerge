@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.AudioFormat;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -179,7 +178,23 @@ public final class Settings {
 		OVERRIDE_MODE = "OVERRIDE_MODE_" + getpInfo().versionName;
 	}
 	
-	@SuppressWarnings("unused")
+	/**
+	 * @param key
+	 * @param value
+	 */
+	public static void setPersistantData(String key, String value) {		
+		if(getSettingscontext() != null) {
+			setSharedPrefs(key, value);
+		}		
+	}
+	
+	public static String getPersistantData(String key) {		
+		if(getSettingscontext() != null) {
+			return mSharedPreferences.getString(key, null);
+		}
+		return null;
+	}
+
 	private static void setSharedPrefs(String key, String value) {
 		Editor editor = mSharedPreferences.edit();
 		editor.putString(key, value);
@@ -227,6 +242,19 @@ public final class Settings {
 	 */
 	public static void setUAC_ASSISTED(boolean mUAC_ASSISTED) {
 		Settings.mUAC_ASSISTED = mUAC_ASSISTED;
+	}
+	
+	/**
+	 * @param mContext
+	 * @return Integer 0 means no post encoding & 1 means post encoding active.
+	 */
+	public static int getPostEncoding(Context mContext) {
+		
+		initSharedPreferences(mContext);
+		int postEncode = Integer.parseInt(
+				mSharedPreferences.getString("post_encode",	"0"));
+		
+		return postEncode;
 	}
 
 	/**
@@ -505,7 +533,7 @@ public final class Settings {
 			try {
 				setpInfo(getSettingscontext().getPackageManager().getPackageInfo(
 						getSettingscontext().getPackageName(), 0));				
-			} catch (NameNotFoundException e) {
+			} catch (Exception e) {
 				Console.print_exception(e);
 			}
 		}		
