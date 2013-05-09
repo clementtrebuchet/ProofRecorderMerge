@@ -560,7 +560,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 	 * }
 	 */
 
-	public String getEmailOrId(Context context) {
+/*	public String getEmailOrId(Context context) {
 
 		try {
 			AccountManager accountManager = AccountManager.get(context);
@@ -585,7 +585,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			account = null;
 		}
 		return account;
-	}
+	}*/
 
 	private void eulaChecker() {
 

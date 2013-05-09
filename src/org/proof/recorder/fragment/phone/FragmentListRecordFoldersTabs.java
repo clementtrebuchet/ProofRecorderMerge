@@ -2,7 +2,6 @@ package org.proof.recorder.fragment.phone;
 
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
-import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
