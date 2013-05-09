@@ -21,6 +21,26 @@
             android:summary="Canaux."
             android:title="Canaux" /> -->
     </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:key="postEncode"
+        android:title="@string/audio_encoder_handler" >
+        <ListPreference
+            android:dialogTitle="@string/select_encoding_method"
+            
+            android:key="post_encode"
+            android:summary="@string/encoding_summary"
+            android:title="@string/encoding_title" />
+<!--         <ListPreference
+            android:defaultValue="MONO"
+            android:dialogTitle="Selection du Canal."
+            android:entries="@array/audio_channel"
+            android:entryValues="@array/audio_channel"
+            android:key="audio_channel"
+            android:summary="Canaux."
+            android:title="Canaux" /> -->
+    </PreferenceCategory>
+    
     <PreferenceCategory
         android:key="mp33"
         android:title="@string/soundopt" >

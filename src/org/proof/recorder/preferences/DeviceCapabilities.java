@@ -37,6 +37,8 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 	private ListPreference mFormat;
 	private ListPreference mCompression;
 	private ListPreference mQual;
+	private ListPreference postEncode;
+	
 	//private ListPreference mChan;
 	private String bestOption;
 
@@ -70,6 +72,9 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 		mQual = (ListPreference) getPreferenceScreen()
 				.findPreference("OGGQUAL");
 		
+		postEncode = (ListPreference) getPreferenceScreen()
+				.findPreference("post_encode");
+		
 		/*mChan = (ListPreference) getPreferenceScreen().findPreference(
 				"audio_channel");
 		mChan.setEnabled(false);*/
@@ -94,6 +99,17 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 		}
 		mFormat.setEntries(entries);
 		mFormat.setEntryValues(entryValues);
+		
+		postEncode.setEntries(new String[] {
+				getString(R.string.encode_while),
+				getString(R.string.encode_after)				
+		});
+		
+		postEncode.setEntryValues(new String[] {
+				"0",
+				"1"
+		});
+		
 		onSettings();
 		QuickActionDlg.setmContext(this);
 
