@@ -1,14 +1,13 @@
 package org.proof.recorder.fragment.voice;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.Settings.mFormat;
+import org.proof.recorder.receivers.AudioRecorderReceiver;
+import org.proof.recorder.service.DataPersistanceManager;
 import org.proof.recorder.utils.AlertDialogHelper;
-import org.proof.recorder.utils.AudioHandler;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -27,17 +26,13 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 {	
-	
-	//private static final String TAG = "FragmentVoiceMediaRecorder";
-	private static Context mContext;
-	private static mFormat forma;
+
 	@Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        
-        mContext = this;
+
         setContentView(R.layout.fragment_voice_recorder);
         FragmentManager fm = getSupportFragmentManager();
 
@@ -61,12 +56,13 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	}
 	
 	public static class VoiceRecorderFragment extends Fragment {
-	    private AudioHandler mRecorder = null;
 	    private static boolean onRecord;
 	    
 	    private ImageButton btnStartRecorder, btnStopRecorder;
 	    private ImageView backG; 
 	    private TextView textI;
+	    
+	    private DataPersistanceManager dpm = null;
 	    /**
 	     * stop the recreation of the activity on Orientation Change
 	     * the MediaRecorder, is therefore not recreated and keep recording on Orientation Changes
@@ -104,6 +100,15 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 			btnStartRecorder.setOnClickListener(playCallBack);
 			btnStopRecorder.setOnClickListener(stopCallBack);
 			
+			dpm = new DataPersistanceManager();
+			
+			if(dpm.isProcessing()) {
+				setOnRecordScene();
+			}
+			else {
+				setNoRecordScene();
+			}
+			
 		}		
 
 		@Override
@@ -120,15 +125,25 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 			btnStartRecorder.invalidate();
 		}
 		
+		private void setOnRecordScene() {
+			startRecording();
+			onRecord = true;
+    		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicingrec));
+    		textI.setText(getString(R.string.start_recording));
+		}
+		
+		private void setNoRecordScene() {
+			backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
+    		textI.setText(getString(R.string.stop_recording));
+    		stopRecording();
+			onRecord = false;
+		}
+		
 		private OnClickListener playCallBack = new OnClickListener() {
 	        @Override
 			public void onClick(View v) {
 	        	if(!onRecord) {
-	        		startRecording();
-					onRecord = true;
-	        		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicingrec));
-	        		textI.setText(getString(R.string.start_recording));
-	        		
+	        		setOnRecordScene();	        		
 	        	}
 	        }
 	    }; 
@@ -137,66 +152,38 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	        @Override
 			public void onClick(View v) {
 	        	if(onRecord) {
-	        		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
-	        		textI.setText(getString(R.string.stop_recording));
-	        		stopRecording();
-					onRecord = false;	        		
+	        		setNoRecordScene();	        		
 	        	}
 	        }
 	    };     
 
 	    private void startRecording() {
 	    	
-	    	String mFormat = Settings.getAudioFormat(mContext);
+	    	dpm = new DataPersistanceManager();
 	    	
-			if (mFormat.equals("3GP")) {
-				forma = Settings.mFormat.THREE_GP;
-
-			} else if (mFormat.equals("WAV")) {
-				forma = Settings.mFormat.WAV;
-
-			} else if (mFormat.equals("MP3")) {
-				forma = Settings.mFormat.MP3;
-
-			} else if (mFormat.equals("OGG")) {
-				forma = Settings.mFormat.OGG;
-
-			}else {
-				forma = Settings.mFormat.THREE_GP;
-			}
-        	mRecorder = new AudioHandler(
-	        		getActivity(), 
-	        		forma,
-	        		org.proof.recorder.Settings.mType.VOICE_TITLED
-	        ); 
-	        mRecorder.startRecording();
+	    	if(!dpm.isProcessing()) {
+	    		Intent audioService = new Intent(getActivity(), AudioRecorderReceiver.class);
+		    	audioService.setAction("android.intent.action.START_AUDIO_RECORDER");		    	
+		    	getActivity().sendBroadcast(audioService);
+	    	}	    	
 	    }
 	   
 
 	    private void stopRecording() {
-	    	try {
-	    		mRecorder.stopRecording();
-		        mRecorder = null;
-	    	}
-	    	catch(NullPointerException e) {
-	    		// TODO: add User dialog info.
-	    		Console.print_exception(e);
-	    	}	        
+	    	
+	    	dpm = new DataPersistanceManager();
+	    	
+	    	if(dpm.isProcessing()) {
+	    		Intent audioService = new Intent(getActivity(), AudioRecorderReceiver.class);
+		    	audioService.setAction("android.intent.action.STOP_AUDIO_RECORDER");		    	
+		    	getActivity().sendBroadcast(audioService);
+	    	}      
 	    }	    	    
 
 	    @Override
 	    public void onPause() {
 	        super.onPause();	        
 	        Console.print_debug("onPause");
-	        
-	        /*if (mRecorder != null) {
-	        	
-	        	if(forma == Settings.mFormat.THREE_GP ) 
-	        		mRecorder.releaseThreeGpRecording();
-	        	
-	            mRecorder = null;
-	            
-	        }*/
 	    }
 	}
 }

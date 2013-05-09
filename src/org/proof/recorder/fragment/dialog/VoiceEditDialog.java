@@ -1,17 +1,12 @@
 package org.proof.recorder.fragment.dialog;
 
-import java.util.ArrayList;
-
 import org.proof.recorder.R;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
-import org.proof.recorder.utils.StaticNotifications;
-import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.receivers.AudioRecorderReceiver;
+import org.proof.recorder.service.DataPersistanceManager;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,14 +20,15 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 public class VoiceEditDialog extends SherlockFragmentActivity {
 	
 	private static String DEFAULT_TITLE;
+	private static Context mContext = null;
+	private static boolean isSaved = false;
 	
 	private Button mEdit, mLater;
 	private TextView mTitleNote;
-	private Bundle mBundle = null;
-	private static Context mContext = null;
 	
 	private String mTitle;
-	private long mVoiceId;
+	
+	private DataPersistanceManager dpm = null;
 
 	/**
 	 * @return the mContext
@@ -64,8 +60,6 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 				R.string.default_note_title);
 		
 		mTitle = DEFAULT_TITLE;
-		
-		mBundle = getIntent().getExtras();
 		
 		mTitleNote = (TextView) findViewById(R.id.mEdit);
 		
@@ -104,33 +98,6 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 		}
 	};
 	
-	private void notifyUser(boolean edited) {
-		String title, info, text;
-		Bundle extraNotification = new Bundle();
-		Class<?> destination;
-			
-		title = getHoldContext().getString(R.string.app_name);
-		
-		destination = FragmentListVoiceTabs.class;
-		
-		extraNotification.putBoolean("isNotify", true);
-		extraNotification.putLong("voiceId", mVoiceId);
-		
-		info = "";
-		if(edited) {
-			text = mTitle + " - " + getHoldContext().getString(R.string.notifyEndOfVoice);
-			extraNotification.putBoolean("hasTitle", true);
-		}
-		else {
-			text = getHoldContext().getString(R.string.notifyEndOfVoice);
-			extraNotification.putBoolean("hasTitle", false);
-		}		
-		
-		StaticNotifications.show(getHoldContext(), destination, extraNotification,
-				title, info, text, StaticNotifications.ICONS.DEFAULT, true,
-				true, 0);
-	}
-	
 	private void saveVoiceTitleNote(boolean edited) {
 		
 		if(edited) {
@@ -143,8 +110,7 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 					!mTitle.equals(
 							getString(
 									R.string.default_note_title))) {			
-				save();
-				notifyUser(edited);
+				notifyAndSave();
 			}
 			
 			else {
@@ -152,54 +118,40 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 			}
 		}
 		else {
-			save();
-			notifyUser(edited);
+			notifyAndSave();
 		}
 	}
 	
-	private void save() {
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
 		
-		ArrayList<String> voice = null;
-		ArrayList<String> voiceNote = null;		
-		
-		String noteText = getHoldContext().getString(R.string.default_note_text);
-		
-		if(mBundle != null) {			
-			voice = mBundle.getStringArrayList("voice");
-			voiceNote = mBundle.getStringArrayList("voiceNote");			
+		if(!isSaved) {
+			notifyAndSave();
 		}
-		
-		if(voice != null) {
-			ContentValues values = new ContentValues();
-			String creationTime = voice.get(4);
-			
-			Uri uriVoice = Uri.parse(voice.get(0));				
-			
-			values.put(ProofDataBase.COLUMN_VOICE_FILE, voice.get(1));
-			values.put(ProofDataBase.COLUMN_VOICE_TIMESTAMP, voice.get(2));
-			values.put(ProofDataBase.COLUMN_VOICE_TAILLE, voice.get(3));				
-			values.put(ProofDataBase.COLUMN_VOICE_HTIME, creationTime);
-			
-			Uri rowId = getHoldContext().getContentResolver().insert(uriVoice, values);
-			
-			Console.print_exception(rowId.toString());
-			
-			if(voiceNote != null) {
-				ContentValues voiceValues = new ContentValues();
-				
-				Uri uriVoiceNote = Uri.parse(voiceNote.get(0));
+		isSaved = false;
+	}
 	
-					mVoiceId = Long.parseLong(rowId.toString());
-					voiceValues.put(ProofDataBase.COLUMNVOICE_ID_COLUMNVOICE_ID, mVoiceId);
-					voiceValues.put(ProofDataBase.COLUMNVOICE_TITLE, mTitle);
-					voiceValues.put(ProofDataBase.COLUMNVOICE_NOTE, noteText);
-					voiceValues.put(ProofDataBase.COLUMNVOICE_DATE_CREATION, creationTime);
-					
-					getHoldContext().getContentResolver().insert(uriVoiceNote, voiceValues);
-								
-			}
-		}
+	private void notifyAndSave() {
 		
+		dpm = new DataPersistanceManager();		
+    	
+    	if(!dpm.isProcessing()) {
+    		
+    		Intent audioService = new Intent(this, AudioRecorderReceiver.class);	    	
+	    	
+	    	Bundle extras = new Bundle();
+	    	
+	    	extras.putString("audioTitle", mTitle);
+	    	
+	    	audioService.setAction("android.intent.action.SAVE_AUDIO_RECORDER");
+	    	
+	    	audioService.putExtras(extras);
+	    	
+	    	sendBroadcast(audioService);
+	    	isSaved = true;
+    	}
+    	
 		onBackPressed();
 	}
 }

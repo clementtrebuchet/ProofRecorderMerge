@@ -82,6 +82,8 @@ public class FragmentListRecordTabs extends SherlockFragmentActivity {
 		
 		try {
 			
+			
+			
 			setRecordId((long) extraData.getLong("RecordId"));
 			String mDirection = (String) extraData.getString("Sense");
 			setNotify((boolean) extraData.getBoolean("isNotify"));
@@ -97,8 +99,12 @@ public class FragmentListRecordTabs extends SherlockFragmentActivity {
 			}
 			
 			mTabsAdapter.addTab(mBar.newTab().setText(tabTitle), tab, null);
+			
+			Console.print_exception("C'est le bad");
 		}
 		catch(Exception e) {
+			
+			Console.print_debug("C'est Bon");
 			
 			setNotify(false);
 			
