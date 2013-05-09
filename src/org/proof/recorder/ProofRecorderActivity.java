@@ -1,5 +1,10 @@
 package org.proof.recorder;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 
 import org.proof.recorder.database.support.AndroidContactsHelper;
@@ -156,7 +161,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	// private static final int ACTIVITY_RECORD_SOUND = 1;
 	
-	private void refreshVoicesAndCalls() {
+	public static void refreshVoicesAndCalls() {
 		
 		int known, unknown, titled, untitled;
 
@@ -191,6 +196,52 @@ public class ProofRecorderActivity extends SherlockActivity {
 		}			
 	}
 	
+	// DEBUG MODE TO COPY DATABASE TO SDCARD
+	
+	public static void copyDatabase(Context c, String DATABASE_NAME) {
+        String databasePath = c.getDatabasePath(DATABASE_NAME).getPath();
+        File f = new File(databasePath);
+        OutputStream myOutput = null;
+        InputStream myInput = null;
+        
+        Log.d("testing", " testing db path " + databasePath);
+        Log.d("testing", " testing db exist " + f.exists());
+
+        if (f.exists()) {
+            try {
+
+                File directory = new File("/storage/sdcard0/DB_DEBUG.db");
+                if (!directory.exists())
+                    directory.mkdir();
+
+                myOutput = new FileOutputStream(directory.getAbsolutePath()
+                        + "/" + DATABASE_NAME);
+                myInput = new FileInputStream(databasePath);
+
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = myInput.read(buffer)) > 0) {
+                    myOutput.write(buffer, 0, length);
+                }
+
+                myOutput.flush();
+            } catch (Exception e) {
+            } finally {
+                try {
+                    if (myOutput != null) {
+                        myOutput.close();
+                        myOutput = null;
+                    }
+                    if (myInput != null) {
+                        myInput.close();
+                        myInput = null;
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -212,6 +263,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 		AlertDialogHelper.setContext(this);
 		
 		refreshVoicesAndCalls();
+		
+		//copyDatabase(this, "proofdatabase.db");
 
 
 		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
