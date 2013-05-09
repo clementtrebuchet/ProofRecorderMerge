@@ -2,7 +2,6 @@ package org.proof.recorder.utils;
 
 import java.io.File;
 import java.util.Stack;
-
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
@@ -19,6 +18,33 @@ public class OsInfo {
 		
 		mAppPath = Environment.getExternalStorageDirectory()
 	            .getPath() + "/ProofRecorder/";
+	}
+	
+	public static String getBaseNameWithNoExt(String mPath) {		
+		
+		File tFile = new File(mPath);
+		return tFile.getName().split("\\.(?=[^\\.]+$)")[0];		
+	}
+	
+	public static String newFileName(String AudioFormat) {		
+		
+		String externalStorage = Environment.getExternalStorageDirectory()
+				.getAbsolutePath();
+		
+		String appBaseStorage = externalStorage + "/proofRecorder/voices/";
+		
+		String format;
+		if(!AudioFormat.equalsIgnoreCase("3gp") && !AudioFormat.equalsIgnoreCase("wav"))
+			format = "wav";
+		else 
+			format = AudioFormat;
+		
+		return appBaseStorage + format + "/" + 
+			   DateUtils.getCurrentMsDate() + "." + AudioFormat;		
+	}
+	
+	public static String getFileSize(String file) {		
+		return Long.valueOf(new File(file).length()).toString();		
 	}
 	
 	private String getFreeSpace(String mPath) {

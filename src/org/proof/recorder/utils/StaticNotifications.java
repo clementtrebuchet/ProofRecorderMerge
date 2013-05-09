@@ -192,6 +192,7 @@ public class StaticNotifications {
 				break;
 			}
 
+			@SuppressWarnings("deprecation")
 			Notification notification = getmBuilder().getNotification();
 			getmNM().notify(_ID, notification);
 		}

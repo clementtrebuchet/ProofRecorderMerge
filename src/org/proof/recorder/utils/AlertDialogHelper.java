@@ -3,6 +3,7 @@ package org.proof.recorder.utils;
 import org.proof.recorder.R;
 import org.proof.recorder.fragment.dialog.NoneRecordsDialog;
 import org.proof.recorder.fragment.dialog.VoiceEditDialog;
+import org.proof.recorder.utils.Log.Console;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -11,8 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class AlertDialogHelper {
-
-	protected static final String TAG = "AlertDialogHelper";
 	
 	private static AlertDialog.Builder mDialog = null;
 	private static ProgressDialog progressDialog = null;
@@ -62,11 +61,18 @@ public class AlertDialogHelper {
 	
 	public static void openProgressDialog() {
 		
-		progressDialog = new ProgressDialog(getContext());
-		progressDialog.setMessage(getContext().getText(R.string.loading));
-		progressDialog.setIndeterminate(true);
+		if(progressDialog == null)
+			progressDialog = new ProgressDialog(getContext());
+		
+		try {
+			progressDialog.setMessage(getContext().getText(R.string.loading));
+			progressDialog.setIndeterminate(true);
 
-		progressDialog.show();
+			progressDialog.show();
+		}
+		catch (Exception e) {
+			Console.print_exception(e);
+		}		
 	}
 
 	public static void hideProgressDialog() {

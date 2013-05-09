@@ -1,5 +1,7 @@
 package org.proof.recorder.utils;
 
+import java.util.Calendar;
+
 import org.proof.recorder.R;
 
 import android.content.Context;
@@ -9,6 +11,17 @@ public class DateUtils {
 	private static Context mContext;
 
 	private DateUtils() {}
+	
+	public static long getCurrentMsDate() {
+		return System.currentTimeMillis();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static String formatTime(String timeStamp) {
+		final Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(Long.parseLong(timeStamp));		
+		return cal.getTime().toLocaleString();
+	}
 	
 	private static String getMonthFromInt(int m) {
 		String month;
