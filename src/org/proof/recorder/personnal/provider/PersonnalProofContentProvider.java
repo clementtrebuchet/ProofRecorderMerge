@@ -701,11 +701,22 @@ public class PersonnalProofContentProvider extends
 			queryBuilder.setTables(ProofDataBase.TABLE_RECODINGAPP);
 			
 			SimplePhoneNumber mPhone = new SimplePhoneNumber(uri.getLastPathSegment());
-
-			Console.print_debug("demande les entrées avec lenumero de telephone dans la table enregistrement"
-								+ uri.getLastPathSegment());
-			queryBuilder.appendWhere(ProofDataBase.COLUMN_TELEPHONE + " LIKE "
-					+ "\"%" + mPhone.get_nationalNumber() + "%\"");
+			
+			String debug;
+			String query = ProofDataBase.COLUMN_TELEPHONE + " LIKE "
+					+ "\"%" + mPhone.get_nationalNumber() + "%\"";
+			
+			queryBuilder.appendWhere(query);
+			
+			debug = "demande les entrées avec lenumero de telephone dans la table enregistrement "
+					+ uri.getLastPathSegment();
+			
+			debug += " - With query: "  + query;
+			
+			debug += " - With SimplePhoneNumber: "  + mPhone;
+			
+			Console.print_debug(debug);			
+			
 			break;
 		case RECORD_DISTINCT_KNOWN_CONTACTS:
 
@@ -1897,7 +1908,8 @@ public class PersonnalProofContentProvider extends
 	public static int getItemsCount(String mQuery) {
 
 		Cursor dataCursor = null;
-		int count = -1;		
+		int count = -1;	
+		
 		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
 		
 		try {			

@@ -2,7 +2,9 @@ package org.proof.recorder.database.support;
 
 import org.proof.recorder.R;
 import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -92,8 +94,10 @@ public final class AndroidContactsHelper {
 		int count;
 		String appendWhere;
 		
-		if(mWhere.equalsIgnoreCase("phone"))
-			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + mPhone + "%\"";
+		if(mWhere.equalsIgnoreCase("phone")) {
+			SimplePhoneNumber phone = new SimplePhoneNumber(mPhone);
+			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + phone.get_nationalNumber() + "%\"";
+		}			
 		else if (mWhere.equalsIgnoreCase("android_id"))
 			appendWhere = ProofDataBase.COLUMN_CONTRACT_ID + " =" + mPhone;
 		else
@@ -101,6 +105,7 @@ public final class AndroidContactsHelper {
 		
 		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_RECODINGAPP + " WHERE " +  appendWhere + " AND " + ProofDataBase.COLUMN_SENS + " LIKE \"%E%\"";
 		count = PersonnalProofContentProvider.getItemsCount(mQuery);
+		
 		return count;
 	}
 	
@@ -108,15 +113,19 @@ public final class AndroidContactsHelper {
 		int count;
 		String appendWhere;
 		
-		if(mWhere.equalsIgnoreCase("phone"))
-			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + mPhone + "%\"";
+		if(mWhere.equalsIgnoreCase("phone")) {
+			SimplePhoneNumber phone = new SimplePhoneNumber(mPhone);
+			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + phone.get_nationalNumber() + "%\"";
+		}			
 		else if (mWhere.equalsIgnoreCase("android_id"))
 			appendWhere = ProofDataBase.COLUMN_CONTRACT_ID + " =" + mPhone;
 		else
 			throw new IllegalStateException("Bad appendWhere variable line: 108 in getOutRecordsCount()");
 		
 		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_RECODINGAPP + " WHERE " +  appendWhere + " AND " + ProofDataBase.COLUMN_SENS + " LIKE \"%S%\"";
+		
 		count = PersonnalProofContentProvider.getItemsCount(mQuery);
+		
 		return count;
 	}
 }
