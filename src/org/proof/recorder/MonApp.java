@@ -6,7 +6,7 @@ import org.acra.annotation.ReportsCrashes;
 
 
 @ReportsCrashes(formKey = "dEdhREpjQThYVXNVakltRmhFSGktRmc6MQ") 
-public class MonApp extends android.app.Application{
+public class MonApp extends android.app.Application {
 	
 	@Override
     public void onCreate() {
