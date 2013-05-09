@@ -447,7 +447,16 @@
 
         <service
 			android:name=".service.jni.Converter"
-			android:enabled="true" />        
+			android:enabled="true" />   
+			
+        
+        <service
+            android:name=".services.ServiceIntentRecorder3gp"
+            android:enabled="true" />
+        
+        <service
+            android:name=".services.ServiceIntentRecorderWav"
+            android:enabled="true" />
 	
         <!-- Receivers for BroadCasters -->
         
@@ -476,6 +485,25 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver
+            android:name=".receivers.AudioRecorderReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.START_AUDIO_RECORDER" />
+                <action android:name="android.intent.action.STOP_AUDIO_RECORDER" />
+                <action android:name="android.intent.action.SAVE_AUDIO_RECORDER" />
+                <action android:name="android.intent.action.SAVE_DELAYED_EXTERNAL_AUDIO_RECORDER" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver
+            android:name=".receivers.PhoneRecorderReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.START_PHONE_RECORDER" />
+                <action android:name="android.intent.action.STOP_PHONE_RECORDER" />
+                <action android:name="android.intent.action.SAVE_PHONE_RECORDER" />
             </intent-filter>
         </receiver>
         

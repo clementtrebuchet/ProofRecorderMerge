@@ -16,6 +16,21 @@
 
     <string name="start_recording">Starting Recording</string>
     <string name="stop_recording">Stopping Recording</string>
+    <string name="foreground_service_started">Voice Media Recorder started!</string>    
+    
+    <string name="notification_wav_title">Wav service running</string>
+    <string name="notification_wav_text">The Wav service is currently running</string>
+    
+    <string name="notification_3gp_title">3gp service running</string>
+    <string name="notification_3gp_text">The 3gp service is currently running</string>
+    
+    <string name="encode_while">Encode while recording</string>
+    <string name="encode_after">Encode after recording</string>
+    
+    <string name="audio_encoder_handler">Audio Encoding Handler</string>
+    <string name="select_encoding_method">Select encoding process</string>
+    <string name="encoding_title">Few Device\'s resources ?</string>
+    <string name="encoding_summary">Split recording process into two steps!</string>    
 
     <!-- DashBoard Description -->
 

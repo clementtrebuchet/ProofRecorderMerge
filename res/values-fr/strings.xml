@@ -20,8 +20,9 @@
     <string name="desriptionListSet">Réglages</string>
     <string name="excludedFromRecordingList_desc">Contact exclus de service d\'enregistrement</string>
 
-    <!-- FIN DashBoard Description -->
+    <!-- FIN DashBoard Description -->    
     
+    <string name="foreground_service_started">Voice Media Recorder démarré!</string>
     
     <string name="loading">Récupération des données, patientez svp&#46;&#46;&#46;</string>
 
@@ -29,6 +30,20 @@
 
     <string name="start_recording">Début de l\'enregistrement</string>
     <string name="stop_recording">Fin de l\'enregistrement</string>
+    
+    <string name="notification_wav_title">Wav service activé</string>
+    <string name="notification_wav_text">Le service Wav en cours de fonctionnement</string>
+    
+    <string name="notification_3gp_title">3gp service activé</string>
+    <string name="notification_3gp_text">Le service 3gp en cours de fonctionnement</string>
+    
+    <string name="encode_while">Encoder pendant l\'enregistrement</string>
+    <string name="encode_after">Encoder après l\'enregistrement</string>
+    
+    <string name="audio_encoder_handler">Gestion Encodage audio</string>
+    <string name="select_encoding_method">Sélection du traitement d\'encodage</string>
+    <string name="encoding_title">Peu de ressources ?</string>
+    <string name="encoding_summary">Scinder l\'enregistrement en deux étapes!</string>
     
     <!-- DashBoard Dialog -->
 
