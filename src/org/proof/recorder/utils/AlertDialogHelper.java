@@ -1,7 +1,7 @@
 package org.proof.recorder.utils;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
+
 import org.proof.recorder.fragment.dialog.NoneRecordsDialog;
 import org.proof.recorder.fragment.dialog.VoiceEditDialog;
 import org.proof.recorder.utils.Log.Console;

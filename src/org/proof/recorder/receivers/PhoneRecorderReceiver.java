@@ -8,7 +8,6 @@ import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
 import org.proof.recorder.receivers.holders.PhoneRecordHolder;
 import org.proof.recorder.service.DataPersistanceManager;
-import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;

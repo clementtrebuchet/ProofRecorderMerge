@@ -12,7 +12,6 @@ import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.database.Cursor;

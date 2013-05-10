@@ -4,7 +4,6 @@ import org.proof.recorder.R;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
 import android.content.Context;
