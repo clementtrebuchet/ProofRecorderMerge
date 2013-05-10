@@ -97,8 +97,7 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 		int i = 0;
 		for (String category : formatList) {
 			entries[i] = category;
-			Console.print_exception(category);
-			entryValues[i] = Integer.toString(i);
+			entryValues[i] = category;
 			i++;
 		}
 		mFormat.setEntries(entries);

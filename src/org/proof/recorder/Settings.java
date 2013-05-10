@@ -476,29 +476,20 @@ public final class Settings {
 		Console.setTagName(Settings.class.getSimpleName());
 
 		initSharedPreferences();
-		String result = "3GP"; 
-		String f = mSharedPreferences.getString("audio_format", "3GP");		
 		
-		if(f.equals("0")){
-			result = "3GP";
-			
-		} else if (f.equals("1")) {
-			result = "WAV";
-			
-		} else if (f.equals("2")) {
-			if(assertPlugExist(0)) // checking MP3 plugin presence
-				result = "MP3";
-			else 
-				result = "OGG";
-			
-		} else if (f.equals("3")) {
-			result = "OGG";
+		String format = mSharedPreferences.getString("audio_format", "3GP");
+		
+		if(format.equals("MP3") && !assertPlugExist(0)) {
+			format = "3GP";
+		}
+		
+		if(format.equals("OGG") && !assertPlugExist(1)) {
+			format = "3GP";
 		}
 
-		Console.print_debug("result: " + result);
-		Console.print_debug("getAudioFormat id : " + f);
-
-		return result;
+		Console.print_debug("getAudioFormat: " + format);
+		
+		return format;
 	}
 
 	/*public static String getChannel() {

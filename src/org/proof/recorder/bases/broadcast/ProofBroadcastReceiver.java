@@ -37,5 +37,4 @@ public class ProofBroadcastReceiver extends BroadcastReceiver {
 			AlertDialogHelper.setContext(context);
 		}		
 	}
-
 }
