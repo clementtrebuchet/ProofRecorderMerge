@@ -17,6 +17,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.media.AudioRecord;
 import android.os.IBinder;
@@ -42,7 +43,11 @@ public class ServiceIntentRecorderWav extends Service {
 	private long totalDataLen = totalAudioLen + 36;
 	
 	private Thread recordingThread = null;
-	private AudioRecord audioWav;
+	private AudioRecord audioWav;	
+	
+	private String pendingIntent = null;
+	private String broadcastIntent = null;
+	private String pendingIntentPackage = null; 
 	
 	// ForGround Service Mechanic
 	
@@ -58,10 +63,7 @@ public class ServiceIntentRecorderWav extends Service {
 	private Object[] mSetForegroundArgs = new Object[1];
 	private Object[] mStartForegroundArgs = new Object[2];
 	private Object[] mStopForegroundArgs = new Object[1];
-	private Notification lNotif;
-	private String pendingIntent = null;
-
-	private String broadcastIntent; 
+	private Notification lNotif;	
 	
 	@SuppressWarnings("deprecation")
 	public Notification mNotification(){
@@ -81,7 +83,8 @@ public class ServiceIntentRecorderWav extends Service {
 			  intent.setClassName(this, pendingIntent);
 		  }
 		  else {
-			  intent.setClassName(this, "org.proof.recorder.ProofRecorderActivity");
+			  intent.setComponent(
+					  new ComponentName(pendingIntentPackage, pendingIntent));
 		  }
 	    
 	      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
@@ -205,6 +208,13 @@ public class ServiceIntentRecorderWav extends Service {
 		mInitNotification(lNotif);
 
 		audioFile = intent.getStringExtra("FileName");
+		
+		if(intent.getExtras().containsKey("notificationPkg")) {
+			pendingIntentPackage = intent.getStringExtra("notificationPkg");
+		}
+		else {
+			pendingIntentPackage = null;
+		}	
 		
 		if(intent.getExtras().containsKey("notificationIntent")) {
 			pendingIntent = intent.getStringExtra("notificationIntent");

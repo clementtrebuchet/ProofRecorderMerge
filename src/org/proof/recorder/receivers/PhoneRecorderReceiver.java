@@ -106,13 +106,15 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 		
 		extras.putInt("audioSource", mAudioSource);
 		
-		if(audioFormat == "mp3") {
+		if(audioFormat.equals("mp3")) {
+			
 			extras.putString("FileName", audioFile);
 			extras.putInt("mSampleRate", Settings.getMP3Hertz(getContext()));
 			extras.putInt("mp3Channel", 1);
 			extras.putInt("outBitrate", Settings.getMp3Compression(getContext()));			
 		}
-		else if(audioFormat == "ogg") {
+		else if(audioFormat.equals("ogg")) {
+			
 			extras.putString("file", audioFile);
 			extras.putInt("sampleRate", Settings.getMP3Hertz(getContext()));
 			extras.putInt("channel", 1);

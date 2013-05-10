@@ -11,6 +11,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.IBinder;
@@ -39,7 +40,9 @@ public class ServiceIntentRecorder3gp extends Service {
 		private Object[] mStartForegroundArgs = new Object[2];
 		private Object[] mStopForegroundArgs = new Object[1];
 		private Notification lNotif;
-		private String pendingIntent; 
+		
+		private String pendingIntent = null;
+		private String pendingIntentPackage = null; 
 		
 		@SuppressWarnings("deprecation")
 		public Notification mNotification(){
@@ -59,7 +62,8 @@ public class ServiceIntentRecorder3gp extends Service {
 				  intent.setClassName(this, pendingIntent);
 			  }
 			  else {
-				  intent.setClassName(this, "org.proof.recorder.ProofRecorderActivity");
+				  intent.setComponent(
+						  new ComponentName(pendingIntentPackage, pendingIntent));
 			  }
 		    
 		      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
@@ -183,6 +187,20 @@ public class ServiceIntentRecorder3gp extends Service {
 		
 		lNotif = mNotification();
 		mInitNotification(lNotif);
+		
+		if(intent.getExtras().containsKey("notificationPkg")) {
+			pendingIntentPackage = intent.getStringExtra("notificationPkg");
+		}
+		else {
+			pendingIntentPackage = null;
+		}	
+		
+		if(intent.getExtras().containsKey("notificationIntent")) {
+			pendingIntent = intent.getStringExtra("notificationIntent");
+		}
+		else {
+			pendingIntent = null;
+		}	
 		
 		audioFile = intent.getStringExtra("FileName");		
 		Console.print_debug(audioFile);
