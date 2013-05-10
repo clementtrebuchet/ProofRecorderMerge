@@ -108,20 +108,23 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		String audioFormat = dpm.getAudioFormat();
 		String audioFile = record.getAudioFile();
 		
-		mAudioSource = new ServiceAudioHelper(getContext()).maConfAudio();
+		mAudioSource = new ServiceAudioHelper(getContext()).maConfAudio();		
 		
-		extras.putString("FileName", audioFile);
 		extras.putInt("audioSource", mAudioSource);
 		
-		if(audioFormat == "mp3") {
+		if(audioFormat.equals("mp3")) {
+			
+			extras.putString("FileName", audioFile);
 			extras.putInt("mSampleRate", Settings.getMP3Hertz(getContext()));
 			extras.putInt("mp3Channel", 1);
 			extras.putInt("outBitrate", Settings.getMp3Compression(getContext()));			
 		}
-		else if(audioFormat == "ogg") {
+		else if(audioFormat.equals("ogg")) {
+			
+			extras.putString("file", audioFile);
 			extras.putInt("sampleRate", Settings.getMP3Hertz(getContext()));
 			extras.putInt("channel", 1);
-			extras.putFloat("quality", Settings.getOGGQual(getContext()));			
+			extras.putFloat("quality", Settings.getOGGQual(getContext()));	
 		}
 		else {
 			
@@ -197,6 +200,9 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 			
 			service.putExtra("notificationIntent",
 				     "org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder");
+			
+			service.putExtra("notificationPkg",
+				     "org.proof.recorder");
 			
 			service.putExtras(prepareExtras());
 			
