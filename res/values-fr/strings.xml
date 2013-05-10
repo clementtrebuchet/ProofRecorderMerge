@@ -50,6 +50,10 @@
     <string name="action_not_allowed">Action non autorisée!</string>    
     <string name="record_on_recording">Impossible de lancer deux \nenregistrements en même temps!</string>
     
+    <string name="bad_mp3_version">Votre plugin MP3 n\'est pas à jour!\nMettez-le à jour!</string>
+    <string name="bad_ogg_version">Votre plugin OGG n\'est pas à jour\nMettez-le à jour!</string>
+    
+    
     <!-- DashBoard Dialog -->
 
     <string name="dashboard_dialog_title">Tableau de Bord</string>

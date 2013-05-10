@@ -36,6 +36,9 @@
     
     <string name="action_not_allowed">Action not allowed!</string>    
     <string name="record_on_recording">Impossible to run recording service \ntwice at the same time!</string>
+    
+    <string name="bad_mp3_version">Your MP3 plugin is outdated, please update!</string>
+    <string name="bad_ogg_version">Your OGG plugin is outdated, please update!</string>
 
     <!-- DashBoard Description -->
 
