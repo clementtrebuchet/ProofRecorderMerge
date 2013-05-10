@@ -3,6 +3,7 @@
  */
 package org.proof.recorder;
 
+import org.proof.recorder.service.DataPersistanceManager;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.AudioFormat;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -190,6 +192,9 @@ public final class Settings {
 	
 	public static String getPersistantData(String key) {		
 		if(getSettingscontext() != null) {
+			if(mSharedPreferences == null) {
+				initSharedPreferences(getSettingscontext());
+			}
 			return mSharedPreferences.getString(key, null);
 		}
 		return null;
@@ -331,6 +336,60 @@ public final class Settings {
 			qual = 0.8f;
 		}
 		return qual;
+	}
+	
+	
+	public static void assertPlugVersion(Context mContext) {
+		int mp3Version  = getPlugVersion(0, mContext);
+		int oggVersion  = getPlugVersion(1, mContext);
+		
+		DataPersistanceManager dpm = new DataPersistanceManager();
+		
+		if(mp3Version < 5) {
+			dpm.cacheRows("MP3_BAD_VERSION", "true");
+		}
+		else {
+			dpm.cacheRows("MP3_BAD_VERSION", "false");
+		}
+		
+		if(oggVersion < 2) {
+			dpm.cacheRows("OGG_BAD_VERSION", "true");
+		}
+		else {
+			dpm.cacheRows("OGG_BAD_VERSION", "false");
+		}
+	}
+	
+	private static int getPlugVersion(int plugId, Context mContext) {
+		
+		String plugIntent;
+		
+		switch (plugId) {
+		case 0:
+			plugIntent = "org.proofs.recorder.codec.mp3";
+			break;
+		case 1:
+			plugIntent = "org.proofs.recorder.codec.ogg";
+			break;
+		default:
+			return -1;
+
+		}
+		
+		PackageManager manager = mContext.getPackageManager();
+		PackageInfo info;
+		try {
+			info = manager.getPackageInfo(plugIntent, 0);
+			Console.print_exception("PackageName = " + info.packageName + "\nVersionCode = "
+				       + info.versionCode + "\nVersionName = "
+				       + info.versionName + "\nPermissions = " + info.permissions);			
+			
+			return info.versionCode;
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 	/**

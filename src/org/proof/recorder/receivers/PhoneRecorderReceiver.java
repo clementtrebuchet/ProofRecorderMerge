@@ -17,6 +17,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class PhoneRecorderReceiver extends BroadcastReceiver {
 	
@@ -165,6 +166,7 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 	}
 	
 	private void startService() {
+		
 		prepareService();				
 		
 		service.putExtras(prepareExtras());
@@ -207,6 +209,21 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 		holder = new PhoneRecordHolder(getContext(), dpm);
 		
 		String AudioFormat = Settings.getAudioFormat(getContext()).toLowerCase();
+		
+		boolean mp3BadVersion, oggBadVersion;
+		
+		mp3BadVersion = Boolean.parseBoolean(dpm.retrieveCachedRows("MP3_BAD_VERSION"));
+		oggBadVersion = Boolean.parseBoolean(dpm.retrieveCachedRows("OGG_BAD_VERSION"));
+		
+		if(AudioFormat.equals("mp3") && mp3BadVersion) {
+			Toast.makeText(context, context.getString(R.string.bad_mp3_version), Toast.LENGTH_LONG).show();	
+			return;
+		}
+		
+		if(AudioFormat.equals("ogg") && oggBadVersion) {
+			Toast.makeText(context, context.getString(R.string.bad_ogg_version), Toast.LENGTH_LONG).show();
+			return;
+		}
 		
 		Console.print_debug(intent.getAction());		
 		

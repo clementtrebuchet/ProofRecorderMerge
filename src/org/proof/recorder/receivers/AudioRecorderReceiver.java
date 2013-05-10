@@ -16,6 +16,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class AudioRecorderReceiver extends BroadcastReceiver {
 	
@@ -185,7 +186,24 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		Console.setTagName(this.getClass().getSimpleName());
 		
 		if(dpm == null)		
-			dpm = new DataPersistanceManager();	
+			dpm = new DataPersistanceManager();
+		
+		String AudioFormat = Settings.getAudioFormat(context).toLowerCase();
+		
+		boolean mp3BadVersion, oggBadVersion;
+		
+		mp3BadVersion = Boolean.parseBoolean(dpm.retrieveCachedRows("MP3_BAD_VERSION"));
+		oggBadVersion = Boolean.parseBoolean(dpm.retrieveCachedRows("OGG_BAD_VERSION"));
+		
+		if(AudioFormat.equals("mp3") && mp3BadVersion) {
+			Toast.makeText(context, context.getString(R.string.bad_mp3_version), Toast.LENGTH_LONG).show();	
+			return;
+		}
+		
+		if(AudioFormat.equals("ogg") && oggBadVersion) {
+			Toast.makeText(context, context.getString(R.string.bad_ogg_version), Toast.LENGTH_LONG).show();
+			return;
+		}
 		
 		holder = new VoiceRecordHolder(getContext(), dpm);		
 		
@@ -193,7 +211,7 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		
 		if (intent.getAction().equals(START_ACTION))
 		{	
-			String AudioFormat = Settings.getAudioFormat(context).toLowerCase();
+			
 			record = holder.getCurrentRecord();
 			record.setAudioFile(OsInfo.newFileName(AudioFormat));
 			
