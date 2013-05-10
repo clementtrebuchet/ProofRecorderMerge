@@ -29,7 +29,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 	protected TelephonyManager _monManagerTel;
 
-	private DataPersistanceManager dpm;
+	private DataPersistanceManager dpm = null;
 
 	/**
 	 * @return the IS_EXCLUDED
@@ -69,6 +69,10 @@ public class ObservateurTelephone extends PhoneStateListener {
 	}
 
 	public void resetDpm() {
+		
+		if(dpm == null)		
+			dpm = new DataPersistanceManager();
+		
 		dpm.cacheRows("CAN_RECORD", "0");
 	}
 
@@ -82,6 +86,9 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 		Console.print_debug(incomingNumber);		
 		Console.print_debug("L'ETAT A CHANGER");
+		
+		if(dpm == null)		
+			dpm = new DataPersistanceManager();
 
 		switch (state) {
 
@@ -169,7 +176,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 		// Note: we indicate the user that's not a recommended state :)
 		// Note: If option 1 or 3 is chosen, then we display Voice dialog for title edit purpose.
 		
-		dpm = new DataPersistanceManager();
+		if(dpm == null)
+			dpm = new DataPersistanceManager();
 		
 		Intent audioService = new Intent(context, PhoneRecorderReceiver.class);
     	
@@ -203,6 +211,9 @@ public class ObservateurTelephone extends PhoneStateListener {
 		
 		context.sendBroadcast(audioService);  
 		
+		if(dpm == null)		
+			dpm = new DataPersistanceManager();
+		
 		dpm.cacheRows("PhoneServiceRunning", "false");
 	}	    
 
@@ -212,6 +223,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 	protected ObservateurTelephone() {
 		super();
 		Console.print_debug("CONSTRUCTOR ObservateurTelephone()");
+		
 		dpm = new DataPersistanceManager();
 		dpm.cacheRows("CAN_RECORD", "1");
 		dpm.cacheRows("CALL_OFFHOOK", "0");
@@ -219,7 +231,6 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 	public void feedNumbers(String phonenumber) {
 		OUT_NUMBER = phonenumber;
-
 	}
 
 	/*

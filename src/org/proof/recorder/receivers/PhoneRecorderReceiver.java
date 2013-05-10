@@ -167,12 +167,6 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 	private void startService() {
 		prepareService();				
 		
-		service.putExtra("notificationIntent",
-			     "org.proof.recorder.ProofRecorderActivity");
-		
-		service.putExtra("notificationPkg",
-			     "org.proof.recorder");
-		
 		service.putExtras(prepareExtras());
 		
 		getContext().startService(service);

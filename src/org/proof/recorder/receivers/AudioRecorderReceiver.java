@@ -32,7 +32,7 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 	
 	private boolean isEdited;
 	
-	private DataPersistanceManager dpm;
+	private DataPersistanceManager dpm = null;
 	
 	private VoiceRecordHolder holder = null;
 	private VoiceRecord record = null;
@@ -105,6 +105,9 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 	private Bundle prepareExtras() {
 		Bundle extras = new Bundle();
 		
+		if(dpm == null)		
+			dpm = new DataPersistanceManager();
+		
 		String audioFormat = dpm.getAudioFormat();
 		String audioFile = record.getAudioFile();
 		
@@ -136,6 +139,9 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 	private void prepareService() {
 		
 		service = new Intent();
+		
+		if(dpm == null)		
+			dpm = new DataPersistanceManager();
 		
 		String audioFormat = dpm.getAudioFormat();		
 		
@@ -178,7 +184,8 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		setContext(context);
 		Console.setTagName(this.getClass().getSimpleName());
 		
-		dpm = new DataPersistanceManager();	
+		if(dpm == null)		
+			dpm = new DataPersistanceManager();	
 		
 		holder = new VoiceRecordHolder(getContext(), dpm);		
 		
