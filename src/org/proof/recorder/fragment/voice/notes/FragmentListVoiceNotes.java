@@ -7,11 +7,12 @@ import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.Log.Console;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnTouchListener;
@@ -24,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class FragmentListVoiceNotes extends Fragment {
+public class FragmentListVoiceNotes extends SherlockFragment {
 
 	static Bundle mBundle;
 	static String id;

@@ -94,7 +94,7 @@ public final class MenuActions {
 	public static void deleteContactsFolder(final Contact mContact,
 			Context mContext, final ContactAdapter ca) {
 
-		if (Settings.isUAC_ASSISTED(mContext)) {
+		if (Settings.isUACAssisted()) {
 
 			mDialog = new AlertDialog.Builder(mContext);
 			mDialog.setTitle(mContext.getString(R.string.strUACTitle));
@@ -188,7 +188,7 @@ public final class MenuActions {
 		final String mFilePath = mCursor.getString(4), mId = mCursor
 				.getString(0);
 
-		if (Settings.isUAC_ASSISTED(mContext)) {
+		if (Settings.isUACAssisted()) {
 
 			mDialog = new AlertDialog.Builder(mContext);
 			mDialog.setTitle(mContext.getString(R.string.strUACTitle));
@@ -250,7 +250,7 @@ public final class MenuActions {
 			final Object mInAdapter,
 			final Object mItem) {
 
-		if (Settings.isUAC_ASSISTED(mContext)) {
+		if (Settings.isUACAssisted()) {
 
 			mDialog = new AlertDialog.Builder(mContext);
 			mDialog.setTitle(mContext.getString(R.string.strUACTitle));

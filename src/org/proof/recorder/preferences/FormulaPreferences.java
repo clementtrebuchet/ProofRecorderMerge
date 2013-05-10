@@ -103,7 +103,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 	}*/
 
 	private void assertMP3() {
-		if (Settings.assertPlugExist(0, getApplicationContext())) {
+		if (Settings.assertPlugExist(0)) {
 			mp3.setChecked(true);
 
 		} else {
@@ -113,7 +113,7 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 	}
 
 	private void assertOgg() {
-		if (Settings.assertPlugExist(1, getApplicationContext())) {
+		if (Settings.assertPlugExist(1)) {
 			ogg.setChecked(true);
 
 		} else {

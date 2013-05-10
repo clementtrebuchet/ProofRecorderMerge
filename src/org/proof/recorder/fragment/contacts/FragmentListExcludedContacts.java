@@ -6,11 +6,11 @@ import java.util.Comparator;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -58,9 +58,12 @@ public class FragmentListExcludedContacts extends Fragment {
 					intent);
 		}
 
-		private BroadcastReceiver eventListPhoneReceiver = new BroadcastReceiver() {
+		private ProofBroadcastReceiver eventListPhoneReceiver = new ProofBroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
+				
+				super.onReceive(context, intent);
+				
 				// Get extra data included in the Intent
 				String message = intent.getStringExtra("message");
 

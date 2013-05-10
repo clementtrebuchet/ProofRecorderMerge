@@ -4,6 +4,7 @@ import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.phone.SearchListAdapter;
 import org.proof.recorder.adapter.voice.VoiceListAdapter;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
@@ -27,9 +28,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class SearchResult extends SherlockFragmentActivity {
+public class SearchResult extends ProofFragmentActivity {
 
 	private static final String SEP_QUERY = ";", BR = "\n";
 
@@ -46,7 +46,7 @@ public class SearchResult extends SherlockFragmentActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle mIcicle) {
+	protected void onCreate(Bundle mIcicle) {
 		super.onCreate(mIcicle);
 		setContentView(R.layout.fragment_contacts_list);
 

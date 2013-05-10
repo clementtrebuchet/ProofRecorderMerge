@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Intent;
@@ -13,13 +14,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
-public class ShareIntentChooser extends
-		FragmentActivity {
+public class ShareIntentChooser extends ProofFragmentActivity {
 	
 //	private static final int SELECT_VIDEO_REQUEST = 1000;
 //	private static final String EXTRA_LOCAL_ONLY = "android.intent.extra.LOCAL_ONLY";
@@ -43,7 +42,7 @@ public class ShareIntentChooser extends
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.share_intent_chooser);
 		

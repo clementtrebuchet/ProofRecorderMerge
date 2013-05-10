@@ -164,7 +164,7 @@ public class StaticNotifications {
 			CharSequence title, CharSequence info, CharSequence text,
 			ICONS opt, boolean autoCancel, boolean flashLight, int icon) {
 
-		if (Settings.isNOTIFICATIONS(context)) {
+		if (Settings.showNotifications()) {
 			if (Settings.isDebug())
 				Log.d(TAG, "show()");
 
@@ -199,7 +199,7 @@ public class StaticNotifications {
 	}
 
 	public static void cancelNotification(Context mContext) {
-		if (Settings.isNOTIFICATIONS(mContext)) {
+		if (Settings.showNotifications()) {
 			try {
 				getmNM().cancel(_ID);
 			} catch (Exception e) {

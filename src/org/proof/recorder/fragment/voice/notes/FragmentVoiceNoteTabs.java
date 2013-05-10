@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.voice.notes;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.fragment.voice.FragmentListVoiceDetail;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.TabsPagerAdapter;
@@ -10,9 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FragmentVoiceNoteTabs extends SherlockFragmentActivity {
+public class FragmentVoiceNoteTabs extends ProofFragmentActivity {
 
 	//private static final String TAG = "FragmentVoiceNoteTabs";
 

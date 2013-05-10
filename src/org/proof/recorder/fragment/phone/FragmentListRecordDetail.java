@@ -3,6 +3,7 @@ package org.proof.recorder.fragment.phone;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.phone.RecorderDetailAdapter;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.fragment.notes.FragmentListNotes;
 import org.proof.recorder.fragment.notes.FragmentNoteTabs;
@@ -20,9 +21,7 @@ import android.support.v4.content.Loader;
 import android.util.Log;
 import android.widget.CursorAdapter;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class FragmentListRecordDetail extends SherlockFragmentActivity {
+public class FragmentListRecordDetail extends ProofFragmentActivity {
 	
 	//private static final String TAG = "FragmentListRecordDetail";
 	/** Called when the activity is first created. */
@@ -31,7 +30,7 @@ public class FragmentListRecordDetail extends SherlockFragmentActivity {
 	static String Id_record;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		b = getIntent().getExtras();
 		// setContentView(R.layout.fragmentdroitdet);
@@ -107,12 +106,7 @@ public class FragmentListRecordDetail extends SherlockFragmentActivity {
 			// Prepare the loader. Either re-connect with an existing one,
 			// or start a new one.
 			getLoaderManager().initLoader(LIST_LOADE, null, this);
-			
-
-		}
-		
-		
-		 
+		}		 
 
 		@Override
 		public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {

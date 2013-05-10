@@ -90,6 +90,10 @@ public class AlertDialogHelper {
 	public static Context getContext() {
 		return mContext;
 	}
+	
+	public static boolean hasContext() {
+		return AlertDialogHelper.mContext != null;
+	}
 
 	/**
 	 * @param mContext the mContext to set

@@ -8,6 +8,7 @@ import org.proof.recorder.graphics.ManipulateUi;
 import org.proof.recorder.service.BestAudioConfiguration;
 import org.proof.recorder.service.TestDevice;
 import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -88,12 +89,15 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 		voice_com.setOnPreferenceClickListener(micClick);
 		B.setOnPreferenceClickListener(micClick);
 		mFormat.setOnPreferenceClickListener(spinClick);
+		
+		
 		ArrayList<String> formatList = pluginMyForma();
 		CharSequence entries[] = new String[formatList.size()];
 		CharSequence entryValues[] = new String[formatList.size()];
 		int i = 0;
 		for (String category : formatList) {
 			entries[i] = category;
+			Console.print_exception(category);
 			entryValues[i] = Integer.toString(i);
 			i++;
 		}
@@ -116,12 +120,15 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 	}
 
 	private ArrayList<String> pluginMyForma() {
+		
 		String required = getApplicationContext().getResources().getString(
 				R.string.REQUIRED);
+		
 		ArrayList<String> mlPlug = new ArrayList<String>();
 		mlPlug.add("3GP");
 		mlPlug.add("WAV");
-		if (Settings.assertPlugExist(0, this.getApplicationContext())) {
+		
+		if (Settings.assertPlugExist(0)) {
 			mlPlug.add("MP3");
 
 		} else {
@@ -130,7 +137,7 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 					Toast.LENGTH_SHORT).show();
 		}
 
-		if (Settings.assertPlugExist(1, this.getApplicationContext())) {
+		if (Settings.assertPlugExist(1)) {
 			mlPlug.add("OGG");
 		} else {
 			mQual.setEnabled(false);

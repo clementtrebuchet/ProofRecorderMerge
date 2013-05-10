@@ -2,6 +2,8 @@ package org.proof.recorder.utils;
 
 import java.util.ArrayList;
 
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +13,6 @@ import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public final class TabsPagerAdapter extends FragmentPagerAdapter implements
 		ActionBar.TabListener, ViewPager.OnPageChangeListener {
@@ -32,7 +33,7 @@ public final class TabsPagerAdapter extends FragmentPagerAdapter implements
 		}
 	}
 
-	public TabsPagerAdapter(SherlockFragmentActivity activity, ViewPager pager) {
+	public TabsPagerAdapter(ProofFragmentActivity activity, ViewPager pager) {
 		super(activity.getSupportFragmentManager());
 		mContext = activity;
 		mActionBar = activity.getSupportActionBar();

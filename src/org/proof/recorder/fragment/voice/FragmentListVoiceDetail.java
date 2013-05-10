@@ -3,6 +3,7 @@ package org.proof.recorder.fragment.voice;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceDetailAdapter;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
@@ -18,9 +19,7 @@ import android.support.v4.content.Loader;
 import android.util.Log;
 import android.widget.CursorAdapter;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class FragmentListVoiceDetail extends SherlockFragmentActivity {
+public class FragmentListVoiceDetail extends ProofFragmentActivity {
 	
 	//private static final String TAG = "FragmentListVoiceDetail";
 	
@@ -29,7 +28,7 @@ public class FragmentListVoiceDetail extends SherlockFragmentActivity {
 	private static String id;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		b = getIntent().getExtras();
 		//setContentView(R.layout.fragmentdroitdet);

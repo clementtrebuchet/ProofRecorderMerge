@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.dialog;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -8,9 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class NoneRecordsDialog extends SherlockFragmentActivity {
+public class NoneRecordsDialog extends ProofFragmentActivity {
 	
 //	private final static String TAG = "CUSTOM_SEARCH_MODULE";
 //	private final static String BR = "\n";
@@ -23,7 +22,7 @@ public class NoneRecordsDialog extends SherlockFragmentActivity {
 	}
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.none_records_info_dialog);
 		

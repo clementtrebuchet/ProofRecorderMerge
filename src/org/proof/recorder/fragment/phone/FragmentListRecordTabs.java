@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.phone;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
@@ -12,9 +13,8 @@ import android.support.v4.view.ViewPager;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FragmentListRecordTabs extends SherlockFragmentActivity {
+public class FragmentListRecordTabs extends ProofFragmentActivity {
 
 	private TabHost mTabHost;
 	private ViewPager mViewPager;

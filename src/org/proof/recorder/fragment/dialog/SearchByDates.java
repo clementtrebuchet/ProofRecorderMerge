@@ -3,6 +3,7 @@ package org.proof.recorder.fragment.dialog;
 import java.util.Calendar;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.DateUtils;
 import org.proof.recorder.utils.Log.Console;
 
@@ -23,9 +24,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class SearchByDates extends SherlockFragmentActivity{
+public class SearchByDates extends ProofFragmentActivity {
 	
 	private Context mContext;
 	
@@ -125,7 +124,7 @@ public class SearchByDates extends SherlockFragmentActivity{
 	};
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_by_dates);
 		Console.setTagName(this.getClass().getSimpleName());

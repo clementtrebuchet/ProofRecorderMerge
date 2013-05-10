@@ -1,9 +1,9 @@
 package org.proof.recorder.broadcastr.phone;
 
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +14,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
-public class AppelsSortants extends BroadcastReceiver {
+public class AppelsSortants extends ProofBroadcastReceiver {
 
 	public boolean OUTCALL;
 	public boolean SPEAKERON;
@@ -41,7 +41,7 @@ public class AppelsSortants extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		Console.setTagName(this.getClass().getSimpleName());
+		super.onReceive(context, intent);
 
 		phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);		
 		Bundle bundle = intent.getExtras();

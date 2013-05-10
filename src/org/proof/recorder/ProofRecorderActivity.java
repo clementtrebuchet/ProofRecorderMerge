@@ -264,7 +264,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		
 		refreshVoicesAndCalls();
 		
-		Settings.assertPlugVersion(mContext);		
+		Settings.assertPlugVersion();		
 		
 		//copyDatabase(this, "proofdatabase.db");
 

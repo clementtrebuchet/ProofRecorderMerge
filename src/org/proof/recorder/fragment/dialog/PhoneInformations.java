@@ -1,9 +1,11 @@
 package org.proof.recorder.fragment.dialog;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.ConnectivityInfo;
 import org.proof.recorder.utils.DeviceInfo;
 import org.proof.recorder.utils.OsInfo;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -15,9 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class PhoneInformations extends SherlockFragmentActivity {
+public class PhoneInformations extends ProofFragmentActivity {
 
 	private static final String TAG = "CapabilitiesDashBoard";
 	private static final String BREAK = "\n";
@@ -25,8 +25,6 @@ public class PhoneInformations extends SherlockFragmentActivity {
 	private static DeviceInfo mDeviceInfo;
 	private static OsInfo mOsInfo;
 	private static TextView dlgmenu_battery_state;
-	
-	private static Context mContext = null;
 	
 	private static BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver(){
 		int scale = -1;
@@ -41,20 +39,22 @@ public class PhoneInformations extends SherlockFragmentActivity {
             temp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
             voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
             
-            Log.i(TAG, "level is " + level + "/" + scale + ", temp is " + temp + ", voltage is " + voltage); 
+            Console.print_debug(
+            		"level is " + 
+		            level + "/" + scale + 
+		            ", temp is " + temp + 
+		            ", voltage is " + voltage
+            ); 
             
-            if (mContext != null)
-            	dlgmenu_battery_state.setText(mContext.getString(R.string.dashbord_dialog_battery_state) + " " + level + " %");
+            dlgmenu_battery_state.setText(context.getString(R.string.dashbord_dialog_battery_state) + " " + level + " %");
         }
 	};
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.dashboard_dialog);
-        
-        mContext = this;
         registerReceiver(mBatInfoReceiver, 
 			    new IntentFilter(Intent.ACTION_BATTERY_CHANGED));  
         

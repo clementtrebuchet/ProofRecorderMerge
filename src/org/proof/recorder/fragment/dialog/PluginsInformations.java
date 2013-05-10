@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.AlertDialogHelper;
 
 import android.content.ActivityNotFoundException;
@@ -20,9 +21,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class PluginsInformations extends SherlockFragmentActivity {
+public class PluginsInformations extends ProofFragmentActivity {
 
 	protected static final String GPLAY = "market://search?q=pname:";
 	private static Context mContext;
@@ -59,7 +58,7 @@ public class PluginsInformations extends SherlockFragmentActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.plugins_dialog);

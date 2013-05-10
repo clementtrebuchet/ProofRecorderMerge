@@ -2,15 +2,14 @@ package org.proof.recorder.scheduling;
 
 import java.util.Calendar;
 
-import org.proof.recorder.Settings;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
 import org.proof.recorder.service.VerifyContactsApi;
+import org.proof.recorder.utils.Log.Console;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 
 /*  Update Deleted Contacts to the list of contacts
@@ -19,11 +18,7 @@ import android.util.Log;
  *  Tab.
  **/
 
-
-
-public class VerifyContactsApiReceiver extends BroadcastReceiver {
-	
-	private static final String TAG = VerifyContactsApiReceiver.class.getSimpleName();
+public class VerifyContactsApiReceiver extends ProofBroadcastReceiver {
 	
 	private static int requestCode = 0x01;
 	
@@ -45,20 +40,13 @@ public class VerifyContactsApiReceiver extends BroadcastReceiver {
 		updateTime.add(Calendar.DAY_OF_WEEK, 1);
 		
 		am.set(AlarmManager.RTC_WAKEUP, updateTime.getTimeInMillis(), sender);
-	}
-	
-	private static void print(String message) {
-		if(Settings.isDebug()) {
-			Log.d(TAG, message);
-		}
-		else {
-			Log.i(TAG, message);
-		}
 	}	
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		print(mMessage);   	
+		super.onReceive(context, intent);
+		
+		Console.print(mMessage);   	
         
         Intent mIntent = new Intent(context, VerifyContactsApi.class);
         

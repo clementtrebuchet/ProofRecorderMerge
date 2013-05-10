@@ -2,6 +2,7 @@ package org.proof.recorder.fragment.voice;
 
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
@@ -12,9 +13,8 @@ import android.support.v4.view.ViewPager;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FragmentListVoiceTabs extends SherlockFragmentActivity {
+public class FragmentListVoiceTabs extends ProofFragmentActivity {
 
 	private TabHost mTabHost;
 	private ViewPager mViewPager;

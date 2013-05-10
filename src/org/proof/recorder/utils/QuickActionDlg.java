@@ -56,7 +56,7 @@ public class QuickActionDlg {
 	/**
 	 * 
 	 */
-	private static Context mContext;
+	private static Context mContext = null;
 	private static QuickAction mQuickAction;
 
 	private QuickActionDlg() {
@@ -70,6 +70,10 @@ public class QuickActionDlg {
 	 */
 	public static void setmContext(Context mContext) {
 		QuickActionDlg.mContext = mContext;
+	}
+	
+	public static boolean hasContext() {
+		return QuickActionDlg.mContext != null;
 	}
 
 	/**

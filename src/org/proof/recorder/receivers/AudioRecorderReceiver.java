@@ -2,6 +2,7 @@ package org.proof.recorder.receivers;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
 import org.proof.recorder.database.models.VoiceRecord;
 import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.receivers.holders.VoiceRecordHolder;
@@ -12,13 +13,12 @@ import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class AudioRecorderReceiver extends BroadcastReceiver {
+public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 	
 	private static final String START_ACTION = "android.intent.action.START_AUDIO_RECORDER";
 	private static final String STOP_ACTION = "android.intent.action.STOP_AUDIO_RECORDER";
@@ -105,9 +105,8 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 	
 	private Bundle prepareExtras() {
 		Bundle extras = new Bundle();
-		
-		if(dpm == null)		
-			dpm = new DataPersistanceManager();
+	
+		dpm = new DataPersistanceManager();
 		
 		String audioFormat = dpm.getAudioFormat();
 		String audioFile = record.getAudioFile();
@@ -119,16 +118,16 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		if(audioFormat.equals("mp3")) {
 			
 			extras.putString("FileName", audioFile);
-			extras.putInt("mSampleRate", Settings.getMP3Hertz(getContext()));
+			extras.putInt("mSampleRate", Settings.getMP3Hertz());
 			extras.putInt("mp3Channel", 1);
-			extras.putInt("outBitrate", Settings.getMp3Compression(getContext()));			
+			extras.putInt("outBitrate", Settings.getMp3Compression());			
 		}
 		else if(audioFormat.equals("ogg")) {
 			
 			extras.putString("file", audioFile);
-			extras.putInt("sampleRate", Settings.getMP3Hertz(getContext()));
+			extras.putInt("sampleRate", Settings.getMP3Hertz());
 			extras.putInt("channel", 1);
-			extras.putFloat("quality", Settings.getOGGQual(getContext()));	
+			extras.putFloat("quality", Settings.getOGGQual());	
 		}
 		else {
 			
@@ -141,9 +140,8 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 	private void prepareService() {
 		
 		service = new Intent();
-		
-		if(dpm == null)		
-			dpm = new DataPersistanceManager();
+	
+		dpm = new DataPersistanceManager();
 		
 		String audioFormat = dpm.getAudioFormat();		
 		
@@ -155,7 +153,7 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		else if(audioFormat.equalsIgnoreCase("mp3")) {
 			service.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
 			
-			if(Settings.getPostEncoding(getContext()) == 1) {
+			if(Settings.getPostEncoding() == 1) {
 				service.putExtra("broadcastClass", 
 						SAVE_DELAYED_EXTERNAL_ACTION);
 				service.putExtra("postEncode", 1);
@@ -184,12 +182,12 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		
 		setContext(context);
-		Console.setTagName(this.getClass().getSimpleName());
 		
-		if(dpm == null)		
-			dpm = new DataPersistanceManager();
+		super.onReceive(context, intent);
+			
+		dpm = new DataPersistanceManager();
 		
-		String AudioFormat = Settings.getAudioFormat(context).toLowerCase();
+		String AudioFormat = Settings.getAudioFormat().toLowerCase();
 		
 		boolean mp3BadVersion, oggBadVersion;
 		
@@ -245,7 +243,7 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 			
 			if(dpm.getAudioFormat().equalsIgnoreCase("wav") |
 			  (dpm.getAudioFormat().equalsIgnoreCase("mp3") &&
-			  Settings.getPostEncoding(getContext()) == 1)) {				
+			  Settings.getPostEncoding() == 1)) {				
 				AlertDialogHelper.openProgressDialog(R.string.encoding_data);
 			}
 			else {

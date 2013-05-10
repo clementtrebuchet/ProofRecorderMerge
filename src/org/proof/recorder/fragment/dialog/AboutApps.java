@@ -2,6 +2,7 @@ package org.proof.recorder.fragment.dialog;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
@@ -16,9 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class AboutApps extends SherlockFragmentActivity {
+public class AboutApps extends ProofFragmentActivity {
 	
 	private static Context mContext;
 	

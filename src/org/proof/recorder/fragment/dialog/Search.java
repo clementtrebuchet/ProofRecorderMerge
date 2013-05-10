@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.dialog;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.fragment.search.SearchResult;
 import org.proof.recorder.utils.DateUtils;
 import org.proof.recorder.utils.Log.Console;
@@ -26,9 +27,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class Search extends SherlockFragmentActivity {
+public class Search extends ProofFragmentActivity {
 
 	private final static String BR = "\n";
 	private final static int DATES_PICKED = 100;
@@ -55,7 +54,7 @@ public class Search extends SherlockFragmentActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
 		

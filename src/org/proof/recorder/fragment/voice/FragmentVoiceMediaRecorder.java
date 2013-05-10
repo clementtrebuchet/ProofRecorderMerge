@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.voice;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.receivers.AudioRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
 import org.proof.recorder.utils.AlertDialogHelper;
@@ -23,10 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
-{	
+public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {	
 
 	@Override
     public void onCreate(Bundle icicle) {

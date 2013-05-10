@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.dialog;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.receivers.AudioRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
 
@@ -15,9 +16,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class VoiceEditDialog extends SherlockFragmentActivity {
+public class VoiceEditDialog extends ProofFragmentActivity {
 	
 	private static String DEFAULT_TITLE;
 	private static Context mContext = null;
@@ -50,7 +49,7 @@ public class VoiceEditDialog extends SherlockFragmentActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.voice_edit_dialog);
 		

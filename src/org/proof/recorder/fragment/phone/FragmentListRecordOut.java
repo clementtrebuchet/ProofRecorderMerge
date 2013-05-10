@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
@@ -15,7 +16,8 @@ import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 
-import android.content.BroadcastReceiver;
+import com.actionbarsherlock.app.SherlockFragment;
+
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -26,7 +28,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -43,7 +44,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FragmentListRecordOut extends Fragment {
+public class FragmentListRecordOut extends SherlockFragment {
 
 	/** Called when the activity is first created. */
 	@Override
@@ -73,9 +74,10 @@ public class FragmentListRecordOut extends Fragment {
 			  LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);		  
 			}
 		
-		private BroadcastReceiver eventListNeedFolderRefreshReceiver = new BroadcastReceiver() {
+		private ProofBroadcastReceiver eventListNeedFolderRefreshReceiver = new ProofBroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
+				super.onReceive(context, intent);
 				StaticIntents redirectIntent = StaticIntents.create(getActivity(), FragmentListKnownContacts.class);
 				startActivity(redirectIntent);
 			}

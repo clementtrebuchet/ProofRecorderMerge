@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.contacts;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.TabsPagerAdapter;
 
@@ -11,9 +12,8 @@ import android.support.v4.view.ViewPager;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class FragmentListPhoneContactsTabs extends SherlockFragmentActivity {
+public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
 
 	//private static final String TAG = "FragmentListPhoneContactsTabs";
 	private TabHost mTabHost;
