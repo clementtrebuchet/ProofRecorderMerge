@@ -5,18 +5,19 @@ android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 android:scrollbarStyle="insideInset"
 android:fadeScrollbars="true"
-android:scrollbarSize="10dip"
+android:scrollbarSize="10sp"
 android:fitsSystemWindows="true" >
 
 <LinearLayout 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >    
     	
     <TextView 
         android:id="@+id/dlgmenu_text1"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -24,8 +25,9 @@ android:fitsSystemWindows="true" >
     
     <TextView 
         android:id="@+id/dlgmenu_text2"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -33,8 +35,9 @@ android:fitsSystemWindows="true" >
     
     <TextView 
         android:id="@+id/dlgmenu_text3"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -42,8 +45,9 @@ android:fitsSystemWindows="true" >
     
     <TextView 
         android:id="@+id/dlgmenu_text4"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -51,8 +55,9 @@ android:fitsSystemWindows="true" >
     
     <TextView 
         android:id="@+id/dlgmenu_text5"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -60,8 +65,9 @@ android:fitsSystemWindows="true" >
     
     <TextView 
         android:id="@+id/dlgmenu_text6"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -69,8 +75,9 @@ android:fitsSystemWindows="true" >
     
     <TextView 
         android:id="@+id/dlgmenu_text7"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -78,8 +85,9 @@ android:fitsSystemWindows="true" >
     
     <TextView 
         android:id="@+id/dlgmenu_text8"
-        android:textSize="19dip"
-        android:layout_margin="5dip"
+        android:textIsSelectable="true"
+        android:textSize="19sp"
+        android:layout_margin="5sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"

@@ -45,6 +45,11 @@
     <string name="encoding_title">Peu de ressources ?</string>
     <string name="encoding_summary">Scinder l\'enregistrement en deux étapes!</string>
     
+    <string name="encoding_data">Encodage des données &#46;&#46;&#46;</string>
+    
+    <string name="action_not_allowed">Action non autorisée!</string>    
+    <string name="record_on_recording">Impossible de lancer deux \nenregistrements en même temps!</string>
+    
     <!-- DashBoard Dialog -->
 
     <string name="dashboard_dialog_title">Tableau de Bord</string>

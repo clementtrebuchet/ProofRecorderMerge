@@ -492,9 +492,19 @@
             android:name=".receivers.AudioRecorderReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.START_AUDIO_RECORDER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.STOP_AUDIO_RECORDER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.SAVE_AUDIO_RECORDER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.SAVE_DELAYED_EXTERNAL_AUDIO_RECORDER" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
         
@@ -502,8 +512,15 @@
             android:name=".receivers.PhoneRecorderReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.START_PHONE_RECORDER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.STOP_PHONE_RECORDER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.SAVE_PHONE_RECORDER" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
         
