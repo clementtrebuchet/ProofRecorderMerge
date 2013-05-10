@@ -203,9 +203,6 @@ public class ServiceIntentRecorderWav extends Service {
 	private void inititialzeWavRecording(Intent intent) {
 		int channel;
 		int quality;
-		
-		lNotif = mNotification();
-		mInitNotification(lNotif);
 
 		audioFile = intent.getStringExtra("FileName");
 		
@@ -246,6 +243,9 @@ public class ServiceIntentRecorderWav extends Service {
 		audioWav = new AudioRecord(mAudioSource,
 				Settings.RECORDER_SAMPLERATE, Settings.RECORDER_CHANNELS,
 				Settings.RECORDER_AUDIO_ENCODING, minBufferSize);
+		
+		lNotif = mNotification();
+		mInitNotification(lNotif);
 	}
 
 	@Override

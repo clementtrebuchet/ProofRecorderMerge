@@ -185,9 +185,6 @@ public class ServiceIntentRecorder3gp extends Service {
 	
 	private void initialize3gp(Intent intent) {
 		
-		lNotif = mNotification();
-		mInitNotification(lNotif);
-		
 		if(intent.getExtras().containsKey("notificationPkg")) {
 			pendingIntentPackage = intent.getStringExtra("notificationPkg");
 		}
@@ -208,6 +205,9 @@ public class ServiceIntentRecorder3gp extends Service {
 		if(audioRecorder == null) {
 			audioRecorder = new MediaRecorder();
 		}
+		
+		lNotif = mNotification();
+		mInitNotification(lNotif);
 	}
 	
 	/**
