@@ -2,14 +2,15 @@ package org.proof.recorder.service;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.service.ProofService;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.OsHandler;
+import org.proof.recorder.utils.Log.Console;
 
 import android.app.ActivityManager;
-import android.app.Service;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,7 +20,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
 import android.provider.ContactsContract.CommonDataKinds;
-import android.util.Log;
 
 /**
  * @author devel.machine
@@ -38,7 +38,7 @@ import android.util.Log;
  *     by the user, our db must map info.
  *     
  */
-public class VerifyContactsApi extends Service {
+public class VerifyContactsApi extends ProofService {
 
 	private static boolean toProcess = false;
 	private static boolean mExternalStorageAvailable = false;
@@ -58,23 +58,6 @@ public class VerifyContactsApi extends Service {
 		ProofDataBase.COLUMNRECODINGAPP_ID,
 		ProofDataBase.COLUMN_CONTRACT_ID,
 		ProofDataBase.COLUMN_TELEPHONE};
-	
-	/**
-	 * @param message
-	 */
-	private void print(String message) {
-		if(Settings.isDebug())
-			Log.d(this.getClass().getName(), "" + message);
-		else
-			Log.i(this.getClass().getName(), "" + message);
-	}
-
-	/**
-	 * @param message
-	 */
-	private void print_exception(String message) {
-		Log.e(this.getClass().getName(), "" + message);
-	}
 
 	/**
 	 * @return
@@ -170,7 +153,7 @@ public class VerifyContactsApi extends Service {
 		int previousCount = getPreviousCount() + DELTA_COUNT;
 		int count = mCursor.getCount();
 		
-		print("Count: " + count + " Previous: " + previousCount);
+		Console.print_debug("Count: " + count + " Previous: " + previousCount);
 
 		if(count > previousCount) {
 			setToProcess(true);
@@ -200,8 +183,7 @@ public class VerifyContactsApi extends Service {
 
 				if(apiId.equals("null")) { // Unknown contact
 
-					if(Settings.isDebug())
-						print("Unknown contact (id): " + apiId
+					Console.print_debug("Unknown contact (id): " + apiId
 							+ " - type(" + apiId.getClass().getName() + ")");
 
 					String mPhone = mCursor.getString(
@@ -209,13 +191,11 @@ public class VerifyContactsApi extends Service {
 									ProofDataBase.COLUMN_TELEPHONE
 									));
 					
-					if(Settings.isDebug())
-						print("Unknown contact (phone): " + mPhone);
+					Console.print_debug("Unknown contact (phone): " + mPhone);
 
 					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(mContext, mPhone);
 
-					if(Settings.isDebug())
-						print("Unknown contact (all): " + mContact);
+					Console.print_debug("Unknown contact (all): " + mContact);
 
 					if(!mContact.getContractId().equals("null")) {
 
@@ -224,8 +204,7 @@ public class VerifyContactsApi extends Service {
 								ProofDataBase.COLUMN_CONTRACT_ID, 
 								mContact.getContractId());
 						
-						if(Settings.isDebug())
-							print("Unknown contact (all): " + mContact + "\n" + "Uri: " + mUri);
+						Console.print_debug("Unknown contact (all): " + mContact + "\n" + "Uri: " + mUri);
 
 						mContext.getContentResolver().update(
 								mUri,
@@ -237,8 +216,7 @@ public class VerifyContactsApi extends Service {
 				}
 				else { // Known contact
 					
-					if(Settings.isDebug())
-						print("Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
+					Console.print_debug("Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
 
 					Cursor pCur = mContext.getContentResolver().query(
 							CommonDataKinds.Phone.CONTENT_URI, null,
@@ -246,7 +224,7 @@ public class VerifyContactsApi extends Service {
 							new String[] { apiId }, null);
 
 					if(pCur.getCount() == 0) {
-						print("Deleted contact API phone Id: " + apiId);
+						Console.print_debug("Deleted contact API phone Id: " + apiId);
 						ContentValues values = new ContentValues();
 						values.put(ProofDataBase.COLUMN_CONTRACT_ID, "null");
 						mContext.getContentResolver().update(
@@ -256,10 +234,8 @@ public class VerifyContactsApi extends Service {
 								new String[] { apiId }
 								);
 						
-						if(Settings.isDebug()) {
-							print("Updated contact API phone Id: " + apiId);	
-							print("Checking for into excluded contacts table for match ...");
-						}					
+							Console.print_debug("Updated contact API phone Id: " + apiId);	
+							Console.print_debug("Checking for into excluded contacts table for match ...");			
 
 						Uri mUriById = Uri.withAppendedPath(
 								PersonnalProofContentProvider.CONTENT_URI, "excluded_contract_id/" + apiId);
@@ -270,14 +246,12 @@ public class VerifyContactsApi extends Service {
 
 							String name = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_DISPLAY_NAME));
 							String phone = _cursor.getColumnName(_cursor.getColumnIndex(ProofDataBase.COLUMN_PHONE_NUMBER));
-							
-							if(Settings.isDebug())
-								print("Found Contact in excluded table! (" + name + " - " + phone + ")");
+
+								Console.print_debug("Found Contact in excluded table! (" + name + " - " + phone + ")");
 							
 							mContext.getContentResolver().delete(mUriById, null, null);
 							
-							if(Settings.isDebug())
-								print("Deleted!");
+							Console.print_debug("Deleted!");
 						}
 					}
 
@@ -288,7 +262,7 @@ public class VerifyContactsApi extends Service {
 			}				
 		}
 		catch(Exception e) {
-			print_exception("" + e);
+			Console.print_exception(e);
 		}
 		finally {
 			mCursor.close();
@@ -299,7 +273,6 @@ public class VerifyContactsApi extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Settings.setSettingscontext(this);
 		mContext = this;
 	}
 
@@ -307,7 +280,7 @@ public class VerifyContactsApi extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {		
 		super.onStartCommand(intent, flags, startId);
 		
-		print("Checks on database contacts and directories state starting ...");
+		Console.print_debug("Checks on database contacts and directories state starting ...");
 		
 		START_ID = startId;
 		
@@ -321,7 +294,7 @@ public class VerifyContactsApi extends Service {
 				}			
 				while(!isExternalStorageAvailable());
 			}catch(Exception e) {
-				print_exception(e.getMessage());
+				Console.print_exception(e);
 			}			
 
 			initializeDbConnection();			
@@ -329,7 +302,7 @@ public class VerifyContactsApi extends Service {
 
 			if(isToProcess()) {
 
-				print("Starting database consistency checks ...");
+				Console.print_debug("Starting database consistency checks ...");
 
 				// Check if all stored record into database really point onto existing 
 				// disk resource, if not delete the db record, on counter part, if a file
@@ -341,20 +314,20 @@ public class VerifyContactsApi extends Service {
 
 				checksDeletedContacts();
 
-				print("Potential deleted Contacts from Phone API mapped!");
-				print(mContext.getString(R.string.analysis_over));
+				Console.print_debug("Potential deleted Contacts from Phone API mapped!");
+				Console.print_debug(mContext.getString(R.string.analysis_over));
 
 				setToProcess(false);
 				
-				print("Database consistency checks processed!");
+				Console.print_debug("Database consistency checks processed!");
 			}
 			
 			else {
-				print("No need to process!");
+				Console.print_debug("No need to process!");
 			}
 		}
 		else {
-			print("Service already running no need to run!");
+			Console.print_debug("Service already running no need to run!");
 		}
 		
 		return START_STICKY;
@@ -364,17 +337,15 @@ public class VerifyContactsApi extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		
-		if(Settings.isDebug())
-			print("Destroyed!");
+
+			Console.print_debug("Destroyed!");
 		
 		stopSelf(START_ID);
 	}
 
 	@Override
 	public IBinder onBind(Intent paramIntent) {
-		if(Settings.isDebug())
-			print("bind!");
+			Console.print_debug("bind!");
 		return null;
 	}
 
