@@ -68,11 +68,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 		_monManagerTel = telephony;
 	}
 
-	public void resetDpm() {
-		
-		if(dpm == null)		
-			dpm = new DataPersistanceManager();
-		
+	public void resetDpm() {				
+		dpm = new DataPersistanceManager();		
 		dpm.cacheRows("CAN_RECORD", "0");
 	}
 
@@ -86,9 +83,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 		Console.print_debug(incomingNumber);		
 		Console.print_debug("L'ETAT A CHANGER");
-		
-		if(dpm == null)		
-			dpm = new DataPersistanceManager();
+			
+		dpm = new DataPersistanceManager();
 
 		switch (state) {
 
@@ -143,13 +139,15 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 		case TelephonyManager.CALL_STATE_IDLE:
 
-			Console.print_debug("L'APPEL Etat IDLE");			
+			Console.print_debug("L'APPEL Etat IDLE");	
 			
-			if(dpm.retrieveCachedRows("CALL_OFFHOOK").equals("1") &&
-					dpm.retrieveCachedRows("CAN_RECORD").equals("1")) {				
-				stopRecording(_context);				
-				dpm.cacheRows("CALL_OFFHOOK", "0");
-			}			
+			if(dpm.retrieveCachedRows("CALL_OFFHOOK") != null) {
+				if(dpm.retrieveCachedRows("CALL_OFFHOOK").equals("1") &&
+						dpm.retrieveCachedRows("CAN_RECORD").equals("1")) {				
+					stopRecording(_context);				
+					dpm.cacheRows("CALL_OFFHOOK", "0");
+				}
+			}						
 
 			_monManagerTel.listen(ObservateurTelephone.this,
 					PhoneStateListener.LISTEN_NONE);
@@ -176,8 +174,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 		// Note: we indicate the user that's not a recommended state :)
 		// Note: If option 1 or 3 is chosen, then we display Voice dialog for title edit purpose.
 		
-		if(dpm == null)
-			dpm = new DataPersistanceManager();
+		dpm = new DataPersistanceManager();
 		
 		Intent audioService = new Intent(context, PhoneRecorderReceiver.class);
     	
@@ -198,6 +195,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 
 	public void stopRecording(Context context) {
+		
+		dpm = new DataPersistanceManager();
 
 		Intent audioService = new Intent(context, PhoneRecorderReceiver.class);
 		
@@ -225,6 +224,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 		Console.print_debug("CONSTRUCTOR ObservateurTelephone()");
 		
 		dpm = new DataPersistanceManager();
+		
 		dpm.cacheRows("CAN_RECORD", "1");
 		dpm.cacheRows("CALL_OFFHOOK", "0");
 	}
