@@ -14,11 +14,10 @@ public class MonApp extends android.app.Application {
 		// Try / catch: might fix crashes on some devices.
 		try {
 			ACRA.init(this);
+			super.onCreate();
 		}
 		catch(Exception e) {
 			Console.print_exception(e);
-		}
-        
-        super.onCreate();
+		}        
     }
 }
