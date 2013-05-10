@@ -28,8 +28,8 @@ import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.StaticNotifications;
 import org.proof.recorder.utils.Log.Console;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
+//import android.accounts.Account;
+//import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -42,7 +42,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.provider.Settings.Secure;
+//import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -386,7 +386,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			@Override
 			public void onClick(View paramView) {
 				
-				AlertDialogHelper.openProgressDialog();				
+				AlertDialogHelper.openProgressDialog(null);				
 
 				if (!bTitled && !bUntitled) {
 
@@ -468,7 +468,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 			@Override
 			public void onClick(View paramView) {
 				
-				AlertDialogHelper.openProgressDialog();				
+				AlertDialogHelper.openProgressDialog(null);				
 
 				if (!bKnown && !bUnknown) {
 

@@ -1,6 +1,7 @@
 package org.proof.recorder.utils;
 
 import org.proof.recorder.R;
+import org.proof.recorder.Settings;
 import org.proof.recorder.fragment.dialog.NoneRecordsDialog;
 import org.proof.recorder.fragment.dialog.VoiceEditDialog;
 import org.proof.recorder.utils.Log.Console;
@@ -56,16 +57,19 @@ public class AlertDialogHelper {
 		if(progressDialog != null) {
 			progressDialog.dismiss();
 			progressDialog.cancel();
+			progressDialog = null;
 		}
 	}
 	
-	public static void openProgressDialog() {
+	public static void openProgressDialog(Object stringId) {
 		
-		if(progressDialog == null)
-			progressDialog = new ProgressDialog(getContext());
+		closeProgressDialog();
+		
+		progressDialog = new ProgressDialog(getContext());
 		
 		try {
-			progressDialog.setMessage(getContext().getText(R.string.loading));
+			progressDialog.setMessage(getContext().getText(
+					stringId  != null ? (Integer)stringId : R.string.loading));
 			progressDialog.setIndeterminate(true);
 
 			progressDialog.show();
