@@ -8,6 +8,7 @@ import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
 import org.proof.recorder.receivers.holders.PhoneRecordHolder;
 import org.proof.recorder.service.DataPersistanceManager;
+import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
@@ -23,6 +24,9 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 	private static final String START_ACTION = "android.intent.action.START_PHONE_RECORDER";
 	private static final String STOP_ACTION = "android.intent.action.STOP_PHONE_RECORDER";
 	private static final String SAVE_ACTION = "android.intent.action.SAVE_PHONE_RECORDER";
+	
+	private static final String KEEP_DATA_TRACK = "android.intent.action.KEEP_PHONE_DATA_TRACK";
+	private static final String SAVE_KEPT_DATA = "android.intent.action.SAVE_PHONE_KEPT_DATA";
 	
 	private static Context mContext = null;
 	private static Intent service = null;
@@ -150,11 +154,48 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 	
 	private void onSave() {
 		
+		record = holder.getCurrentRecord();
+		
 		if(record.toBeInserted()) {
 			record.save();
 			notifyUser();
 			holder.setCurrentRecord(new PhoneRecord());
 		}
+		
+		holder.save();
+	}
+	
+	private void startService() {
+		prepareService();				
+		
+		service.putExtra("notificationIntent",
+			     "org.proof.recorder.ProofRecorderActivity");
+		
+		service.putExtras(prepareExtras());
+		
+		getContext().startService(service);
+	}
+	
+	private void stopService() {
+		
+		prepareService();			
+		getContext().stopService(service);
+	}
+	
+	private void keepDataTrack(Intent intent, String AudioFormat) {		
+		keepDataTrack(intent, AudioFormat, OsInfo.newFileName(AudioFormat));
+	}
+	
+	private void keepDataTrack(Intent intent, String AudioFormat, String fileName) {		
+		
+		record = holder.getCurrentRecord();
+		
+		record.setPhoneAudioFile(fileName);
+		record.setDirectionCall(intent.getStringExtra("directionCall"));
+		record.setPhoneNumber(intent.getStringExtra("phoneNumber"));
+		
+		dpm.setAudioFormat(AudioFormat);		
+		dpm.save();
 		
 		holder.save();
 	}
@@ -167,57 +208,42 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 		
 		dpm = new DataPersistanceManager();	
 		
-		holder = new PhoneRecordHolder(getContext(), dpm);		
+		holder = new PhoneRecordHolder(getContext(), dpm);
+		
+		String AudioFormat = Settings.getAudioFormat(getContext()).toLowerCase();
 		
 		Console.print_debug(intent.getAction());		
 		
 		if (intent.getAction().equals(START_ACTION))
-		{	
-			String AudioFormat = Settings.getAudioFormat(context).toLowerCase();
-			record = holder.getCurrentRecord();
+		{				
+			keepDataTrack(intent, AudioFormat);
+			startService();
+		}
+		
+		else if (intent.getAction().equals(KEEP_DATA_TRACK)) {
 			
-			record.setPhoneAudioFile(OsInfo.newFileName(AudioFormat));
-			record.setDirectionCall(intent.getStringExtra("directionCall"));
-			record.setPhoneNumber(intent.getStringExtra("phoneNumber"));
+			String currentAudioFile = dpm.retrieveCachedRows("AudioFile");
 			
-			dpm.setProcessing("1");	
-			dpm.setAudioFormat(AudioFormat);		
-			dpm.save();
+			keepDataTrack(intent, AudioFormat, currentAudioFile);
 			
-			holder.save();
+			dpm.cacheRows("INVALID_STATE", "true");
 			
-			prepareService();				
-			
-			service.putExtra("notificationIntent",
-				     "org.proof.recorder.ProofRecorderActivity");
-			
-			service.putExtras(prepareExtras());
-			
-			context.startService(service);
+			saveVoiceDpmOnStop();
+		}
+		
+		else if (intent.getAction().equals(SAVE_KEPT_DATA)) {			
+			stopService();						
+			handleStop();
 		}
 		
 		else if (intent.getAction().equals(STOP_ACTION))
-		{
-			prepareService();			
-			context.stopService(service);
-			
-			dpm.setProcessing("0");
-			dpm.save();
-			
-			if(dpm.getAudioFormat().equalsIgnoreCase("wav") |
-			  (dpm.getAudioFormat().equalsIgnoreCase("mp3") &&
-			  Settings.getPostEncoding(getContext()) == 1)) {
-				
-			}
-			else {
-				Intent service = new Intent(SAVE_ACTION);
-				context.sendBroadcast(service);
-			}
+		{			
+			stopService();			
+			handleStop();
 		}
 		
 		else if (intent.getAction().equals(SAVE_ACTION))
-		{			
-			record = holder.getCurrentRecord();	
+		{						
 			onSave();
 		}
 		
@@ -226,5 +252,23 @@ public class PhoneRecorderReceiver extends BroadcastReceiver {
 		}
 		
 		Console.print_debug(record);
+	}
+	
+	private void saveVoiceDpmOnStop() {
+		dpm.setProcessing("0");
+		dpm.save();
+	}
+
+	private void handleStop() {
+		
+		if(dpm.getAudioFormat().equalsIgnoreCase("wav") |
+		  (dpm.getAudioFormat().equalsIgnoreCase("mp3") &&
+		  Settings.getPostEncoding(getContext()) == 1)) {
+			
+		}
+		else {
+			Intent service = new Intent(SAVE_ACTION);
+			getContext().sendBroadcast(service);
+		}
 	}
 }

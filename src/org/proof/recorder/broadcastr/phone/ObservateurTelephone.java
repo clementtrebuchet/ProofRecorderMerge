@@ -151,20 +151,59 @@ public class ObservateurTelephone extends PhoneStateListener {
 	}
 
 	public void startRecording(Context context, String phoneNumber, String directionCall) {
-
+		
+		
+		// should fix when audio recorder is on 
+		// and an incoming / outgoing call is done at the same time.
+		// Avoiding strange behavior or/and bugs.
+		
+		// We let the service on, but we keep track of all data:
+		// Voice & Call, then we ask the user to choose what we're to do
+		// with this hybrid audio record.
+		
+		// ie. Save it as:
+		//     1 A voice record
+		//     2 A call record
+		//     3 both.
+		
+		// Note: we indicate the user that's not a recommended state :)
+		// Note: If option 1 or 3 is chosen, then we display Voice dialog for title edit purpose.
+		
+		dpm = new DataPersistanceManager();
+		
 		Intent audioService = new Intent(context, PhoneRecorderReceiver.class);
-		audioService.setAction("android.intent.action.START_PHONE_RECORDER");
+    	
+    	if(!dpm.isProcessing()) {
+    		// Normal behavior    		
+    		audioService.setAction("android.intent.action.START_PHONE_RECORDER");
+    	}    	
+    	else {
+    		audioService.setAction("android.intent.action.KEEP_PHONE_DATA_TRACK");
+    	}
+    	
 		audioService.putExtra("phoneNumber", phoneNumber);
 		audioService.putExtra("directionCall", directionCall);
-		context.sendBroadcast(audioService);	    	
+		context.sendBroadcast(audioService);
+		
+		dpm.cacheRows("PhoneServiceRunning", "true");
 	}
 
 
 	public void stopRecording(Context context) {
 
 		Intent audioService = new Intent(context, PhoneRecorderReceiver.class);
-		audioService.setAction("android.intent.action.STOP_PHONE_RECORDER");		    	
-		context.sendBroadcast(audioService);    
+		
+		if(!dpm.isProcessing()) {
+    		// Normal behavior    		
+    		audioService.setAction("android.intent.action.STOP_PHONE_RECORDER");
+    	}    	
+    	else {
+    		audioService.setAction("android.intent.action.SAVE_PHONE_KEPT_DATA");
+    	}
+		
+		context.sendBroadcast(audioService);  
+		
+		dpm.cacheRows("PhoneServiceRunning", "false");
 	}	    
 
 	/**

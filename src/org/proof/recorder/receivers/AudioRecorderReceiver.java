@@ -23,7 +23,7 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 	private static final String STOP_ACTION = "android.intent.action.STOP_AUDIO_RECORDER";
 	private static final String SAVE_ACTION = "android.intent.action.SAVE_AUDIO_RECORDER";
 	
-	private static final String SAVE_DELAYED_EXTERNAL_ACTION = "android.intent.action.SAVE_DELAYED_EXTERNAL_AUDIO_RECORDER";	
+	private static final String SAVE_DELAYED_EXTERNAL_ACTION = "android.intent.action.SAVE_DELAYED_EXTERNAL_AUDIO_RECORDER";
 	
 	private static Context mContext = null;
 	private static Intent service = null;
@@ -205,7 +205,7 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		
 		else if (intent.getAction().equals(STOP_ACTION))
 		{
-			prepareService();			
+			prepareService();		
 			context.stopService(service);
 			
 			dpm.setProcessing("0");
@@ -213,8 +213,8 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 			
 			if(dpm.getAudioFormat().equalsIgnoreCase("wav") |
 			  (dpm.getAudioFormat().equalsIgnoreCase("mp3") &&
-			  Settings.getPostEncoding(getContext()) == 1)) {
-				AlertDialogHelper.openProgressDialog();
+			  Settings.getPostEncoding(getContext()) == 1)) {				
+				AlertDialogHelper.openProgressDialog(R.string.encoding_data);
 			}
 			else {
 				AlertDialogHelper.openVoiceEditDialog();
@@ -231,9 +231,24 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		}
 		
 		else if (intent.getAction().equals(SAVE_DELAYED_EXTERNAL_ACTION))
-		{			
-			AlertDialogHelper.closeProgressDialog();			
-			AlertDialogHelper.openVoiceEditDialog();
+		{	
+			boolean invalid = Boolean.parseBoolean(
+					dpm.retrieveCachedRows("INVALID_STATE"));
+			
+			if(!invalid) {
+				AlertDialogHelper.closeProgressDialog();			
+				AlertDialogHelper.openVoiceEditDialog();
+			}
+			else {
+				// If any service recording was enabled by AudioRecorder and still running when call arise.
+				// The service will respond to this action. 
+				// We need to route the saving action to Appropriated listener (PhoneBroadcastReceiver).
+				// then we reset globals "INVALID_STATE".
+				
+				Intent redirection = new Intent("android.intent.action.SAVE_PHONE_RECORDER");
+				context.sendBroadcast(redirection);
+				dpm.cacheRows("INVALID_STATE", "false");
+			}		
 		}
 		
 		else {

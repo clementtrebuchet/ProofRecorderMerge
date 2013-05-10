@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -125,25 +126,40 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 			btnStartRecorder.invalidate();
 		}
 		
-		private void setOnRecordScene() {
-			startRecording();
+		private void setOnRecordScene() {			
 			onRecord = true;
     		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicingrec));
     		textI.setText(getString(R.string.start_recording));
 		}
 		
 		private void setNoRecordScene() {
-			backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
-    		textI.setText(getString(R.string.stop_recording));
-    		stopRecording();
 			onRecord = false;
+			backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
+    		textI.setText(getString(R.string.stop_recording));		
 		}
 		
 		private OnClickListener playCallBack = new OnClickListener() {
 	        @Override
 			public void onClick(View v) {
 	        	if(!onRecord) {
-	        		setOnRecordScene();	        		
+	        		dpm = new DataPersistanceManager();
+	    	    	
+	    	    	// If on a call, the user try to start an Audio Record
+	    	    	// It won't start it avoiding bugs!
+	    	    	
+	    	    	phoneRecording = Boolean.parseBoolean(
+	    	    			dpm.retrieveCachedRows("PhoneServiceRunning"));
+	    	    	
+	    	    	if(!phoneRecording) {
+	    	    		startRecording();
+	    	    		setOnRecordScene();
+	    	    	}
+	    	    	else {
+	    	    		String message = getString(R.string.action_not_allowed) + "\n";
+ 	    			   	message += getString(R.string.record_on_recording);
+ 	    			   
+ 	    			   	Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+	    	    	}
 	        	}
 	        }
 	    }; 
@@ -152,14 +168,26 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	        @Override
 			public void onClick(View v) {
 	        	if(onRecord) {
-	        		setNoRecordScene();	        		
+	        		
+	        		dpm = new DataPersistanceManager();
+	    	    	
+	    	    	// If on a call, the user try to start an Audio Record
+	    	    	// It won't start it avoiding bugs!
+	    	    	
+	    	    	phoneRecording = Boolean.parseBoolean(
+	    	    			dpm.retrieveCachedRows("PhoneServiceRunning"));
+	    	    	
+	    	    	if(!phoneRecording) {
+	    	    		stopRecording();
+		        		setNoRecordScene();
+	    	    	}        		       		
 	        	}
 	        }
-	    };     
+	    };
+
+		private boolean phoneRecording;     
 
 	    private void startRecording() {
-	    	
-	    	dpm = new DataPersistanceManager();
 	    	
 	    	if(!dpm.isProcessing()) {
 	    		Intent audioService = new Intent(getActivity(), AudioRecorderReceiver.class);
