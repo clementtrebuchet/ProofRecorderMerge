@@ -380,14 +380,13 @@ public final class Settings {
 		PackageInfo info;
 		try {
 			info = manager.getPackageInfo(plugIntent, 0);
-			Console.print_exception("PackageName = " + info.packageName + "\nVersionCode = "
+			Console.print_debug("PackageName = " + info.packageName + "\nVersionCode = "
 				       + info.versionCode + "\nVersionName = "
-				       + info.versionName + "\nPermissions = " + info.permissions);			
+				       + info.versionName + "\nPermissions = " + info.permissions);		
 			
 			return info.versionCode;
 		} catch (NameNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Console.print_exception(e);
 		}
 		return -1;
 	}

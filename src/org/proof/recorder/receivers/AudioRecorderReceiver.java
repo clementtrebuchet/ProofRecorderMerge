@@ -132,6 +132,7 @@ public class AudioRecorderReceiver extends BroadcastReceiver {
 		}
 		else {
 			
+			extras.putString("FileName", audioFile);
 		}			
 		
 		return extras;

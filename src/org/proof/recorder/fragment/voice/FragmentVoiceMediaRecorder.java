@@ -64,6 +64,8 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    private TextView textI;
 	    
 	    private DataPersistanceManager dpm = null;
+	    
+	    private boolean phoneRecording;
 	    /**
 	     * stop the recreation of the activity on Orientation Change
 	     * the MediaRecorder, is therefore not recreated and keep recording on Orientation Changes
@@ -171,8 +173,8 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	        		
 	        		dpm = new DataPersistanceManager();
 	    	    	
-	    	    	// If on a call, the user try to start an Audio Record
-	    	    	// It won't start it avoiding bugs!
+	    	    	// If on a call, the user try to stop an Audio Record
+	    	    	// It won't stop it avoiding bugs!
 	    	    	
 	    	    	phoneRecording = Boolean.parseBoolean(
 	    	    			dpm.retrieveCachedRows("PhoneServiceRunning"));
@@ -183,9 +185,7 @@ public class FragmentVoiceMediaRecorder extends SherlockFragmentActivity
 	    	    	}        		       		
 	        	}
 	        }
-	    };
-
-		private boolean phoneRecording;     
+	    };		     
 
 	    private void startRecording() {
 	    	
