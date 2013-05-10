@@ -59,11 +59,11 @@ public class ServiceIntentRecorder3gp extends Service {
 			  Intent intent = new Intent();
 			  
 			  if(pendingIntent != null) {
-				  intent.setClassName(this, pendingIntent);
+				  intent.setComponent(
+						  new ComponentName(pendingIntentPackage, pendingIntent));			  
 			  }
 			  else {
-				  intent.setComponent(
-						  new ComponentName(pendingIntentPackage, pendingIntent));
+				  intent.setClass(this, org.proof.recorder.ProofRecorderActivity.class);
 			  }
 		    
 		      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
