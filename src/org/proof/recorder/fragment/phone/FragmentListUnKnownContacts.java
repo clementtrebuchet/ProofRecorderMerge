@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
@@ -33,9 +34,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
-public class FragmentListUnKnownContacts extends SherlockFragment {
+public class FragmentListUnKnownContacts extends ProofFragment {
 
 	/** Called when the activity is first created. */
 	@Override

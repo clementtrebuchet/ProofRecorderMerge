@@ -8,6 +8,7 @@ import java.util.Comparator;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
@@ -18,8 +19,6 @@ import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.Log.Console;
-
-import com.actionbarsherlock.app.SherlockFragment;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -48,7 +47,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FragmentListRecordIn extends SherlockFragment {
+public class FragmentListRecordIn extends ProofFragment {
 
 	/** Called when the activity is first created. */
 	@Override

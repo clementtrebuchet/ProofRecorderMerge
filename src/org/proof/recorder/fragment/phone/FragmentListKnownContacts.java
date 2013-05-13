@@ -6,10 +6,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
+import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -20,7 +21,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -34,9 +34,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
-public class FragmentListKnownContacts extends SherlockFragment {
+public class FragmentListKnownContacts extends ProofFragment {
 	
 	//private final static String TAG = "FragmentListKnownContacts";
 
@@ -48,7 +46,6 @@ public class FragmentListKnownContacts extends SherlockFragment {
 
 	public static class KnownContactsLoader extends ListFragment
 	{
-		private static final String TAG = "FragmentPhoneCallDossier";
 		boolean mDualPane;
 		int mCursorPos = -1;
 		
@@ -109,18 +106,17 @@ public class FragmentListKnownContacts extends SherlockFragment {
 					.getMenuInfo();
 			int recordPosition = record.position;	
 			
-			ContactAdapter ca = (ContactAdapter) getListAdapter();				
-			Contact mContact = ca.getItem(recordPosition);
+			ContactAdapter ca = (ContactAdapter) getListAdapter();
 			
-			if(Settings.isDebug())
-				Log.v(TAG, "" + recordPosition);
+			Contact mContact = contacts.get(recordPosition);
+			
+			Console.print_debug(recordPosition);
 			if (item.getItemId() == R.id.cm_records_list_del_file) {
 				MenuActions.deleteContactsFolder(mContact, getActivity(), ca);
 				return true;
 			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
 				MenuActions.displayCallsFolderDetails(mContact.getContractId(), "android_id", getActivity());
-				if(Settings.isDebug())
-					Log.i("ContextMenu", "Display Item's details");
+				Console.print_debug("Display Item's details");
 				return true;
 			}
 			return super.onContextItemSelected(item);
@@ -131,10 +127,8 @@ public class FragmentListKnownContacts extends SherlockFragment {
 				contacts = ContactsDataHelper.getCallsFoldersOfKnown(getActivity());
 				if(uiOn)
 					getActivity().runOnUiThread(returnRes);
-			} catch (Exception e) {
-				
-				if(Settings.isDebug())
-					Log.e(TAG, "E" + e.getMessage());
+			} catch (Exception e) {				
+				Console.print_exception(e);
 			}
 		}
 
@@ -185,8 +179,7 @@ public class FragmentListKnownContacts extends SherlockFragment {
 					if (input == null) {
 
 					} else {
-						if (Settings.isDebug())
-							Log.v(TAG, "Image is read");
+						Console.print_debug("Image is read");
 
 						Bitmap bitmap = BitmapFactory.decodeStream(input);
 						imageView.setImageBitmap(bitmap);
@@ -212,7 +205,9 @@ public class FragmentListKnownContacts extends SherlockFragment {
 			            return s1.getContactName().compareToIgnoreCase(s2.getContactName());
 			        }
 			    });
+			
 			setListAdapter(contactAdapter);
+			
 			if(getListView().getCount() > 0)
 				registerForContextMenu(getListView());
 		}
@@ -231,9 +226,8 @@ public class FragmentListKnownContacts extends SherlockFragment {
 		 long id) {
 		
 			 super.onListItemClick(l, v, position, id);	
-			 
-			ContactAdapter ca = (ContactAdapter) getListAdapter();				
-			Contact mContact = ca.getItem(position);
+			
+			Contact mContact = contacts.get(position);
 			
 			MenuActions.displayCallsFolderDetails(mContact.getContractId(), "android_id", getActivity());
 		 }
