@@ -3,18 +3,17 @@ package org.proof.recorder.fragment.dialog;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.AlertDialogHelper;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,37 +23,15 @@ import android.widget.AdapterView.OnItemClickListener;
 public class PluginsInformations extends ProofFragmentActivity {
 
 	protected static final String GPLAY = "market://search?q=pname:";
-	private static Context mContext;
 	private static ListView plugs;
-
-	/**
-	 * @return the mContext
-	 */
-	public static Context getContext() {
-		return mContext;
-	}
-
-	/**
-	 * @param mContext the mContext to set
-	 */
-	public static void setContext(Context mContext) {
-		PluginsInformations.mContext = mContext;
-	}
-
-	/**
-	 * @param message
-	 */
-	private static void print(String message) {
-		if(!Settings.isDebug())
-			Log.d(AboutApps.class.getName(), message);
-	}
 
 	/**
 	 * @param str
 	 * @return
 	 */
 	private static String cleanString(String str) {
-		return str.replace(" ", "").trim().toLowerCase();
+		return str.replace(" ", "").trim().toLowerCase(
+				Locale.getDefault());
 	}
 
 	@Override
@@ -63,10 +40,7 @@ public class PluginsInformations extends ProofFragmentActivity {
 
 		setContentView(R.layout.plugins_dialog);
 
-		setContext(this);
-		AlertDialogHelper.setContext(this);
-
-		print("onCreate");
+		Console.print_debug("onCreate");
 
 		// Array of strings storing country names
 		String[] titles = new String[] {

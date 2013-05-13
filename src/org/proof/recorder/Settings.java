@@ -154,33 +154,34 @@ public final class Settings {
 		return device_id;
 
 	}*/
+	
+	public static int defaultQuality = 7;
 
 	public static String methodCALL = "call";
-	public static String methodVOICE = "voice";
-	public static int defaultQuality = 7;
+	public static String methodVOICE = "voice";	
 
 	private static boolean mNOTIFICATIONS = false;
 	private static boolean mUAC_ASSISTED = false;
-	private static SharedPreferences mSharedPreferences;
-	private static final boolean TOAST_NOTIFICATIONS = true;
-	private static final boolean DEBUG = true;
-
 	private static boolean NOT_LICENSED = false;
+	
+	private static final boolean TOAST_NOTIFICATIONS = true;
+	private static final boolean DEBUG = true;	
 
 	private static final FORMULA mFORMULA = FORMULA.BASIC;
 
 	private static Context SettingsContext = null;
+	private static SharedPreferences mSharedPreferences = null;
+	
 
 	private static void initSharedPreferences() {
 		
-		if(mSharedPreferences == null) {
+		if(mSharedPreferences == null && getSettingscontext() != null) {
 			
 			mSharedPreferences = null;
+			
 			mSharedPreferences = PreferenceManager
 					.getDefaultSharedPreferences(getSettingscontext());		
-		}
-		
-		OVERRIDE_MODE = "OVERRIDE_MODE_" + getpInfo().versionName;
+		}		
 	}
 
 	/**
@@ -362,7 +363,7 @@ public final class Settings {
 			dpm.cacheRows("OGG_BAD_VERSION", "false");
 		}
 		
-		Console.print_exception(getAudioFormat());
+		Console.print_debug(getAudioFormat());
 	}
 
 	private static int getPlugVersion(int plugId) {
@@ -585,7 +586,10 @@ public final class Settings {
 	 * @return the settingscontext
 	 */
 	public static void setSettingscontext(Context _Context) {
+		
 		Settings.SettingsContext = _Context;
+		
+		OVERRIDE_MODE = "OVERRIDE_MODE_" + getpInfo().versionName;
 	}
 	
 	public static boolean hasContext() {
