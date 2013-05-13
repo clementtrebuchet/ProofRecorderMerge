@@ -3,11 +3,10 @@ package org.proof.recorder.fragment.voice.notes;
 import java.util.Date;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.Log.Console;
-
-import com.actionbarsherlock.app.SherlockFragment;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -25,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class FragmentListVoiceNotes extends SherlockFragment {
+public class FragmentListVoiceNotes extends ProofFragment {
 
 	static Bundle mBundle;
 	static String id;

@@ -2,9 +2,9 @@ package org.proof.recorder.fragment.voice;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.receivers.AudioRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
-import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
@@ -40,8 +40,7 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 			Fragment list = new VoiceRecorderFragment();
 			fm.beginTransaction().add(R.id.fragLayout_voice_recorder, list).commit();
 		}
-		
-		QuickActionDlg.setmContext(this);		
+			
 		getSupportActionBar().setHomeButtonEnabled(true);
     }
 	
@@ -55,7 +54,7 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	    return QuickActionDlg.mainActionsMenuHandler(item);
 	}
 	
-	public static class VoiceRecorderFragment extends Fragment {
+	public static class VoiceRecorderFragment extends ProofFragment {
 	    private static boolean onRecord;
 	    
 	    private ImageButton btnStartRecorder, btnStopRecorder;
@@ -83,8 +82,7 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	    
 	    @Override
 	    public void onCreate(Bundle icicle) {
-	        super.onCreate(icicle); 
-	        AlertDialogHelper.setContext(getActivity());
+	        super.onCreate(icicle);
 	        
 	        setRetainInstance(true); // TODO: check efficiency of it!!!
 	    }

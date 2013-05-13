@@ -7,6 +7,7 @@ import java.util.Comparator;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceAdapter;
+import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.database.collections.VoicesList;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
@@ -22,9 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
-public class FragmentListVoice extends SherlockFragment {
+public class FragmentListVoice extends ProofFragment {
 	
 	public static String ID;
 	private static boolean isNotify = false;
