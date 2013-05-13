@@ -1,31 +1,58 @@
 package org.proof.recorder.preferences;
 
 import org.proof.recorder.R;
-import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.bases.activity.ProofPreferenceActivity;
+import org.proof.recorder.utils.Log.Console;
 
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference.OnPreferenceClickListener;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
+public class Preference extends ProofPreferenceActivity {
 
-public class Preference extends SherlockPreferenceActivity {
+	private CheckBoxPreference INCALL;
+	private CheckBoxPreference OUTCALL;
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		
-		@SuppressWarnings("deprecation")
+		addPreferencesFromResource(R.xml.preference);
+		
+		getPreferences();	
+		setCallBacks();			
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void getPreferences() {
+		INCALL = (CheckBoxPreference) getPreferenceScreen().findPreference("INCALL");
+		OUTCALL = (CheckBoxPreference) getPreferenceScreen().findPreference("OUTCALL");
+	}
+	
+	private void setCallBacks() {
+		INCALL.setOnPreferenceClickListener(micClick);
+		OUTCALL.setOnPreferenceClickListener(micClick);	
+	}
+	
+	private OnPreferenceClickListener micClick = new OnPreferenceClickListener() {
+
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			
-			QuickActionDlg.setmContext(this);			
-			addPreferencesFromResource(R.xml.preference);			
+		public boolean onPreferenceClick(
+				android.preference.Preference paramPreference) {
+			ensureSelection();
+			return paramPreference.isEnabled();
 		}
 		
-		@Override
-	    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {		
-			return QuickActionDlg.mainUiMenuHandler(menu);
-	    }
-		
-		@Override
-		public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
-		    return QuickActionDlg.mainActionsMenuHandler(item);
+	};
+	
+	private void ensureSelection(){
+		if(OUTCALL.isChecked() || INCALL.isChecked()){
+			if(!INCALL.isChecked()){
+				INCALL.setChecked(true);
+				Console.print_debug("INCALL set to : "+INCALL.isChecked());
+			}
 		}
+	}
 		
 }

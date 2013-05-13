@@ -2,6 +2,7 @@ package org.proof.recorder.preferences;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofPreferenceActivity;
 import org.proof.recorder.place.de.marche.Eula;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
@@ -16,9 +17,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
-public class FormulaPreferences extends SherlockPreferenceActivity {
+public class FormulaPreferences extends ProofPreferenceActivity {
 
 	private final static String TAG = "FormulaPreferences";
 
@@ -72,8 +72,6 @@ public class FormulaPreferences extends SherlockPreferenceActivity {
 		if (!eula.isChecked())
 			eula();
 		onSettings();
-
-		QuickActionDlg.setmContext(this);
 	}
 
 	@Override

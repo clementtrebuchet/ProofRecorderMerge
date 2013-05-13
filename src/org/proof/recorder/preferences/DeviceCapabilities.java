@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofPreferenceActivity;
 import org.proof.recorder.graphics.ManipulateUi;
 import org.proof.recorder.service.BestAudioConfiguration;
 import org.proof.recorder.service.TestDevice;
 import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.Log.Console;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -20,9 +20,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-
-public class DeviceCapabilities extends SherlockPreferenceActivity {
+public class DeviceCapabilities extends ProofPreferenceActivity {
+	
 	private static final String TAG = "DeviceCapabilities";
 	public Bundle OPTIONS;
 	public Bundle BESTOPTION;
@@ -114,8 +113,6 @@ public class DeviceCapabilities extends SherlockPreferenceActivity {
 		});
 		
 		onSettings();
-		QuickActionDlg.setmContext(this);
-
 	}
 
 	private ArrayList<String> pluginMyForma() {
