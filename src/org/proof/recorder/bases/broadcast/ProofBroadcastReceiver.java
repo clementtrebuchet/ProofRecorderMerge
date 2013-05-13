@@ -1,40 +1,37 @@
 package org.proof.recorder.bases.broadcast;
 
-import org.proof.recorder.Settings;
-import org.proof.recorder.utils.AlertDialogHelper;
-import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.bases.utils.SetStaticContext;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 public class ProofBroadcastReceiver extends BroadcastReceiver {
+	
+	private Context internalContext = null;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// TODO Auto-generated method stub
-		
-		setConsoleTagName();
-		setStaticsContext(context);
+		initialize(context);
 	}
 	
-	private void setConsoleTagName() {
-		Console.setTagName(this.getClass().getSimpleName());
+	protected void initialize(Context context) {
+		SetStaticContext.setConsoleTagName(this.getClass().getSimpleName());
+		SetStaticContext.setStaticsContext(context, 0);
+		setInternalContext(context);
 	}
-	
-	private void setStaticsContext(Context context) {
-		
-		if(!QuickActionDlg.hasContext()) {
-			QuickActionDlg.setmContext(context);
-		}
-		
-		if(!Settings.hasContext()) {
-			Settings.setSettingscontext(context);
-		}
 
-		if(!QuickActionDlg.hasContext()) {
-			AlertDialogHelper.setContext(context);
-		}		
+	/**
+	 * @return the internalContext
+	 */
+	protected Context getInternalContext() {
+		return internalContext;
+	}
+
+	/**
+	 * @param internalContext the internalContext to set
+	 */
+	private void setInternalContext(Context internalContext) {
+		this.internalContext = internalContext;
 	}
 }
