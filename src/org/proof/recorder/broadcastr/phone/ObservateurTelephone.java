@@ -1,6 +1,7 @@
 package org.proof.recorder.broadcastr.phone;
 
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.utils.SetStaticContext;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.receivers.PhoneRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
@@ -25,11 +26,13 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 	private static boolean IS_EXCLUDED;
 
-	private Context _context = null;
+	private static Context _context = null;
 
 	protected TelephonyManager _monManagerTel;
 
 	private DataPersistanceManager dpm = null;
+
+	private static Intent audioService;
 
 	/**
 	 * @return the IS_EXCLUDED
@@ -46,8 +49,16 @@ public class ObservateurTelephone extends PhoneStateListener {
 		ObservateurTelephone.IS_EXCLUDED = isExcluded;
 	}
 
-	public void setContext(Context context) {
+	private void setContext(Context context) {
 		_context = context;
+		
+		if(!Settings.hasContext()) {
+			Settings.setSettingscontext(context);
+		}	
+	}
+	
+	private Context getContext() {
+		return _context;
 	}
 
 	/**
@@ -68,21 +79,17 @@ public class ObservateurTelephone extends PhoneStateListener {
 		_monManagerTel = telephony;
 	}
 
-	public void resetDpm() {				
-		dpm = new DataPersistanceManager();		
+	public void resetDpm() {	
 		dpm.cacheRows("CAN_RECORD", "0");
 	}
 
 	synchronized @Override
-	public void onCallStateChanged(int state, String incomingNumber) {
+	public void onCallStateChanged(int state, String incomingNumber) {		
 
-		Console.setTagName(this.getClass().getSimpleName());
-
-		if (_context == null)
-			return;
-
-		Console.print_debug(incomingNumber);		
-		Console.print_debug("L'ETAT A CHANGER");
+		if (getContext() == null)
+			return;	
+		
+		SetStaticContext.setStaticsContext(getContext(), 0);
 			
 		dpm = new DataPersistanceManager();
 
@@ -95,12 +102,13 @@ public class ObservateurTelephone extends PhoneStateListener {
 			Console.print_debug(info);
 
 			if (Settings.isToastNotifications())
-				Toast.makeText(_context, info, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), info, Toast.LENGTH_SHORT).show();
 
 			break;
 		case TelephonyManager.CALL_STATE_OFFHOOK:
 
-			Contact.setResolver(_context.getApplicationContext().getContentResolver());
+			Contact.setResolver(
+					getContext().getApplicationContext().getContentResolver());
 
 			boolean excluded = false;
 			Contact contact = new Contact();
@@ -108,9 +116,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 			try {
 				contact.setPhoneNumber(OUT_NUMBER);
 			} catch (Exception e) {
-				Console.print_exception("Exception 'ContactsDataHelper.isExcluded(<context>, ': " + OUT_NUMBER + "')" +
-						"Contact info: " + contact + 
-						"Details': " + e);
+				Console.print_exception(e);
 			}			
 
 			excluded = contact.isExcluded();
@@ -134,7 +140,10 @@ public class ObservateurTelephone extends PhoneStateListener {
 			}
 
 			Console.print_debug("L'APPEL A ETE PRIS");
-			dpm.cacheRows("CALL_OFFHOOK", "1");
+
+			if(dpm.retrieveCachedRows("CAN_RECORD").equals("1")) {					
+				startRecording();
+			}
 			
 			break;
 
@@ -142,22 +151,20 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 			Console.print_debug("L'APPEL Etat IDLE");	
 			
-			if(dpm.retrieveCachedRows("CALL_OFFHOOK") != null) {
-				if(dpm.retrieveCachedRows("CALL_OFFHOOK").equals("1") &&
-						dpm.retrieveCachedRows("CAN_RECORD").equals("1")) {
-					
-					stopRecording(_context);				
-					dpm.cacheRows("CALL_OFFHOOK", "0");
-				}
-			}						
+			if(dpm.retrieveCachedRows("CAN_RECORD").equals("1")) {					
+				stopRecording();				
+			}									
 
 			_monManagerTel.listen(ObservateurTelephone.this,
 					PhoneStateListener.LISTEN_NONE);
 			break;
 		}
+		
+		Console.print_debug(incomingNumber);		
+		Console.print_debug("L'ETAT A CHANGER");
 	}
 
-	public void startRecording(Context context, String phoneNumber, String directionCall) {
+	public void prepareRecording(String phoneNumber, String directionCall) {
 		
 		
 		// should fix when audio recorder is on 
@@ -176,9 +183,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 		// Note: we indicate the user that's not a recommended state :)
 		// Note: If option 1 or 3 is chosen, then we display Voice dialog for title edit purpose.
 		
-		dpm = new DataPersistanceManager();
-		
-		Intent audioService = new Intent(context, PhoneRecorderReceiver.class);
+		audioService = new Intent(getContext(), PhoneRecorderReceiver.class);
     	
     	if(!dpm.isProcessing()) {
     		// Normal behavior    		
@@ -190,45 +195,70 @@ public class ObservateurTelephone extends PhoneStateListener {
     	
 		audioService.putExtra("phoneNumber", phoneNumber);
 		audioService.putExtra("directionCall", directionCall);
-		context.sendBroadcast(audioService);
 		
-		dpm.cacheRows("PhoneServiceRunning", "true");
+		dpm.cacheRows("PhoneServicePrepared", "true");
+	}
+	
+	private void startRecording() {
+		
+		boolean isPrepared;
+		
+		try {
+			isPrepared = Boolean.parseBoolean(
+					dpm.retrieveCachedRows("PhoneServicePrepared"));
+		}
+		catch (Exception e) {
+			isPrepared = false;
+		}
+		
+		if(isPrepared) {
+			getContext().sendBroadcast(audioService);			
+			
+			dpm.cacheRows("PhoneServicePrepared", "false");
+			dpm.cacheRows("PhoneServiceRunning", "true");
+		}	
 	}
 
 
-	public void stopRecording(Context context) {
+	public void stopRecording() {
 		
-		dpm = new DataPersistanceManager();
-
-		Intent audioService = new Intent(context, PhoneRecorderReceiver.class);
+		boolean hasStarted;
 		
-		if(!dpm.isProcessing()) {
-    		// Normal behavior    		
-    		audioService.setAction("android.intent.action.STOP_PHONE_RECORDER");
-    	}    	
-    	else {
-    		audioService.setAction("android.intent.action.SAVE_PHONE_KEPT_DATA");
-    	}
+		try {
+			hasStarted = Boolean.parseBoolean(
+					dpm.retrieveCachedRows("PhoneServiceRunning"));
+		}
+		catch (Exception e) {
+			hasStarted = false;
+		}
 		
-		context.sendBroadcast(audioService);  
-		
-		if(dpm == null)		
-			dpm = new DataPersistanceManager();
-		
-		dpm.cacheRows("PhoneServiceRunning", "false");
+		if(hasStarted) {
+			Intent audioService = new Intent(getContext(), PhoneRecorderReceiver.class);
+			
+			if(!dpm.isProcessing()) {
+	    		// Normal behavior    		
+	    		audioService.setAction("android.intent.action.STOP_PHONE_RECORDER");
+	    	}    	
+	    	else {
+	    		audioService.setAction("android.intent.action.SAVE_PHONE_KEPT_DATA");
+	    	}
+			
+			getContext().sendBroadcast(audioService);  
+			
+			dpm.cacheRows("PhoneServiceRunning", "false");
+		}		
 	}	    
 
-	/**
-	 * 
-	 */
-	protected ObservateurTelephone() {
+	public ObservateurTelephone(Context context) {
 		super();
-		Console.print_debug("CONSTRUCTOR ObservateurTelephone()");
+		
+		Console.setTagName(this.getClass().getSimpleName());
+		
+		setContext(context);
 		
 		dpm = new DataPersistanceManager();
 		
 		dpm.cacheRows("CAN_RECORD", "1");
-		dpm.cacheRows("CALL_OFFHOOK", "0");
 	}
 
 	public void feedNumbers(String phonenumber) {

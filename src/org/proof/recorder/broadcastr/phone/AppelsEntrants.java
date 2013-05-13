@@ -18,7 +18,8 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 
 	public boolean INCALL;
 	public boolean SPEAKERON;
-	ObservateurTelephone customPhoneListener = new ObservateurTelephone();
+	
+	ObservateurTelephone customPhoneListener = null;
 
 	private static String phoneNumber = "";
 
@@ -51,7 +52,7 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 
 		phoneNumber = bundle.getString("incoming_number");
 		
-		customPhoneListener.setContext(context);
+		customPhoneListener = new ObservateurTelephone(context);
 		
 		getPreferences(context);
 
@@ -69,6 +70,7 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 		
 		TelephonyManager telephony = (TelephonyManager) context
 				.getSystemService(Context.TELEPHONY_SERVICE);
+		
 		customPhoneListener.getManager(telephony);
 
 		telephony.listen(customPhoneListener,
@@ -87,13 +89,16 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 		Console.print_debug(
 				"NUMERO DE TELEPHONE: " + phoneNumber);
 		
-		if (phoneNumber != null) {
-			String info = "Appel entrant  " + phoneNumber;
+		if (phoneNumber != null) {			
+			if (Settings.isToastNotifications()) {
+				Toast.makeText(
+						context, 
+						"Appel entrant  " + phoneNumber, 
+						Toast.LENGTH_SHORT).show();
+			}			
 			
-			if (Settings.isToastNotifications())
-				Toast.makeText(context, info, Toast.LENGTH_SHORT).show();
-			
-			customPhoneListener.startRecording(context, phoneNumber, "E");
+			customPhoneListener.feedNumbers(phoneNumber);
+			customPhoneListener.prepareRecording(phoneNumber, "E");
 		}
 
 	}	

@@ -18,7 +18,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 
 	public boolean OUTCALL;
 	public boolean SPEAKERON;
-	ObservateurTelephone customPhoneListener = new ObservateurTelephone();
+	ObservateurTelephone customPhoneListener = null;
 
 	private static String phoneNumber = "";
 
@@ -26,6 +26,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
+		
 		OUTCALL = preferences.getBoolean("OUTCALL", true);
 
 		try {
@@ -41,7 +42,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		super.onReceive(context, intent);
+		super.onReceive(context, intent);		
 
 		phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);		
 		Bundle bundle = intent.getExtras();
@@ -49,7 +50,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 		if (null == bundle)
 			return;		
 		
-		customPhoneListener.setContext(context);
+		customPhoneListener = new ObservateurTelephone(context);
 		
 		getPreferences(context);
 
@@ -64,7 +65,11 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 		
 		TelephonyManager telephony = (TelephonyManager) context
 				.getSystemService(Context.TELEPHONY_SERVICE);
+		
 		customPhoneListener.getManager(telephony);
+		
+		telephony.listen(customPhoneListener,
+				PhoneStateListener.LISTEN_CALL_STATE);
 
 		AudioManager audioManage = (AudioManager) context
 				.getSystemService(Context.AUDIO_SERVICE);
@@ -74,20 +79,20 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 		}
 		else {
 			audioManage.setSpeakerphoneOn(false);
+		}		
+
+		if(Settings.isToastNotifications()) {
+			Toast.makeText(
+					context, 
+					"Appel sortant : " + phoneNumber, 
+					Toast.LENGTH_SHORT).show();
 		}
-
-		customPhoneListener.startRecording(context, phoneNumber, "S");
-
-		telephony.listen(customPhoneListener,
-				PhoneStateListener.LISTEN_CALL_STATE);			
-
+		
 		Console.print_debug(phoneNumber);
 		Console.print_debug(bundle.toString());
-
-		String info = "Appel sortant : " + phoneNumber;
-
-		if(Settings.isToastNotifications())
-			Toast.makeText(context, info, Toast.LENGTH_SHORT).show();
+		
+		customPhoneListener.feedNumbers(phoneNumber);
+		customPhoneListener.prepareRecording(phoneNumber, "S");
 	}
 
 }
