@@ -29,6 +29,7 @@
             android:dialogTitle="@string/select_encoding_method"
             
             android:key="post_encode"
+            android:defaultValue="0"
             android:summary="@string/encoding_summary"
             android:title="@string/encoding_title" />
 <!--         <ListPreference
@@ -73,7 +74,7 @@
         android:key="enableBestConf"
         android:title="@string/dialog_based_audoiSourceBestConf" >
         <CheckBoxPreference
-            android:defaultValue="True"
+            android:defaultValue="true"
             android:key="BESTCONF"
             android:summary="@string/summary_checkbox_BESTCONF"
             android:title="@string/title_checkbox_BESTCONF" />

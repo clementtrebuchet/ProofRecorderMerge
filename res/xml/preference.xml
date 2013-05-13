@@ -10,14 +10,17 @@
     <PreferenceCategory android:title="@string/dialog_based_phonePrefs" >
         <CheckBoxPreference
             android:key="INCALL"
+            android:defaultValue="true"
             android:summary="@string/summary_checkbox_INCALL"
             android:title="@string/title_checkbox_INCALL" />
         <CheckBoxPreference
             android:key="OUTCALL"
+            android:defaultValue="true"
             android:summary="@string/summary_checkbox_OUTCALL"
             android:title="@string/title_checkbox_OUTCALL" />
         <CheckBoxPreference
             android:key="SPEAK"
+            android:defaultValue="false"
             android:summary="@string/summary_checkbox_speaker"
             android:title="@string/title_checkbox_speaker" />
     </PreferenceCategory>
@@ -25,10 +28,12 @@
     <PreferenceCategory android:title="@string/dialog_based_phonePrefs_ergo" >
         <CheckBoxPreference
             android:key="NOTIFICATION"
+            android:defaultValue="true"
             android:summary="@string/summary_checkbox_NOTIFICATION"
             android:title="@string/title_checkbox_NOTIFICATION" />
         <CheckBoxPreference
             android:key="UAC_ASSISTED"
+            android:defaultValue="true"
             android:summary="@string/summary_checkbox_UAC_ASSISTED"
             android:title="@string/title_checkbox_UAC_ASSISTED" />
     </PreferenceCategory>
