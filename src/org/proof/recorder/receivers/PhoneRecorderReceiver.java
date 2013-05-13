@@ -1,5 +1,7 @@
 package org.proof.recorder.receivers;
 
+import java.util.Locale;
+
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
@@ -27,8 +29,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	
 	private static final String KEEP_DATA_TRACK = "android.intent.action.KEEP_PHONE_DATA_TRACK";
 	private static final String SAVE_KEPT_DATA = "android.intent.action.SAVE_PHONE_KEPT_DATA";
-	
-	private static Context mContext = null;
+
 	private static Intent service = null;
 	
 	private static int mAudioSource;	
@@ -37,20 +38,6 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	
 	private PhoneRecordHolder holder = null;
 	private PhoneRecord record = null;
-	
-	/**
-	 * @return the mContext
-	 */
-	public static Context getContext() {
-		return mContext;
-	}
-
-	/**
-	 * @param mContext the mContext to set
-	 */
-	public static void setContext(Context mContext) {
-		PhoneRecorderReceiver.mContext = mContext;
-	}
 	
 	private void notifyUser() {
 		
@@ -68,10 +55,10 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		Bundle extraNotification = new Bundle();
 		Class<?> destination;
 
-		title = getContext().getString(R.string.app_name);
+		title = getInternalContext().getString(R.string.app_name);
 			
 			Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
-					getContext(), phoneNumber);
+					getInternalContext(), phoneNumber);
 			
 			extraNotification.putBoolean("isNotify", true);
 			extraNotification.putString("Sense", directionCall);
@@ -87,11 +74,11 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 
 			destination = FragmentListRecordTabs.class;			
 			info = "";
-			text = getContext().getString(R.string.notifyEndOfCallOne) + " "
+			text = getInternalContext().getString(R.string.notifyEndOfCallOne) + " "
 					+ mFrom + " "
-					+ getContext().getString(R.string.notifyEndOfCallTwo);
+					+ getInternalContext().getString(R.string.notifyEndOfCallTwo);
 			
-		StaticNotifications.show(getContext(), destination, extraNotification,
+		StaticNotifications.show(getInternalContext(), destination, extraNotification,
 				title, info, text, StaticNotifications.ICONS.DEFAULT, true,
 				true, 0);
 	}
@@ -102,7 +89,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		String audioFormat = dpm.getAudioFormat();
 		String audioFile = record.getPhoneAudioFile();
 		
-		mAudioSource = new ServiceAudioHelper(getContext()).maConfAudio();		
+		mAudioSource = new ServiceAudioHelper(getInternalContext()).maConfAudio();		
 		
 		extras.putInt("audioSource", mAudioSource);
 		
@@ -134,24 +121,34 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		String audioFormat = dpm.getAudioFormat();		
 		
 		if(audioFormat.equalsIgnoreCase("wav")) {
-			service.setClass(getContext(), org.proof.recorder.services.ServiceIntentRecorderWav.class);	
+			
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.ServiceIntentRecorderWav.class);	
+			
 			service.putExtra("broadcastClass", 
 					SAVE_ACTION);
 		}
 		else if(audioFormat.equalsIgnoreCase("mp3")) {
-			service.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
+			
+			service.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");		
 			
 			if(Settings.getPostEncoding() == 1) {
 				service.putExtra("broadcastClass", 
 						SAVE_ACTION);
 				service.putExtra("postEncode", 1);
 			}
+			else {
+				service.putExtra("broadcastClass", "");
+				service.putExtra("postEncode", 0);
+			}
 		}
 		else if(audioFormat.equalsIgnoreCase("ogg")) {
+			
 			service.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");			
 		}
 		else {
-			service.setClass(getContext(), org.proof.recorder.services.ServiceIntentRecorder3gp.class);
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.ServiceIntentRecorder3gp.class);
 		}		
 	}
 	
@@ -174,13 +171,14 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		
 		service.putExtras(prepareExtras());
 		
-		getContext().startService(service);
+		getInternalContext().startService(service);	
 	}
 	
 	private void stopService() {
 		
 		prepareService();			
-		getContext().stopService(service);
+		
+		getInternalContext().stopService(service);
 	}
 	
 	private void keepDataTrack(Intent intent, String AudioFormat) {		
@@ -195,7 +193,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		record.setDirectionCall(intent.getStringExtra("directionCall"));
 		record.setPhoneNumber(intent.getStringExtra("phoneNumber"));
 		
-		dpm.setAudioFormat(AudioFormat);		
+		dpm.setAudioFormat(AudioFormat);
 		dpm.save();
 		
 		holder.save();
@@ -206,18 +204,20 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		
 		super.onReceive(context, intent);
 		
-		setContext(context);
+		boolean mp3BadVersion, oggBadVersion;
 		
 		dpm = new DataPersistanceManager();	
 		
-		holder = new PhoneRecordHolder(getContext(), dpm);
+		holder = new PhoneRecordHolder(context, dpm);
 		
-		String AudioFormat = Settings.getAudioFormat().toLowerCase();
+		String AudioFormat = Settings.getAudioFormat().toLowerCase(
+				Locale.getDefault());		
 		
-		boolean mp3BadVersion, oggBadVersion;
+		mp3BadVersion = Boolean.parseBoolean(
+				dpm.retrieveCachedRows("MP3_BAD_VERSION"));
 		
-		mp3BadVersion = Boolean.parseBoolean(dpm.retrieveCachedRows("MP3_BAD_VERSION"));
-		oggBadVersion = Boolean.parseBoolean(dpm.retrieveCachedRows("OGG_BAD_VERSION"));
+		oggBadVersion = Boolean.parseBoolean(
+				dpm.retrieveCachedRows("OGG_BAD_VERSION"));
 		
 		if(AudioFormat.equals("mp3") && mp3BadVersion) {
 			Toast.makeText(context, context.getString(R.string.bad_mp3_version), Toast.LENGTH_LONG).show();	
@@ -227,9 +227,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		if(AudioFormat.equals("ogg") && oggBadVersion) {
 			Toast.makeText(context, context.getString(R.string.bad_ogg_version), Toast.LENGTH_LONG).show();
 			return;
-		}
-		
-		Console.print_debug(intent.getAction());		
+		}		
 		
 		if (intent.getAction().equals(START_ACTION))
 		{				
@@ -239,7 +237,8 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		
 		else if (intent.getAction().equals(KEEP_DATA_TRACK)) {
 			
-			String currentAudioFile = dpm.retrieveCachedRows("AudioFile");
+			// getting current AudioFile recorded from MediaRecorder not call! 
+			String currentAudioFile = dpm.retrieveCachedRows("AudioFile"); 			
 			
 			keepDataTrack(intent, AudioFormat, currentAudioFile);
 			
@@ -265,9 +264,11 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		}
 		
 		else {
-			Console.print_debug("IGNORED (UNKNOWN ACTION): " + intent.getAction());
+			Console.print_debug(
+					"*********** IGNORED (UNKNOWN ACTION) ***********");
 		}
 		
+		Console.print_debug(intent.getAction());
 		Console.print_debug(record);
 	}
 	
@@ -285,7 +286,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		}
 		else {
 			Intent service = new Intent(SAVE_ACTION);
-			getContext().sendBroadcast(service);
+			getInternalContext().sendBroadcast(service);
 		}
 	}
 }
