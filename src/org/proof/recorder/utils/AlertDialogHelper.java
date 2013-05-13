@@ -20,32 +20,33 @@ public class AlertDialogHelper {
 	private static Context mContext = null;
 	
 	public static void openVoiceEditDialog() {		
-		Intent mIntent = new Intent(mContext, VoiceEditDialog.class);
-		mContext.startActivity(mIntent);
+		Intent mIntent = new Intent(getContext(), VoiceEditDialog.class);
+		mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		getContext().startActivity(mIntent);
 	}
 	
 	public static void openVoiceEditDialog(Bundle bundle) {		
-		Intent mIntent = new Intent(mContext, VoiceEditDialog.class);
+		Intent mIntent = new Intent(getContext(), VoiceEditDialog.class);
 		if(bundle != null) {
 			mIntent.putExtras(bundle);
 		}
-		mContext.startActivity(mIntent);
+		getContext().startActivity(mIntent);
 	}
 
 	public static void openNoneRecordsDialog() {
-		Intent mIntent = new Intent(mContext, NoneRecordsDialog.class);
-		mContext.startActivity(mIntent);
+		Intent mIntent = new Intent(getContext(), NoneRecordsDialog.class);
+		getContext().startActivity(mIntent);
 	}
 	
 	public static void openSimpleNoMatchDialog() {
 		
 		mDialog = new AlertDialog.Builder(getContext());
-		mDialog.setTitle(mContext.getString(R.string.gplay_title));
+		mDialog.setTitle(getContext().getString(R.string.gplay_title));
 
-		mDialog.setMessage(mContext.getString(R.string.gplay_no_match));
+		mDialog.setMessage(getContext().getString(R.string.gplay_no_match));
 
 		mDialog.setPositiveButton(
-				mContext.getString(R.string.ok),
+				getContext().getString(R.string.ok),
 				null);
 
 		mDialog.show();
@@ -63,13 +64,14 @@ public class AlertDialogHelper {
 	
 	public static void openProgressDialog(Object stringId) {
 		
-		closeProgressDialog();
+		//closeProgressDialog();
 		
 		progressDialog = new ProgressDialog(getContext());
 		
 		try {
 			progressDialog.setMessage(getContext().getText(
 					stringId  != null ? (Integer)stringId : R.string.loading));
+			
 			progressDialog.setIndeterminate(true);
 
 			progressDialog.show();
@@ -87,7 +89,7 @@ public class AlertDialogHelper {
 	/**
 	 * @return the mContext
 	 */
-	public static Context getContext() {
+	private static Context getContext() {
 		return mContext;
 	}
 	

@@ -83,29 +83,47 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 	}
 
 	private void recorder(int source, boolean resultat){
+		
+		AudioRecord recorder = null;
+		
 		try{
 			bufferSize = AudioRecord.getMinBufferSize(Settings.RECORDER_SAMPLERATE,
-					Settings.RECORDER_CHANNELS, Settings.RECORDER_AUDIO_ENCODING);
-			AudioRecord recorder = new AudioRecord(
+					Settings.RECORDER_CHANNELS, Settings.RECORDER_AUDIO_ENCODING);			
+			
+			recorder = new AudioRecord(
 					source,
 					Settings.RECORDER_SAMPLERATE, Settings.RECORDER_CHANNELS,
 					Settings.RECORDER_AUDIO_ENCODING, bufferSize);
+			
 			recorder.startRecording();
+			
 			resultat = true;
 			BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source-1], resultat);
 
 			print("position : " + toStr[source-1] + " capabilitie : " + resultat);
 
 			recorder.stop();
+			recorder.release();
+			
+			recorder = null;
+			
 		}catch (Exception e){
 
 			print_exception("Capabilitie for " + toStr[source-1] + " : " + e);
 
 			resultat = false;
 			BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source-1], resultat);
-
+			
+			if(recorder != null) {
+				try {
+					recorder.release();
+					recorder = null;
+				}
+				catch (Exception exc) {
+					recorder = null;
+				}
+			}
 		}
-
 	}
 
 	private void testAll(int[] all, boolean[] res){
