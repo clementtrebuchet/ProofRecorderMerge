@@ -21,36 +21,36 @@ import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.widget.Toast;
 
 public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
-
+	
 	private static final String START_ACTION = "android.intent.action.START_PHONE_RECORDER";
 	private static final String STOP_ACTION = "android.intent.action.STOP_PHONE_RECORDER";
 	private static final String SAVE_ACTION = "android.intent.action.SAVE_PHONE_RECORDER";
-
+	
 	private static final String KEEP_DATA_TRACK = "android.intent.action.KEEP_PHONE_DATA_TRACK";
 	private static final String SAVE_KEPT_DATA = "android.intent.action.SAVE_PHONE_KEPT_DATA";
 
 	private static Intent service = null;
-
-	private static int mAudioSource;
-
+	
+	private static int mAudioSource;	
+	
 	private DataPersistanceManager dpm;
 	IServiceIntentRecorderMP3Cx connection;
 	IServiceIntentRecorderMP3 mService = null;
 	private PhoneRecordHolder holder = null;
 	private PhoneRecord record = null;
-
+	
 	private void notifyUser() {
-
+		
 		String phoneNumber, directionCall;
-
+		
 		phoneNumber = record.getPhoneNumber();
 		directionCall = record.getDirectionCall();
-
-		if (phoneNumber.equals("NULL") && directionCall.equals("NULL")) {
+		
+		if(phoneNumber.equals("NULL") && 
+		   directionCall.equals("NULL")) {
 			return;
 		}
 
@@ -59,281 +59,244 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		Class<?> destination;
 
 		title = getInternalContext().getString(R.string.app_name);
+			
+			Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
+					getInternalContext(), phoneNumber);
+			
+			extraNotification.putBoolean("isNotify", true);
+			extraNotification.putString("Sense", directionCall);
+			
+			extraNotification.putLong("RecordId", record.getSavedId());
+			
+			String mFrom;
+			if (!mContact.getContractId().equalsIgnoreCase("null")) {
+				mFrom = mContact.getContactName();
+			} else {
+				mFrom = phoneNumber;
+			}
 
-		Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
-				getInternalContext(), phoneNumber);
-
-		extraNotification.putBoolean("isNotify", true);
-		extraNotification.putString("Sense", directionCall);
-
-		extraNotification.putLong("RecordId", record.getSavedId());
-
-		String mFrom;
-		if (!mContact.getContractId().equalsIgnoreCase("null")) {
-			mFrom = mContact.getContactName();
-		} else {
-			mFrom = phoneNumber;
-		}
-
-		destination = FragmentListRecordTabs.class;
-		info = "";
-		text = getInternalContext().getString(R.string.notifyEndOfCallOne)
-				+ " " + mFrom + " "
-				+ getInternalContext().getString(R.string.notifyEndOfCallTwo);
-
-		StaticNotifications.show(getInternalContext(), destination,
-				extraNotification, title, info, text,
-				StaticNotifications.ICONS.DEFAULT, true, true, 0);
+			destination = FragmentListRecordTabs.class;			
+			info = "";
+			text = getInternalContext().getString(R.string.notifyEndOfCallOne) + " "
+					+ mFrom + " "
+					+ getInternalContext().getString(R.string.notifyEndOfCallTwo);
+			
+		StaticNotifications.show(getInternalContext(), destination, extraNotification,
+				title, info, text, StaticNotifications.ICONS.DEFAULT, true,
+				true, 0);
 	}
-
+	
 	private Bundle prepareExtras() {
 		Bundle extras = new Bundle();
-
+		
 		String audioFormat = dpm.getAudioFormat();
 		String audioFile = record.getPhoneAudioFile();
-
-		mAudioSource = new ServiceAudioHelper(getInternalContext())
-				.maConfAudio();
-
+		
+		mAudioSource = new ServiceAudioHelper(getInternalContext()).maConfAudio();		
+		
 		extras.putInt("audioSource", mAudioSource);
-
-		if (audioFormat.equals("mp3")) {
-
+		
+		if(audioFormat.equals("mp3")) {
+			
 			extras.putString("FileName", audioFile);
 			extras.putInt("mSampleRate", Settings.getMP3Hertz());
 			extras.putInt("mp3Channel", 1);
-			extras.putInt("outBitrate", Settings.getMp3Compression());
-		} else if (audioFormat.equals("ogg")) {
-
+			extras.putInt("outBitrate", Settings.getMp3Compression());			
+		}
+		else if(audioFormat.equals("ogg")) {
+			
 			extras.putString("file", audioFile);
 			extras.putInt("sampleRate", Settings.getMP3Hertz());
 			extras.putInt("channel", 1);
-			extras.putFloat("quality", Settings.getOGGQual());
-		} else {
-			extras.putString("FileName", audioFile);
+			extras.putFloat("quality", Settings.getOGGQual());			
 		}
-
+		else {
+			extras.putString("FileName", audioFile);
+		}			
+		
 		return extras;
 	}
-
+	
 	private void prepareService() {
-
+		
 		service = new Intent();
-
-		String audioFormat = dpm.getAudioFormat();
-
-		if (audioFormat.equalsIgnoreCase("wav")) {
-
-			service.setClass(getInternalContext(),
-					org.proof.recorder.services.ServiceIntentRecorderWav.class);
-
-			service.putExtra("broadcastClass", SAVE_ACTION);
-		} else if (audioFormat.equalsIgnoreCase("mp3")) {
-
-			service.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
-
-			if (Settings.getPostEncoding() == 1) {
-				service.putExtra("broadcastClass", SAVE_ACTION);
+		
+		String audioFormat = dpm.getAudioFormat();		
+		
+		if(audioFormat.equalsIgnoreCase("wav")) {
+			
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.ServiceIntentRecorderWav.class);	
+			
+			service.putExtra("broadcastClass", 
+					SAVE_ACTION);
+		}
+		else if(audioFormat.equalsIgnoreCase("mp3")) {
+			
+			service.setAction("org.proofs.recorder.codec.mp3.utils.MP3Middleware");		
+			
+			if(Settings.getPostEncoding() == 1) {
+				service.putExtra("broadcastClass", 
+						SAVE_ACTION);
 				service.putExtra("postEncode", 1);
-			} else {
+			}
+			else {
 				service.putExtra("broadcastClass", "");
 				service.putExtra("postEncode", 0);
 			}
-		} else if (audioFormat.equalsIgnoreCase("ogg")) {
-
-			service.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");
-		} else {
-			service.setClass(getInternalContext(),
-					org.proof.recorder.services.ServiceIntentRecorder3gp.class);
 		}
+		else if(audioFormat.equalsIgnoreCase("ogg")) {
+			
+			service.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");			
+		}
+		else {
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.ServiceIntentRecorder3gp.class);
+		}		
 	}
-
+	
 	private void onSave() {
-
+		
 		record = holder.getCurrentRecord();
-
-		if (record.toBeInserted()) {
+		
+		if(record.toBeInserted()) {
 			record.save();
 			notifyUser();
 			holder.setCurrentRecord(new PhoneRecord());
 		}
-
+		
 		holder.save();
 	}
-
+	
 	private void startService() {
-		String audioFormat = dpm.getAudioFormat();
-
-		if (audioFormat.equalsIgnoreCase("mp3")) {
-
-			try {
-				mService.parametersRec(record.getPhoneAudioFile(),
-						Settings.getMP3Hertz(), mAudioSource,
-						Settings.getMp3Compression(), 0, "", "");
-				mService.startRec();
-			} catch (RemoteException e) {
-				Console.print_debug("startService()  " + e.getMessage());
-			}
-
-		} else {
-			prepareService();
-
+		
+			prepareService();				
+			
 			service.putExtras(prepareExtras());
-
-			getInternalContext().startService(service);
-		}
-
+			
+			getInternalContext().startService(service);	
+		
+		
+		
 	}
-
+	
+	
 	private void stopService() {
-		String audioFormat = dpm.getAudioFormat();
-
-		if (audioFormat.equalsIgnoreCase("mp3")) {
-			try {
-				mService.stopRec();
-
-			} catch (RemoteException e) {
-
-				Console.print_debug("startService()  " + e.getMessage());
-			} finally {
-				releaseService();
-			}
-
-		} else {
-			prepareService();
-
+		
+			prepareService();			
+			
 			getInternalContext().stopService(service);
-		}
-
+		
+		
 	}
-
-	private void keepDataTrack(Intent intent, String AudioFormat) {
+	
+	private void keepDataTrack(Intent intent, String AudioFormat) {		
 		keepDataTrack(intent, AudioFormat, OsInfo.newFileName(AudioFormat));
 	}
-
-	private void keepDataTrack(Intent intent, String AudioFormat,
-			String fileName) {
-
+	
+	private void keepDataTrack(Intent intent, String AudioFormat, String fileName) {		
+		
 		record = holder.getCurrentRecord();
-
+		
 		record.setPhoneAudioFile(fileName);
 		record.setDirectionCall(intent.getStringExtra("directionCall"));
 		record.setPhoneNumber(intent.getStringExtra("phoneNumber"));
-
+		
 		dpm.setAudioFormat(AudioFormat);
 		dpm.save();
-
+		
 		holder.save();
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-
+		
 		super.onReceive(context, intent);
-		initService();
+		
 		boolean mp3BadVersion, oggBadVersion;
-
-		dpm = new DataPersistanceManager();
-
+		
+		dpm = new DataPersistanceManager();	
+		
 		holder = new PhoneRecordHolder(context, dpm);
-
+		
 		String AudioFormat = Settings.getAudioFormat().toLowerCase(
-				Locale.getDefault());
-
-		mp3BadVersion = Boolean.parseBoolean(dpm
-				.retrieveCachedRows("MP3_BAD_VERSION"));
-
-		oggBadVersion = Boolean.parseBoolean(dpm
-				.retrieveCachedRows("OGG_BAD_VERSION"));
-
-		if (AudioFormat.equals("mp3") && mp3BadVersion) {
-			Toast.makeText(context,
-					context.getString(R.string.bad_mp3_version),
-					Toast.LENGTH_LONG).show();
+				Locale.getDefault());		
+		
+		mp3BadVersion = Boolean.parseBoolean(
+				dpm.retrieveCachedRows("MP3_BAD_VERSION"));
+		
+		oggBadVersion = Boolean.parseBoolean(
+				dpm.retrieveCachedRows("OGG_BAD_VERSION"));
+		
+		if(AudioFormat.equals("mp3") && mp3BadVersion) {
+			Toast.makeText(context, context.getString(R.string.bad_mp3_version), Toast.LENGTH_LONG).show();	
 			return;
 		}
-
-		if (AudioFormat.equals("ogg") && oggBadVersion) {
-			Toast.makeText(context,
-					context.getString(R.string.bad_ogg_version),
-					Toast.LENGTH_LONG).show();
+		
+		if(AudioFormat.equals("ogg") && oggBadVersion) {
+			Toast.makeText(context, context.getString(R.string.bad_ogg_version), Toast.LENGTH_LONG).show();
 			return;
-		}
-
-		if (intent.getAction().equals(START_ACTION)) {
+		}		
+		
+		if (intent.getAction().equals(START_ACTION))
+		{				
 			keepDataTrack(intent, AudioFormat);
 			startService();
 		}
-
+		
 		else if (intent.getAction().equals(KEEP_DATA_TRACK)) {
-
-			// getting current AudioFile recorded from MediaRecorder not call!
-			String currentAudioFile = dpm.retrieveCachedRows("AudioFile");
-
+			
+			// getting current AudioFile recorded from MediaRecorder not call! 
+			String currentAudioFile = dpm.retrieveCachedRows("AudioFile"); 			
+			
 			keepDataTrack(intent, AudioFormat, currentAudioFile);
-
+			
 			dpm.cacheRows("INVALID_STATE", "true");
-
+			
 			saveVoiceDpmOnStop();
 		}
-
-		else if (intent.getAction().equals(SAVE_KEPT_DATA)) {
-			stopService();
+		
+		else if (intent.getAction().equals(SAVE_KEPT_DATA)) {			
+			stopService();						
 			handleStop();
 		}
-
-		else if (intent.getAction().equals(STOP_ACTION)) {
-			stopService();
+		
+		else if (intent.getAction().equals(STOP_ACTION))
+		{			
+			stopService();			
 			handleStop();
 		}
-
-		else if (intent.getAction().equals(SAVE_ACTION)) {
+		
+		else if (intent.getAction().equals(SAVE_ACTION))
+		{						
 			onSave();
 		}
-
+		
 		else {
-			Console.print_debug("*********** IGNORED (UNKNOWN ACTION) ***********");
+			Console.print_debug(
+					"*********** IGNORED (UNKNOWN ACTION) ***********");
 		}
-
+		
 		Console.print_debug(intent.getAction());
 		Console.print_debug(record);
 	}
-
+	
 	private void saveVoiceDpmOnStop() {
 		dpm.setProcessing("0");
 		dpm.save();
 	}
 
 	private void handleStop() {
-
-		if (dpm.getAudioFormat().equalsIgnoreCase("wav")
-				| (dpm.getAudioFormat().equalsIgnoreCase("mp3") && Settings
-						.getPostEncoding() == 1)) {
-
-		} else {
+		
+		if(dpm.getAudioFormat().equalsIgnoreCase("wav") |
+		  (dpm.getAudioFormat().equalsIgnoreCase("mp3") &&
+		  Settings.getPostEncoding() == 1)) {
+			
+		}
+		else {
 			Intent service = new Intent(SAVE_ACTION);
 			getInternalContext().sendBroadcast(service);
 		}
 	}
-
-	/** Binds to the service. */
-	private void initService() {
-		connection = new IServiceIntentRecorderMP3Cx();
-		Intent i = new Intent();
-		i.setClassName("org.proofs.recorder",
-				"org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
-		boolean ret = getInternalContext().bindService(i, connection,
-				Context.BIND_AUTO_CREATE);
-		mService = connection.getService();
-		Console.print_debug("initService() bound with " + ret);
-
-	}
-
-	/** Unbinds from the service. */
-	private void releaseService() {
-		getInternalContext().unbindService(connection);
-		connection = null;
-		Console.print_debug("releaseService() unbound.");
-
-	}
+	
 }
