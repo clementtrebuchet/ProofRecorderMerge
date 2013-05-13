@@ -45,13 +45,18 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 		super.onReceive(context, intent);
 		
 		Bundle bundle = intent.getExtras();
+		
 		if (null == bundle)
 			return;
 
 		phoneNumber = bundle.getString("incoming_number");
+		
+		customPhoneListener.setContext(context);
+		
 		getPreferences(context);
 
 		if (INCALL == false) {
+			
 			Console.print_debug(
 					"BROADCASTRECEVEIVER ACTIF INCALL OFF");
 			
@@ -60,9 +65,7 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 		}
 
 		Console.print_debug(
-				"BROADCASTRECEVEIVER ACTIF");
-
-		customPhoneListener.setContext(context);
+				"BROADCASTRECEVEIVER ACTIF");		
 		
 		TelephonyManager telephony = (TelephonyManager) context
 				.getSystemService(Context.TELEPHONY_SERVICE);
@@ -86,6 +89,7 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 		
 		if (phoneNumber != null) {
 			String info = "Appel entrant  " + phoneNumber;
+			
 			if (Settings.isToastNotifications())
 				Toast.makeText(context, info, Toast.LENGTH_SHORT).show();
 			

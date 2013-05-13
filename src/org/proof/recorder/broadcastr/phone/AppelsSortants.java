@@ -47,8 +47,10 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 		Bundle bundle = intent.getExtras();
 
 		if (null == bundle)
-			return;
-
+			return;		
+		
+		customPhoneListener.setContext(context);
+		
 		getPreferences(context);
 
 		if (OUTCALL == false) {
@@ -59,8 +61,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 			customPhoneListener.resetDpm();			
 			return;
 		}
-
-		customPhoneListener.setContext(context);
+		
 		TelephonyManager telephony = (TelephonyManager) context
 				.getSystemService(Context.TELEPHONY_SERVICE);
 		customPhoneListener.getManager(telephony);

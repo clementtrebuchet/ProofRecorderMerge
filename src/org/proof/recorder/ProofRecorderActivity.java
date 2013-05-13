@@ -259,6 +259,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 
 		mContext = this;
+		
 		Settings.setSettingscontext(this);
 		AlertDialogHelper.setContext(this);
 		
@@ -347,12 +348,17 @@ public class ProofRecorderActivity extends SherlockActivity {
 		}
 		SharedPreferences pre = PreferenceManager
 				.getDefaultSharedPreferences(this);
+		
 		if (!pre.getBoolean("FIRSTINSTALL", false)) {
+			
 			Eula.showEULA(ProofRecorderActivity.this);
 			pre.edit().putBoolean("FIRSTINSTALL", true).commit();
+			
 		} else {
+			
 			eulaChecker();
 		}
+		
 		StaticNotifications.cancelNotification(this);		
 
 		// Microphone DashBoard Icon

@@ -135,6 +135,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 			Console.print_debug("L'APPEL A ETE PRIS");
 			dpm.cacheRows("CALL_OFFHOOK", "1");
+			
 			break;
 
 		case TelephonyManager.CALL_STATE_IDLE:
@@ -143,7 +144,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 			
 			if(dpm.retrieveCachedRows("CALL_OFFHOOK") != null) {
 				if(dpm.retrieveCachedRows("CALL_OFFHOOK").equals("1") &&
-						dpm.retrieveCachedRows("CAN_RECORD").equals("1")) {				
+						dpm.retrieveCachedRows("CAN_RECORD").equals("1")) {
+					
 					stopRecording(_context);				
 					dpm.cacheRows("CALL_OFFHOOK", "0");
 				}
