@@ -10,7 +10,7 @@ interface IServiceIntentRecorderMP3 {
     
     
     int parametersRec(in String Filename,in int mSampleRate,in int audioSource,in int outBitRate,
-    						in int postEcode, in String  notificationIntent, in String notificationPkg);
+    						in int postEcode, in String  notificationIntent, in String notificationPkg, in String broadcastClass);
     									
     int startRec();
     int stopRec();

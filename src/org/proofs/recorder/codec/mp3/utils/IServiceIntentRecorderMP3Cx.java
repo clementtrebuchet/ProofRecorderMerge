@@ -84,7 +84,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
      */
 	public void safelyPassParameters(String Filename, int mSampleRate,
 			int audioSource, int outBitRate, int postEcode,
-			String notificationIntent, String notificationPkg) {
+			String notificationIntent, String notificationPkg,String broadcastClass) {
 
 		Log.d(TAG, "Trying to query the message from the Service.");
 		if (service == null) { // if the service is null the connection is not
@@ -98,7 +98,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 			try {
 				parent.parametersRecAsynchronously(service.parametersRec(
 						Filename, mSampleRate, audioSource, outBitRate,
-						postEcode, notificationIntent, notificationPkg));
+						postEcode, notificationIntent, notificationPkg, broadcastClass));
 			} catch (RemoteException e) {
 				Log.e(TAG, "An error occured during the call (safelyPassParameters).");
 			}

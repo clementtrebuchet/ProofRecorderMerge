@@ -138,7 +138,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 					SAVE_DELAYED_EXTERNAL_ACTION);
 		}
 		else if(audioFormat.equalsIgnoreCase("mp3")) {
-			service.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.MP3Middleware.class);
 			
 			if(Settings.getPostEncoding() == 1) {
 				service.putExtra("broadcastClass", 

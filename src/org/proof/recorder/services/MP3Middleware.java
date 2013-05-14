@@ -5,12 +5,8 @@ import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3;
 import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 
 import android.app.Service;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.os.RemoteException;
 
 public class MP3Middleware extends Service  {
 
@@ -22,6 +18,8 @@ public class MP3Middleware extends Service  {
 	private int mSampleRate;
 	private int audioSource;
 	private int outBitrate;
+	private int postEncode;
+	private String broadcastClass;
 	
 	 @Override
 	  public void onCreate() {
@@ -45,7 +43,12 @@ public class MP3Middleware extends Service  {
 				mSampleRate = intent.getIntExtra("mSampleRate", 44100);
 				audioSource = intent.getIntExtra("audioSource", 1);
 				outBitrate = intent.getIntExtra("outBitrate", 192);
-				Console.print_debug(mFile+"/"+mSampleRate+"/"+audioSource+"/"+outBitrate);			
+				postEncode = intent.getIntExtra("postEncode", 0);
+				broadcastClass = intent.getStringExtra("broadcastClass");
+				if (broadcastClass == null){
+					broadcastClass = "org.proofs.recorder.codec.mp3.MainActivity";
+				}
+				Console.print_debug(mFile+"/"+mSampleRate+"/"+audioSource+"/"+outBitrate+"/"+broadcastClass);			
 		return(START_STICKY);	
 	}
 		
@@ -62,12 +65,15 @@ public class MP3Middleware extends Service  {
 		 Console.print_debug("proof stopRecAsynchronously: "+message);
 	 }
 
-	 public void callWhenReady(){
-		 
-		this.remotePlugCnx.safelyPassParameters(mFile, mSampleRate, audioSource, outBitrate, 0, "org.proofs.recorder.codec.mp3", "org.proofs.recorder.codec.mp3.MainActivity");
+	public void callWhenReady() {
+
+		this.remotePlugCnx.safelyPassParameters(mFile, mSampleRate,
+				audioSource, outBitrate, postEncode,
+				"org.proofs.recorder.codec.mp3",
+				"org.proofs.recorder.codec.mp3.MainActivity", broadcastClass);
 		this.remotePlugCnx.safelyStartRec();
-		 
-	 }
+
+	}
 	
 	
 	@Override
