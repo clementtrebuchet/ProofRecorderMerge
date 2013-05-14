@@ -133,7 +133,9 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		}
 		else if(audioFormat.equalsIgnoreCase("mp3")) {
 			
-			service.setAction("org.proofs.recorder.codec.mp3.utils.MP3Middleware");		
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.MP3Middleware.class);
+				
 			
 			if(Settings.getPostEncoding() == 1) {
 				service.putExtra("broadcastClass", 

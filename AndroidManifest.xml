@@ -457,6 +457,10 @@
         <service
             android:name=".services.ServiceIntentRecorderWav"
             android:enabled="true" />
+        
+        <service
+            android:name=".services.MP3Middleware"
+            android:enabled="true" />
 	
         <!-- Receivers for BroadCasters -->
         
