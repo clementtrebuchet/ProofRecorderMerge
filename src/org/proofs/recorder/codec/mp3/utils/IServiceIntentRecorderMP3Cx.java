@@ -25,13 +25,16 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 		this.parent = parent;
 		
 	}
+	
 	/**
 	 * 
 	 */
 	public void onServiceConnected(ComponentName name, IBinder boundService) {
 		this.mBoundService = boundService;
 		this.service = IServiceIntentRecorderMP3.Stub.asInterface(mBoundService);
-		Log.d(TAG, "onServiceConnected() connected service is " + service);
+		Log.d(TAG, "onServiceConnected() connected service is " + this.service);
+		this.parent.callWhenReady();
+		
 
 	}
 	
@@ -63,9 +66,9 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
      */
     public void safelyConnectTheService() {
             if(service == null) {
-	            	Intent i = new Intent();
-	        	    i.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
-                    parent.bindService(i, this, Context.BIND_AUTO_CREATE);
+	            	Intent i = new Intent("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
+	        	    //i.setAction();
+                    parent.bindService(i, IServiceIntentRecorderMP3Cx.this, Context.BIND_AUTO_CREATE);
                     Log.d(TAG, "The Service will be connected soon (asynchronus call)!");
             }
     }

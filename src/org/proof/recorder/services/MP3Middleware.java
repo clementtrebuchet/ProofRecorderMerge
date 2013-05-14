@@ -34,22 +34,19 @@ public class MP3Middleware extends Service  {
 	  */
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-				
+		super.onStartCommand(intent, flags, startId);
 				this.remotePlugCnx = new IServiceIntentRecorderMP3Cx(this);
-				Console.print_debug("proof onStartCommand: "+ this.remotePlugCnx);
+				this.remotePlugCnx.safelyConnectTheService();
+				while(this.remotePlugCnx == null){
+					Console.print_debug("this.remotePlugCnx is :"+this.remotePlugCnx);
+				}
+				Console.print_debug("proof onStartCommand: "+ this.remotePlugCnx+"mService is "+mService);
 				mFile = intent.getStringExtra("FileName");
 				mSampleRate = intent.getIntExtra("mSampleRate", 44100);
 				audioSource = intent.getIntExtra("audioSource", 1);
 				outBitrate = intent.getIntExtra("outBitrate", 192);
-				Console.print_debug(mFile+"/"+mSampleRate+"/"+audioSource+"/"+outBitrate);
-				while(this.remotePlugCnx == null){
-					;
-				}
-				this.remotePlugCnx.safelyPassParameters(mFile, mSampleRate, audioSource, outBitrate, 0, "org.proofs.recorder.codec.mp3", "org.proofs.recorder.codec.mp3.MainActivity");
-				this.remotePlugCnx.safelyStartRec();
-			
-				
-		return super.onStartCommand(intent, flags, startId);	
+				Console.print_debug(mFile+"/"+mSampleRate+"/"+audioSource+"/"+outBitrate);			
+		return(START_STICKY);	
 	}
 		
 	 public void parametersRecAsynchronously(int message) {
@@ -62,9 +59,15 @@ public class MP3Middleware extends Service  {
 	 }
 	 
 	 public void stopRecAsynchronously(int message){
-		 Console.print_debug("proof startRecAsynchronously: "+message);
+		 Console.print_debug("proof stopRecAsynchronously: "+message);
 	 }
 
+	 public void callWhenReady(){
+		 
+		this.remotePlugCnx.safelyPassParameters(mFile, mSampleRate, audioSource, outBitrate, 0, "org.proofs.recorder.codec.mp3", "org.proofs.recorder.codec.mp3.MainActivity");
+		this.remotePlugCnx.safelyStartRec();
+		 
+	 }
 	
 	
 	@Override
