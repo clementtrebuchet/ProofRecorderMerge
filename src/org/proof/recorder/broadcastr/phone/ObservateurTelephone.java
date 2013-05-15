@@ -1,5 +1,7 @@
 package org.proof.recorder.broadcastr.phone;
 
+import java.util.logging.Logger;
+
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.utils.SetStaticContext;
 import org.proof.recorder.database.models.Contact;
@@ -84,10 +86,12 @@ public class ObservateurTelephone extends PhoneStateListener {
 	}
 
 	synchronized @Override
-	public void onCallStateChanged(int state, String incomingNumber) {		
+	public void onCallStateChanged(int state, String incomingNumber) {	
 
-		if (getContext() == null)
+		if (getContext() == null) {
+			Console.print_exception("The Context is Null!");
 			return;	
+		}
 		
 		SetStaticContext.setStaticsContext(getContext(), 0);
 			
@@ -255,6 +259,8 @@ public class ObservateurTelephone extends PhoneStateListener {
 		Console.setTagName(this.getClass().getSimpleName());
 		
 		setContext(context);
+		
+		SetStaticContext.setStaticsContext(context, 0);
 		
 		dpm = new DataPersistanceManager();
 		

@@ -18,6 +18,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 
 	public boolean OUTCALL;
 	public boolean SPEAKERON;
+	
 	ObservateurTelephone customPhoneListener = null;
 
 	private static String phoneNumber = "";

@@ -193,12 +193,9 @@ public final class Settings {
 			setSharedPrefs(key, value);		
 	}
 
-	public static String getPersistantData(String key) {		
-		if(getSettingscontext() != null) {			
-			initSharedPreferences();
-			return mSharedPreferences.getString(key, null);
-		}
-		return null;
+	public static String getPersistantData(String key) {					
+		initSharedPreferences();
+		return mSharedPreferences.getString(key, null);
 	}
 
 	private static void setSharedPrefs(String key, String value) {
