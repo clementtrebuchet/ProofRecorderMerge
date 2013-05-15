@@ -138,7 +138,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 					SAVE_DELAYED_EXTERNAL_ACTION);
 		}
 		else if(audioFormat.equalsIgnoreCase("mp3")) {
-			service.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.MP3Middleware.class);
 			
 			if(Settings.getPostEncoding() == 1) {
 				service.putExtra("broadcastClass", 
@@ -147,7 +148,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 			}
 		}
 		else if(audioFormat.equalsIgnoreCase("ogg")) {
-			service.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");			
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.OGGMiddleware.class);		
 		}
 		else {
 			service.setClass(getInternalContext(), org.proof.recorder.services.ServiceIntentRecorder3gp.class);

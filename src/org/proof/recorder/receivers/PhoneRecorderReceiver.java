@@ -15,6 +15,8 @@ import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
 import org.proof.recorder.utils.Log.Console;
+import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3;
+import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +37,8 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	private static int mAudioSource;	
 	
 	private DataPersistanceManager dpm;
-	
+	IServiceIntentRecorderMP3Cx connection;
+	IServiceIntentRecorderMP3 mService = null;
 	private PhoneRecordHolder holder = null;
 	private PhoneRecord record = null;
 	
@@ -130,7 +133,9 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		}
 		else if(audioFormat.equalsIgnoreCase("mp3")) {
 			
-			service.setAction("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");		
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.MP3Middleware.class);
+				
 			
 			if(Settings.getPostEncoding() == 1) {
 				service.putExtra("broadcastClass", 
@@ -144,7 +149,8 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		}
 		else if(audioFormat.equalsIgnoreCase("ogg")) {
 			
-			service.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");			
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.OGGMiddleware.class);		
 		}
 		else {
 			service.setClass(getInternalContext(), 
@@ -167,18 +173,24 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	
 	private void startService() {
 		
-		prepareService();				
+			prepareService();				
+			
+			service.putExtras(prepareExtras());
+			
+			getInternalContext().startService(service);	
 		
-		service.putExtras(prepareExtras());
 		
-		getInternalContext().startService(service);	
+		
 	}
+	
 	
 	private void stopService() {
 		
-		prepareService();			
+			prepareService();			
+			
+			getInternalContext().stopService(service);
 		
-		getInternalContext().stopService(service);
+		
 	}
 	
 	private void keepDataTrack(Intent intent, String AudioFormat) {		
@@ -289,4 +301,5 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 			getInternalContext().sendBroadcast(service);
 		}
 	}
+	
 }
