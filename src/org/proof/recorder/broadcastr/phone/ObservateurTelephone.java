@@ -1,7 +1,5 @@
 package org.proof.recorder.broadcastr.phone;
 
-import java.util.logging.Logger;
-
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.utils.SetStaticContext;
 import org.proof.recorder.database.models.Contact;
