@@ -148,7 +148,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 			}
 		}
 		else if(audioFormat.equalsIgnoreCase("ogg")) {
-			service.setAction("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");			
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.OGGMiddleware.class);		
 		}
 		else {
 			service.setClass(getInternalContext(), org.proof.recorder.services.ServiceIntentRecorder3gp.class);
