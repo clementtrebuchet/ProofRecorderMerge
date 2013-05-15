@@ -58,7 +58,7 @@ public class IServiceRecorderOggCx implements ServiceConnection{
      */
     public void safelyConnectTheService() {
             if(service == null) {
-	            	Intent i = new Intent("org.proofs.recorder.codec.mp3.utils.ServiceIntentRecorderMP3");
+	            	Intent i = new Intent("org.proofs.recorder.codec.ogg.utils.ServiceIntentRecorderOgg");
 	        	    //i.setAction();
                     parent.bindService(i, IServiceRecorderOggCx.this, Context.BIND_AUTO_CREATE);
                     Log.d(TAG, "The Service will be connected soon (asynchronus call)!");
