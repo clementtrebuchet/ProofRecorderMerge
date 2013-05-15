@@ -133,7 +133,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 		String audioFormat = dpm.getAudioFormat();		
 		
 		if(audioFormat.equalsIgnoreCase("wav")) {
-			service.setClass(getInternalContext(), org.proof.recorder.services.ServiceIntentRecorderWav.class);	
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.ServiceIntentRecorderWav.class);	
 			service.putExtra("broadcastClass", 
 					SAVE_DELAYED_EXTERNAL_ACTION);
 		}
@@ -152,7 +153,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 					org.proof.recorder.services.OGGMiddleware.class);		
 		}
 		else {
-			service.setClass(getInternalContext(), org.proof.recorder.services.ServiceIntentRecorder3gp.class);
+			service.setClass(getInternalContext(), 
+					org.proof.recorder.services.ServiceIntentRecorder3gp.class);
 		}		
 	}
 	
@@ -202,8 +204,7 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 	private void handleStop(String AudioFormat) {
 		if(AudioFormat.equalsIgnoreCase("wav") |
 				  (AudioFormat.equalsIgnoreCase("mp3") &&
-				  Settings.getPostEncoding() == 1)) {
-					
+				  Settings.getPostEncoding() == 1)) {					
 					AlertDialogHelper.openProgressDialog(R.string.encoding_data);
 				}
 				else {
@@ -212,7 +213,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 	}
 	
 	private void handleDelayedSave() {
-		if(!isValid()) {
+		
+		if(isValid()) {
 			AlertDialogHelper.closeProgressDialog();			
 			AlertDialogHelper.openVoiceEditDialog();
 		}
@@ -237,7 +239,7 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 	}
 	
 	private boolean isValid() {
-		return Boolean.parseBoolean(
+		return !Boolean.parseBoolean(
 				dpm.retrieveCachedRows("INVALID_STATE"));
 	}
 

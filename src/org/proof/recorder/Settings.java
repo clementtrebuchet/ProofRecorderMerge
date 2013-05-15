@@ -250,14 +250,15 @@ public final class Settings {
 	/**
 	 * @param mContext
 	 * @return Integer 0 means no post encoding & 1 means post encoding active.
+	 * @TODO: Enforce post encoding process before reactivation (Uncomment).
 	 */
 	public static int getPostEncoding() {
 
-		initSharedPreferences();
-		int postEncode = Integer.parseInt(
-				mSharedPreferences.getString("post_encode",	"0"));
+//		initSharedPreferences();
+//		int postEncode = Integer.parseInt(
+//				mSharedPreferences.getString("post_encode",	"0"));
 
-		return postEncode;
+		return 0; // Quick & Simple fix
 	}
 
 	/**

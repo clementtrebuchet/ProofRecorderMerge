@@ -232,14 +232,12 @@ public class ServiceIntentRecorder3gp extends Service {
 			audioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
 		} catch (IllegalStateException e) {
-
 			Console.print_exception(e);
 		}
 
 		try {
 			audioRecorder.setOutputFile(audioFile);
 		} catch (IllegalStateException e) {
-
 			Console.print_exception(e);
 		}
 

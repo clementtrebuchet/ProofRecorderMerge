@@ -80,7 +80,6 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 		this.remotePlugCnx.safelyPassParameters(mFile, mSampleRate, mQuality,
 				audioSource, notificationIntent, notificationPkg);
 		this.remotePlugCnx.safelyStartRec();
-
 	}
 
 	@Override

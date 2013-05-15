@@ -43,7 +43,7 @@ public class ServiceIntentRecorderWav extends Service {
 	private long totalDataLen = totalAudioLen + 36;
 	
 	private Thread recordingThread = null;
-	private AudioRecord audioWav;	
+	private AudioRecord audioWav = null;	
 	
 	private String pendingIntent = null;
 	private String broadcastIntent = null;
@@ -240,10 +240,18 @@ public class ServiceIntentRecorderWav extends Service {
 
 		minBufferSize = AudioRecord.getMinBufferSize(quality, channel,
 				Settings.RECORDER_AUDIO_ENCODING);
-
-		audioWav = new AudioRecord(mAudioSource,
-				Settings.RECORDER_SAMPLERATE, Settings.RECORDER_CHANNELS,
-				Settings.RECORDER_AUDIO_ENCODING, minBufferSize);
+		
+		if(minBufferSize == AudioRecord.ERROR_BAD_VALUE) {
+			audioWav = null;
+		}
+		else if(minBufferSize == AudioRecord.ERROR) {
+			audioWav = null;
+		}
+		else {
+			audioWav = new AudioRecord(mAudioSource,
+					Settings.RECORDER_SAMPLERATE, Settings.RECORDER_CHANNELS,
+					Settings.RECORDER_AUDIO_ENCODING, minBufferSize);
+		}		
 		
 		lNotif = mNotification();
 		mInitNotification(lNotif);
@@ -331,8 +339,14 @@ public class ServiceIntentRecorderWav extends Service {
 
 		if (audioWav != null) {
 			isRecording = false;
-
-			audioWav.stop();
+			
+			try {
+				audioWav.stop();
+			}
+			catch(IllegalStateException e) {
+				Console.print_exception(e);
+			}
+			
 			audioWav.release();
 
 			audioWav = null;
@@ -356,7 +370,11 @@ public class ServiceIntentRecorderWav extends Service {
 					}							
 				}
 			}).start();	
-		}		
+		}
+		else {
+			Intent notifyReceiver = new Intent(broadcastIntent);
+			sendBroadcast(notifyReceiver);
+		}
 	}
 
 	/**
