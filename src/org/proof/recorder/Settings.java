@@ -349,14 +349,14 @@ public final class Settings {
 
 		DataPersistanceManager dpm = new DataPersistanceManager();
 
-		if(mp3Version < 5 && mp3Version != -1) {
+		if(mp3Version < 8 && mp3Version != -1) {
 			dpm.cacheRows("MP3_BAD_VERSION", "true");
 		}
 		else {
 			dpm.cacheRows("MP3_BAD_VERSION", "false");
 		}
 
-		if(oggVersion < 2 && oggVersion != -1) {
+		if(oggVersion < 3 && oggVersion != -1) {
 			dpm.cacheRows("OGG_BAD_VERSION", "true");
 		}
 		else {
