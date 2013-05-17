@@ -1,5 +1,6 @@
 package org.proof.recorder.services;
 
+import org.proof.recorder.receivers.PhoneRecorderReceiver;
 import org.proof.recorder.utils.PlugMiddleware;
 import org.proof.recorder.utils.Log.Console;
 import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3;
@@ -12,7 +13,7 @@ import android.os.IBinder;
 public class MP3Middleware extends Service implements PlugMiddleware  {
 
 	public IServiceIntentRecorderMP3 mService;
-	private IServiceIntentRecorderMP3Cx remotePlugCnx;
+	private static IServiceIntentRecorderMP3Cx remotePlugCnx;
 	private String mFile;
 	private int mSampleRate;
 	private int audioSource;
@@ -22,6 +23,7 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	private String notificationIntent;
 	private String notificationPkg;
 
+	public static int startID;
 	@Override
 	public void onCreate() {
 		super.onCreate();	  	
@@ -33,14 +35,15 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
+		
 
-		this.remotePlugCnx = new IServiceIntentRecorderMP3Cx(this);
-		this.remotePlugCnx.safelyConnectTheService();
+		MP3Middleware.remotePlugCnx = new IServiceIntentRecorderMP3Cx(this);
+		MP3Middleware.remotePlugCnx.safelyConnectTheService();
 
-		while(this.remotePlugCnx == null){
-			Console.print_debug("this.remotePlugCnx is :"+this.remotePlugCnx);
+		while(MP3Middleware.remotePlugCnx == null){
+			Console.print_debug("this.remotePlugCnx is :"+MP3Middleware.remotePlugCnx);
 		}
-		Console.print_debug("proof onStartCommand: "+ this.remotePlugCnx+"mService is "+mService);
+		Console.print_debug("proof onStartCommand: "+ MP3Middleware.remotePlugCnx+"mService is "+mService);
 		mFile = intent.getStringExtra("FileName");
 		mSampleRate = intent.getIntExtra("mSampleRate", 44100);
 		audioSource = intent.getIntExtra("audioSource", 1);
@@ -88,21 +91,26 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	public void stopRecAsynchronously(int message){
 		Console.print_debug("proof stopRecAsynchronously RC =: "+message);
 	}
-
+	
+	@Override
+	public void EncodeRawFileAsynchronously(int message){
+		Console.print_debug("proof EncodeRawFileAsynchronously RC =: "+message);
+	}
+	
 	@Override
 	public void callWhenReady() {
 
-		this.remotePlugCnx.safelyPassParameters(mFile, mSampleRate,
+		MP3Middleware.remotePlugCnx.safelyPassParameters(mFile, mSampleRate,
 				audioSource, outBitrate, postEncode, notificationIntent,
 				notificationPkg, broadcastClass);
-		this.remotePlugCnx.safelyStartRec();
+		MP3Middleware.remotePlugCnx.safelyStartRec();
 
 	}	
-
+	
 	@Override
 	public void onDestroy() {
-		this.remotePlugCnx.safelyStopRec();
-		this.remotePlugCnx.safelyDisconnectTheService();
+		MP3Middleware.remotePlugCnx.safelyStopRec();
+		MP3Middleware.remotePlugCnx.safelyDisconnectTheService();
 		super.onDestroy();
 
 
@@ -112,7 +120,14 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
-
+	/***
+	 * pass static reference to connection manager
+	 * class PhoneRecordReceiver
+	 */
+	public static void getCNX(){
+		PhoneRecorderReceiver.MP3Cnx(remotePlugCnx);
+		
+	}
 
 
 

@@ -14,7 +14,7 @@ interface IServiceIntentRecorderMP3 {
     									
     int startRec();
     int stopRec();
-    int encodeFile(in String inFileName, in String outFileName);
+    int encodeFile();
     
 
     

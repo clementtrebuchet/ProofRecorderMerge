@@ -11,6 +11,7 @@ import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
 import org.proof.recorder.receivers.holders.PhoneRecordHolder;
 import org.proof.recorder.service.DataPersistanceManager;
+import org.proof.recorder.services.MP3Middleware;
 import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
@@ -41,6 +42,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	IServiceIntentRecorderMP3 mService = null;
 	private PhoneRecordHolder holder = null;
 	private PhoneRecord record = null;
+	static IServiceIntentRecorderMP3Cx cnx = null;
 	
 	private void notifyUser() {
 		
@@ -265,9 +267,23 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		}
 		
 		else if (intent.getAction().equals(STOP_ACTION))
-		{			
-			stopService();			
-			handleStop();
+		{	
+			/**
+			 * if post encode is set then get the static reference to cnx manager.
+			 */
+			if(Settings.getPostEncoding() == 1) {
+				MP3Middleware.getCNX();
+				PhoneRecorderReceiver.cnx.safelyStopRec();
+				PhoneRecorderReceiver.cnx.safelyEncodeRawFile();
+				stopService();			
+				handleStop();
+			}
+			else {
+				stopService();			
+				handleStop();
+				
+			}
+			
 		}
 		
 		else if (intent.getAction().equals(SAVE_ACTION))
@@ -300,6 +316,17 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 			Intent service = new Intent(SAVE_ACTION);
 			getInternalContext().sendBroadcast(service);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param cnx
+	 * set the cnx reference 
+	 */
+	public static  void  MP3Cnx(IServiceIntentRecorderMP3Cx cnx){
+		
+		PhoneRecorderReceiver.cnx = cnx;	
+		
 	}
 	
 }

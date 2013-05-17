@@ -115,4 +115,12 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 
 	}
 
+	@Override
+	public void EncodeRawFileAsynchronously(int message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 }

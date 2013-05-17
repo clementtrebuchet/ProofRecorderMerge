@@ -6,5 +6,6 @@ public interface PlugMiddleware {
 	void parametersRecAsynchronously(int message);
 	void startRecAsynchronously(int message);
 	void stopRecAsynchronously(int message);
+	void EncodeRawFileAsynchronously(int message);
 
 }
