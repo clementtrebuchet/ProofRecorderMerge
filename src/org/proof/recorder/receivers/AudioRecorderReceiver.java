@@ -9,15 +9,19 @@ import org.proof.recorder.database.models.VoiceRecord;
 import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.receivers.holders.VoiceRecordHolder;
 import org.proof.recorder.service.DataPersistanceManager;
+import org.proof.recorder.services.MP3Middleware;
 import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
 import org.proof.recorder.utils.Log.Console;
+import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.Toast;
 
 public class AudioRecorderReceiver extends ProofBroadcastReceiver {
@@ -30,7 +34,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 	
 	private static Intent service = null;
 	
-	private static int mAudioSource;	
+	private static int mAudioSource;
+	private static IServiceIntentRecorderMP3Cx cnx;	
 	
 	private boolean isEdited;
 	
@@ -38,6 +43,8 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 	
 	private VoiceRecordHolder holder = null;
 	private VoiceRecord record = null;
+	
+	Handler threadHandler = null;
 	
 	/**
 	 * @return the isEdited
@@ -284,13 +291,53 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 			startService();
 		}
 		
-		else if (intent.getAction().equals(STOP_ACTION))
-		{
-			stopService();
-			
-			resetCurrentData();
-			
-			handleStop(AudioFormat);
+		else if (intent.getAction().equals(STOP_ACTION)) {
+			String audioFormat = dpm.getAudioFormat();
+			if (Settings.getPostEncoding() == 1
+					&& audioFormat.equalsIgnoreCase("mp3")) {
+				
+				threadHandler = new Handler();
+				Runnable R = new Runnable() {
+					
+					@Override
+					public void run() {
+						threadHandler.postDelayed(new Runnable() {
+
+							@Override
+							public void run() {
+								
+								MP3Middleware.getCNX(1);
+								Console.print_debug("*********** AudioRecorderReceiver.cnx ***********"
+										+ AudioRecorderReceiver.cnx);
+								AudioRecorderReceiver.cnx.safelyStopRec();
+								AudioRecorderReceiver.cnx.safelyEncodeRawFile();
+								stopService();
+								
+								
+								
+								
+							}
+
+						}, 1000);
+
+					}
+
+				};
+				Thread mThread = new Thread(R);
+				mThread.start();
+				AlertDialogHelper.hideProgressDialog();
+				resetCurrentData();
+				handleStop(AudioFormat);
+
+			} else {
+				stopService();
+
+				resetCurrentData();
+
+				handleStop(AudioFormat);
+
+			}
+
 		}
 		
 		else if (intent.getAction().equals(SAVE_ACTION))
@@ -315,4 +362,21 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 		Console.print_debug(intent.getAction());		
 		Console.print_debug(record);
 	}
+	/**
+	 * 
+	 * @param cnx
+	 * set the cnx reference 
+	 */
+	public static  void  MP3Cnx(IServiceIntentRecorderMP3Cx cnx){
+		
+		AudioRecorderReceiver.cnx = cnx;	
+		
+	}
+	
+	Handler mHandler = new Handler(){
+		@Override
+		  public void handleMessage(Message msg) {
+			  
+		     }
+	};
 }

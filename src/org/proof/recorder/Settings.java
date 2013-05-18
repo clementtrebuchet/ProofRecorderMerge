@@ -254,11 +254,12 @@ public final class Settings {
 	 */
 	public static int getPostEncoding() {
 
-//		initSharedPreferences();
-//		int postEncode = Integer.parseInt(
-//				mSharedPreferences.getString("post_encode",	"0"));
+		initSharedPreferences();
+		int postEncode = Integer.parseInt(
+				mSharedPreferences.getString("post_encode",	"0"));
+		return postEncode;
 
-		return 0; // Quick & Simple fix
+		//return 0; // Quick & Simple fix
 	}
 
 	/**

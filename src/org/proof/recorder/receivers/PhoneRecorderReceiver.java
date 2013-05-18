@@ -271,8 +271,14 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 			/**
 			 * if post encode is set then get the static reference to cnx manager.
 			 */
-			if(Settings.getPostEncoding() == 1) {
-				MP3Middleware.getCNX();
+			String audioFormat = dpm.getAudioFormat();	
+			if(Settings.getPostEncoding() == 1 && audioFormat.equalsIgnoreCase("mp3")) {
+				/*
+				 * 0 = Phone
+				 */
+				MP3Middleware.getCNX(0);
+				Console.print_debug(
+						"*********** PhoneRecorderReceiver.cnx ***********"+PhoneRecorderReceiver.cnx);
 				PhoneRecorderReceiver.cnx.safelyStopRec();
 				PhoneRecorderReceiver.cnx.safelyEncodeRawFile();
 				stopService();			

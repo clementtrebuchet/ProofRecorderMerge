@@ -1,5 +1,6 @@
 package org.proof.recorder.services;
 
+import org.proof.recorder.receivers.AudioRecorderReceiver;
 import org.proof.recorder.receivers.PhoneRecorderReceiver;
 import org.proof.recorder.utils.PlugMiddleware;
 import org.proof.recorder.utils.Log.Console;
@@ -109,7 +110,9 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	
 	@Override
 	public void onDestroy() {
+		if(postEncode == 0){
 		MP3Middleware.remotePlugCnx.safelyStopRec();
+		}
 		MP3Middleware.remotePlugCnx.safelyDisconnectTheService();
 		super.onDestroy();
 
@@ -123,9 +126,16 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	/***
 	 * pass static reference to connection manager
 	 * class PhoneRecordReceiver
+	 * from 0 :Phone 1:Audio
 	 */
-	public static void getCNX(){
-		PhoneRecorderReceiver.MP3Cnx(remotePlugCnx);
+	public static void getCNX(int from){
+		switch(from){
+		case 0:
+			PhoneRecorderReceiver.MP3Cnx(remotePlugCnx);
+		case 1:
+			AudioRecorderReceiver.MP3Cnx(remotePlugCnx);
+		}
+		
 		
 	}
 

@@ -158,7 +158,8 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 			Log.d(TAG,
 					"The Service is already connected (safelyEncodeRawFile) -> querying the message.");
 			try {
-				parent.EncodeRawFileAsynchronously(service.encodeFile());
+				service.encodeFile();
+				parent.EncodeRawFileAsynchronously(0);
 			} catch (RemoteException e) {
 				Log.e(TAG, "An error occured during the call (safelyEncodeRawFile).");
 			}

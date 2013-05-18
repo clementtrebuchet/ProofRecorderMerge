@@ -5,6 +5,7 @@ import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.receivers.AudioRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
+import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
@@ -167,7 +168,7 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	        @Override
 			public void onClick(View v) {
 	        	if(onRecord) {
-	        		
+	        		AlertDialogHelper.openProgressDialog(null);
 	        		dpm = new DataPersistanceManager();
 	    	    	
 	    	    	// If on a call, the user try to stop an Audio Record
@@ -177,8 +178,10 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	    	    			dpm.retrieveCachedRows("PhoneServiceRunning"));
 	    	    	
 	    	    	if(!phoneRecording) {
+	    	    		
 	    	    		stopRecording();
-		        		setNoRecordScene();
+						setNoRecordScene();
+	    	    		
 	    	    	}        		       		
 	        	}
 	        }
