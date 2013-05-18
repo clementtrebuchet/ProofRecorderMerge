@@ -48,6 +48,7 @@ public class AlertDialogHelper {
 		mDialog.setPositiveButton(
 				getContext().getString(R.string.ok),
 				null);
+		
 
 		mDialog.show();
 	}
@@ -73,7 +74,7 @@ public class AlertDialogHelper {
 					stringId  != null ? (Integer)stringId : R.string.loading));
 			
 			progressDialog.setIndeterminate(true);
-
+			progressDialog.setCancelable(false);
 			progressDialog.show();
 		}
 		catch (Exception e) {

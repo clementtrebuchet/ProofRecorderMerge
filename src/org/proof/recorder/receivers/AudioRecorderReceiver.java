@@ -325,7 +325,6 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 				};
 				Thread mThread = new Thread(R);
 				mThread.start();
-				AlertDialogHelper.hideProgressDialog();
 				resetCurrentData();
 				handleStop(AudioFormat);
 

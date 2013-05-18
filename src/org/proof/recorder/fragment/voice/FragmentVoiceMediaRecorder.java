@@ -168,7 +168,7 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	        @Override
 			public void onClick(View v) {
 	        	if(onRecord) {
-	        		AlertDialogHelper.openProgressDialog(null);
+	        		
 	        		dpm = new DataPersistanceManager();
 	    	    	
 	    	    	// If on a call, the user try to stop an Audio Record
