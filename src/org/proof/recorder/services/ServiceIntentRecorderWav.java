@@ -25,7 +25,6 @@ import android.util.Log;
 
 public class ServiceIntentRecorderWav extends Service {
 	
-	
 	private static final int NOTIFICATION_ID = 1234567890;
 	
 	private static String audioFile = null;
