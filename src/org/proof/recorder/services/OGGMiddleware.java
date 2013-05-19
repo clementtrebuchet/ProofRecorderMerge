@@ -61,9 +61,7 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 		} catch (NoSuchMethodException e) {
 			throw new IllegalStateException(
 					"OS doesn't have Service.startForeground OR Service.setForeground!");
-		}
-		
-		
+		}		
 	}
 
 	/**
