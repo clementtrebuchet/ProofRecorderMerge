@@ -122,12 +122,7 @@
     <string name="summary_checkbox_speaker">Necessaire à une\nbonne qualitée\nd\'enregistrement</string>
     <string name="arrow_record">arrow image</string>
     <!-- Settings -->
-    <!-- DEBUT SYNCRON -->
-    <string name="syncronTEL">Synchroniser sur le serveur</string>
-    <string name="syncronVOX">Synchroniser Voix</string>
-    <string name="syncronConnectionError">Erreur de connection</string>
-    <string name="syncronDATA">Synchroniser DATA</string>
-    <!-- FIN SYNCRON -->
+
     <!-- Communication -->
     <string name="dialog_based_phonePrefs">Communications</string>
     <string name="dialog_based_phonePrefs_ergo">Sécurité et Ergonomie</string>
