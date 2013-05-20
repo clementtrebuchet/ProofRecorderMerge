@@ -10,6 +10,7 @@ import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -47,20 +48,20 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		private static final String TAG = "FragmentPhoneCallDossier";
 		boolean mDualPane;
 		int mCursorPos = -1;
-		
+
 		// ArrayList<Contact>() Variables
-		
+
 		private static ArrayList<Contact> contacts = null;
 		private static ContactAdapter contactAdapter = null;
 		private static Runnable viewContacts = null;
 		private static boolean uiOn = false;
-		
-		
+
+
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);				
-			
+
 			viewContacts = new Runnable() {
 				@Override
 				public void run() {
@@ -69,9 +70,9 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 					uiOn = false;
 				}
 			};
-			
+
 			getActivity().runOnUiThread(viewContacts);			
-			
+
 			contactAdapter = new ContactAdapter(getActivity(),
 					R.layout.fragment_listrecord_dossiers_detail, contacts);
 		}
@@ -104,27 +105,37 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 			AdapterContextMenuInfo record = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			int recordPosition = record.position;	
-			
-			ContactAdapter ca = (ContactAdapter) getListAdapter();				
-			Contact mContact = ca.getItem(recordPosition);
-			
-			if (item.getItemId() == R.id.cm_records_list_del_file) {
-				//MenuActions.deleteContactsFolder(mContact, getActivity(), ca);					
-				return true;
-			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
-				MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
-				return true;
+
+			ContactAdapter ca = (ContactAdapter) getListAdapter();
+
+			// In case Collection is empty, if so no action allowed.
+
+			try {
+				Contact mContact = ca.getItem(recordPosition);
+
+				if (item.getItemId() == R.id.cm_records_list_del_file) {
+					//MenuActions.deleteContactsFolder(mContact, getActivity(), ca);					
+					return true;
+				} else if (item.getItemId() == R.id.cm_records_list_display_details) {
+					MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
+					return true;
+				}
+
 			}
+			catch(IndexOutOfBoundsException exc) {
+				Console.print_exception(exc);
+			}	
+
 			return super.onContextItemSelected(item);
 		}		
-		
+
 		private void getContacts() {
 			try {
 				contacts = ContactsDataHelper.getCallsFoldersOfUnKnown(getActivity());
 				if(uiOn)
 					getActivity().runOnUiThread(returnRes);
 			} catch (Exception e) {
-					Log.e(TAG, "" + e.getMessage());
+				Log.e(TAG, "" + e.getMessage());
 			}
 		}
 
@@ -148,7 +159,7 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 				}
 				Contact mContact = items.get(position);
 				if (mContact != null) {		
-					
+
 					TextView hideId;
 
 
@@ -184,7 +195,7 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 					phTxt.setText(mContact.getPhoneNumber());
 					nomUtilisateur.setText(mContact.getContactName());
 					hideId.setVisibility(View.INVISIBLE);
-								
+
 				}
 				return view;
 			}
@@ -196,40 +207,40 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 			super.onActivityCreated(savedInstanceState);
 			if(!contacts.isEmpty())
 				Collections.sort(contacts, new Comparator<Contact>() {
-			        @Override
-			        public int compare(Contact s1, Contact s2) {	        	
-			        	
-			            return s1.getsPhoneNumber().get_nationalNumber().compareToIgnoreCase(
-			            		s2.getsPhoneNumber().get_nationalNumber());
-			        }
-			    });
-			
+					@Override
+					public int compare(Contact s1, Contact s2) {	        	
+
+						return s1.getsPhoneNumber().get_nationalNumber().compareToIgnoreCase(
+								s2.getsPhoneNumber().get_nationalNumber());
+					}
+				});
+
 			setListAdapter(contactAdapter);
-			
+
 			if(getListView().getCount() > 0)
 				registerForContextMenu(getListView());
 		}
-		
+
 		private Runnable returnRes = new Runnable() {
 
 			@Override
 			public void run() {
-				
+
 				((ContactAdapter) getListAdapter()).notifyDataSetChanged();
 			}
 		};
 
-		 @Override
-		 public void onListItemClick(ListView l, final View v, int position,
-		 long id) {
-		
-			 super.onListItemClick(l, v, position, id);	
-			 
+		@Override
+		public void onListItemClick(ListView l, final View v, int position,
+				long id) {
+
+			super.onListItemClick(l, v, position, id);	
+
 			ContactAdapter ca = (ContactAdapter) getListAdapter();				
 			Contact mContact = ca.getItem(position);
-			
+
 			MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());		 
-		 }
+		}
 
 	}
 
