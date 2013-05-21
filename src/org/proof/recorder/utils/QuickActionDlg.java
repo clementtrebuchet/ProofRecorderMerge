@@ -547,7 +547,6 @@ public class QuickActionDlg {
 			}
 
 			else {
-
 				if (!Settings.isNotLicensed()) {
 					mContext.startActivity(StaticIntents.goPhone(mContext));
 				}
@@ -564,14 +563,12 @@ public class QuickActionDlg {
 			break;
 
 		default:
-			if (Settings.isToastNotifications() && id != 0)
-				Toast.makeText(
-						mContext,
-						"Erreur dans " + TAG + " ID inconnu dans onItemClick()",
-						Toast.LENGTH_SHORT).show();
+			if (id != 0) {
+				Console.print_debug(
+						"Erreur dans " + TAG + " ID inconnu dans onItemClick()");
+			}				
 			return false;
 		}
-
 		return true;
 	}
 
