@@ -8,6 +8,7 @@ import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceAdapter;
 import org.proof.recorder.bases.fragment.ProofFragment;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.collections.VoicesList;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
@@ -17,7 +18,6 @@ import org.proof.recorder.utils.Log.Console;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +34,7 @@ public class FragmentListVoice extends ProofFragment {
 		super.onCreate(savedInstanceState);		
 	}
 
-	public static class VoiceListLoader extends ListFragment {
+	public static class VoiceListLoader extends ProofListFragmentWithQuickAction {
 		
 		private static ArrayList<Voice> voices = null;
 		private static VoiceAdapter voicesAdapter = null;
@@ -164,6 +164,18 @@ public class FragmentListVoice extends ProofFragment {
 					this, 
 					Settings.mType.VOICE_TITLED
 			);
+		}
+
+		@Override
+		protected boolean handleActionMode(int itemId) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		protected void initOnActivityCreated() {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

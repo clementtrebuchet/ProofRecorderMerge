@@ -3,6 +3,8 @@ package org.proof.recorder.fragment.phone;
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.fragment.phone.FragmentListRecordIn.InCommingCallsLoader;
+import org.proof.recorder.fragment.phone.FragmentListRecordOut.OutGoingCallsLoader;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.TabsPagerAdapter;
@@ -10,6 +12,7 @@ import org.proof.recorder.utils.Log.Console;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -57,7 +60,7 @@ public class FragmentListRecordTabs extends ProofFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 		
 		setContentView(R.layout.fragment_inout_records_tabs);
 		
@@ -167,8 +170,17 @@ public class FragmentListRecordTabs extends ProofFragmentActivity {
 				startActivity(StaticIntents.goHome(this));		
 			}
 		}	
-
-		QuickActionDlg.setmContext(this);
+	}
+	
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+	    if(OutGoingCallsLoader.isMulti | InCommingCallsLoader.isMulti) {
+	        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+	           // handle your back button code here
+	           return true; // consumes the back key event - ActionMode is not finished
+	        }
+	    }
+	    return super.dispatchKeyEvent(event);
 	}
 
 	@Override
