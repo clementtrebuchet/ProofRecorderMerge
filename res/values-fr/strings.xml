@@ -52,6 +52,14 @@
     <string name="dashbord_dialog_free_space">Espace libre (carte SD):</string>
     <string name="dashbord_dialog_app_space">Espace utilisé:</string>
     <!-- END DashBoard Dialog -->
+    
+    <string name="multi_select_mode">Activer la Multi Sélection</string>
+    
+    <string name="qaction_delete_all">Supprimer tout</string>
+    <string name="qaction_delete">Supprimer</string>
+    <string name="qaction_share">Partager</string> 
+    <string name="qaction_done">OK</string>   
+    
     <!-- START Google Play -->
     <string name="gplay_title">Google Play</string>
     <string name="gplay_no_match">Aucune correspondance trouvée!</string>

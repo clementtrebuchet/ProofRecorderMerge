@@ -23,6 +23,13 @@
     <string name="notification_ogg_title">Ogg service running</string>
     <string name="notification_ogg_text">The Ogg service is currently running</string>
     
+    <string name="multi_select_mode">Enable Multi Selection</string>
+    
+    <string name="qaction_delete_all">Delete All</string>
+    <string name="qaction_delete">Delete</string>
+    <string name="qaction_share">Share</string>
+    <string name="qaction_done">OK</string> 
+    
     <string name="encode_while">Encode while recording</string>
     <string name="encode_after">Encode after recording</string>
     <string name="audio_encoder_handler">Audio Encoding Handler</string>
