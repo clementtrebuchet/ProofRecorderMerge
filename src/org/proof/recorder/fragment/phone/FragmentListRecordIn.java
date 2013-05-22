@@ -18,7 +18,6 @@ import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.Log.Console;
 
 import android.annotation.TargetApi;
@@ -66,28 +65,21 @@ public class FragmentListRecordIn extends ProofFragment {
 	public static class InCommingCallsLoader extends ProofListFragmentWithQuickAction {
 		private static InCommingCallsAdapter recordsAdapter = null;
 
-		private void sendEventToFolderList() {
-			Console.print_debug("Broadcast: eventListNeedFolderRefreshReceiver");
-
-			Intent intent = new Intent("eventListToBeRefreshedReceiver");
-			// You can also include some extra data.
-			intent.putExtra("message", "Refresh");
-			LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);				  
-		}
-
-		private ProofBroadcastReceiver eventListNeedFolderRefreshReceiver = new ProofBroadcastReceiver() {
+		private ProofBroadcastReceiver eventNotifyMultiSelect = new ProofBroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				super.onReceive(context, intent);
-				StaticIntents redirectIntent = StaticIntents.create(getActivity(), FragmentListKnownContacts.class);
-				startActivity(redirectIntent);
+				isMulti = intent.getBooleanExtra("MULTI_SELECT_MODE", false);
+				displayQuickActionMode();
+				recordsAdapter.clear();
+				initOnActivityCreated();
 			}
 		};
 
 		@Override
 		public void onDestroy() {
 			LocalBroadcastManager.getInstance(getActivity())
-			.unregisterReceiver(eventListNeedFolderRefreshReceiver);
+			.unregisterReceiver(eventNotifyMultiSelect);
 			super.onDestroy();
 		}
 
@@ -98,7 +90,7 @@ public class FragmentListRecordIn extends ProofFragment {
 			setHasOptionsMenu(true);
 
 			LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
-					eventListNeedFolderRefreshReceiver, new IntentFilter("eventInNeedToBeRefreshedReceiver"));
+					eventNotifyMultiSelect, new IntentFilter("eventNotifyMultiSelectIn"));
 
 			MenuActions.setmContext(getActivity());		
 
@@ -126,6 +118,13 @@ public class FragmentListRecordIn extends ProofFragment {
 
 
 		/* Options Menu */
+		
+		private void notifyOutRecordsTab() {			
+			Intent intent = new Intent("eventNotifyMultiSelectOut");
+			intent.putExtra("MULTI_SELECT_MODE", true);
+			LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
+					intent);
+		}
 
 		@Override
 		public boolean onOptionsItemSelected(
@@ -136,6 +135,7 @@ public class FragmentListRecordIn extends ProofFragment {
 
 				recordsAdapter.clear();
 				initOnActivityCreated();
+				notifyOutRecordsTab();				
 			}
 			return result;
 		}
@@ -377,9 +377,6 @@ public class FragmentListRecordIn extends ProofFragment {
 				Record mRecord = inCommingCallsAdapter.getItem(position);	
 
 				QuickActionDlg.showPhoneOptionsDlg(getActivity(), view, null, inCommingCallsAdapter, mRecord);
-
-				if(recordsAdapter.getCount() == 0)
-					sendEventToFolderList();
 			}
 			else {
 				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
