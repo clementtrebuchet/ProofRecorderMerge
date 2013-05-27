@@ -1,49 +1,27 @@
 package org.proof.recorder.fragment.phone;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.adapter.phone.ObjectsAdapter;
 import org.proof.recorder.bases.fragment.ProofFragment;
-import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.models.Record;
-import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.StaticIntents;
+import org.proof.recorder.utils.Log.Console;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.v4.app.ListFragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-public class FragmentListRecordOut extends ProofFragment {
+import android.view.View;
+
+import android.widget.CheckBox;
+import android.widget.ListView;
+
+public class FragmentListRecordOut extends ProofFragment {		
 
 	/** Called when the activity is first created. */
 	@Override
@@ -51,55 +29,13 @@ public class FragmentListRecordOut extends ProofFragment {
 		super.onCreate(savedInstanceState);
 	}
 
-	public static class OutGoingCallsLoader extends ListFragment
+	public static class OutGoingCallsLoader extends ProofListFragmentWithQuickAction
 	{
-		private static final String TAG = "FragmentPhoneCallDossier";
-		boolean mDualPane;
-		int mCursorPos = -1;
-		private static Bundle b;
-		
-		// ArrayList<Contact>() Variables
-		
-		private static ArrayList<Record> records = null;
-		private static OutGoingCallsAdapter recordsAdapter = null;
-		private static Runnable viewRecords = null;
-		
-		private void sendEventToFolderList() {
-			if(Settings.isDebug())
-			  Log.d("sender", "Broadcast: eventListNeedFolderRefreshReceiver (out)");
-			
-			  Intent intent = new Intent("eventListToBeRefreshedReceiver");
-			  intent.putExtra("message", "Refresh");
-			  LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);		  
-			}
-		
-		private ProofBroadcastReceiver eventListNeedFolderRefreshReceiver = new ProofBroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				super.onReceive(context, intent);
-				StaticIntents redirectIntent = StaticIntents.create(getActivity(), FragmentListKnownContacts.class);
-				startActivity(redirectIntent);
-			}
-		};
-		
-		@Override
-		public void onDestroy() {
-			LocalBroadcastManager.getInstance(getActivity())
-					.unregisterReceiver(eventListNeedFolderRefreshReceiver);
-			super.onDestroy();
-		}
-
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);			
-			LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
-					eventListNeedFolderRefreshReceiver, new IntentFilter("eventOutNeedToBeRefreshedReceiver"));
-			
-			MenuActions.setmContext(getActivity());			
-			b = getActivity().getIntent().getExtras();
-			
-			setRetainInstance(true);
-			viewRecords = new Runnable() {
+			super.onCreate(savedInstanceState);
+
+			fillCollectionRunnable = new Runnable() {
 				@Override
 				public void run() {
 					getContacts();
@@ -107,203 +43,170 @@ public class FragmentListRecordOut extends ProofFragment {
 			};					
 		}
 
-		/**
-		 * Contextual Menu for displaying social and all :)
-		 */
+		/* Options Menu */
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			return super.onCreateView(inflater, container, savedInstanceState);
-		}
-
-		@Override
-		public void onCreateContextMenu(ContextMenu menu, View v,
-				ContextMenuInfo menuInfo) {
-
-			menu.add(Menu.NONE, R.id.cm_records_list_del_file, Menu.NONE,
-					getString(R.string.cm_records_list_del_file_txt));
-			menu.add(Menu.NONE, R.id.cm_records_list_read_wav, Menu.NONE,
-					getString(R.string.cm_records_list_read_wav_txt));
-			menu.add(Menu.NONE, R.id.cm_records_list_display_details,
-					Menu.NONE, getString(R.string.cm_records_list_details_txt));
-			menu.add(Menu.NONE, R.id.cm_records_list_display_sharing_opts,
-					Menu.NONE, getString(R.string.cm_records_list_sharing_opts_txt));
-
-			super.onCreateContextMenu(menu, v, menuInfo);
-		}
-
-		@Override
-		public boolean onContextItemSelected(MenuItem item) {
-
-			AdapterContextMenuInfo record = (AdapterContextMenuInfo) item
-					.getMenuInfo();
-			int recordPosition = record.position;				
-			Record mRecord = recordsAdapter.getItem(recordPosition);		
+		/*@Override
+		public boolean onOptionsItemSelected(
+				com.actionbarsherlock.view.MenuItem item) {
 			
-			if(Settings.isDebug())
-				Log.v(TAG, "" + recordPosition);
+			boolean result = false;
+			if(item.getItemId() == R.id.cm_records_list_del_file) {
+				result = super.onOptionsItemSelected(item);
 
-			if (item.getItemId() == R.id.cm_records_list_del_file) {
-				if(Settings.isDebug())
-					Log.i("ContextMenu", "Suppressed Item");
-				MenuActions.deleteItem(
-						mRecord.getmId(),
-						Settings.mType.CALL, 
-						null,
-						recordsAdapter, 
-						null, 
-						mRecord
-				);
-				return true;
-			} else if (item.getItemId() == R.id.cm_records_list_read_wav) {
-				MenuActions.readPhone(mRecord.getmFilePath());
-				if(Settings.isDebug())
-					Log.i("ContextMenu", "Read Item");
-				return true;
-			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
-				if(Settings.isDebug())
-					Log.i("ContextMenu", "Display Item's details");
-				MenuActions.displayItemPhoneDetails(mRecord.getmId());
-				return true;
-			} else if (item.getItemId() == R.id.cm_records_list_display_sharing_opts) {
-				if(Settings.isDebug())
-					Log.i("ContextMenu", "Sharing Options Item");
-				String[] mDatas = new String[] {
-						mRecord.getmFilePath()
-				};
-				MenuActions.sharingOptions(mDatas);
-				return true;
+				listAdapter.clear();
+				initOnActivityCreated();
 			}
-			return super.onContextItemSelected(item);
-		}	
-		
+			return result;
+		}*/
+
+		/* End of Options Menu */
+
 		private void getContacts() {
 			try {
-				String mIdOrTelephone = b.getString("mIdOrTelephone");
-				String mWhere = b.getString("mWhereClause");
-				records = ContactsDataHelper.getOutGoingCalls(getActivity(), mWhere, mIdOrTelephone);
-			} catch (Exception e) {
-				
-				if(Settings.isDebug())
-					Log.e(TAG, "E" + e.getMessage());
+				String mIdOrTelephone = extraData.getString("mIdOrTelephone");
+				String mWhere = extraData.getString("mWhereClause");
+				innerCollection = ContactsDataHelper.getOutGoingCalls(getActivity(), mWhere, mIdOrTelephone);
+			} catch (Exception e) {				
+				Console.print_exception(e);
 			}
-		}
-
-		public class OutGoingCallsAdapter extends ArrayAdapter<Record> {
-
-			private ArrayList<Record> items;
-
-			public OutGoingCallsAdapter(Context context, int textViewResourceId,
-					ArrayList<Record> items) {
-				super(context, textViewResourceId, items);
-				this.items = items;
-			}
-
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View view = convertView;
-				if (view == null) {
-					LayoutInflater vi = (LayoutInflater) getActivity()
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.listfragmentdroit, null);
-				}
-				Record mRecord = items.get(position);
-				if (mRecord != null) {
-					
-					String origPhone = mRecord.getmPhone();
-					
-					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
-							getActivity(), origPhone);
-
-					TextView phTxt = (TextView) view.findViewById(R.id.number);
-					
-					TextView mHtime = (TextView) view.findViewById(R.id.timehumanreadable);
-
-					TextView mId = (TextView) view.findViewById(R.id.idrecord);
-					mId.setVisibility(View.INVISIBLE);
-
-					ImageView imageView = (ImageView) view.findViewById(R.id.list_image);
-					Bitmap defaultBite = BitmapFactory.decodeResource(
-							getActivity().getResources(), R.drawable.telphone);
-					imageView.setImageBitmap(defaultBite);
-
-					InputStream input = null;
-
-					if (mContact.getLongContractId() != -1) {
-						Uri uri = ContentUris.withAppendedId(
-								ContactsContract.Contacts.CONTENT_URI,
-								mContact.getLongContractId());
-						ContentResolver cr = getActivity().getContentResolver();
-						input = ContactsContract.Contacts.openContactPhotoInputStream(cr,
-								uri);
-					}
-					if (input == null) {
-
-					} else {
-						if (Settings.isDebug())
-							Log.v(TAG, "Image is read");
-
-						Bitmap bitmap = BitmapFactory.decodeStream(input);
-						imageView.setImageBitmap(bitmap);
-					}
-
-					phTxt.setText(origPhone);
-					mHtime.setText(mRecord.getmHtime());
-								
-				}
-				return view;
-			}
-
 		}
 
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-			
-			getActivity().runOnUiThread(viewRecords);
-			
-			try {
-				Collections.sort(records, new Comparator<Record>() {
-			        @Override
-			        public int compare(Record s1, Record s2) {
-			            return s1.getmHtime().compareToIgnoreCase(s2.getmHtime());
-			        }
-			    });
-				
-				recordsAdapter = new OutGoingCallsAdapter(getActivity(),
-						R.layout.listfragmentdroit, records);
-				
-				setListAdapter(recordsAdapter);
+			initOnActivityCreated();			
+		}
+
+		@Override
+		public void onListItemClick(ListView l, final View view, int position,
+				long id) {
+
+			super.onListItemClick(l, view, position, id);	
+
+			if(!isMulti) {				
+				QuickActionDlg.showPhoneOptionsDlg(
+						getActivity(), 
+						view, 
+						listAdapter,
+						(Record) listAdapter.getItem(position)
+				);
 			}
-			catch(Exception e) {
-				setEmptyText("Aucun Enregistrements d'appels");
-			}		
-			
-			if(getListView().getCount() > 0) {
-				registerForContextMenu(getListView());
+			else {
+				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
+				checkbox.toggle();
 			}
 		}
 
-		 @Override
-		 public void onListItemClick(ListView l, final View v, int position,
-		 long id) {
+		@Override
+		protected void initOnOptionsItemSelected() {
+			FragmentListRecordTabs.removeUnusedTab();			
+		}
+
+		@Override
+		protected void preDeleteAllAction() {
+			
+			int iter = 0;
+			for (Object record : innerCollection) {
+				recordIds[iter] = ((Record) record).getmId();
+				recordPaths[iter] = ((Record) record).getmFilePath();
+				
+				iter++;
+
+				Console.print_debug("Position: " + record);
+			}			
+		}
+
+		@Override
+		protected void DoneAction() {
+			FragmentListRecordTabs.readdUnusedTab();			
+		}
+
+		@Override
+		protected void DeleteAllAction() {
+			MenuActions.deleteCalls(recordIds, recordPaths);
+			FragmentListRecordTabs.removeCurrentTab(getInternalContext());			
+		}
+
+		@Override
+		protected void ShareAction() {
+			MenuActions.sharingOptions(recordPaths);			
+		}
 		
-			 super.onListItemClick(l, v, position, id);	
-			 
-			OutGoingCallsAdapter outGoingCallsAdapter = (OutGoingCallsAdapter) getListAdapter();				
-			Record mRecord = outGoingCallsAdapter.getItem(position);
+		@Override
+		protected void preDeleteAndShareAction() {
+			int iter = 0;					
 			
-			QuickActionDlg.showPhoneOptionsDlg(getActivity(), v, outGoingCallsAdapter, null, mRecord);
+			for (Object item : innerCollection) {
+				Record lcRecord = (Record) item;
+				
+				if(lcRecord.isChecked()) {
+					try {						
+						recordIds[iter] = lcRecord.getmId();
+						recordPaths[iter] = lcRecord.getmFilePath();
+						
+						iter++;
+					}
+					catch (Exception e) {
+						Console.print_exception(e);
+					}	
+				}							
+			}			
+		}
+
+		@Override
+		protected void DeleteAction() {
 			
-			if(recordsAdapter.getCount() == 0)
-				sendEventToFolderList();
-			 
-			 if(Settings.isDebug())
-				 Log.v("MA_LISTE_DE_MERDE_AT :", "" + position + "(telephone : " + mRecord.getmPhone() +")");		
+			MenuActions.deleteCalls(recordIds, recordPaths);
+			
+			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
+			
+			for(Object item : innerCollection) {
+				Record lcRecord = (Record) item;
+				
+				if(lcRecord.isChecked()) {					
+					toBeProcessed.add(lcRecord);			
+				}					
+			}
+			
+			for(Object item : toBeProcessed) {
+				((ObjectsAdapter)listAdapter).remove((Record) item);
+				((ArrayList<Object>)innerCollection).remove((Record) item);
+			}
+			
+			((ObjectsAdapter)listAdapter).notifyDataSetChanged();		
+		}
 
-		 }
+		@Override
+		protected boolean itemChecked(Object item) {
+			return ((Record) item).isChecked();
+		}
 
+		@Override
+		protected int innerCollectionSorting(Object first, Object second) {
+			return ((Record) first).getmHtime().compareToIgnoreCase(
+					((Record) second).getmHtime());
+		}
+
+		@Override
+		protected void initAdapter(Context context, List<Object> collection,
+				int layoutId, boolean multiSelectMode) {
+			listAdapter = null;
+			listAdapter = new ObjectsAdapter(context, collection, layoutId, multiSelectMode);
+		}
+		
+		@Override
+		protected void uncheckItem(Object item) {
+			((Record) item).setChecked(false);	
+		}
+
+		@Override
+		protected void toggleItem(Object item, boolean checked) {
+			((Record) item).setChecked(checked);
+		}
+		
+		@Override
+		protected Object getItemClone(Object item) {
+			return ((Record) item).clone();
+		}
 	}
-
 }

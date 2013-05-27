@@ -29,8 +29,7 @@
         android:id="@id/android:list"
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:drawSelectorOnTop="false"
-         />
+        android:drawSelectorOnTop="false" />
 
     <!-- android:id="@+id/idrecord" -->
 
@@ -42,7 +41,7 @@
         android:layout_toRightOf="@+id/thumbnail"
         android:text="@+string/tableId"
         android:textColor="#040404"
-        android:textSize="15dip"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:typeface="sans" />
 
@@ -57,7 +56,7 @@
         android:layout_toRightOf="@+id/thumbnail"
         android:text="@+string/tableNumero"
         android:textColor="#343434"
-        android:textSize="18dip"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
@@ -67,7 +66,7 @@
         android:layout_below="@+id/number"
         android:layout_toRightOf="@+id/thumbnail"
         android:textColor="#10bcc9"
-        android:textSize="13dip"
+        android:textSize="13sp"
         android:textStyle="bold" />
     <!-- @+id/timehumanreadable -->
 
@@ -81,10 +80,10 @@
         android:gravity="right"
         android:text="@+string/tableHeure"
         android:textColor="#10bcc9"
-        android:textSize="16dip"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
-    <!-- fleche droite -->
+    <!-- fleche droite  -->
 
     <ImageView
         android:id="@+id/arrow_record_detail"
@@ -94,5 +93,14 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/arrows" />
+    
+    <CheckBox
+        android:id="@+id/cb_select_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
 </RelativeLayout>

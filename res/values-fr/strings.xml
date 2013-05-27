@@ -52,6 +52,14 @@
     <string name="dashbord_dialog_free_space">Espace libre (carte SD):</string>
     <string name="dashbord_dialog_app_space">Espace utilisé:</string>
     <!-- END DashBoard Dialog -->
+    
+    <string name="multi_select_mode">Activer la Multi Sélection</string>
+    
+    <string name="qaction_select_all">Sélectionnez tout</string>
+    <string name="qaction_delete">Supprimer</string>
+    <string name="qaction_share">Partager</string> 
+    <string name="qaction_done">OK</string>   
+    
     <!-- START Google Play -->
     <string name="gplay_title">Google Play</string>
     <string name="gplay_no_match">Aucune correspondance trouvée!</string>
@@ -248,18 +256,18 @@
     <string name="stats">Statistiques d\'utilisation</string>
     <string name="about_us">A propos</string>
     <!-- About Us texts -->
-    <string name="about_app">
-        
-        &amp;lt;p&amp;gt;
+    <string name="about_app">        
+        <![CDATA[
+        <p>
 	        Cette application vous permet:
-	        &amp;lt;ul&amp;gt;
-		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;D\'enregister&amp;lt;/u&amp;gt; en different format (mp3, wav, ogg, ...)&amp;lt;br&amp;gt; vos appels téléphoniques ou plus simplement votre voix.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;D\'Associer&amp;lt;/u&amp;gt; un titre, ainsi qu\'une note pour tout type d\'enregistrement.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;De Filtrer&amp;lt;/u&amp;gt; ce service d\'enregistrements,&amp;lt;br&amp;gt; sur la base de votre propre liste de contacts.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-	        &amp;lt;/ul&amp;gt;
+	        <ul>
+		        <li><u>D\'enregister</u> en different format (mp3, wav, ogg, ...)<br> vos appels téléphoniques ou plus simplement votre voix.</li><br><br>
+		        <li><u>D\'Associer</u> un titre, ainsi qu\'une note pour tout type d\'enregistrement.</li><br><br>
+		        <li><u>De Filtrer</u> ce service d\'enregistrements,<br> sur la base de votre propre liste de contacts.</li><br><br>
+	        </ul>
 	        Et plus ...
-        &amp;lt;/p&amp;gt;    
-            
+        </p>    
+        ]]>            
     </string>
     <string name="about_some_links">Quelques liens:</string>
     <string name="contact_subject">Proof and Voice Recorder: Une question?</string>

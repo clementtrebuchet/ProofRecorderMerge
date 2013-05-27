@@ -2,11 +2,32 @@ package org.proof.recorder.database.models;
 
 import java.io.Serializable;
 
+import org.proof.recorder.utils.DateUtils;
+import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 
 import android.content.ContentResolver;
 
-public class Voice implements DataLayerInterface, Serializable {
+public class Voice implements DataLayerInterface, Serializable, Cloneable {
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			// On récupère l'instance à renvoyer par l'appel de la 
+			// méthode super.clone()
+			o = super.clone();
+		} catch(CloneNotSupportedException cnse) {
+			// Ne devrait jamais arriver car nous implémentons 
+			// l'interface Cloneable
+			cnse.printStackTrace(System.err);
+		}
+		// on renvoie le clone
+		return o;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -107,6 +128,26 @@ public class Voice implements DataLayerInterface, Serializable {
 	
 	private Note _note;
 	
+	private boolean isChecked = false;
+
+	/**
+	 * @return the isChecked
+	 */
+	public boolean isChecked() {
+		return isChecked;
+	}
+
+	/**
+	 * @param isChecked the isChecked to set
+	 */
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
+	}
+	
+	public void toggle() {
+		setChecked(!this.isChecked);		
+	}
+	
 	/**
 	 * 
 	 */
@@ -188,7 +229,7 @@ public class Voice implements DataLayerInterface, Serializable {
 	/**
 	 * @param _timestamp the _timestamp to set
 	 */
-	public void setTimestamp(String _timestamp) {
+	private void setTimestamp(String _timestamp) {
 		this._timestamp = _timestamp;
 	}
 	/**
@@ -202,6 +243,8 @@ public class Voice implements DataLayerInterface, Serializable {
 	 */
 	public void setFilePath(String _filePath) {
 		this._filePath = _filePath;
+		this.setTimestamp(OsInfo.getBaseNameWithNoExt(_filePath));
+		this.setHumanTime(DateUtils.formatTime(this.getTimestamp()));
 	}
 	/**
 	 * @return the _note

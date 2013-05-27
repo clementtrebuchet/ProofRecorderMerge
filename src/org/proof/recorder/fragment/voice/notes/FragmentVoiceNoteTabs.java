@@ -15,12 +15,14 @@ import com.actionbarsherlock.app.ActionBar;
 public class FragmentVoiceNoteTabs extends ProofFragmentActivity {
 
 	//private static final String TAG = "FragmentVoiceNoteTabs";
+	
+	public static String id;
 
 	private TabHost mTabHost;
 	private ViewPager mViewPager;
 	private TabsPagerAdapter mTabsAdapter;
-	public static String id;
-	private Bundle b;
+	
+	private Bundle extraData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,9 @@ public class FragmentVoiceNoteTabs extends ProofFragmentActivity {
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mTabHost.setup();
-		b = getIntent().getExtras();
-		id = (String) b.get("id");
+		extraData = getIntent().getExtras();
+		id = (String) extraData.get("id");
+		
 		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
 
 		mTabsAdapter.addTab(
@@ -50,7 +53,6 @@ public class FragmentVoiceNoteTabs extends ProofFragmentActivity {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
 
-		QuickActionDlg.setmContext(this);
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}
 
