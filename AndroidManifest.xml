@@ -1,65 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.proof.recorder"
-    android:installLocation="preferExternal"
+    
     android:versionCode="8"
     android:versionName="1.2.5" >
-
+    <!-- android:installLocation="preferExternal" -->
     <uses-sdk
-       android:targetSdkVersion="17"
-      android:minSdkVersion="8"  />
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" ></uses-permission>
-    <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" ></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" ></uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" ></uses-permission>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" ></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" ></uses-permission>
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" ></uses-permission>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" ></uses-permission>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" ></uses-permission>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" ></uses-permission>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" ></uses-permission>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" ></uses-permission>
-    
-<!--     Required permission to check licensing. -->
-<!--     <uses-permission android:name="com.android.vending.CHECK_LICENSE" ></uses-permission> -->
-    
-<!--     Required permission to GCM -->
-<!--     <permission -->
-<!--         android:name="org.proof.recorder.permission.C2D_MESSAGE" -->
-<!--         android:protectionLevel="signature" /> -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" >
+    </uses-permission>
 
-<!--     <uses-permission android:name="org.proof.recorder.permission.C2D_MESSAGE" ></uses-permission> -->
-<!--     Others Required permission for GCM -->
-<!--     App receives GCM messages. -->
-<!--     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" ></uses-permission> -->
-<!--     GCM connects to Google Services. -->
-<!--     <uses-permission android:name="android.permission.INTERNET" ></uses-permission> -->
-<!--     GCM requires a Google account. -->
-<!--     <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission> -->
-    
-<!--     Keeps the processor from sleeping when a message is received. -->
-<!--     <uses-permission android:name="android.permission.WAKE_LOCK" ></uses-permission> -->
-<!--     Required permission to use in-app billing. -->
-<!--     <uses-permission android:name="com.android.vending.BILLING" ></uses-permission> -->
+    <!-- Required permission to check licensing. -->
+    <!-- <uses-permission android:name="com.android.vending.CHECK_LICENSE" ></uses-permission> -->
 
-<!--     <permission android:name="org.proof.recorder.XFBSIMPLE" android:protectionLevel="signature"></permission> -->
-<!--     <uses-permission android:name="org.proof.recorder.XFBSIMPLE"></uses-permission> -->
 
-    <permission android:name="org.proof.recorder.DBPERM" android:label="Provider Permissions" android:protectionLevel="signature"></permission>
-    <uses-permission android:name="org.proof.recorder.DBPERM"></uses-permission>
-    
-    <uses-permission android:name="org.proofs.recorder.codec.ogg.OGG_SECURE_PG"></uses-permission>
+    <!-- Required permission to GCM -->
+    <!-- <permission -->
+    <!-- android:name="org.proof.recorder.permission.C2D_MESSAGE" -->
+    <!-- android:protectionLevel="signature" /> -->
+
+
+    <!-- <uses-permission android:name="org.proof.recorder.permission.C2D_MESSAGE" ></uses-permission> -->
+    <!-- Others Required permission for GCM -->
+    <!-- App receives GCM messages. -->
+    <!-- <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" ></uses-permission> -->
+    <!-- GCM connects to Google Services. -->
+    <!-- <uses-permission android:name="android.permission.INTERNET" ></uses-permission> -->
+    <!-- GCM requires a Google account. -->
+    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission> -->
+
+
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <!-- <uses-permission android:name="android.permission.WAKE_LOCK" ></uses-permission> -->
+    <!-- Required permission to use in-app billing. -->
+    <!-- <uses-permission android:name="com.android.vending.BILLING" ></uses-permission> -->
+
+
+    <!-- <permission android:name="org.proof.recorder.XFBSIMPLE" android:protectionLevel="signature"></permission> -->
+    <!-- <uses-permission android:name="org.proof.recorder.XFBSIMPLE"></uses-permission> -->
+
+    <permission
+        android:name="org.proof.recorder.DBPERM"
+        android:label="Provider Permissions"
+        android:protectionLevel="signature" >
+    </permission>
+
+    <uses-permission android:name="org.proof.recorder.DBPERM" >
+    </uses-permission>
+    <uses-permission android:name="org.proofs.recorder.codec.ogg.OGG_SECURE_PG" >
+    </uses-permission>
 
     <application
-        android:icon="@drawable/ic_launcher"
+        android:name="MonApp"
         android:allowBackup="true"
-        android:label="@string/app_name" android:name="MonApp">
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
         <activity
             android:name=".ProofRecorderActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -74,7 +99,9 @@
         </activity>
         <!-- IN APP BILLING -->
 
-        <!-- <activity
+
+        <!--
+        <activity
             android:name=".billing.vending.ProofStore"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sherlock.Light" >
@@ -95,8 +122,9 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.FtpFragment"/>
             </intent-filter>
-        </activity> -->
-        
+        </activity>
+        -->
+
         <activity
             android:name=".fragment.dialog.VoiceEditDialog"
             android:configChanges="orientation|keyboardHidden"
@@ -235,7 +263,8 @@
                 <category android:name="android.intent.category.DeviceCapabilities" />
             </intent-filter>
         </activity>
-        <!-- <activity
+        <!--
+        <activity
             android:name=".syncron.fragment.SyncronUi"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
@@ -246,7 +275,8 @@
 
                 <category android:name="android.intent.category.SyncronUi" />
             </intent-filter>
-        </activity> -->
+        </activity>
+        -->
         <activity
             android:name=".preferences.FormulaPreferences"
             android:label="@string/app_name"
@@ -257,7 +287,8 @@
                 <category android:name="android.intent.category.FormulaPreferences" />
             </intent-filter>
         </activity>
-        <!-- <activity
+        <!--
+        <activity
             android:name=".preferences.ServerAccount"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sherlock.Light" >
@@ -266,7 +297,8 @@
 
                 <category android:name="android.intent.category.ServerAccount" />
             </intent-filter>
-        </activity> -->
+        </activity>
+        -->
         <activity
             android:name=".fragment.voice.FragmentListVoiceTabs"
             android:label="@string/app_name"
@@ -429,52 +461,47 @@
         <service
             android:name=".service.ServiceAudioRecord"
             android:enabled="true" />
-        
         <service
             android:name=".service.ServiceSchd"
             android:enabled="true" />
-        
-        <!-- <service
+
+        <!--
+        <service
             android:name=".simplexfb.FtpCli"
             android:enabled="true" android:permission="org.proof.recorder.XFBSIMPLE"/>
         
         <service android:name=".service.GCMIntentService" />
         
-        <service android:name=".billing.vending.BillingService" /> -->
-        
-        <service android:name=".service.VerifyContactsApi"
-            android:enabled="true" />
+        <service android:name=".billing.vending.BillingService" />
+        -->
 
         <service
-			android:name=".service.jni.Converter"
-			android:enabled="true" />   
-			
-        
+            android:name=".service.VerifyContactsApi"
+            android:enabled="true" />
+        <service
+            android:name=".service.jni.Converter"
+            android:enabled="true" />
         <service
             android:name=".services.ServiceIntentRecorder3gp"
             android:enabled="true" />
-        
         <service
             android:name=".services.ServiceIntentRecorderWav"
             android:enabled="true" />
-        
         <service
             android:name=".services.MP3Middleware"
             android:enabled="true" />
-        
         <service
             android:name=".services.OGGMiddleware"
             android:enabled="true" />
-	
+
         <!-- Receivers for BroadCasters -->
-        
-        
+
         <receiver
             android:name=".scheduling.VerifyContactsApiReceiver"
             android:process=":remote" >
             <action android:name="android.intent.action.CHECK_CONTACTS_ALARM" />
         </receiver>
-        
+
         <!-- Incoming Calls -->
         <receiver android:name=".broadcastr.phone.AppelsEntrants" >
             <intent-filter>
@@ -495,44 +522,64 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-        
-        <receiver
-            android:name=".receivers.AudioRecorderReceiver" >
+        <receiver android:name=".receivers.AudioRecorderReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.START_AUDIO_RECORDER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.STOP_AUDIO_RECORDER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SAVE_AUDIO_RECORDER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SAVE_DELAYED_EXTERNAL_AUDIO_RECORDER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-        
-        <receiver
-            android:name=".receivers.PhoneRecorderReceiver" >
+        <receiver android:name=".receivers.PhoneRecorderReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.START_PHONE_RECORDER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.STOP_PHONE_RECORDER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SAVE_PHONE_RECORDER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-        
-        <!--GCM
+        <!-- Widget Broadcast -->
+        <receiver android:name=".wigdet.ProofRecorderWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="org.proof.recorder.wigdet.ACTION_ENABLE_SERVICE" />
+                <action android:name="org.proof.recorder.wigdet.ACTION_DISABLE_SERVICE" />
+                <action android:name="org.proof.recorder.wigdet.SET_MP3" />
+                <action android:name="org.proof.recorder.wigdet.SET_OGG" />
+                <action android:name="org.proof.recorder.wigdet.SET_3GP" />
+                <action android:name="org.proof.recorder.wigdet.SET_WAV" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_meta" />
+        </receiver>
+
+        <!--
+        GCM
         <receiver
             android:name=".broadcastr.phone.GCMPersonnal"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -542,28 +589,39 @@
 
                 <category android:name="org.proof.recorder" />
             </intent-filter>
-        </receiver> -->
+        </receiver>
+        -->
         <!-- Alarm manager receiver -->
-<!--         <receiver
+        <!--
+             <receiver
             android:name=".broadcastr.phone.AlarmSchd"
             android:process=":remote" android:permission="org.proof.recorder.XFBSIMPLE">
             <action android:name="android.intent.action.ALERT_SCHD" />
-        </receiver> -->
-        
-        <!-- <receiver android:name=".billing.vending.BillingReceiver" >
+        </receiver>
+        -->
+
+
+        <!--
+        <receiver android:name=".billing.vending.BillingReceiver" >
             <intent-filter>
                 <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
                 <action android:name="com.android.vending.billing.RESPONSE_CODE" />
                 <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
             </intent-filter>
-        </receiver> -->
+        </receiver>
+        -->
         <!--
         Place the following after the Activity
 	     Definition
         -->
         <provider
             android:name=".personnal.provider.PersonnalProofContentProvider"
-            android:authorities="org.proof.recorder.personnal.provider.PersonnalProofContentProvider" android:exported="true" android:readPermission="org.proof.recorder.DBPERM" android:enabled="true" android:permission="org.proof.recorder.DBPERM" android:writePermission="org.proof.recorder.DBPERM"/>
+            android:authorities="org.proof.recorder.personnal.provider.PersonnalProofContentProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="org.proof.recorder.DBPERM"
+            android:readPermission="org.proof.recorder.DBPERM"
+            android:writePermission="org.proof.recorder.DBPERM" />
     </application>
 
 </manifest>
