@@ -22,9 +22,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	
 	protected abstract KIND getKind();
 	
-	protected TabHost mTabHost;
-	protected static ViewPagerOnSwipeOff mViewPager;
-	protected TabsPagerAdapter mTabsAdapter;
+	protected static ViewPagerOnSwipeOff mViewPager;	
 	
 	protected static ActionBar mBar;
 	protected static int savedPosition;
@@ -38,6 +36,9 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	protected static Class<?> classSecond;
 	
 	protected static String _id;
+	
+	protected TabHost mTabHost;
+	protected TabsPagerAdapter mTabsAdapter;
 	
 	/**
 	 * @param voiceId the voiceId to set
@@ -182,7 +183,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	
 	public static void removeCurrentTab(Context context) {
 
-		if (hasOne && hasSecond) {
+		if (hasOne && hasSecond && !isNotify) {
 
 			mBar.removeAllTabs();			
 			mBar.addTab(savedPosition == 0 ? tabOne : tabSecond, 0);			
@@ -199,7 +200,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 
 	public static void removeUnusedTab() {
 
-		if (hasOne && hasSecond) {
+		if (hasOne && hasSecond && !isNotify) {
 
 			Tab current = mBar.getSelectedTab();
 
@@ -217,7 +218,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	}
 
 	public static void readdUnusedTab() {
-		if (hasOne && hasSecond) {
+		if (hasOne && hasSecond && !isNotify) {
 			mBar.addTab(
 					savedPosition == 0 ? tabOne : tabSecond, savedPosition);
 			mViewPager.disablePaging(false);
