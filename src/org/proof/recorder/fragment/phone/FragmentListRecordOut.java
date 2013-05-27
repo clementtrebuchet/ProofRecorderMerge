@@ -43,24 +43,6 @@ public class FragmentListRecordOut extends ProofFragment {
 			};					
 		}
 
-		/* Options Menu */
-
-		/*@Override
-		public boolean onOptionsItemSelected(
-				com.actionbarsherlock.view.MenuItem item) {
-			
-			boolean result = false;
-			if(item.getItemId() == R.id.cm_records_list_del_file) {
-				result = super.onOptionsItemSelected(item);
-
-				listAdapter.clear();
-				initOnActivityCreated();
-			}
-			return result;
-		}*/
-
-		/* End of Options Menu */
-
 		private void getContacts() {
 			try {
 				String mIdOrTelephone = extraData.getString("mIdOrTelephone");

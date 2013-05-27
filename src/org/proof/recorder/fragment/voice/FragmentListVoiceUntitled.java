@@ -79,24 +79,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 					getVoices();
 				}
 			};					
-		}	
-		
-		/*@Override
-		public boolean onOptionsItemSelected(
-				com.actionbarsherlock.view.MenuItem item) {
-			boolean result = false;
-			if (item.getItemId() == R.id.cm_records_list_del_file) {
-				result = super.onOptionsItemSelected(item);
-
-				listAdapter.clear();
-				initOnActivityCreated();
-			}
-			return result;
-		}*/
-
-		/**
-		 * End of Contextual Menu
-		 */
+		}
 
 		@Override
 		public void onListItemClick(ListView l, View view, int position, long id) {
