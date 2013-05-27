@@ -1,7 +1,6 @@
 package org.proof.recorder.fragment.voice;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceDetailAdapter;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.database.support.ProofDataBase;
@@ -16,22 +15,15 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
+
 import android.widget.CursorAdapter;
 
 public class FragmentListVoiceDetail extends ProofFragmentActivity {
-	
-	//private static final String TAG = "FragmentListVoiceDetail";
-	
-	/** Called when the activity is first created. */
-	static Bundle b;
-	private static String id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		b = getIntent().getExtras();
-		//setContentView(R.layout.fragmentdroitdet);
+
 		FragmentManager fm = getSupportFragmentManager();
 
 		// Create the list fragment and add it as our sole content.
@@ -58,9 +50,10 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 			LoaderManager.LoaderCallbacks<Cursor> {
 
 		private static final int LIST_LOADE = 0x01;
-		private static final String TAG = "FragmentListOfVoiceDetails";
+
 		boolean mDualPane;
 		int mCursorPos = -1;
+		
 		String[] from = new String[] { 
 				ProofDataBase.COLUMNVOICE_ID,
 				ProofDataBase.COLUMN_VOICE_FILE, 
@@ -89,9 +82,7 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 			setListShown(true);
 			setHasOptionsMenu(true);
 			setMenuVisibility(true);
-			
-			if(Settings.isDebug())
-				Log.v(TAG, "PASS HERE");
+
 			// Prepare the loader. Either re-connect with an existing one,
 			// or start a new one.
 			getLoaderManager().initLoader(LIST_LOADE, null, this);
@@ -100,11 +91,10 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 		@Override
 		public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 
-			/*id = (String) b.get("id");
-			Log.v(TAG, id);*/
-			id = FragmentListVoice.ID;
+			/*id = (String) b.get("id"); */
+			
 			Uri uri = Uri.withAppendedPath(
-					PersonnalProofContentProvider.CONTENT_URI, "voice_id/" + id);
+					PersonnalProofContentProvider.CONTENT_URI, "voice_id/" + FragmentListVoice.ID);
 			CursorLoader cursorLoader = new CursorLoader(getActivity(), uri,
 					from, null, null, null);
 			return cursorLoader;
