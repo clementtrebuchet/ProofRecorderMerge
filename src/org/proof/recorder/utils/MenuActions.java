@@ -1,21 +1,19 @@
 package org.proof.recorder.utils;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceListAdapter;
+import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.fragment.dialog.ShareIntentChooser;
 import org.proof.recorder.fragment.notes.FragmentNoteTabs;
 import org.proof.recorder.fragment.phone.FragmentListKnownContacts.KnownContactsLoader.ContactAdapter;
-import org.proof.recorder.fragment.phone.FragmentListRecordIn.InCommingCallsLoader.InCommingCallsAdapter;
-import org.proof.recorder.fragment.phone.FragmentListRecordOut.OutGoingCallsLoader.OutGoingCallsAdapter;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
-import org.proof.recorder.fragment.search.SearchResult.SearchListLoader;
+
 import org.proof.recorder.fragment.voice.FragmentListVoice;
 import org.proof.recorder.fragment.voice.notes.FragmentVoiceNoteTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
@@ -28,14 +26,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.util.Log;
+
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 public final class MenuActions {
-
-	private final static String TAG = "MENU_ACTIONS";
 
 	private static Context mContext;
 	private static Object mVoiceAdapter;
@@ -50,44 +45,42 @@ public final class MenuActions {
 
 	}
 
-	private static VoiceListAdapter getmVoiceAdapter() {
+	private static VoiceListAdapter getVoiceAdapter() {
 		return (VoiceListAdapter) mVoiceAdapter;
 	}
 
-	public static void setmVoiceAdapter(Object adapter) {
+	public static void setVoiceAdapter(Object adapter) {
 		MenuActions.mVoiceAdapter = adapter;
 	}
 
-	private static Context getmContext() {
+	private static Context getInternalContext() {
 		return mContext.getApplicationContext();
 	}
 
-	public static void setmContext(Context mContext) {
+	public static void setInternalContext(Context mContext) {
 		MenuActions.mContext = mContext;
 	}
 
 	private static void _deleteContactsFolder(String mPhone) {
 		int mDeletedContacts = PersonnalProofContentProvider
 				.deleteContactsFolder(mPhone);
-		if (Settings.isDebug())
-			Log.i("ContextMenu",
-					"All contacts' folder were Suppressed (CONTACTS COUNT: "
-							+ mDeletedContacts + ") !!");
+		Console.print_debug(
+				"All contacts' folder were Suppressed (CONTACTS COUNT: "
+				+ mDeletedContacts + ") !!");
 	}
 
 	public static void displayCallsFolderDetails(String mPhone, String mWhere,
 			Context mContext) {
 
 		try {
-			Bundle b = new Bundle();
-			b.putString("mWhereClause", mWhere);
-			b.putString("mIdOrTelephone", mPhone);
+			Bundle extraData = new Bundle();
+			extraData.putString("mWhereClause", mWhere);
+			extraData.putString("mIdOrTelephone", mPhone);
 			StaticIntents intent = StaticIntents.create(mContext,
-					FragmentListRecordTabs.class, b);
+					FragmentListRecordTabs.class, extraData);
 			mContext.startActivity(intent);
 		} catch (Exception e) {
-			if (Settings.isDebug())
-				Log.e(TAG, e.getMessage());
+			Console.print_exception(e);
 		}
 	}
 
@@ -148,10 +141,9 @@ public final class MenuActions {
 
 		Uri uri = PersonnalProofContentProvider.deleteItem(uriType, mId);
 		try {
-			getmContext().getContentResolver().delete(uri, null, null);
+			getInternalContext().getContentResolver().delete(uri, null, null);
 		} catch (Exception e) {
-			if (Settings.isDebug())
-				Log.e(TAG, e.getMessage());
+			Console.print_exception(e);
 		}
 	}
 
@@ -159,26 +151,12 @@ public final class MenuActions {
 
 		try {
 			OsHandler.deleteFileFromDisk(mFilePath);
-		} catch (IOException e) {
-			if (Settings.isDebug())
-				Log.v(TAG,
-						"showVoiceOptionsDlg()->ID_DELETE : " + e.getMessage());
+		} catch (Exception e) {
+			Console.print_exception(e);
 		}
 	}
 
-	private static void refreshListOfRecords(
-			final OutGoingCallsAdapter outAdapter,
-			final InCommingCallsAdapter inAdapter, final Record mRecord) {
-
-		if (null != outAdapter)
-			outAdapter.remove(mRecord);
-		else if (null != inAdapter)
-			inAdapter.remove(mRecord);
-		else {
-		}
-	}
-
-	public static void deleteSearchItem(
+	/*public static void deleteSearchItem(
 			final Cursor mCursor,
 			final Settings.mType mType,
 			final LoaderManager lm,
@@ -231,23 +209,82 @@ public final class MenuActions {
 					(SearchListLoader) mCustomLoader
 			);
 		}		
+	}*/
+	
+	public static void deleteCalls(
+			final String[] recordIds, final String[] recordPaths) {
+		
+		for(String id : recordIds) {
+			_deleteItem(id, Settings.mType.CALL);
+		}
+		
+		for(String file : recordPaths) {
+			deleteOnDisk(file);
+		}
+	}
+	
+	public static void deleteVoices(
+			final String[] recordIds, final String[] recordPaths) {
+		
+		for(String id : recordIds) {
+			_deleteItem(id, Settings.mType.VOICE);
+		}
+		
+		for(String file : recordPaths) {
+			deleteOnDisk(file);
+		}
+	}
+	
+	
+	private static void removeItem(
+			final Settings.mType type, 
+			final String id, 
+			final ProofBaseMultiSelectListAdapter adpater,
+			final List<Object> innerCollection,
+			final Object item) {
+		
+		String itemPath = null;
+		
+		_deleteItem(id, type);
+		
+		switch (type) {
+		case CALL:
+			Record record = (Record) item;
+			((ArrayAdapter<Object>) adpater).remove(record);
+			itemPath = record.getmFilePath();
+			break;
+				
+		case VOICE_TITLED:
+		case VOICE_UNTITLED:
+			Voice voice = (Voice) item;
+			((ArrayAdapter<Object>) adpater).remove(voice);
+			innerCollection.remove(voice);
+			((ArrayAdapter<Object>) adpater).notifyDataSetChanged();
+			itemPath = voice.getFilePath();
+			break;
+
+		default:
+			break;
+		}	
+		
+		if(itemPath != null)
+			deleteOnDisk(itemPath);
 	}
 
 	/**
 	 * @param mId
 	 * @param mType
-	 * @param collection
+	 * @param innerCollection
 	 * @param mOutAdapter
 	 * @param mInAdapter
 	 * @param mItem
 	 */
-	@SuppressWarnings("unchecked")
+
 	public static void deleteItem(
 			final String mId, 
 			final Settings.mType mType,
-			final ArrayList<Voice> collection,
-			final Object mOutAdapter, 
-			final Object mInAdapter,
+			final List<Object> innerCollection,
+			final ProofBaseMultiSelectListAdapter adpater,
 			final Object mItem) {
 
 		if (Settings.isUACAssisted()) {
@@ -272,60 +309,13 @@ public final class MenuActions {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							_deleteItem(mId, mType);
-							switch (mType) {
-							case CALL:
-								deleteOnDisk(((Record) mItem).getmFilePath());
-								refreshListOfRecords(
-										(OutGoingCallsAdapter) mOutAdapter,
-										(InCommingCallsAdapter) mInAdapter,
-										(Record) mItem);
-								break;
-
-							case VOICE_UNTITLED:
-								((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
-								collection.remove((Voice) mItem);
-								((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
-								break;
-
-							case VOICE_TITLED:
-								((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
-								collection.remove((Voice) mItem);
-								((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
-								break;
-
-							default:
-								break;
-							}
+							removeItem(mType, mId, adpater, innerCollection, mItem);
 						}
 					});
 
 			mDialog.show();
 		} else {
-			_deleteItem(mId, mType);
-
-			switch (mType) {
-			case CALL:
-				deleteOnDisk(((Record) mItem).getmFilePath());
-				refreshListOfRecords((OutGoingCallsAdapter) mOutAdapter,
-						(InCommingCallsAdapter) mInAdapter, (Record) mItem);
-				break;
-
-			case VOICE_UNTITLED:
-				((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
-				collection.remove((Voice) mItem);
-				((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
-				break;
-
-			case VOICE_TITLED:
-				((ArrayAdapter<Voice>) mOutAdapter).remove((Voice) mItem);
-				collection.remove((Voice) mItem);
-				((ArrayAdapter<Voice>) mOutAdapter).notifyDataSetChanged();
-				break;
-
-			default:
-				break;
-			}
+			removeItem(mType, mId, adpater, innerCollection, mItem);
 		}
 
 	}
@@ -334,7 +324,7 @@ public final class MenuActions {
 		try {
 			intent.putExtras(b);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			getmContext().startActivity(intent);
+			getInternalContext().startActivity(intent);
 		} catch (Exception e) {
 			Console.print_exception(e);
 		}
@@ -342,9 +332,9 @@ public final class MenuActions {
 
 	public static void displayItemVoiceDetails(Cursor c) {
 		if (c == null)
-			c = getmVoiceAdapter().getCursor();
+			c = getVoiceAdapter().getCursor();
 		FragmentListVoice.ID = c.getString(0);
-		StaticIntents intent = StaticIntents.create(getmContext(),
+		StaticIntents intent = StaticIntents.create(getInternalContext(),
 				FragmentVoiceNoteTabs.class);
 		Bundle b = new Bundle();
 		b.putString("id", c.getString(0));
@@ -354,7 +344,7 @@ public final class MenuActions {
 	public static void displayItemVoiceDetails(String id) {
 
 		FragmentListVoice.ID = id;
-		StaticIntents intent = StaticIntents.create(getmContext(),
+		StaticIntents intent = StaticIntents.create(getInternalContext(),
 				FragmentVoiceNoteTabs.class);
 		Bundle b = new Bundle();
 		b.putString("id", id);
@@ -363,7 +353,7 @@ public final class MenuActions {
 
 	public static void displayItemPhoneDetails(String mId) {
 		FragmentNoteTabs.id = mId;
-		StaticIntents intent = StaticIntents.create(getmContext(),
+		StaticIntents intent = StaticIntents.create(getInternalContext(),
 				FragmentNoteTabs.class);
 		Bundle b = new Bundle();
 		b.putString("id", mId);
@@ -387,15 +377,13 @@ public final class MenuActions {
 			intent.setDataAndType(wav, audio);
 
 			if (Settings.isToastNotifications())
-				Toast.makeText(getmContext(), wav.toString(),
+				Toast.makeText(getInternalContext(), wav.toString(),
 						Toast.LENGTH_SHORT).show();
 
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			getmContext().startActivity(intent);
+			getInternalContext().startActivity(intent);
 		} catch (Exception e) {
-
-			if (Settings.isDebug())
-				Log.e(TAG, e.getMessage());
+			Console.print_exception(e);
 		}
 	}
 
@@ -406,7 +394,7 @@ public final class MenuActions {
 	 */
 	public static void sharingOptions(String[] mDatas) {
 		Intent mIntentShare = new Intent(mContext, ShareIntentChooser.class);
-		mIntentShare.putExtra("mAttachFilePath", mDatas[0]);
+		mIntentShare.putExtra("AttachedFiles", mDatas);
 		mContext.startActivity(mIntentShare);    
 	}
 }

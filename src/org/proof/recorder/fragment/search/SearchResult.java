@@ -1,30 +1,31 @@
 package org.proof.recorder.fragment.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
-import org.proof.recorder.adapter.phone.SearchListAdapter;
-import org.proof.recorder.adapter.voice.VoiceListAdapter;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
+import org.proof.recorder.database.collections.VoicesList;
+import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.Log.Console;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CursorAdapter;
-import android.widget.ListAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -33,16 +34,28 @@ public class SearchResult extends ProofFragmentActivity {
 
 	private static final String SEP_QUERY = ";", BR = "\n";
 
-	private static boolean mByDate, mPreciseDate, mPeriodDate, mVoices, mCalls;
-	private static String mQuery, mPrecise, mStartingDate, mEndingDate;
-	private static Bundle extraDatas;
+	private static boolean mByDate, 
+	mPreciseDate, 
+	mPeriodDate, 
+	mVoices, 
+	mCalls;
+
+	private static String mQuery, 
+	mPrecise, 
+	mStartingDate, 
+	mEndingDate;
 	
-	/**
-	 * @param message
-	 */
-	private static void print(String message) {
-		if(Settings.isDebug())
-			Log.d(SearchResult.class.getName(), message);
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if(SearchListLoader.isMulti) {
+			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && 
+					event.getAction() == KeyEvent.ACTION_UP) {
+				// handle your back button code here
+				// consumes the back key event - ActionMode is not finished
+				return true; 
+			}
+		}
+		return super.dispatchKeyEvent(event);
 	}
 
 	@Override
@@ -53,70 +66,173 @@ public class SearchResult extends ProofFragmentActivity {
 		FragmentManager fm = getSupportFragmentManager();
 
 		ActionBar mBar = getSupportActionBar();
+
 		mBar.setHomeButtonEnabled(true);
 
 		if (fm.findFragmentById(R.id.contacts_list_fragment) == null) {
 			SearchListLoader list = new SearchListLoader();
-			fm.beginTransaction().add(R.id.contacts_list_fragment, list)
-					.commit();
+			fm.beginTransaction().add(R.id.contacts_list_fragment, list).commit();
 		}		
 	}
 
-	public static class SearchListLoader extends ListFragment implements
-			LoaderManager.LoaderCallbacks<Cursor> {
+	public static class SearchListLoader extends ProofListFragmentWithQuickAction {
 
-		private static final int LIST_LOADE = 0x01;
+		private void getItems() {
 
-		boolean mDualPane;
-		int mCursorPos = -1;
+			String mByDateQuery = null;
+			Uri uri = null;
 
-		private String[] mVoicesFrom = new String[] {
-				ProofDataBase.COLUMNVOICE_ID, ProofDataBase.COLUMN_VOICE_HTIME,
-				ProofDataBase.COLUMN_VOICE_TAILLE,
-				ProofDataBase.COLUMN_VOICE_TIMESTAMP,
-				ProofDataBase.COLUMN_VOICE_FILE };
+			if (mCalls) {
 
-		private String[] mCallsFrom = new String[] {
-				ProofDataBase.COLUMNRECODINGAPP_ID, ProofDataBase.COLUMN_HTIME,
-				ProofDataBase.COLUMN_TAILLE, ProofDataBase.COLUMN_TIMESTAMP,
-				ProofDataBase.COLUMN_FILE, ProofDataBase.COLUMN_TELEPHONE };
+				if (mByDate) {
+					mByDateQuery = mQuery;
+					if (mPreciseDate) {
+						mByDateQuery += SEP_QUERY + mPrecise;
+						uri = Uri.withAppendedPath(
+								PersonnalProofContentProvider.CONTENT_URI,
+								"search_calls_by_date/" + mByDateQuery);
+					} else if (mPeriodDate) {
+						mByDateQuery += SEP_QUERY + mStartingDate + SEP_QUERY + mEndingDate;
+						uri = Uri.withAppendedPath(
+								PersonnalProofContentProvider.CONTENT_URI,
+								"search_calls_by_date/" + mByDateQuery);
+					}
 
-		private Object mAdapter;
+					else {} // Should never happened
+				} else {
+					uri = Uri.withAppendedPath(
+							PersonnalProofContentProvider.CONTENT_URI,
+							"search_calls/" + mQuery);
+				}
+			}
+			else if (mVoices) {
+
+				if (mByDate) {
+					mByDateQuery = mQuery;
+					if (mPreciseDate) {
+						mByDateQuery += SEP_QUERY + mPrecise;
+						uri = Uri.withAppendedPath(
+								PersonnalProofContentProvider.CONTENT_URI,
+								"search_voices_by_date/" + mByDateQuery);
+					} else if (mPeriodDate) {
+						mByDateQuery += SEP_QUERY + mStartingDate + SEP_QUERY + mEndingDate;
+						uri = Uri.withAppendedPath(
+								PersonnalProofContentProvider.CONTENT_URI,
+								"search_voices_by_date/" + mByDateQuery);
+					}
+
+					else {} // Should never happened
+				} else {
+					uri = Uri.withAppendedPath(
+							PersonnalProofContentProvider.CONTENT_URI,
+							"search_voices/" + mQuery);
+				}
+			}
+			else {} // Should never happened
+
+			Cursor cursor = null;
+
+			innerCollection = null;		
+
+			try {
+
+				cursor = getInternalContext().getContentResolver().query(
+						uri, null, null, null, null);
+
+				if(mVoices) {
+					VoicesList mList = new VoicesList(cursor);					
+					innerCollection = mList.getCollection();
+				}
+
+				else if(mCalls) {
+
+					innerCollection = new ArrayList<Object>();
+
+					while (cursor.moveToNext()) {
+
+						String mId = cursor
+								.getString(cursor
+										.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID));
+						
+						String mAndroidId = cursor
+								.getString(cursor
+										.getColumnIndex(ProofDataBase.COLUMN_CONTRACT_ID));
+
+						String mPhone = cursor
+								.getString(cursor
+										.getColumnIndex(ProofDataBase.COLUMN_TELEPHONE));
+
+						String mFile = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_FILE));
+
+						String mHtime = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_HTIME));
+
+						String mSense = cursor.getString(cursor
+								.getColumnIndex(ProofDataBase.COLUMN_SENS));
+
+						Record mRecord = new Record(mId, mFile, mPhone, mSense,
+								mHtime, mAndroidId);
+
+						innerCollection.add(mRecord);
+					}
+				}
+
+			} catch (Exception e) {
+				Console.print_exception(e);
+			} finally {
+				if (cursor != null) {
+					cursor.close();
+				}
+			}			
+		}
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
+			super.onCreate(savedInstanceState);		
 
-			String mLogMsg = "SEARCH LOG MESSAGE => " + BR;
+			String mLogMsg = "";
 
-			extraDatas = getActivity().getIntent().getExtras();
+			extraData = getActivity().getIntent().getExtras();
 
-			mByDate = extraDatas.getBoolean("mByDate");
-			mCalls = extraDatas.getBoolean("mCalls");
-			mVoices = extraDatas.getBoolean("mVoices");
+			mCalls = extraData.getBoolean("mCalls");
+			mVoices = extraData.getBoolean("mVoices");
 
-			mLogMsg += "mByDate: " + mByDate + BR;
-			mLogMsg += "mCalls: " + mCalls + BR;
-			mLogMsg += "mVoices: " + mVoices + BR;
+			mByDate = extraData.getBoolean("mByDate");
+
+			if(Settings.isDebug()) {
+				mLogMsg += "SEARCH LOG MESSAGE => " + BR;
+				mLogMsg += "mByDate: " + mByDate + BR;
+				mLogMsg += "mCalls: " + mCalls + BR;
+				mLogMsg += "mVoices: " + mVoices + BR;
+			}
 
 			if (mByDate) {
-				mPreciseDate = extraDatas.getBoolean("mPreciseDate");
-				mPeriodDate = extraDatas.getBoolean("mPeriodDate");
+				mPreciseDate = extraData.getBoolean("mPreciseDate");
+				mPeriodDate = extraData.getBoolean("mPeriodDate");
 
-				mLogMsg += "mPreciseDate: " + mPreciseDate + BR;
-				mLogMsg += "mPeriodDate: " + mPeriodDate + BR;
+				if(Settings.isDebug()) {
+					mLogMsg += "mPreciseDate: " + mPreciseDate + BR;
+					mLogMsg += "mPeriodDate: " + mPeriodDate + BR;
+				}
 
 				if (mPreciseDate) {
-					mPrecise = extraDatas.getString("preciseDate");
-					mLogMsg += "mPrecise: " + mPrecise + BR;
-				} else if (mPeriodDate) {
-					mStartingDate = extraDatas.getString("startingDate");
-					mEndingDate = extraDatas.getString("endingDate");
+					mPrecise = extraData.getString("preciseDate");
 
-					mLogMsg += "mStartingDate: " + mStartingDate + BR;
-					mLogMsg += "mEndingDate: " + mEndingDate + BR;
-				} else {
-				} // should never happened
+					if(Settings.isDebug())
+						mLogMsg += "mPrecise: " + mPrecise + BR;
+
+				} else if (mPeriodDate) {
+					mStartingDate = extraData.getString("startingDate");
+					mEndingDate = extraData.getString("endingDate");
+
+					if(Settings.isDebug()) {
+						mLogMsg += "mStartingDate: " + mStartingDate + BR;
+						mLogMsg += "mEndingDate: " + mEndingDate + BR;
+					}
+
+				} else {} // should never happened
+
 			} else {
 				mPreciseDate = false;
 				mPeriodDate = false;
@@ -125,21 +241,19 @@ public class SearchResult extends ProofFragmentActivity {
 				mEndingDate = "";
 			}
 
-			mQuery = extraDatas.getString("mQuery");
+			mQuery = extraData.getString("mQuery");
 
-			mLogMsg += "mQuery: " + mQuery;
+			if(Settings.isDebug())
+				mLogMsg += "mQuery: " + mQuery;
 
-			print(mLogMsg);
-		}
+			Console.print_debug(mLogMsg);
 
-		/**
-		 * Contextual Menu for displaying social and all :)
-		 */
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			return super.onCreateView(inflater, container, savedInstanceState);
+			fillCollectionRunnable = new Runnable() {
+				@Override
+				public void run() {
+					getItems();
+				}
+			};
 		}
 
 		/**
@@ -149,133 +263,255 @@ public class SearchResult extends ProofFragmentActivity {
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
-
-			if (mCalls) {
-
-				int[] to = { R.id.idrecord, R.id.timehumanreadable, R.id.sens, };
-
-				mAdapter = new SearchListAdapter(getActivity(),
-						R.layout.listfragmentdroit, null, mCallsFrom, to,
-						CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-				
-			} else if (mVoices) {
-
-				int[] to = { R.id.idrecord, R.id.timehumanreadable, R.id.sens, };
-
-				mAdapter = new VoiceListAdapter(getActivity(),
-						R.layout.listfragmentdroit, null, mVoicesFrom, to,
-						CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-			}
-
-			else {
-			}
-
-			setListAdapter((ListAdapter) mAdapter);
 			setListShown(true);
-			setHasOptionsMenu(true);
 			setMenuVisibility(true);
-
-			Console.print_debug("PASS HERE");
-			
-			getLoaderManager().initLoader(LIST_LOADE, null, this);
-
-			registerForContextMenu(getListView());
-
-			if (((android.support.v4.widget.CursorAdapter) mAdapter).getCount() == 0)
-				setEmptyText(getString(R.string.search_none_records_found));
 		}
 
 		@Override
-		public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-			String[] mFrom = null;
-			String mByDateQuery = null;
-			Uri uri = null;
-			CursorLoader cursorLoader;
+		public void onListItemClick(ListView l, View view, int position, long id) {
+			super.onListItemClick(l, view, position, id);
 
-			if (mCalls) {
+			if (!isMulti) {
+				if(mCalls)
+					QuickActionDlg.showPhoneOptionsDlg(
+							getActivity(), 
+							view, 
+							listAdapter, 
+							(Record) listAdapter.getItem(position)
+							);
 
-				mFrom = mCallsFrom;
+				else if(mVoices)
+					QuickActionDlg.showTitledVoiceOptionsDlg(
+							getActivity(), 
+							view, 
+							(Voice) listAdapter.getItem(position), 
+							listAdapter, 
+							innerCollection, 
+							Settings.mType.VOICE);
 
-				if (mByDate) {
-					mByDateQuery = mQuery;
-					if (mPreciseDate) {
-						mByDateQuery += SEP_QUERY + mPrecise;
-						uri = Uri.withAppendedPath(
-								PersonnalProofContentProvider.CONTENT_URI,
-								"search_calls_by_date/" + mByDateQuery);
-					} else if (mPeriodDate) {
-						mByDateQuery += SEP_QUERY + mStartingDate + SEP_QUERY + mEndingDate;
-						uri = Uri.withAppendedPath(
-								PersonnalProofContentProvider.CONTENT_URI,
-								"search_calls_by_date/" + mByDateQuery);
-					}
+			} else {
+				CheckBox checkbox = (CheckBox) view
+						.findViewById(R.id.cb_select_item);
+				checkbox.toggle();
+			}
+		}
+		
+		@Override
+		protected void initOnOptionsItemSelected() {
+			// TODO Auto-generated method stub
 
-					else {
-					} // Should never happened
-				} else {
-					uri = Uri.withAppendedPath(
-							PersonnalProofContentProvider.CONTENT_URI,
-							"search_calls/" + mQuery);
+		}
+		
+		@Override
+		protected void DoneAction() {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		protected void preDeleteAndShareAction() {
+			if(mCalls) {
+				int iter = 0;					
+				
+				for (Object item : innerCollection) {
+					Record lcRecord = (Record) item;
+					
+					if(lcRecord.isChecked()) {
+						try {						
+							recordIds[iter] = lcRecord.getmId();
+							recordPaths[iter] = lcRecord.getmFilePath();
+							
+							iter++;
+						}
+						catch (Exception e) {
+							Console.print_exception(e);
+						}	
+					}							
 				}
 			}
+			else if(mVoices) {
+				int iter = 0;					
+				
+				for (Object item : innerCollection) {
+					Voice lcVoice = (Voice) item;
+					
+					if(lcVoice.isChecked()) {
+						try {						
+							recordIds[iter] = lcVoice.getId();
+							recordPaths[iter] = lcVoice.getFilePath();
+							
+							iter++;
+						}
+						catch (Exception e) {
+							Console.print_exception(e);
+						}	
+					}							
+				}	
+			}
+		}
 
-			else if (mVoices) {
-
-				mFrom = mVoicesFrom;
-
-				if (mByDate) {
-					mByDateQuery = mQuery;
-					if (mPreciseDate) {
-						mByDateQuery += SEP_QUERY + mPrecise;
-						uri = Uri.withAppendedPath(
-								PersonnalProofContentProvider.CONTENT_URI,
-								"search_voices_by_date/" + mByDateQuery);
-					} else if (mPeriodDate) {
-						mByDateQuery += SEP_QUERY + mStartingDate + SEP_QUERY + mEndingDate;
-						uri = Uri.withAppendedPath(
-								PersonnalProofContentProvider.CONTENT_URI,
-								"search_voices_by_date/" + mByDateQuery);
+		@Override
+		protected void DeleteAction() {
+			
+			if(mCalls) {
+				MenuActions.deleteCalls(recordIds, recordPaths);
+			}
+			else if(mVoices) {
+				MenuActions.deleteVoices(recordIds, recordPaths);
+			}
+			
+			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
+			
+			for(Object item : innerCollection) {
+				
+				if(mCalls) {
+					Record lcItem = (Record) item;
+					if(lcItem.isChecked()) {					
+						toBeProcessed.add(lcItem);			
 					}
-
-					else {
-					} // Should never happened
-				} else {
-					uri = Uri.withAppendedPath(
-							PersonnalProofContentProvider.CONTENT_URI,
-							"search_voices/" + mQuery);
+				}
+				else if(mVoices) {
+					Voice lcItem = (Voice) item;
+					if(lcItem.isChecked()) {					
+						toBeProcessed.add(lcItem);			
+					}
+				}									
+			}
+			
+			for(Object item : toBeProcessed) {
+				if(mCalls) {
+					((org.proof.recorder.adapter.phone.ObjectsAdapter)listAdapter).remove((Record) item);
+					((ArrayList<Object>)innerCollection).remove((Record) item);
+				}
+				else if(mVoices) {
+					((org.proof.recorder.adapter.voice.ObjectsAdapter)listAdapter).remove((Voice) item);
+					((ArrayList<Object>)innerCollection).remove((Voice) item);
 				}
 			}
-
-			else {
-			} // Should never happened
-
-			cursorLoader = new CursorLoader(getActivity(), uri, mFrom, null,
-					null, null);
-
-			return cursorLoader;
-		}
-
-		@Override
-		public void onLoadFinished(Loader<Cursor> arg0, Cursor arg1) {
-			((SimpleCursorAdapter) mAdapter).swapCursor(arg1);
-		}
-
-		@Override
-		public void onLoaderReset(Loader<Cursor> arg0) {
-			((SimpleCursorAdapter) mAdapter).swapCursor(null);
-		}
-
-		@Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-			super.onListItemClick(l, v, position, id);
 			
-			Cursor c = ((android.support.v4.widget.CursorAdapter) getListAdapter()).getCursor();
+			if(mCalls) {
+				((org.proof.recorder.adapter.phone.ObjectsAdapter)listAdapter).notifyDataSetChanged();
+			}
+			else if(mVoices) {
+				((org.proof.recorder.adapter.voice.ObjectsAdapter)listAdapter).notifyDataSetChanged();
+			}
+		}
+
+		@Override
+		protected void preDeleteAllAction() {
 			
+			int iter = 0;
+			for (Object item : innerCollection) {
+				if(mCalls) {
+					recordIds[iter] = ((Record) item).getmId();
+					recordPaths[iter] = ((Record) item).getmFilePath();
+				}
+				else if(mVoices) {
+					recordIds[iter] = ((Voice) item).getId();
+					recordPaths[iter] = ((Voice) item).getFilePath();
+				}
+				else
+					break;
+
+				iter++;
+
+				Console.print_debug("Position: " + item);
+			}		
+		}
+
+		@Override
+		protected void DeleteAllAction() {
+			if(mCalls) {
+				MenuActions.deleteCalls(recordIds, recordPaths);
+				getActivity().startActivity(StaticIntents.goPhone(getInternalContext()));
+			}
+			else if(mVoices) {
+				MenuActions.deleteVoices(recordIds, recordPaths);
+				getActivity().startActivity(StaticIntents.goVoice(getInternalContext()));
+			}
+			else
+				return;
+			
+			
+		}
+
+		@Override
+		protected void ShareAction() {
+			MenuActions.sharingOptions(recordPaths);			
+		}
+
+		@Override
+		protected boolean itemChecked(Object item) {
+
 			if(mCalls)
-				QuickActionDlg.showSearchOptionsDlg(getActivity(), v, c, Settings.mType.CALL, getLoaderManager(), this);
+				return ((Record) item).isChecked();
+
 			else if(mVoices)
-				QuickActionDlg.showSearchOptionsDlg(getActivity(), v, c, Settings.mType.VOICE, getLoaderManager(), this);
-			else {}
+				return ((Voice) item).isChecked();
+
+			else
+				return false;
+		}
+
+		@Override
+		protected int innerCollectionSorting(Object first, Object second) {
+
+			if(mCalls)
+				return ((Record) first).getmHtime().compareToIgnoreCase(
+						((Record) second).getmHtime());
+
+			else if(mVoices)
+				return ((Voice) first).getHumanTime().compareToIgnoreCase(
+						((Voice) second).getHumanTime());
+
+			else
+				return 0;
+
+		}
+
+		@Override
+		protected void uncheckItem(Object item) {
+			if(mCalls)
+				((Record) item).setChecked(false);
+			else if(mVoices)
+				((Voice) item).setChecked(false);			
+			else
+				return;
+		}
+
+		@Override
+		protected void toggleItem(Object item, boolean checked) {
+			if(mCalls)
+				((Record) item).setChecked(checked);
+			else if(mVoices)
+				((Voice) item).setChecked(checked);
+			else
+				return;
+		}
+
+		@Override
+		protected Object getItemClone(Object item) {
+			if(mCalls)
+				return ((Record) item).clone();
+			else if(mVoices)
+				return ((Voice) item).clone();
+			else
+				return item;
+		}
+
+		@Override
+		protected void initAdapter(Context context, List<Object> collection,
+				int layoutId, boolean multiSelectMode) {
+
+			listAdapter = null;
+
+			if(mCalls)
+				listAdapter = new org.proof.recorder.adapter.phone.ObjectsAdapter(
+						context, collection, layoutId, multiSelectMode);
+
+			if(mVoices)
+				listAdapter = new org.proof.recorder.adapter.voice.ObjectsAdapter(
+						context, collection, layoutId, multiSelectMode);
 		}
 
 	}

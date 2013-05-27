@@ -1,49 +1,27 @@
 package org.proof.recorder.fragment.phone;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.proof.recorder.R;
-import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.adapter.phone.ObjectsAdapter;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
-import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
-import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.Log.Console;
 
-import android.annotation.TargetApi;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.v4.content.LocalBroadcastManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-public class FragmentListRecordOut extends ProofFragment {
+import android.view.View;
+
+import android.widget.CheckBox;
+import android.widget.ListView;
+
+public class FragmentListRecordOut extends ProofFragment {		
 
 	/** Called when the activity is first created. */
 	@Override
@@ -53,49 +31,11 @@ public class FragmentListRecordOut extends ProofFragment {
 
 	public static class OutGoingCallsLoader extends ProofListFragmentWithQuickAction
 	{
-		boolean mDualPane;
-		int mCursorPos = -1;
-		private static Bundle mBundle;		
-
-		// ArrayList<Contact>() Variables
-
-		private static ArrayList<Record> records = null;
-		private static OutGoingCallsAdapter recordsAdapter = null;
-		private static Runnable viewRecords = null;
-
-		private ProofBroadcastReceiver eventNotifyMultiSelect = new ProofBroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				super.onReceive(context, intent);
-				isMulti = intent.getBooleanExtra("MULTI_SELECT_MODE", false);
-				displayQuickActionMode();
-				recordsAdapter.clear();
-				initOnActivityCreated();
-			}
-		};		
-
-		@Override
-		public void onDestroy() {
-			LocalBroadcastManager.getInstance(getActivity())
-			.unregisterReceiver(eventNotifyMultiSelect);
-			super.onDestroy();
-		}
-
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 
-			setHasOptionsMenu(true);
-
-			LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
-					eventNotifyMultiSelect, new IntentFilter("eventNotifyMultiSelectOut"));
-
-			MenuActions.setmContext(getActivity());			
-			mBundle = getActivity().getIntent().getExtras();
-
-			setRetainInstance(true);
-
-			viewRecords = new Runnable() {
+			fillCollectionRunnable = new Runnable() {
 				@Override
 				public void run() {
 					getContacts();
@@ -103,19 +43,9 @@ public class FragmentListRecordOut extends ProofFragment {
 			};					
 		}
 
-		/**
-		 * Contextual Menu for displaying social and all :)
-		 */
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			return super.onCreateView(inflater, container, savedInstanceState);
-		}
-
 		/* Options Menu */
 
-		@Override
+		/*@Override
 		public boolean onOptionsItemSelected(
 				com.actionbarsherlock.view.MenuItem item) {
 			
@@ -123,157 +53,22 @@ public class FragmentListRecordOut extends ProofFragment {
 			if(item.getItemId() == R.id.cm_records_list_del_file) {
 				result = super.onOptionsItemSelected(item);
 
-				recordsAdapter.clear();
+				listAdapter.clear();
 				initOnActivityCreated();
-				notifyInRecordsTab();
 			}
 			return result;
-		}
-		
-		private void notifyInRecordsTab() {			
-			Intent intent = new Intent("eventNotifyMultiSelectIn");
-			intent.putExtra("MULTI_SELECT_MODE", true);
-			LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
-					intent);
-		}
+		}*/
 
 		/* End of Options Menu */
 
 		private void getContacts() {
 			try {
-				String mIdOrTelephone = mBundle.getString("mIdOrTelephone");
-				String mWhere = mBundle.getString("mWhereClause");
-				records = ContactsDataHelper.getOutGoingCalls(getActivity(), mWhere, mIdOrTelephone);
+				String mIdOrTelephone = extraData.getString("mIdOrTelephone");
+				String mWhere = extraData.getString("mWhereClause");
+				innerCollection = ContactsDataHelper.getOutGoingCalls(getActivity(), mWhere, mIdOrTelephone);
 			} catch (Exception e) {				
 				Console.print_exception(e);
 			}
-		}
-
-		public class OutGoingCallsAdapter extends ArrayAdapter<Record> {
-
-			private ArrayList<Record> items;
-
-			public OutGoingCallsAdapter(Context context, int textViewResourceId,
-					ArrayList<Record> items) {
-				super(context, textViewResourceId, items);
-				this.items = items;
-			}
-
-			@Override
-			public View getView(final int position, View convertView, ViewGroup parent) {
-				View view = convertView;
-				if (view == null) {
-					LayoutInflater vi = (LayoutInflater) getActivity()
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.listfragmentdroit, null);
-				}
-				Record mRecord = items.get(position);
-				if (mRecord != null) {
-
-					String origPhone = mRecord.getmPhone();
-
-					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(
-							getActivity(), origPhone);
-
-					TextView phTxt = (TextView) view.findViewById(R.id.number);
-
-					TextView mHtime = (TextView) view.findViewById(R.id.timehumanreadable);
-
-					TextView mId = (TextView) view.findViewById(R.id.idrecord);
-					mId.setVisibility(TextView.INVISIBLE);
-
-					ImageView imageView = (ImageView) view.findViewById(R.id.list_image);
-					Bitmap defaultBite = BitmapFactory.decodeResource(
-							getActivity().getResources(), R.drawable.telphone);
-					imageView.setImageBitmap(defaultBite);
-
-					InputStream input = null;
-
-					if (mContact.getLongContractId() != -1) {
-						Uri uri = ContentUris.withAppendedId(
-								ContactsContract.Contacts.CONTENT_URI,
-								mContact.getLongContractId());
-						ContentResolver cr = getActivity().getContentResolver();
-						input = ContactsContract.Contacts.openContactPhotoInputStream(cr,
-								uri);
-					}
-
-					if (input != null) {
-						Bitmap bitmap = BitmapFactory.decodeStream(input);
-						imageView.setImageBitmap(bitmap);
-					}
-
-					phTxt.setText(origPhone);
-					mHtime.setText(mRecord.getmHtime());
-
-					CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
-					ImageView arrow = (ImageView) view.findViewById(R.id.arrow_record_detail);
-
-					if(isMulti) {					
-						arrow.setVisibility(ImageView.INVISIBLE);
-
-						checkbox.setVisibility(CheckBox.VISIBLE);
-						checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-							@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-							@Override
-							public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-								if(isChecked) {
-									Console.print_debug("Count of checked items: " + position);
-									Console.print_debug("Item info: " + records.get(position));
-
-									if(!selectedItems.contains(position)) {
-										selectedItems.add(position);
-									}									
-								}
-								else {
-									if(selectedItems.contains(position)) {
-										selectedItems.remove(position);
-									}
-								}
-							}
-						});
-					}
-					else {
-						checkbox.setVisibility(CheckBox.INVISIBLE);
-						arrow.setVisibility(ImageView.VISIBLE);
-					}								
-				}
-				return view;
-			}
-
-		}		
-
-		@Override
-		protected boolean handleActionMode(int itemId) {
-
-			if(!selectedItems.isEmpty()) {
-
-				List<Record> recordsToProcess = new ArrayList<Record>();
-
-				for(int pos : selectedItems) {
-					recordsToProcess.add(records.get(pos));
-					Console.print_debug("Position: " + pos + " - " + records.get(pos));
-				}
-
-				switch (itemId) {
-
-				case DELETE_ALL:
-					break;
-
-				case DELETE:
-					break;		
-
-				case SHARE:
-					break;
-
-				default:
-					break;
-
-				}
-				return true;
-			}			
-			return false;
 		}
 
 		@Override
@@ -283,47 +78,135 @@ public class FragmentListRecordOut extends ProofFragment {
 		}
 
 		@Override
-		protected void initOnActivityCreated() {
-			getActivity().runOnUiThread(viewRecords);
-
-			try {
-				Collections.sort(records, new Comparator<Record>() {
-					@Override
-					public int compare(Record s1, Record s2) {
-						return s1.getmHtime().compareToIgnoreCase(s2.getmHtime());
-					}
-				});
-
-				recordsAdapter = new OutGoingCallsAdapter(getActivity(),
-						R.layout.listfragmentdroit, records);				
-
-				setListAdapter(recordsAdapter);
-			}
-			catch(Exception e) {
-				setEmptyText("Aucun Enregistrements d'appels");
-			}		
-
-			if(getListView().getCount() > 0) {
-				registerForContextMenu(getListView());
-			}
-		}
-
-		@Override
 		public void onListItemClick(ListView l, final View view, int position,
 				long id) {
 
 			super.onListItemClick(l, view, position, id);	
 
-			if(!isMulti) {
-				OutGoingCallsAdapter outGoingCallsAdapter = (OutGoingCallsAdapter) getListAdapter();				
-				Record mRecord = outGoingCallsAdapter.getItem(position);
-
-				QuickActionDlg.showPhoneOptionsDlg(getActivity(), view, outGoingCallsAdapter, null, mRecord);
+			if(!isMulti) {				
+				QuickActionDlg.showPhoneOptionsDlg(
+						getActivity(), 
+						view, 
+						listAdapter,
+						(Record) listAdapter.getItem(position)
+				);
 			}
 			else {
 				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
 				checkbox.toggle();
 			}
+		}
+
+		@Override
+		protected void initOnOptionsItemSelected() {
+			FragmentListRecordTabs.removeUnusedTab();			
+		}
+
+		@Override
+		protected void preDeleteAllAction() {
+			
+			int iter = 0;
+			for (Object record : innerCollection) {
+				recordIds[iter] = ((Record) record).getmId();
+				recordPaths[iter] = ((Record) record).getmFilePath();
+				
+				iter++;
+
+				Console.print_debug("Position: " + record);
+			}			
+		}
+
+		@Override
+		protected void DoneAction() {
+			FragmentListRecordTabs.readdUnusedTab();			
+		}
+
+		@Override
+		protected void DeleteAllAction() {
+			MenuActions.deleteCalls(recordIds, recordPaths);
+			FragmentListRecordTabs.removeCurrentTab(getInternalContext());			
+		}
+
+		@Override
+		protected void ShareAction() {
+			MenuActions.sharingOptions(recordPaths);			
+		}
+		
+		@Override
+		protected void preDeleteAndShareAction() {
+			int iter = 0;					
+			
+			for (Object item : innerCollection) {
+				Record lcRecord = (Record) item;
+				
+				if(lcRecord.isChecked()) {
+					try {						
+						recordIds[iter] = lcRecord.getmId();
+						recordPaths[iter] = lcRecord.getmFilePath();
+						
+						iter++;
+					}
+					catch (Exception e) {
+						Console.print_exception(e);
+					}	
+				}							
+			}			
+		}
+
+		@Override
+		protected void DeleteAction() {
+			
+			MenuActions.deleteCalls(recordIds, recordPaths);
+			
+			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
+			
+			for(Object item : innerCollection) {
+				Record lcRecord = (Record) item;
+				
+				if(lcRecord.isChecked()) {					
+					toBeProcessed.add(lcRecord);			
+				}					
+			}
+			
+			for(Object item : toBeProcessed) {
+				((ObjectsAdapter)listAdapter).remove((Record) item);
+				((ArrayList<Object>)innerCollection).remove((Record) item);
+			}
+			
+			((ObjectsAdapter)listAdapter).notifyDataSetChanged();		
+		}
+
+		@Override
+		protected boolean itemChecked(Object item) {
+			return ((Record) item).isChecked();
+		}
+
+		@Override
+		protected int innerCollectionSorting(Object first, Object second) {
+			return ((Record) first).getmHtime().compareToIgnoreCase(
+					((Record) second).getmHtime());
+		}
+
+		@Override
+		protected void initAdapter(Context context, List<Object> collection,
+				int layoutId, boolean multiSelectMode) {
+			listAdapter = null;
+			listAdapter = new ObjectsAdapter(context, collection, layoutId, multiSelectMode);
+		}
+		
+		@Override
+		protected void uncheckItem(Object item) {
+			((Record) item).setChecked(false);	
+		}
+
+		@Override
+		protected void toggleItem(Object item, boolean checked) {
+			((Record) item).setChecked(checked);
+		}
+		
+		@Override
+		protected Object getItemClone(Object item) {
+			return ((Record) item).clone();
 		}
 	}
 }

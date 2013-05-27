@@ -52,7 +52,8 @@ public final class ContactsDataHelper {
 										mCallsFoldersKnownContacts, 
 										mCallsFoldersUnKnownContacts;
 
-	private static ArrayList<Record> mIncommingCalls, mOutGoingCalls;
+	static List<Object> mIncommingCalls;
+	private static List<Object> mOutGoingCalls;
 
 	private static String[] phoneProjection = new String[] {
 			ContactsContract.Contacts.DISPLAY_NAME,
@@ -267,8 +268,8 @@ public final class ContactsDataHelper {
 		
 		Record.setResolver(mContext.getApplicationContext().getContentResolver());
 		
-		mIncommingCalls = new ArrayList<Record>();
-		mOutGoingCalls = new ArrayList<Record>();
+		mIncommingCalls = new ArrayList<Object>();
+		mOutGoingCalls = new ArrayList<Object>();
 		
 		while (cursor.moveToNext()) {
 			
@@ -424,7 +425,7 @@ public final class ContactsDataHelper {
 		return mExcludedContacts;
 	}
 	
-	public static ArrayList<Record> getIncommingCalls(Context context, String mWhere, String mPhone) {
+	public static List<Object> getIncommingCalls(Context context, String mWhere, String mPhone) {
 		mContext = context;	
 		print("mPhone or Id" + mPhone + " mWhere: " + mWhere);
 		_getIncommingCalls(mPhone, mWhere);	
@@ -432,7 +433,7 @@ public final class ContactsDataHelper {
 		return mIncommingCalls;
 	}
 	
-	public static ArrayList<Record> getOutGoingCalls(Context context, String mWhere, String mPhone) {
+	public static List<Object> getOutGoingCalls(Context context, String mWhere, String mPhone) {
 		mContext = context;
 		print("mPhone or Id" + mPhone + " mWhere: " + mWhere);
 		_getOutGoingCalls(mPhone, mWhere);
