@@ -223,7 +223,7 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	 */
 	@SuppressWarnings("deprecation")
 	public Notification mNotification(){
-		Notification note=new Notification(R.drawable.app_sample_code,
+		Notification note=new Notification(R.drawable.navigationrefresh,
                 getString(R.string.notification_ogg_title),
                 System.currentTimeMillis());
 		return note;

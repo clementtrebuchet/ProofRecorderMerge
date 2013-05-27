@@ -105,17 +105,25 @@ public class FragmentListKnownContacts extends ProofFragment {
 			
 			ContactAdapter ca = (ContactAdapter) getListAdapter();
 			
-			Contact mContact = contacts.get(recordPosition);
+			// In case Collection is empty, if so no action allowed.
 			
-			Console.print_debug(recordPosition);
-			if (item.getItemId() == R.id.cm_records_list_del_file) {
-				MenuActions.deleteContactsFolder(mContact, getActivity(), ca);
-				return true;
-			} else if (item.getItemId() == R.id.cm_records_list_display_details) {
-				MenuActions.displayCallsFolderDetails(mContact.getContractId(), "android_id", getActivity());
-				Console.print_debug("Display Item's details");
-				return true;
+			try {		
+				Contact mContact = ca.getItem(recordPosition);
+				
+				Console.print_debug(recordPosition);
+				if (item.getItemId() == R.id.cm_records_list_del_file) {
+					MenuActions.deleteContactsFolder(mContact, getActivity(), ca);
+					return true;
+				} else if (item.getItemId() == R.id.cm_records_list_display_details) {
+					MenuActions.displayCallsFolderDetails(mContact.getContractId(), "android_id", getActivity());
+					Console.print_debug("Display Item's details");
+					return true;
+				}
 			}
+			catch(IndexOutOfBoundsException exc) {
+				Console.print_exception(exc);
+			}			
+			
 			return super.onContextItemSelected(item);
 		}		
 		
