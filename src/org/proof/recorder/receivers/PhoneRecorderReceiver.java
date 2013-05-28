@@ -66,6 +66,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 					getInternalContext(), phoneNumber);
 			
 			extraNotification.putBoolean("isNotify", true);
+			
 			extraNotification.putString("Sense", directionCall);
 			
 			extraNotification.putLong("RecordId", record.getSavedId());

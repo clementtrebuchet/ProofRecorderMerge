@@ -1,6 +1,7 @@
 package org.proof.recorder.fragment.dialog;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.proof.recorder.R;
@@ -34,7 +35,7 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 						mShareGmailIcon;
 	
 	private static Bundle mBundle;
-	private static String mAttachFilePath;
+	private static String[] mAttachedFiles;
 	
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -72,7 +73,8 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 		 *  */
 
 		mBundle = getIntent().getExtras();
-		mAttachFilePath = mBundle.getString("mAttachFilePath");
+		
+		mAttachedFiles = mBundle.getStringArray("AttachedFiles");
 
 		mShareMailIcon = (ImageButton) findViewById(R.id.mShareMailIcon);
 		//mShareYouTubeIcon = (ImageButton) findViewById(R.id.mShareYouTubeIcon);
@@ -160,7 +162,7 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 			content.put(Video.VideoColumns.DATE_ADDED,
 			System.currentTimeMillis() / 1000);
 			content.put(Video.Media.MIME_TYPE, "audio/mpeg");
-			content.put(MediaStore.Video.Media.DATA, mAttachFilePath);
+			content.put(MediaStore.Video.Media.DATA, mAttachedFiles);
 			ContentResolver resolver = getBaseContext().getContentResolver();
 			Uri uri = resolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, content);
 			
@@ -183,7 +185,7 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 	private void startMailIntent(String mType) {
 
 		boolean found = false;
-		Intent share = new Intent(android.content.Intent.ACTION_SEND);
+		Intent share = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
 		share.setType("audio/3gp");
 
 		// gets the list of intents that can be loaded.
@@ -200,8 +202,15 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 							getString(R.string.custom_intent_chooser_subject));
 					share.putExtra(Intent.EXTRA_TEXT,
 							getString(R.string.custom_intent_chooser_text));
-					share.putExtra(Intent.EXTRA_STREAM,
-							Uri.fromFile(new File(mAttachFilePath))); 
+					
+					ArrayList<Uri> uris = new ArrayList<Uri>();
+					for(String attachmentPath : mAttachedFiles) {
+						Uri attachment = Uri.fromFile(new File(attachmentPath));
+						uris.add(attachment);						
+					}
+					
+					share.putParcelableArrayListExtra(Intent.EXTRA_STREAM,	uris); 
+					
 					share.setPackage(info.activityInfo.packageName);
 					found = true;
 					break;

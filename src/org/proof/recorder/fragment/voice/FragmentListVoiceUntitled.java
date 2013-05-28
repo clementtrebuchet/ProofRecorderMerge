@@ -1,50 +1,37 @@
 package org.proof.recorder.fragment.voice;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.adapter.voice.VoiceAdapter;
+
+import org.proof.recorder.adapter.voice.ObjectsAdapter;
 import org.proof.recorder.bases.fragment.ProofFragment;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.collections.VoicesList;
+
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 public class FragmentListVoiceUntitled extends ProofFragment {
-
-	//private static final String TAG = "FragmentListVoice";
-	
-	public static String ID;
-	/** Called when the activity is first created. */	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
-	public static class VoiceListLoader extends ListFragment {
-
-		private static ArrayList<Voice> voices = null;
-		private static VoiceAdapter voicesAdapter = null;
-		private static Runnable viewVoices = null;
-		
-		boolean mDualPane;
-		int mCursorPos = -1;
-		
-		private static Bundle extraDatas;
+	public static class VoiceListLoader extends ProofListFragmentWithQuickAction {
 		
 		private void getVoices() {
 			
@@ -53,7 +40,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 			
 			try {
 				
-				mQuery = (String) extraDatas.get("search");
+				mQuery = (String) extraData.get("search");
 				
 				if(mQuery != null)
 					throw new Exception();
@@ -73,7 +60,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 				
 				VoicesList mList = new VoicesList(cursor);
 				
-				voices = mList.getCollection();
+				innerCollection = mList.getCollection();
 				
 			} catch (Exception e) {				
 				Console.print_exception(e);
@@ -83,13 +70,10 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			
-			Console.setTagName(this.getClass().getSimpleName());
+
 			Voice.setResolver(getActivity().getContentResolver());
 			
-			extraDatas = getActivity().getIntent().getExtras();
-			
-			viewVoices = new Runnable() {
+			fillCollectionRunnable = new Runnable() {
 				@Override
 				public void run() {
 					getVoices();
@@ -97,66 +81,137 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 			};					
 		}
 
-		/**
-		 * Contextual Menu for displaying social and all :)
-		 */
-
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {			
-			return super.onCreateView(inflater, container, savedInstanceState);
-		}		
+		public void onListItemClick(ListView l, View view, int position, long id) {
 
-		/**
-		 * End of Contextual Menu
-		 */
-
-		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
+			super.onListItemClick(l, view, position, id);
 			
-			getActivity().runOnUiThread(viewVoices);
-			
-			try{
-				Collections.sort(voices, new Comparator<Voice>() {
-			        @Override
-			        public int compare(Voice s1, Voice s2) {
-			            return s1.getTimestamp().compareToIgnoreCase(s2.getTimestamp());
-			        }
-			    });
+			if (!isMulti) {
+				Voice voice = (Voice) innerCollection.get(position);
 				
-				voicesAdapter = new VoiceAdapter(getActivity(),
-						R.layout.listfragmentdroit, voices);
-				
-				setListAdapter(voicesAdapter);
-			}
-			catch(Exception e) {
-				setEmptyText("");
-			}
-			
-			if(getListView().getCount() > 0) {
-				registerForContextMenu(getListView());
+				QuickActionDlg.showUnTitledVoiceOptionsDlg(
+						getActivity(),
+						view, 
+						voice, 
+						listAdapter, 
+						innerCollection, 
+						org.proof.recorder.Settings.mType.VOICE_UNTITLED
+				);
+			} else {
+				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
+				checkbox.toggle();
 			}			
 		}
 
 		@Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-
-			super.onListItemClick(l, v, position, id);
-			
-			Voice voice = voices.get(position);
-			
-			QuickActionDlg.showUnTitledVoiceOptionsDlg(
-					getActivity(),
-					v, 
-					voice, 
-					voicesAdapter, 
-					voices, 
-					this, 
-					Settings.mType.VOICE_UNTITLED
-			);
+		protected void initOnOptionsItemSelected() {
+			FragmentListVoiceTabs.removeUnusedTab();			
 		}
 
-	}
+		@Override
+		protected void preDeleteAllAction() {
+			
+			int iter = 0;
+			for (Object voice : innerCollection) {
+				recordIds[iter] = ((Voice) voice).getId();
+				recordPaths[iter] = ((Voice) voice).getFilePath();
+				
+				iter++;
 
+				Console.print_debug("Position: " + voice);
+			}			
+		}
+
+		@Override
+		protected void DoneAction() {
+			FragmentListVoiceTabs.readdUnusedTab();			
+		}
+
+		@Override
+		protected void DeleteAllAction() {
+			MenuActions.deleteVoices(recordIds, recordPaths);
+			FragmentListVoiceTabs.removeCurrentTab(getInternalContext());			
+		}
+
+		@Override
+		protected void ShareAction() {
+			MenuActions.sharingOptions(recordPaths);			
+		}
+
+		@Override
+		protected void preDeleteAndShareAction() {
+			int iter = 0;					
+			
+			for (Object item : innerCollection) {
+				Voice lcVoice = (Voice) item;
+				
+				if(lcVoice.isChecked()) {
+					try {						
+						recordIds[iter] = lcVoice.getId();
+						recordPaths[iter] = lcVoice.getFilePath();
+						
+						iter++;
+					}
+					catch (Exception e) {
+						Console.print_exception(e);
+					}	
+				}							
+			}			
+		}
+
+		@Override
+		protected void DeleteAction() {
+			
+			MenuActions.deleteVoices(recordIds, recordPaths);
+			
+			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
+			
+			for(Object item : innerCollection) {
+				Voice lcVoice = (Voice) item;
+				
+				if(lcVoice.isChecked()) {
+					toBeProcessed.add(lcVoice);						
+				}				
+			}
+			
+			for(Object item : toBeProcessed) {
+				((ObjectsAdapter)listAdapter).remove((Voice) item);
+				((ArrayList<Object>)innerCollection).remove((Voice) item);
+			}
+			
+			((ObjectsAdapter)listAdapter).notifyDataSetChanged();			
+		}
+
+		@Override
+		protected boolean itemChecked(Object item) {
+			return ((Voice) item).isChecked();
+		}
+		
+		@Override
+		protected int innerCollectionSorting(Object first, Object second) {
+			return ((Voice) first).getTimestamp().compareToIgnoreCase(
+		    		((Voice) second).getTimestamp());
+		}
+		
+		@Override
+		protected void initAdapter(Context context, List<Object> collection,
+				int layoutId, boolean multiSelectMode) {
+			listAdapter = new ObjectsAdapter(context, collection, layoutId, multiSelectMode);
+		}
+		
+		@Override
+		protected void uncheckItem(Object item) {
+			((Voice) item).setChecked(false);	
+		}
+
+		@Override
+		protected void toggleItem(Object item, boolean checked) {
+			((Voice) item).setChecked(checked);
+		}
+		
+		@Override
+		protected Object getItemClone(Object item) {
+			return ((Voice) item).clone();
+		}
+	}
 }

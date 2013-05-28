@@ -53,10 +53,8 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 
 		private static ArrayList<Contact> contacts = null;
 		private static ContactAdapter contactAdapter = null;
-		private static Runnable viewContacts = null;
-		private static boolean uiOn = false;
 
-
+		private static Runnable viewContacts = null;		
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -65,9 +63,7 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 			viewContacts = new Runnable() {
 				@Override
 				public void run() {
-					uiOn = true;
 					getContacts();
-					uiOn = false;
 				}
 			};
 
@@ -132,8 +128,6 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		private void getContacts() {
 			try {
 				contacts = ContactsDataHelper.getCallsFoldersOfUnKnown(getActivity());
-				if(uiOn)
-					getActivity().runOnUiThread(returnRes);
 			} catch (Exception e) {
 				Log.e(TAG, "" + e.getMessage());
 			}
@@ -220,15 +214,6 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 			if(getListView().getCount() > 0)
 				registerForContextMenu(getListView());
 		}
-
-		private Runnable returnRes = new Runnable() {
-
-			@Override
-			public void run() {
-
-				((ContactAdapter) getListAdapter()).notifyDataSetChanged();
-			}
-		};
 
 		@Override
 		public void onListItemClick(ListView l, final View v, int position,

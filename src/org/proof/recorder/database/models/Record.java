@@ -4,17 +4,37 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.proof.recorder.Settings;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.DateUtils;
+import org.proof.recorder.utils.OsInfo;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.telephony.PhoneNumberUtils;
-import android.util.Log;
 
-public class Record implements DataLayerInterface, Serializable {
+public class Record implements DataLayerInterface, Serializable, Cloneable {
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() {
+		Object o = null;
+		try {
+			// On récupère l'instance à renvoyer par l'appel de la 
+			// méthode super.clone()
+			o = super.clone();
+		} catch(CloneNotSupportedException cnse) {
+			// Ne devrait jamais arriver car nous implémentons 
+			// l'interface Cloneable
+			cnse.printStackTrace(System.err);
+		}
+		// on renvoie le clone
+		return o;
+	}
 
 	/**
 	 * 
@@ -28,6 +48,9 @@ public class Record implements DataLayerInterface, Serializable {
 
 	private static Uri mUriRecordById = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "record_by_id/");
+	
+	private static boolean hasDataLayer = false;
+	private static ContentResolver mResolver;
 
 	// Private Attributes
 
@@ -38,27 +61,35 @@ public class Record implements DataLayerInterface, Serializable {
 	private String mTimeStamp;
 	private String mSense;
 	private String mAndroidId;
-	private String mSize;	
+	private String mSize;
 
 	private DataPhoneNumber mDataNumber;
-	private static ContentResolver mResolver;
+	
 	private Contact mContact;
+	
+	private boolean isChecked = false;
 
-	private static boolean hasDataLayer = false;
+	/**
+	 * @return the isChecked
+	 */
+	public boolean isChecked() {
+		return isChecked;
+	}
 
+	/**
+	 * @param isChecked the isChecked to set
+	 */
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
+	}
+	
+	public void toggle() {
+		setChecked(!this.isChecked);		
+	}
+	
 	// Logging wrapping
-
-	protected void print(String message) {
-		if(Settings.isDebug())
-			Log.d(this.getClass().getName(), message);
-	}
-
-	protected void print_exception(String message) {
-		Log.e(this.getClass().getName(), message);
-	}
-
 	public void toConsole() {
-		this.print(this.toString());
+		Console.print_debug(this.toString());
 	}
 
 	@Override
@@ -147,6 +178,12 @@ public class Record implements DataLayerInterface, Serializable {
 	public Record () {
 		this.initialize("-1", "null");
 	}
+	
+	public Record (String size, String fileName, String phone, String sense) {
+		this.initialize("-1", fileName, phone);
+		this.setmSense(sense);
+		this.setmSize(size);
+	}
 
 	public Record (String id, String fileName) {
 		this.initialize(id, fileName);
@@ -164,9 +201,9 @@ public class Record implements DataLayerInterface, Serializable {
 				   String mAndroidId) {
 		
 		this.initialize(id, fileName, phone);
-		setmSense(sense);
-		setmHtime(htime);
-		setmAndroidId(mAndroidId);
+		this.setmSense(sense);
+		this.setmHtime(htime);
+		this.setmAndroidId(mAndroidId);
 		
 	}
 	
@@ -177,17 +214,17 @@ public class Record implements DataLayerInterface, Serializable {
 	private void initialize(String id, String fileName) {
 		this.setmContact(new Contact());
 		this.mDataNumber = new DataPhoneNumber();
-		setmId(id);
-		setmFilePath(fileName);
+		this.setmId(id);
+		this.setmFilePath(fileName);
 	}
 	
 	private void initialize(String id, String fileName, String phone) {
 		
 		this.setmContact(new Contact(phone));
 		this.mDataNumber = new DataPhoneNumber(phone);
-		setmPhone(phone);
-		setmId(id);
-		setmFilePath(fileName);
+		this.setmPhone(phone);
+		this.setmId(id);
+		this.setmFilePath(fileName);
 	}
 
 	public String getmHtime() {
@@ -208,6 +245,8 @@ public class Record implements DataLayerInterface, Serializable {
 
 	public static void setResolver(ContentResolver mResolver) {
 		Record.mResolver = mResolver;
+		Contact.setResolver(mResolver);
+		DataPhoneNumber.setResolver(mResolver);
 		setHasDataLayer(true);
 	}
 
@@ -249,6 +288,8 @@ public class Record implements DataLayerInterface, Serializable {
 	 */
 	public void setmFilePath(String mFilePath) {
 		this.mFilePath = mFilePath;
+		this.setmTimeStamp(OsInfo.getBaseNameWithNoExt(mFilePath));
+		this.setmHtime(DateUtils.formatTime(this.getmTimeStamp()));
 	}
 
 	/**
@@ -274,7 +315,9 @@ public class Record implements DataLayerInterface, Serializable {
 	 * @return the mAndroidId
 	 */
 	public String getmAndroidId() {
-		return mAndroidId.trim();
+		if(mAndroidId != null)
+			return mAndroidId.trim();
+		return "null";
 	}
 
 	/**
@@ -292,6 +335,7 @@ public class Record implements DataLayerInterface, Serializable {
 		this.mContact = mContact;
 	}
 
+	@SuppressWarnings("unused")
 	private String getPhoneNumberFK() {
 		return this.mDataNumber.get_countryCode() + ";" + 
 				this.mDataNumber.get_nationalNumber();
@@ -303,7 +347,7 @@ public class Record implements DataLayerInterface, Serializable {
 		DataLayerInterface._values.put(ProofDataBase.COLUMN_FILE, this.getmFilePath());
 		DataLayerInterface._values.put(ProofDataBase.COLUMN_TIMESTAMP, this.getmTimeStamp());
 		DataLayerInterface._values.put(ProofDataBase.COLUMN_HTIME, this.getmHtime());
-		DataLayerInterface._values.put(ProofDataBase.COLUMN_TELEPHONE, this.getPhoneNumberFK());
+		DataLayerInterface._values.put(ProofDataBase.COLUMN_TELEPHONE, this.getmPhone());
 		DataLayerInterface._values.put(ProofDataBase.COLUMN_SENS, this.getmSense());
 		DataLayerInterface._values.put(ProofDataBase.COLUMN_TAILLE, this.getmSize());
 		DataLayerInterface._values.put(ProofDataBase.COLUMN_ISYNC_PH, "0");		
@@ -313,12 +357,12 @@ public class Record implements DataLayerInterface, Serializable {
 	public void save() {
 		
 		if(hasDataLayer()) {
-			this.mDataNumber.save();
+			//this.mDataNumber.save();
 			this.fillValues();
 			getResolver().insert(mUriRecords, DataLayerInterface._values);	
 		}
 		else {
-			print_exception("No data access (None ContentResolver has been passed)");
+			Console.print_exception("No data access (None ContentResolver has been passed)");
 		}
 		
 	}

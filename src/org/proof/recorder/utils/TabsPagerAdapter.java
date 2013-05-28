@@ -3,6 +3,7 @@ package org.proof.recorder.utils;
 import java.util.ArrayList;
 
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,15 +16,15 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
 public final class TabsPagerAdapter extends FragmentPagerAdapter implements
-		ActionBar.TabListener, ViewPager.OnPageChangeListener {
-	
+ActionBar.TabListener, ViewPager.OnPageChangeListener {
+
 	private static Context mContext;
 	private final ActionBar mActionBar;
 	private final ViewPager mViewPager;
 	private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
 	static final class TabInfo {
-		
+
 		private final Class<?> clss;
 		private final Bundle args;
 
@@ -80,10 +81,15 @@ public final class TabsPagerAdapter extends FragmentPagerAdapter implements
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		Object tag = tab.getTag();
 		for (int i = 0; i < mTabs.size(); i++) {
-			if (mTabs.get(i) == tag) {
-				mViewPager.setCurrentItem(i);
+			try {
+				if (mTabs.get(i) == tag) {
+					mViewPager.setCurrentItem(i);
+				}
 			}
-		}
+			catch (Exception e) {
+				Console.print_exception(e);
+			}				
+		}	
 	}
 
 	@Override

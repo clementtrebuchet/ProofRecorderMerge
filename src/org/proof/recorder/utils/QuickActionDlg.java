@@ -1,16 +1,15 @@
 package org.proof.recorder.utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
+import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.dialog.Search;
-import org.proof.recorder.fragment.phone.FragmentListRecordIn.InCommingCallsLoader.InCommingCallsAdapter;
-import org.proof.recorder.fragment.phone.FragmentListRecordOut.OutGoingCallsLoader.OutGoingCallsAdapter;
 import org.proof.recorder.quick.action.ActionItem;
 import org.proof.recorder.quick.action.QuickAction;
 import org.proof.recorder.utils.Log.Console;
@@ -18,8 +17,6 @@ import org.proof.recorder.utils.Log.Console;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.support.v4.app.LoaderManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -70,6 +67,7 @@ public class QuickActionDlg {
 	 */
 	public static void setmContext(Context mContext) {
 		QuickActionDlg.mContext = mContext;
+		MenuActions.setInternalContext(mContext);
 	}
 	
 	public static boolean hasContext() {
@@ -79,21 +77,22 @@ public class QuickActionDlg {
 	/**
 	 * Calls List Quick Actions Dialog
 	 * 
-	 * @param c
+	 * @param context
 	 * @param v
 	 * @param outAdapter
 	 * @param inAdapter
-	 * @param mRecord
+	 * @param record
 	 */
-	public static void showPhoneOptionsDlg(Context c, View v,
-			final OutGoingCallsAdapter outAdapter,
-			final InCommingCallsAdapter inAdapter, final Record mRecord) {
-		mContext = c;
-		MenuActions.setmContext(c);
+	public static void showPhoneOptionsDlg(Context context, View v,
+			final ProofBaseMultiSelectListAdapter adpater, final Record record) {
+		
+		mContext = context;
+		
+		MenuActions.setInternalContext(context);
 
 		setHasSearch(true);
 
-		injectQuickDlgMenu(c);
+		injectQuickDlgMenu(context);
 
 		mQuickAction
 		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -104,30 +103,26 @@ public class QuickActionDlg {
 				switch (actionId) {
 
 				case ID_DISPLAY:
-					MenuActions.displayItemPhoneDetails(mRecord
-							.getmId());
+					MenuActions.displayItemPhoneDetails(record.getmId());
 					break;
 
 				case ID_READ:
-					MenuActions.readPhone(mRecord.getmFilePath());
+					MenuActions.readPhone(record.getmFilePath());
 					break;
 
 				case ID_SEARCH:
 					Intent intent = new Intent(mContext, Search.class);
-					intent.putExtra("phone", mRecord.getmDataNumber().get_nationalNumber());
+					intent.putExtra("phone", record.getmDataNumber().get_nationalNumber());
 					mContext.startActivity(intent);
 					break;						
 
 				case ID_SHARE:
-					String[] mDatas = new String[] { mRecord
-							.getmFilePath() };
+					String[] mDatas = new String[] { record.getmFilePath() };
 					MenuActions.sharingOptions(mDatas);
 					break;
 
 				case ID_DELETE:
-					MenuActions.deleteItem(mRecord.getmId(),
-							Settings.mType.CALL, null,
-							outAdapter, inAdapter, mRecord);
+					MenuActions.deleteItem(record.getmId(), Settings.mType.CALL, null,	adpater, record);
 					break;
 				default:
 					if (Settings.isToastNotifications())
@@ -148,29 +143,28 @@ public class QuickActionDlg {
 	/**
 	 * Voice List Quick Actions Dialog
 	 * 
-	 * @param c
-	 * @param v
+	 * @param context
+	 * @param view
 	 * @param voice
 	 * @param adapter
 	 * @param lm
 	 * @param voiceListLoader
 	 */
 	public static void showTitledVoiceOptionsDlg(
-			Context c,
-			View v,
+			Context context,
+			View view,
 			final Voice voice,
 			final Object adapter,
-			final ArrayList<Voice> collection,
-			final org.proof.recorder.fragment.voice.FragmentListVoice.VoiceListLoader voiceListLoader,
+			final List<Object> innerCollection,
 			final Settings.mType mType) {
 		
-		mContext = c;
-		MenuActions.setmVoiceAdapter(adapter);
-		MenuActions.setmContext(c);
+		mContext = context;
+		MenuActions.setVoiceAdapter(adapter);
+		MenuActions.setInternalContext(context);
 
 		setHasSearch(false);
 
-		injectQuickDlgMenu(c);
+		injectQuickDlgMenu(context);
 		// Set listener for action item clicked
 		mQuickAction
 		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -195,7 +189,7 @@ public class QuickActionDlg {
 
 				case ID_DELETE:
 					MenuActions.deleteItem(voice.getId(), mType,
-							collection, adapter, null, voice);
+							innerCollection, (ProofBaseMultiSelectListAdapter) adapter, voice);
 					try {
 						OsHandler.deleteFileFromDisk(voice.getFilePath());
 					} catch (IOException e) {
@@ -218,13 +212,13 @@ public class QuickActionDlg {
 			}
 		});
 
-		mQuickAction.show(v);
+		mQuickAction.show(view);
 	}
 
-	public static void showSearchOptionsDlg(
+	/*public static void showSearchOptionsDlg(
 			Context activity, 
-			View v, 
-			final Cursor c,
+			View view, 
+			final Cursor cursor,
 			final Settings.mType mType,
 			final LoaderManager lm,
 			final Object mCustomLoader) {
@@ -233,7 +227,7 @@ public class QuickActionDlg {
 		setHasSearch(false);
 
 		injectQuickDlgMenu(activity);
-		MenuActions.setmContext(activity);
+		MenuActions.setInternalContext(activity);
 
 		mQuickAction
 		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -246,26 +240,26 @@ public class QuickActionDlg {
 				case ID_DISPLAY:
 
 					if (mType == Settings.mType.CALL) {
-						MenuActions.displayItemPhoneDetails(c.getString(0));
+						MenuActions.displayItemPhoneDetails(cursor.getString(0));
 					} else {
-						MenuActions.displayItemVoiceDetails(c);
+						MenuActions.displayItemVoiceDetails(cursor);
 					}
 					break;
 
 				case ID_READ:
 					if (mType == Settings.mType.CALL) {
-						MenuActions.readPhone(c.getString(4));
+						MenuActions.readPhone(cursor.getString(4));
 					} else {
-						MenuActions.readVoice(c.getString(4));
+						MenuActions.readVoice(cursor.getString(4));
 					}
 					break;
 
 				case ID_SHARE:
-					MenuActions.sharingOptions(new String[] { c.getString(4) });
+					MenuActions.sharingOptions(new String[] { cursor.getString(4) });
 					break;
 
 				case ID_DELETE:
-					MenuActions.deleteSearchItem(c, mType, lm, mCustomLoader);
+					MenuActions.deleteSearchItem(cursor, mType, lm, mCustomLoader);
 					break;
 
 				default:
@@ -281,25 +275,24 @@ public class QuickActionDlg {
 			}
 		});
 
-		mQuickAction.show(v);
-	}
+		mQuickAction.show(view);
+	}*/
 
 	public static void showUnTitledVoiceOptionsDlg(
-			Context activity,
-			View v,
+			Context context,
+			View view,
 			final Voice voice,
 			final Object listAdapter,
-			final ArrayList<Voice> collection,
-			final org.proof.recorder.fragment.voice.FragmentListVoiceUntitled.VoiceListLoader voiceListLoader,
+			final List<Object> innerCollection,
 			final Settings.mType mType) {
 
-		mContext = activity;
-		MenuActions.setmVoiceAdapter(listAdapter);
-		MenuActions.setmContext(activity);
+		mContext = context;
+		MenuActions.setVoiceAdapter(listAdapter);
+		MenuActions.setInternalContext(context);
 
 		setHasSearch(false);
 
-		injectQuickDlgMenu(activity);
+		injectQuickDlgMenu(context);
 		// Set listener for action item clicked
 		mQuickAction
 		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
@@ -323,14 +316,19 @@ public class QuickActionDlg {
 					break;
 
 				case ID_DELETE:
-					MenuActions.deleteItem(voice.getId(), mType,
-							collection, listAdapter, null, voice);
+					
+					MenuActions.deleteItem(
+							voice.getId(), 
+							mType, 
+							innerCollection, 
+							(ProofBaseMultiSelectListAdapter) listAdapter, 
+							voice
+					);
+					
 					try {
 						OsHandler.deleteFileFromDisk(voice.getFilePath());
 					} catch (IOException e) {
-						Console.print_exception(
-									"showVoiceOptionsDlg()->ID_DELETE : "
-											+ e.getMessage());
+						Console.print_exception(e);
 					}
 					break;
 
@@ -347,7 +345,7 @@ public class QuickActionDlg {
 			}
 		});
 
-		mQuickAction.show(v);
+		mQuickAction.show(view);
 
 	}
 
@@ -452,15 +450,12 @@ public class QuickActionDlg {
 
 		AlertDialogHelper.setContext(mContext);
 
-		if (Settings.isDebug()) {
-
 			String msg = "=== ITEM INFO ===" + BR;
 			msg += "STRING: " + item.toString() + BR;
 			msg += "ID    : " + item.getItemId() + BR;
 			msg += "GROUP : " + item.getGroupId() + BR;
 
 			Console.print_debug(msg);
-		}
 
 		int id = item.getItemId();
 		switch (id) {
@@ -547,7 +542,6 @@ public class QuickActionDlg {
 			}
 
 			else {
-
 				if (!Settings.isNotLicensed()) {
 					mContext.startActivity(StaticIntents.goPhone(mContext));
 				}
@@ -564,14 +558,12 @@ public class QuickActionDlg {
 			break;
 
 		default:
-			if (Settings.isToastNotifications() && id != 0)
-				Toast.makeText(
-						mContext,
-						"Erreur dans " + TAG + " ID inconnu dans onItemClick()",
-						Toast.LENGTH_SHORT).show();
+			if (id != 0) {
+				Console.print_debug(
+						"Erreur dans " + TAG + " ID inconnu dans onItemClick()");
+			}				
 			return false;
 		}
-
 		return true;
 	}
 
