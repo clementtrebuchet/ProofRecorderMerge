@@ -3,19 +3,20 @@
     android:shape="rectangle" >
 
     <stroke
-        android:width="2dp"
-        android:color="#000000" />
+        android:width="4dp"
+        android:color="#01040A" />
 
     <gradient
         android:angle="225"
-        android:endColor="#000000"
-        android:startColor="#FFFFFF" />
+        android:endColor="#000B1F"
+        android:startColor="#1F2021"
+        android:centerColor="#425B87"/>
+    
 
     <corners
-        android:bottomLeftRadius="7dp"
-        android:bottomRightRadius="7dp"
-        android:topLeftRadius="7dp"
-        android:topRightRadius="7dp" />
+        android:bottomLeftRadius="5dp"
+        android:bottomRightRadius="5dp"
+        android:topLeftRadius="5dp"
+        android:topRightRadius="5dp" />
 
-<!--     <solid android:color="#8B8B7A" /> -->
 </shape> 
