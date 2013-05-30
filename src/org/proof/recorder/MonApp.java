@@ -1,20 +1,28 @@
 package org.proof.recorder;
 
-import org.acra.ACRA;
-import org.acra.annotation.ReportsCrashes;
+import org.acra.*;
 import org.proof.recorder.utils.Log.Console;
 
-@ReportsCrashes(formKey = "dEdhREpjQThYVXNVakltRmhFSGktRmc6MQ") 
+
 public class MonApp extends android.app.Application {
 	
+	private ACRAConfiguration mACRA;
+
 	@Override
     public void onCreate() {
-        // The following line triggers the initialization of ACRA
-		
-		// Try / catch: might fix crashes on some devices.
+		super.onCreate();
+        /*
+         * The following line triggers the initialization of ACRA 
+         * Try / catch: might fix crashes on some devices.
+		 */
 		try {
-			ACRA.init(this);
-			super.onCreate();
+			
+		ACRA.init(this);
+		mACRA = ACRA.getNewDefaultConfig(this);
+		mACRA.setFormKey("dEdhREpjQThYVXNVakltRmhFSGktRmc6MQ");
+		ACRA.setConfig(mACRA);
+		
+			
 		}
 		catch(Exception e) {
 			Console.print_exception(e);
