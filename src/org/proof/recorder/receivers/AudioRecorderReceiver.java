@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.widget.Toast;
 
 public class AudioRecorderReceiver extends ProofBroadcastReceiver {
@@ -371,11 +370,4 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 		AudioRecorderReceiver.cnx = cnx;	
 		
 	}
-	
-	Handler mHandler = new Handler(){
-		@Override
-		  public void handleMessage(Message msg) {
-			  
-		     }
-	};
 }
