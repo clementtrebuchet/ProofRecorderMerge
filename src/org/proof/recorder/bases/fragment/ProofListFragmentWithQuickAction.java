@@ -6,27 +6,23 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.proof.recorder.R;
-
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
-import org.proof.recorder.bases.utils.SetStaticContext;
-
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class ProofListFragmentWithQuickAction extends SherlockListFragment {	
+public abstract class ProofListFragmentWithQuickAction extends ProofListFragmentWithAsyncLoader {	
 
 	protected final static int SELECT_ALL = 5, 
 			DELETE = 10, 
@@ -35,11 +31,6 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 
 	public static boolean isMulti = false;
 
-	protected ViewGroup viewGroup = null;
-	protected Bundle extraData = null;
-	protected ProofBaseMultiSelectListAdapter listAdapter = null;
-
-	protected List<Object> innerCollection = null;
 	protected ActionMode mode = null;	
 
 	protected String[] recordIds = null, recordPaths = null;	
@@ -48,9 +39,8 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 	
 	protected MenuItem ItemClicked = null;
 
-	private Context internalContext = null;
 	private int selectedCount = 0;
-	private boolean checked = false;
+	private boolean checked = false;	
 
 	public final class QuickActionMode implements ActionMode.Callback {
 
@@ -99,8 +89,8 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 			// TODO Auto-generated method stub
 			return false;
 		}
-	}	
-
+	}
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -108,15 +98,8 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		initializedContext();
-	}
-
-	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		initOnActivityCreated();		
+		super.onActivityCreated(savedInstanceState);		
 	}
 
 	@Override
@@ -134,25 +117,25 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 		getActivity().runOnUiThread(fillCollectionRunnable);
 
 		try {
-			Collections.sort(innerCollection, new Comparator<Object>() {
+			Collections.sort(objects, new Comparator<Object>() {
 				@Override
 				public int compare(Object first, Object second) {
-					return innerCollectionSorting(first, second);
+					return collectionSorter(first, second);
 				}
 			});
 
 			initAdapter(
 					getActivity(), 
-					innerCollection, 
+					objects, 
 					R.layout.listfragmentdroit, 
 					isMulti);
 
-			setListAdapter(listAdapter);
+			setListAdapter((ListAdapter) listAdapter);
 		} catch (Exception e) {
 			setEmptyText(getString(R.string.none_records_dlg_msg));
 		}
 		
-		if(innerCollection.size() == 0)
+		if(objects.size() == 0)
 			setEmptyText(getString(R.string.none_records_dlg_msg));
 
 		if (getListView().getCount() > 0) {
@@ -160,21 +143,8 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 		}
 	}
 
-	private void initializedContext() {
-		SetStaticContext.setConsoleTagName(this.getClass().getSimpleName());
-		SetStaticContext.setStaticsContext(getActivity(), 1);
-		setInternalContext(getActivity());
-	}
-
-	protected void initialize() {
-		initializedContext();
-
+	private void initialize() {
 		setHasOptionsMenu(true);
-		setRetainInstance(true);
-
-		extraData = getActivity().getIntent().getExtras();		
-		innerCollection = new ArrayList<Object>();
-
 		isMulti = false;
 	}
 
@@ -196,8 +166,6 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 	protected abstract void toggleItem(Object item, boolean checked);	
 	protected abstract boolean itemChecked(Object item);
 
-	protected abstract int innerCollectionSorting(Object first, Object second);
-
 	protected List<Object> cloneCollection(List<Object> list) {
 		List<Object> clone = new ArrayList<Object>(list.size());
 		for(Object item: list) clone.add(getItemClone(item));
@@ -215,7 +183,7 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 	protected void evaluateSelectedCount() {
 		
 		selectedCount = 0;
-		for(Object item : innerCollection) {
+		for(Object item : objects) {
 			if(itemChecked(item)) {
 				selectedCount++;
 			}
@@ -235,9 +203,9 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 
 			Console.print_debug("itemId: " + itemId);
 
-			if (itemId == SELECT_ALL && !innerCollection.isEmpty()) {
+			if (itemId == SELECT_ALL && !objects.isEmpty()) {
 
-				selectedCount = innerCollection.size();
+				selectedCount = objects.size();
 
 				recordIds = new String[selectedCount];
 				recordPaths = new String[selectedCount];
@@ -264,11 +232,9 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 			selectedCount = 0;
 			checked = false;
 			
-			initOnActivityCreated();
-			getSherlockActivity().setRequestedOrientation(
-					ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-
 			mode.finish();
+			
+			reStartAsyncLoader();	
 			
 			this.DoneAction();
 
@@ -286,7 +252,7 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 
 			Console.print_debug("DELETE: " + itemId);
 
-			if(innerCollection.size() == selectedCount) {
+			if(objects.size() == selectedCount) {
 
 				Console.print_debug("DELETE ALL: ");
 
@@ -326,11 +292,11 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 
 	private void uncheckAll() {		
 
-		for(Object item : innerCollection) {
+		for(Object item : objects) {
 			uncheckItem(item);
 		}
 
-		listAdapter.uncheckAll();
+		((ProofBaseMultiSelectListAdapter) listAdapter).uncheckAll();
 
 		selectedCount = 0;
 		checked = false;
@@ -343,7 +309,7 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 
 		if(!checked) {
 			checked = true;
-			selectedCount = innerCollection.size();
+			selectedCount = objects.size();
 			ItemClicked.setIcon(R.drawable.icon_all_selected);
 		}			
 		else {
@@ -352,26 +318,12 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 			ItemClicked.setIcon(R.drawable.icon_select_all);
 		}
 
-		for(Object item : innerCollection) {
+		for(Object item : objects) {
 			toggleItem(item, checked);
 		}
 
-		listAdapter.toggleChecked(checked);
+		((ProofBaseMultiSelectListAdapter) listAdapter).toggleChecked(checked);
 	}	
-
-	/**
-	 * @return the internalContext
-	 */
-	protected Context getInternalContext() {
-		return internalContext;
-	}
-
-	/**
-	 * @param internalContext the internalContext to set
-	 */
-	private void setInternalContext(Context internalContext) {
-		this.internalContext = internalContext;
-	}
 
 	protected void displayQuickActionMode() {
 
@@ -426,25 +378,21 @@ public abstract class ProofListFragmentWithQuickAction extends SherlockListFragm
 	/* (non-Javadoc)
 	 * @see com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onOptionsItemSelected(
 			com.actionbarsherlock.view.MenuItem item) {
-
-		if (item.getItemId() == R.id.cm_records_list_del_file) {
+		
+		
+		if (item.getItemId() == R.id.cm_records_list_del_file && !isLoading) {
 			isMulti = true;
 			displayQuickActionMode();
 			
 			initOnOptionsItemSelected();
 			
-			listAdapter.clear();
+			((ArrayAdapter<Object>) listAdapter).clear();
 			initOnActivityCreated();
 		}
 		return true;
-	}
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 }

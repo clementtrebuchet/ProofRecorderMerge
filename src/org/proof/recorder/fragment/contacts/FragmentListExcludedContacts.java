@@ -5,22 +5,22 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.proof.recorder.R;
-import org.proof.recorder.Settings;
+
 import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithAsyncLoader;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,18 +36,13 @@ public class FragmentListExcludedContacts extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 
-	public static class ExcludedContactsLoader extends ListFragment {
-
-		private final static String TAG = "FragmentListExcludedContacts";
-		private static ArrayList<Contact> contacts = null;
-		private static ContactAdapter contactAdapter = null;
-		private static LoadContactsList async;
+	public static class ExcludedContactsLoader extends ProofListFragmentWithAsyncLoader {
+		
 		private SparseBooleanArray selectedContacts = new SparseBooleanArray();
 
 		private void sendEventToPhoneList(Contact c) {
 
-			if (Settings.isDebug())
-				Log.d("sender", "Broadcasting message");
+			Console.print_debug("Broadcasting message");
 
 			Intent intent = new Intent("eventOnContactExcludedAdded");
 			// You can also include some extra data.
@@ -67,71 +62,42 @@ public class FragmentListExcludedContacts extends Fragment {
 				// Get extra data included in the Intent
 				String message = intent.getStringExtra("message");
 
-				if (Settings.isDebug())
-					Log.d(TAG + " Receiver", "Got message: " + message);
+				Console.print_debug("Got message: " + message);
 
 				try {
 					Contact contactObj = (Contact) intent
 							.getSerializableExtra("contactObj");
-					ContactAdapter c = (ContactAdapter) getListAdapter();
-					c.add(contactObj);
-					Collections.sort(contacts, new Comparator<Contact>() {
+					ContactAdapter listAdapter = (ContactAdapter) getListAdapter();
+					listAdapter.add(contactObj);
+					Collections.sort(objects, new Comparator<Object>() {
 						@Override
-						public int compare(Contact s1, Contact s2) {
-							return s1.getContactName().compareToIgnoreCase(
-									s2.getContactName());
+						public int compare(Object s1, Object s2) {
+							return ((Contact) s1).getContactName().compareToIgnoreCase(
+									((Contact) s2).getContactName());
 						}
 					});
-					c.notifyDataSetChanged();
+					listAdapter.notifyDataSetChanged();
 				} catch (Exception e) {
-					if (Settings.isDebug())
-						Log.e(TAG + " Receiver", "Got Error: " + e.getMessage());
+					Console.print_exception(e);
 				}
 			}
 		};
 
 		private void getContacts() {
 			try {
-				contacts = ContactsDataHelper.getExcludedList(getActivity());
+				objects = ContactsDataHelper.getExcludedList(getActivity());
 			} catch (Exception e) {
-				if (Settings.isDebug())
-					Log.e(TAG, "E" + e.getMessage());
+				Console.print_exception(e);
+				objects = new ArrayList<Object>();
 			}
 		}
 
-		private class LoadContactsList extends AsyncTask<Void, Integer, Long> {
+		public class ContactAdapter extends ArrayAdapter<Object> {
 
-			@Override
-			protected void onProgressUpdate(Integer... progress) {
-				super.onProgressUpdate(progress);
-			}
-			
-			@Override
-		    protected void onPreExecute() {
-		        super.onPreExecute();
-		    }
-
-			@Override
-			protected void onPostExecute(Long result) {
-				contactAdapter = new ContactAdapter(getActivity(),
-						R.layout.custom_contacts_list, contacts);
-				setListAdapter(contactAdapter);
-				((ContactAdapter) getListAdapter()).notifyDataSetChanged();
-			}
-
-			@Override
-			protected Long doInBackground(Void... params) {
-				getContacts();				
-				return null;
-			}
-		}
-
-		public class ContactAdapter extends ArrayAdapter<Contact> {
-
-			private ArrayList<Contact> items;
+			private ArrayList<Object> items;
 
 			public ContactAdapter(Context context, int textViewResourceId,
-					ArrayList<Contact> items) {
+					ArrayList<Object> items) {
 				super(context, textViewResourceId, items);
 				this.items = items;
 			}
@@ -149,7 +115,7 @@ public class FragmentListExcludedContacts extends Fragment {
 							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					view = vi.inflate(R.layout.custom_contacts_list, null);
 				}
-				Contact contact = items.get(position);
+				Contact contact = (Contact) items.get(position);
 				if (contact != null) {
 					CheckBox nameCheckBox = (CheckBox) view
 							.findViewById(R.id.checkBox);
@@ -187,29 +153,25 @@ public class FragmentListExcludedContacts extends Fragment {
 
 				selectedContacts.append(position, true);
 
-				ContactAdapter ca = (ContactAdapter) getListAdapter();
-				Contact c = ca.getItem(position);
-
-				String msg = "Item: (" + c.getId() + ") " + c.getContactName();
+				ContactAdapter contactAdapter = (ContactAdapter) getListAdapter();
+				Contact contact = (Contact) objects.get(position);
 
 				Uri uri = Uri.withAppendedPath(
 						PersonnalProofContentProvider.CONTENT_URI,
-						"excluded_contact_id/" + c.getId());
+						"excluded_contact_id/" + contact.getId());
 				try {
 					getActivity().getApplicationContext().getContentResolver()
 							.delete(uri, null, null);
 
-					sendEventToPhoneList(c);
+					sendEventToPhoneList(contact);
 
-					ca.remove(c);
+					contactAdapter.remove(contact);
+					objects.remove(contact);
 					selectedContacts.delete(position);
-					ca.notifyDataSetChanged();
+					contactAdapter.notifyDataSetChanged();
 
 				} catch (IllegalArgumentException e) {
-					if (Settings.isDebug())
-						Log.e(TAG,
-								msg + " ERREUR DE SUPPRESSION -> "
-										+ e.getMessage());
+					Console.print_exception(e);
 				}
 			}
 
@@ -221,40 +183,49 @@ public class FragmentListExcludedContacts extends Fragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-
 			LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
 					eventListPhoneReceiver,
 					new IntentFilter("eventOnContactAdded"));
+			
+			startAsyncLoader();
 		}
 
 		@Override
 		public void onDestroy() {
-			// Unregister since the activity is about to be closed.
-			LocalBroadcastManager.getInstance(getActivity())
-					.unregisterReceiver(eventListPhoneReceiver);
-			
-			if(!async.getStatus().equals("FINISHED"))
-				async.cancel(true);
-			
 			super.onDestroy();
+			LocalBroadcastManager.getInstance(getActivity())
+					.unregisterReceiver(eventListPhoneReceiver);		
 		}
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			return super.onCreateView(inflater, container, savedInstanceState);
+		protected void _onPreExecute() {
+			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
-			async = new LoadContactsList();
-			async.execute();
+		protected void _onProgressUpdate(Integer... progress) {
+			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
-		public void onViewCreated(View view, Bundle savedInstanceState) {
-			super.onViewCreated(view, savedInstanceState);			
+		protected void _onPostExecute(Long result) {
+			listAdapter = new ContactAdapter(getActivity(),
+					R.layout.custom_contacts_list, objects);			
+		}
+
+		@Override
+		protected Long _doInBackground(Void... params) {
+			getContacts();
+			return null;
+		}
+
+		@Override
+		protected int collectionSorter(Object object1, Object object2) {
+			// TODO Auto-generated method stub
+			return ((Contact) object1).getContactName().compareToIgnoreCase(
+					((Contact) object2).getContactName());
 		}
 	}
 }

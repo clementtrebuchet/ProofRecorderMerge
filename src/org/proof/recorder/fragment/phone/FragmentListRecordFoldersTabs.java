@@ -3,7 +3,7 @@ package org.proof.recorder.fragment.phone;
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.utils.AlertDialogHelper;
+
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.TabsPagerAdapter;
@@ -89,10 +89,6 @@ public class FragmentListRecordFoldersTabs extends ProofFragmentActivity {
 			 * */
 			startActivity(StaticIntents.goHome(this));		
 		}
-
-		QuickActionDlg.setmContext(this);		
-		
-		AlertDialogHelper.hideProgressDialog();
 	}
 
 	@Override

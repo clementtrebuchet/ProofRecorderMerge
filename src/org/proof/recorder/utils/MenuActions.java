@@ -5,7 +5,7 @@ import java.util.List;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceListAdapter;
-import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
+
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
@@ -71,10 +71,11 @@ public final class MenuActions {
 
 	public static void displayCallsFolderDetails(String mPhone, String mWhere,
 			Context mContext) {
+		
+		Console.print_exception(mPhone);
 
 		try {
 			Bundle extraData = new Bundle();
-			extraData.putString("mWhereClause", mWhere);
 			extraData.putString("mIdOrTelephone", mPhone);
 			StaticIntents intent = StaticIntents.create(mContext,
 					FragmentListRecordTabs.class, extraData);
@@ -239,7 +240,7 @@ public final class MenuActions {
 	private static void removeItem(
 			final Settings.mType type, 
 			final String id, 
-			final ProofBaseMultiSelectListAdapter adpater,
+			final ArrayAdapter<Object> adpater,
 			final List<Object> innerCollection,
 			final Object item) {
 		
@@ -250,16 +251,16 @@ public final class MenuActions {
 		switch (type) {
 		case CALL:
 			Record record = (Record) item;
-			((ArrayAdapter<Object>) adpater).remove(record);
+			adpater.remove(record);
 			itemPath = record.getmFilePath();
 			break;
 				
 		case VOICE_TITLED:
 		case VOICE_UNTITLED:
 			Voice voice = (Voice) item;
-			((ArrayAdapter<Object>) adpater).remove(voice);
+			adpater.remove(voice);
 			innerCollection.remove(voice);
-			((ArrayAdapter<Object>) adpater).notifyDataSetChanged();
+			adpater.notifyDataSetChanged();
 			itemPath = voice.getFilePath();
 			break;
 
@@ -274,7 +275,7 @@ public final class MenuActions {
 	/**
 	 * @param mId
 	 * @param mType
-	 * @param innerCollection
+	 * @param objects
 	 * @param mOutAdapter
 	 * @param mInAdapter
 	 * @param mItem
@@ -284,7 +285,7 @@ public final class MenuActions {
 			final String mId, 
 			final Settings.mType mType,
 			final List<Object> innerCollection,
-			final ProofBaseMultiSelectListAdapter adpater,
+			final ArrayAdapter<Object> adpater,
 			final Object mItem) {
 
 		if (Settings.isUACAssisted()) {

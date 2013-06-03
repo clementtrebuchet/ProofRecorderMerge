@@ -67,7 +67,7 @@ public class FragmentListVoiceTabs extends ProofMultiSelectFragmentActivity {
 	@Override
 	protected boolean isMulti() {
 		return FragmentListVoice.VoiceListLoader.isMulti |
-				FragmentListVoiceUntitled.VoiceListLoader.isMulti;
+			   FragmentListVoiceUntitled.VoiceListLoader.isMulti;
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
@@ -132,7 +133,7 @@ public class SearchResult extends ProofFragmentActivity {
 
 			Cursor cursor = null;
 
-			innerCollection = null;		
+			objects = null;		
 
 			try {
 
@@ -141,12 +142,12 @@ public class SearchResult extends ProofFragmentActivity {
 
 				if(mVoices) {
 					VoicesList mList = new VoicesList(cursor);					
-					innerCollection = mList.getCollection();
+					objects = (ArrayList<Object>) mList.getCollection();
 				}
 
 				else if(mCalls) {
 
-					innerCollection = new ArrayList<Object>();
+					objects = new ArrayList<Object>();
 
 					while (cursor.moveToNext()) {
 
@@ -174,7 +175,7 @@ public class SearchResult extends ProofFragmentActivity {
 						Record mRecord = new Record(mId, mFile, mPhone, mSense,
 								mHtime, mAndroidId);
 
-						innerCollection.add(mRecord);
+						objects.add(mRecord);
 					}
 				}
 
@@ -192,8 +193,6 @@ public class SearchResult extends ProofFragmentActivity {
 			super.onCreate(savedInstanceState);		
 
 			String mLogMsg = "";
-
-			extraData = getActivity().getIntent().getExtras();
 
 			mCalls = extraData.getBoolean("mCalls");
 			mVoices = extraData.getBoolean("mVoices");
@@ -254,6 +253,8 @@ public class SearchResult extends ProofFragmentActivity {
 					getItems();
 				}
 			};
+			
+			startAsyncLoader();
 		}
 
 		/**
@@ -267,6 +268,7 @@ public class SearchResult extends ProofFragmentActivity {
 			setMenuVisibility(true);
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void onListItemClick(ListView l, View view, int position, long id) {
 			super.onListItemClick(l, view, position, id);
@@ -276,17 +278,17 @@ public class SearchResult extends ProofFragmentActivity {
 					QuickActionDlg.showPhoneOptionsDlg(
 							getActivity(), 
 							view, 
-							listAdapter, 
-							(Record) listAdapter.getItem(position)
+							(ArrayAdapter<Object>) listAdapter, 
+							(Record) ((ArrayAdapter<Object>) listAdapter).getItem(position)
 							);
 
 				else if(mVoices)
 					QuickActionDlg.showTitledVoiceOptionsDlg(
 							getActivity(), 
 							view, 
-							(Voice) listAdapter.getItem(position), 
+							(Voice) ((ArrayAdapter<Object>) listAdapter).getItem(position), 
 							listAdapter, 
-							innerCollection, 
+							objects,
 							Settings.mType.VOICE);
 
 			} else {
@@ -299,13 +301,11 @@ public class SearchResult extends ProofFragmentActivity {
 		@Override
 		protected void initOnOptionsItemSelected() {
 			// TODO Auto-generated method stub
-
 		}
 		
 		@Override
 		protected void DoneAction() {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -313,7 +313,7 @@ public class SearchResult extends ProofFragmentActivity {
 			if(mCalls) {
 				int iter = 0;					
 				
-				for (Object item : innerCollection) {
+				for (Object item : objects) {
 					Record lcRecord = (Record) item;
 					
 					if(lcRecord.isChecked()) {
@@ -332,7 +332,7 @@ public class SearchResult extends ProofFragmentActivity {
 			else if(mVoices) {
 				int iter = 0;					
 				
-				for (Object item : innerCollection) {
+				for (Object item : objects) {
 					Voice lcVoice = (Voice) item;
 					
 					if(lcVoice.isChecked()) {
@@ -362,7 +362,7 @@ public class SearchResult extends ProofFragmentActivity {
 			
 			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
 			
-			for(Object item : innerCollection) {
+			for(Object item : objects) {
 				
 				if(mCalls) {
 					Record lcItem = (Record) item;
@@ -381,11 +381,11 @@ public class SearchResult extends ProofFragmentActivity {
 			for(Object item : toBeProcessed) {
 				if(mCalls) {
 					((org.proof.recorder.adapter.phone.ObjectsAdapter)listAdapter).remove((Record) item);
-					((ArrayList<Object>)innerCollection).remove((Record) item);
+					((ArrayList<Object>)objects).remove((Record) item);
 				}
 				else if(mVoices) {
 					((org.proof.recorder.adapter.voice.ObjectsAdapter)listAdapter).remove((Voice) item);
-					((ArrayList<Object>)innerCollection).remove((Voice) item);
+					((ArrayList<Object>)objects).remove((Voice) item);
 				}
 			}
 			
@@ -401,7 +401,7 @@ public class SearchResult extends ProofFragmentActivity {
 		protected void preDeleteAllAction() {
 			
 			int iter = 0;
-			for (Object item : innerCollection) {
+			for (Object item : objects) {
 				if(mCalls) {
 					recordIds[iter] = ((Record) item).getmId();
 					recordPaths[iter] = ((Record) item).getmFilePath();
@@ -454,22 +454,6 @@ public class SearchResult extends ProofFragmentActivity {
 		}
 
 		@Override
-		protected int innerCollectionSorting(Object first, Object second) {
-
-			if(mCalls)
-				return ((Record) first).getmHtime().compareToIgnoreCase(
-						((Record) second).getmHtime());
-
-			else if(mVoices)
-				return ((Voice) first).getHumanTime().compareToIgnoreCase(
-						((Voice) second).getHumanTime());
-
-			else
-				return 0;
-
-		}
-
-		@Override
 		protected void uncheckItem(Object item) {
 			if(mCalls)
 				((Record) item).setChecked(false);
@@ -514,6 +498,42 @@ public class SearchResult extends ProofFragmentActivity {
 						context, collection, layoutId, multiSelectMode);
 		}
 
-	}
+		@Override
+		protected void _onPreExecute() {
+			// TODO Auto-generated method stub			
+		}
 
+		@Override
+		protected void _onProgressUpdate(Integer... progress) {
+			// TODO Auto-generated method stub			
+		}
+
+		@Override
+		protected void _onPostExecute(Long result) {
+			initAdapter(getActivity(), 
+					objects, 
+					R.layout.listfragmentdroit, 
+					isMulti);
+		}
+
+		@Override
+		protected Long _doInBackground(Void... params) {
+			getItems();
+			return null;
+		}
+
+		@Override
+		protected int collectionSorter(Object object1, Object object2) {
+			if(mCalls)
+				return ((Record) object1).getmHtime().compareToIgnoreCase(
+						((Record) object2).getmHtime());
+
+			else if(mVoices)
+				return ((Voice) object1).getHumanTime().compareToIgnoreCase(
+						((Voice) object2).getHumanTime());
+
+			else
+				return 0;
+		}
+	}
 }

@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+
 import android.widget.CheckBox;
 import android.widget.ListView;
 
@@ -59,8 +60,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 				Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
 				
 				VoicesList mList = new VoicesList(cursor);
-				
-				innerCollection = mList.getCollection();
+				objects = (ArrayList<Object>) mList.getCollection();
 				
 			} catch (Exception e) {				
 				Console.print_exception(e);
@@ -72,6 +72,8 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 			super.onCreate(savedInstanceState);
 
 			Voice.setResolver(getActivity().getContentResolver());
+			
+			startAsyncLoader();
 			
 			fillCollectionRunnable = new Runnable() {
 				@Override
@@ -87,14 +89,14 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 			super.onListItemClick(l, view, position, id);
 			
 			if (!isMulti) {
-				Voice voice = (Voice) innerCollection.get(position);
+				Voice voice = (Voice) objects.get(position);
 				
 				QuickActionDlg.showUnTitledVoiceOptionsDlg(
 						getActivity(),
 						view, 
 						voice, 
 						listAdapter, 
-						innerCollection, 
+						objects, 
 						org.proof.recorder.Settings.mType.VOICE_UNTITLED
 				);
 			} else {
@@ -112,7 +114,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 		protected void preDeleteAllAction() {
 			
 			int iter = 0;
-			for (Object voice : innerCollection) {
+			for (Object voice : objects) {
 				recordIds[iter] = ((Voice) voice).getId();
 				recordPaths[iter] = ((Voice) voice).getFilePath();
 				
@@ -142,7 +144,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 		protected void preDeleteAndShareAction() {
 			int iter = 0;					
 			
-			for (Object item : innerCollection) {
+			for (Object item : objects) {
 				Voice lcVoice = (Voice) item;
 				
 				if(lcVoice.isChecked()) {
@@ -166,7 +168,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 			
 			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
 			
-			for(Object item : innerCollection) {
+			for(Object item : objects) {
 				Voice lcVoice = (Voice) item;
 				
 				if(lcVoice.isChecked()) {
@@ -176,7 +178,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 			
 			for(Object item : toBeProcessed) {
 				((ObjectsAdapter)listAdapter).remove((Voice) item);
-				((ArrayList<Object>)innerCollection).remove((Voice) item);
+				((ArrayList<Object>)objects).remove((Voice) item);
 			}
 			
 			((ObjectsAdapter)listAdapter).notifyDataSetChanged();			
@@ -185,12 +187,6 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 		@Override
 		protected boolean itemChecked(Object item) {
 			return ((Voice) item).isChecked();
-		}
-		
-		@Override
-		protected int innerCollectionSorting(Object first, Object second) {
-			return ((Voice) first).getTimestamp().compareToIgnoreCase(
-		    		((Voice) second).getTimestamp());
 		}
 		
 		@Override
@@ -212,6 +208,35 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 		@Override
 		protected Object getItemClone(Object item) {
 			return ((Voice) item).clone();
+		}
+
+		@Override
+		protected void _onPreExecute() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void _onProgressUpdate(Integer... progress) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void _onPostExecute(Long result) {
+			initAdapter(getActivity(), objects,	R.layout.listfragmentdroit, isMulti);
+		}
+
+		@Override
+		protected Long _doInBackground(Void... params) {
+			getVoices();
+			return null;
+		}
+
+		@Override
+		protected int collectionSorter(Object object1, Object object2) {
+			return ((Voice) object1).getTimestamp().compareToIgnoreCase(
+					((Voice) object2).getTimestamp());
 		}
 	}
 }

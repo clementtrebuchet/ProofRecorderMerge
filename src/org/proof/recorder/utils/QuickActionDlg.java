@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.SubMenu;
@@ -85,7 +86,7 @@ public class QuickActionDlg {
 	 * @param record
 	 */
 	public static void showPhoneOptionsDlg(Context context, View v,
-			final ProofBaseMultiSelectListAdapter adpater, final Record record) {
+			final ArrayAdapter<Object> adpater, final Record record) {
 		
 		mContext = context;
 		

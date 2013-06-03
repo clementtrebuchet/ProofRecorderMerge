@@ -2,7 +2,6 @@ package org.proof.recorder.bases.activity;
 
 import org.proof.recorder.R;
 
-import org.proof.recorder.utils.AlertDialogHelper;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.TabsPagerAdapter;
@@ -17,36 +16,36 @@ import android.view.KeyEvent;
 import android.widget.TabHost;
 
 public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActivity {
-	
+
 	protected static enum KIND { BASE, VOICE, CALL };
-	
+
 	protected abstract KIND getKind();
-	
+
 	protected static ViewPagerOnSwipeOff mViewPager;	
-	
+
 	protected static ActionBar mBar;
 	protected static int savedPosition;
 	protected static Tab tabOne, tabSecond;
-	
+
 	protected static boolean hasOne, hasSecond, isNotify;
-	
+
 	protected static Bundle extraData = null;
-	
+
 	protected static Class<?> classOne;
 	protected static Class<?> classSecond;
-	
+
 	protected static String _id;
-	
+
 	protected TabHost mTabHost;
 	protected TabsPagerAdapter mTabsAdapter;
-	
+
 	/**
 	 * @param voiceId the voiceId to set
 	 */
 	private static void setId(String id) {
 		ProofMultiSelectFragmentActivity._id = id;
 	}
-	
+
 	protected abstract String idKey();	
 	protected abstract int tabOneResourceId();
 	protected abstract int tabSecondResourceId();
@@ -54,43 +53,43 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	protected abstract void setUpTabsCount();
 	protected abstract boolean isMulti();
 	protected abstract int innerContentView();
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
-		
+
 		setContentView(innerContentView());
-		
+
 		extraData = getIntent().getExtras();
-		
+
 		mBar = getSupportActionBar();
 		mBar.setHomeButtonEnabled(true);
 		mBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
+
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 		mViewPager = (ViewPagerOnSwipeOff) findViewById(R.id.pager);
 		mTabHost.setup();
-		
+
 		if (savedInstance != null) {
 			mTabHost.setCurrentTabByTag(savedInstance.getString("tab"));
 		}
 
 		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
-		
+
 		tabOne = mBar.newTab().setText(getString(tabOneResourceId()));
 		tabSecond = mBar.newTab().setText(getString(tabSecondResourceId()));
-		
+
 		this.setUpTabsClasses();
-		
+
 		try {
 			setNotify(extraData.getBoolean("isNotify"));			
 			setId("" + extraData.getLong(idKey()));
-			
+
 			String mTabTitle;
-			
+
 			if(getKind() == KIND.VOICE) {				
 				boolean hasTitle = extraData.getBoolean("hasTitle");
-				
+
 				if(hasTitle) {
 					mTabTitle = getString(tabOneResourceId());				
 				}
@@ -100,7 +99,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 			}			
 			else if(getKind() == KIND.CALL) {
 				String mDirection = (String) extraData.getString("Sense");
-				
+
 				if (mDirection.equalsIgnoreCase("e")) {
 					mTabTitle = getString(tabOneResourceId());
 				}
@@ -111,30 +110,30 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 			else {
 				throw new Exception("UNDEFINED KIND!");
 			}		
-			
+
 			mTabsAdapter.addTab(mBar.newTab().setText(mTabTitle), classOne, null);
 		}
 		catch(Exception e) {
-			
+
 			this.setUpTabsCount();
-			
+
 			setNotify(false);			
 			setId(null);			
-			
+
 			if (hasOne && !hasSecond) {
-				
+
 				mTabsAdapter.addTab(
 						tabOne,
 						classOne, null);
 			}
-			
+
 			else if (!hasOne && hasSecond) {	
-				
+
 				mTabsAdapter.addTab(
 						tabSecond,
 						classSecond, null);
 			}
-			
+
 			else if (hasOne && hasSecond) {				
 
 				mTabsAdapter.addTab(
@@ -145,15 +144,13 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 						tabSecond,
 						classSecond, null);	
 			}
-			
+
 			else {
 				/**
 				 *  @TODO: set Notification and AlertDialog Message 
 				 * */
 				startActivity(StaticIntents.goHome(this));		
 			}		
-			
-			AlertDialogHelper.hideProgressDialog();
 		}
 	}
 
@@ -169,7 +166,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 		}
 		return super.dispatchKeyEvent(event);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 		return QuickActionDlg.mainUiMenuHandler(menu);
@@ -180,7 +177,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 			com.actionbarsherlock.view.MenuItem item) {
 		return QuickActionDlg.mainActionsMenuHandler(item);
 	}
-	
+
 	public static void removeCurrentTab(Context context) {
 
 		if (hasOne && hasSecond && !isNotify) {
@@ -190,7 +187,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 
 			hasOne = savedPosition == 0 ? true : false;
 			hasSecond = savedPosition == 1 ? true : false;
-			
+
 			mViewPager.disablePaging(false);
 		}
 		else {
@@ -224,7 +221,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 			mViewPager.disablePaging(false);
 		}		
 	}
-	
+
 	/**
 	 * @return the isNotify
 	 */
