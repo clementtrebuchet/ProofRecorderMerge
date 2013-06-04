@@ -18,14 +18,15 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	private static final String TAG = ProofRecorderWidget.class.getName();
 	public static final String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ACTION_ENABLE_SERVICE";
 	public static final String ACTION_DISABLE_SERVICE = "org.proof.recorder.wigdet.ACTION_DISABLE_SERVICE";
-	public static final String SET_MP3 = "org.proof.recorder.wigdet.SET_MP3";
-	public static final String SET_OGG = "org.proof.recorder.wigdet.SET_OGG";
-	public static final String SET_3GP = "org.proof.recorder.wigdet.SET_3GP";
-	public static final String SET_WAV = "org.proof.recorder.wigdet.SET_WAV";
+	public static final String SET_FORMAT = "org.proof.recorder.wigdet.SET_FORMAT";
+	public static final String REC = "org.proof.recorder.wigdet.REC";
+//	public static final String SET_3GP = "org.proof.recorder.wigdet.SET_3GP";
+//	public static final String SET_WAV = "org.proof.recorder.wigdet.SET_WAV";
 	private SharedPreferences mSharedPreferences = null;
 	private Editor mEditor = null;
 	public static final String ACTION_UPDATE = "org.proof.recorder.wigdet.ACTION_DISABLE_SERVICE";
 	public static boolean isEnable;
+	public static  boolean recOn;
 
 	/**
 	 * 
@@ -58,7 +59,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		active.setAction(ACTION_ENABLE_SERVICE);
 		PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context,
 				0, active, 0);
-		remoteViews.setOnClickPendingIntent(R.id.imageButton5,
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonon,
 				actionPendingIntent);
 
 		active.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
@@ -66,21 +67,21 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
 				active, PendingIntent.FLAG_UPDATE_CURRENT);
-		remoteViews.setOnClickPendingIntent(R.id.imageButton1, pendingIntent);
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec, pendingIntent);
 
 		active = new Intent(context, ProofRecorderWidget.class);
-		active.setAction(SET_MP3);
+		active.setAction(SET_FORMAT);
 		actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
-		remoteViews.setOnClickPendingIntent(R.id.imageButton1,
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonbox,
 				actionPendingIntent);
 
 		active = new Intent(context, ProofRecorderWidget.class);
-		active.setAction(SET_OGG);
+		active.setAction(REC);
 		actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
-		remoteViews.setOnClickPendingIntent(R.id.imageButton2,
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec,
 				actionPendingIntent);
 
-		active = new Intent(context, ProofRecorderWidget.class);
+		/*active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(SET_3GP);
 		actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButton3,
@@ -90,7 +91,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		active.setAction(SET_WAV);
 		actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButton4,
-				actionPendingIntent);
+				actionPendingIntent);*/
 		appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
 
 	}
@@ -114,32 +115,42 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 				mEditor.putBoolean("INCALL", false);
 				mEditor.putBoolean("OUTCALL", false);
 				isEnable = false;
+				Log.d(TAG, "ACTION_ENABLE_SERVICE :"+isEnable);
 			} else {
 				mEditor.putBoolean("INCALL", true);
 				mEditor.putBoolean("OUTCALL", true);
 				isEnable = true;
+				Log.d(TAG, "ACTION_ENABLE_SERVICE :"+isEnable);
 			}
 
 			mCommit();
 
-			Log.d(TAG, "ACTION_ENABLE_SERVICE OK");
 
 		} else if (action.equals(ACTION_DISABLE_SERVICE)) {
 
 			Log.d(TAG, "ACTION_DISABLE_SERVICE OK");
 
-		} else if (action.equals(SET_MP3)) {
+		} else if (action.equals(SET_FORMAT)) {
+			
+			Intent mActivity = new Intent(context, WidgetPreferenceFormat.class);
+			mActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(mActivity);
+			Log.d(TAG, "mActivity");
 
-			mEditor.putString("audio_format", "MP3");
-			mCommit();
-			Log.d(TAG, "SET_MP3 OK");
+		} else if (action.equals(REC)) {
+			Log.d(TAG, "REC");
+			if(recOn){
+				recOn = false;
+			} else {
+				recOn = true;
+			}
+			
+		}
+//			mEditor.putString("audio_format", "OGG");
+//			mCommit();
+//			Log.d(TAG, "SET_OGG OK");
 
-		} else if (action.equals(SET_OGG)) {
-			mEditor.putString("audio_format", "OGG");
-			mCommit();
-			Log.d(TAG, "SET_OGG OK");
-
-		} else if (action.equals(SET_3GP)) {
+		/*} else if (action.equals(SET_3GP)) {
 			mEditor.putString("audio_format", "3GP");
 			mCommit();
 			Log.d(TAG, "SET_3GP OK");
@@ -149,21 +160,29 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 			mCommit();
 			Log.d(TAG, "SET_WAV OK");
 
-		}
-
+		}*/
+		
 		RemoteViews remoteViews1 = new RemoteViews(context.getPackageName(),
 				R.layout.widget_layout);
 		if (isEnable) {
 			
-			remoteViews1.setImageViewResource(R.id.imageButton5,
-					R.drawable.settings_w);
+			remoteViews1.setImageViewResource(R.id.imageButtonon,
+					R.drawable.on);
 		} else {
 			
-			remoteViews1.setImageViewResource(R.id.imageButton5,
-					R.drawable.settings_wi);
+			remoteViews1.setImageViewResource(R.id.imageButtonon,
+					R.drawable.off);
+		}
+		
+		if (recOn){
+			remoteViews1.setImageViewResource(R.id.imageButtonstoprec,
+					R.drawable.rec);
+		} else {
+			remoteViews1.setImageViewResource(R.id.imageButtonstoprec,
+					R.drawable.stoprec);
 		}
 
-		String format = mSharedPreferences.getString("audio_format", "3GP");
+		/*String format = mSharedPreferences.getString("audio_format", "3GP");
 		if (format.equalsIgnoreCase("mp3")) {
 			remoteViews1.setImageViewResource(R.id.imageButton1,
 					R.drawable.plug_mp3_w);
@@ -203,7 +222,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 			remoteViews1.setImageViewResource(R.id.imageButton4,
 					R.drawable.plug_wav_w);
 
-		}
+		}*/
 	
 		ComponentName cn = new ComponentName(context, ProofRecorderWidget.class);
 		AppWidgetManager.getInstance(context).updateAppWidget(cn, remoteViews1);

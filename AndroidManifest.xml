@@ -451,7 +451,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+ 		<activity
+            android:name=".wigdet.WidgetPreferenceFormat"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sherlock.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.WidgetPreferenceFormat" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- Services -->
         <service
             android:name=".service.ServiceAudioRecord"
@@ -562,10 +572,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="org.proof.recorder.wigdet.ACTION_ENABLE_SERVICE" />
                 <action android:name="org.proof.recorder.wigdet.ACTION_DISABLE_SERVICE" />
-                <action android:name="org.proof.recorder.wigdet.SET_MP3" />
-                <action android:name="org.proof.recorder.wigdet.SET_OGG" />
-                <action android:name="org.proof.recorder.wigdet.SET_3GP" />
-                <action android:name="org.proof.recorder.wigdet.SET_WAV" />
+                <action android:name="org.proof.recorder.wigdet.SET_FORMAT" />
+                <action android:name="org.proof.recorder.wigdet.REC" />
             </intent-filter>
 
             <meta-data

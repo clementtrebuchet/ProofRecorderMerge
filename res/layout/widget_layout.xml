@@ -3,39 +3,36 @@
     android:id="@+id/layout_wid"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dip"
     android:background="@drawable/myshape"
-    android:gravity="top"
-    android:orientation="horizontal" >
+    android:gravity="top|center_horizontal"
+    android:orientation="vertical"
+    android:visibility="visible" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="234dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="12dp" >
+        android:padding="4dp" >
 
         <ImageButton
-            android:id="@+id/imageButton1"
+            android:id="@+id/imageButtonon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/action_item_btn"
             android:padding="2dp"
-            android:src="@drawable/plug_mp3_wi" />
+            android:src="@drawable/off" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/imageButtonstoprec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:src="@drawable/plug_ogg_wi" />
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:background="@drawable/action_item_btn"
             android:padding="0.5dp"
-            android:src="@drawable/plug_3gp_wi" />
+            android:src="@drawable/stoprec" />
 
+        <!--
         <ImageButton
             android:id="@+id/imageButton4"
             android:layout_width="wrap_content"
@@ -49,6 +46,15 @@
             android:layout_height="wrap_content"
             android:padding="2dp"
             android:src="@drawable/settings_wi" />
+        -->
+
+        <ImageButton
+            android:id="@+id/imageButtonbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/action_item_btn"
+            android:padding="2dp"
+            android:src="@drawable/box" />
 
     </LinearLayout>
 
