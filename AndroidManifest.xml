@@ -570,6 +570,7 @@
         <receiver android:name=".wigdet.ProofRecorderWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED"/>
                 <action android:name="org.proof.recorder.wigdet.ACTION_ENABLE_SERVICE" />
                 <action android:name="org.proof.recorder.wigdet.ACTION_DISABLE_SERVICE" />
                 <action android:name="org.proof.recorder.wigdet.SET_FORMAT" />
