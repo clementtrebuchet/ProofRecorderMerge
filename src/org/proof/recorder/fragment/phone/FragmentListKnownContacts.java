@@ -1,33 +1,21 @@
 package org.proof.recorder.fragment.phone;
 
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.proof.recorder.R;
+import org.proof.recorder.adapters.ContactAdapter;
 import org.proof.recorder.bases.fragment.ProofFragment;
-import org.proof.recorder.bases.fragment.ProofListFragmentWithAsyncLoader;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-
-import android.view.LayoutInflater;
-
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class FragmentListKnownContacts extends ProofFragment {
 
@@ -36,12 +24,20 @@ public class FragmentListKnownContacts extends ProofFragment {
 		super.onCreate(savedInstanceState);
 	}	
 
-	public static class KnownContactsLoader extends ProofListFragmentWithAsyncLoader
+	public static class KnownContactsLoader extends ProofListFragmentWithQuickAction
 	{		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);				
+			super.onCreate(savedInstanceState);	
+			
 			startAsyncLoader();
+			
+			fillCollectionRunnable = new Runnable() {				
+				@Override
+				public void run() {
+					getContacts();					
+				}
+			};
 		}		
 		
 		private void getContacts() {
@@ -52,72 +48,8 @@ public class FragmentListKnownContacts extends ProofFragment {
 			}
 		}
 
-		public class ContactAdapter extends ArrayAdapter<Object> {
-
-			private ArrayList<Object> items;
-
-			public ContactAdapter(Context context, int textViewResourceId,
-					ArrayList<Object> items) {
-				super(context, textViewResourceId, items);
-				this.items = items;
-			}
-
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View view = convertView;
-				if (view == null) {
-					LayoutInflater vi = (LayoutInflater) getActivity()
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.fragment_listrecord_dossiers_detail, null);
-				}
-				Contact mContact = (Contact) items.get(position);
-				if (mContact != null) {		
-					
-					TextView hideId;
-
-					TextView phTxt = (TextView) view.findViewById(R.id.numberDossier);
-					TextView nomUtilisateur = (TextView) view.findViewById(R.id.nomDossier);
-					hideId = (TextView) view.findViewById(R.id.idrecordDossier);
-
-					ImageView imageView = (ImageView) view
-							.findViewById(R.id.list_imageDossier);
-					Bitmap defaultBite = BitmapFactory.decodeResource(
-							getActivity().getResources(), R.drawable.telphone);
-					imageView.setImageBitmap(defaultBite);
-
-					InputStream input = null;
-
-					if (mContact.getLongContractId() != -1) {
-						Uri uri = ContentUris.withAppendedId(
-								ContactsContract.Contacts.CONTENT_URI,
-								mContact.getLongContractId());
-						ContentResolver cr = getActivity().getContentResolver();
-						input = ContactsContract.Contacts.openContactPhotoInputStream(cr,
-								uri);
-					}
-
-					if (input == null) {
-
-					} else {
-						Console.print_debug("Image is read");
-
-						Bitmap bitmap = BitmapFactory.decodeStream(input);
-						imageView.setImageBitmap(bitmap);
-					}
-
-					phTxt.setText(mContact.getPhoneNumber());
-					nomUtilisateur.setText(mContact.getContactName());
-					hideId.setVisibility(View.INVISIBLE);
-								
-				}
-				return view;
-			}
-
-		}
-
 		 @Override
-		 public void onListItemClick(ListView l, final View v, int position,
-		 long id) {
+		 public void onListItemClick(ListView l, final View v, int position, long id) {
 		
 			 super.onListItemClick(l, v, position, id);	
 			
@@ -139,9 +71,9 @@ public class FragmentListKnownContacts extends ProofFragment {
 		}
 
 		@Override
-		protected void _onPostExecute(Long result) {
-			listAdapter = new ContactAdapter(getActivity(),
-					R.layout.fragment_listrecord_dossiers_detail, objects);			
+		protected void _onPostExecute(Long result) {			
+			initAdapter(getActivity(),
+					objects, R.layout.fragment_listrecord_dossiers_detail, isMulti);
 		}
 
 		@Override
@@ -155,6 +87,71 @@ public class FragmentListKnownContacts extends ProofFragment {
 			Contact c1 = (Contact) object1;
 			Contact c2 = (Contact) object2;
 			return c1.getContactName().compareToIgnoreCase(c2.getContactName());
+		}
+
+		@Override
+		protected void preDeleteAndShareAction() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void DeleteAction() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void initOnOptionsItemSelected() {
+			FragmentListRecordFoldersTabs.removeUnusedTab();			
+		}
+
+		@Override
+		protected void preDeleteAllAction() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void DoneAction() {
+			FragmentListRecordFoldersTabs.readdUnusedTab();			
+		}
+
+		@Override
+		protected void DeleteAllAction() {
+			FragmentListRecordFoldersTabs.removeCurrentTab(getInternalContext());			
+		}
+
+		@Override
+		protected void ShareAction() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void uncheckItem(Object item) {
+			((Contact) item).setChecked(false);		
+		}
+
+		@Override
+		protected void toggleItem(Object item, boolean checked) {
+			((Contact) item).setChecked(checked);			
+		}
+
+		@Override
+		protected boolean itemChecked(Object item) {
+			return ((Contact) item).isChecked();
+		}
+
+		@Override
+		protected Object getItemClone(Object item) {
+			return ((Contact) item).clone();
+		}
+
+		@Override
+		protected void initAdapter(Context context, List<Object> collection,
+				int layoutId, boolean multiSelectMode) {
+			listAdapter = new ContactAdapter(context, collection, layoutId, multiSelectMode);						
 		}
 
 	}

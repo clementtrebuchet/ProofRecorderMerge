@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.proof.recorder.R;
-import org.proof.recorder.adapter.phone.ObjectsAdapter;
+import org.proof.recorder.adapters.RecordAdapter;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.models.Record;
@@ -233,11 +233,11 @@ public class FragmentListRecordIn extends ProofFragment {
 			}
 
 			for(Object item : toBeProcessed) {
-				((ObjectsAdapter)listAdapter).remove((Record) item);
+				((RecordAdapter)listAdapter).remove((Record) item);
 				((ArrayList<Object>)objects).remove((Record) item);
 			}
 
-			((ObjectsAdapter)listAdapter).notifyDataSetChanged();		
+			((RecordAdapter)listAdapter).notifyDataSetChanged();		
 		}
 
 		@Override
@@ -277,7 +277,7 @@ public class FragmentListRecordIn extends ProofFragment {
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
 			listAdapter = null;
-			listAdapter = new ObjectsAdapter(context, collection, layoutId, multiSelectMode);
+			listAdapter = new RecordAdapter(context, collection, layoutId, multiSelectMode);
 		}
 
 		@Override

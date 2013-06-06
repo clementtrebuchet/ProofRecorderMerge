@@ -380,20 +380,20 @@ public class SearchResult extends ProofFragmentActivity {
 			
 			for(Object item : toBeProcessed) {
 				if(mCalls) {
-					((org.proof.recorder.adapter.phone.ObjectsAdapter)listAdapter).remove((Record) item);
+					((org.proof.recorder.adapters.RecordAdapter)listAdapter).remove((Record) item);
 					((ArrayList<Object>)objects).remove((Record) item);
 				}
 				else if(mVoices) {
-					((org.proof.recorder.adapter.voice.ObjectsAdapter)listAdapter).remove((Voice) item);
+					((org.proof.recorder.adapters.VoiceAdapter)listAdapter).remove((Voice) item);
 					((ArrayList<Object>)objects).remove((Voice) item);
 				}
 			}
 			
 			if(mCalls) {
-				((org.proof.recorder.adapter.phone.ObjectsAdapter)listAdapter).notifyDataSetChanged();
+				((org.proof.recorder.adapters.RecordAdapter)listAdapter).notifyDataSetChanged();
 			}
 			else if(mVoices) {
-				((org.proof.recorder.adapter.voice.ObjectsAdapter)listAdapter).notifyDataSetChanged();
+				((org.proof.recorder.adapters.VoiceAdapter)listAdapter).notifyDataSetChanged();
 			}
 		}
 
@@ -490,11 +490,11 @@ public class SearchResult extends ProofFragmentActivity {
 			listAdapter = null;
 
 			if(mCalls)
-				listAdapter = new org.proof.recorder.adapter.phone.ObjectsAdapter(
+				listAdapter = new org.proof.recorder.adapters.RecordAdapter(
 						context, collection, layoutId, multiSelectMode);
 
 			if(mVoices)
-				listAdapter = new org.proof.recorder.adapter.voice.ObjectsAdapter(
+				listAdapter = new org.proof.recorder.adapters.VoiceAdapter(
 						context, collection, layoutId, multiSelectMode);
 		}
 

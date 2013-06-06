@@ -88,6 +88,15 @@
 
 
     <!-- fleche droite -->
+    
+    <CheckBox
+        android:id="@+id/cb_select_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <ImageView
         android:id="@+id/arrow_record_detailDossier"

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.proof.recorder.R;
+import org.proof.recorder.bases.adapter.ProofBaseListAdapter;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
 import org.proof.recorder.utils.Log.Console;
 
@@ -14,8 +15,9 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+
 import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
@@ -99,7 +101,8 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);		
+		super.onActivityCreated(savedInstanceState);	
+		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
 
 	@Override
@@ -127,7 +130,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			initAdapter(
 					getActivity(), 
 					objects, 
-					R.layout.listfragmentdroit, 
+					((ProofBaseListAdapter) listAdapter).getLayoutResourceId(), 
 					isMulti);
 
 			setListAdapter((ListAdapter) listAdapter);
@@ -343,8 +346,13 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 		int doneButtonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
 		View doneButton = getSherlockActivity().findViewById(doneButtonId);
+		
+		if(doneButton == null | doneButtonId == 0) {
+			doneButtonId = R.id.abs__action_mode_close_button;
+			doneButton = getSherlockActivity().findViewById(doneButtonId);
+		}
+		
 		doneButton.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				handleActionMode(DONE);
@@ -378,7 +386,6 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 	/* (non-Javadoc)
 	 * @see com.actionbarsherlock.app.SherlockFragment#onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onOptionsItemSelected(
 			com.actionbarsherlock.view.MenuItem item) {
@@ -388,10 +395,11 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			isMulti = true;
 			displayQuickActionMode();
 			
-			initOnOptionsItemSelected();
+			initOnOptionsItemSelected();		
 			
-			((ArrayAdapter<Object>) listAdapter).clear();
-			initOnActivityCreated();
+			//initOnActivityCreated();
+			
+			reStartAsyncLoader();
 		}
 		return true;
 	}

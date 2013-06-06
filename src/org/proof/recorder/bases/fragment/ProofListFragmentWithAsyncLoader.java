@@ -57,7 +57,7 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 		
 		objects = new ArrayList<Object>();		
 		extraData = getActivity().getIntent().getExtras();
-		initializeTask();
+		initializeTask();	
 	}
 	
 	@Override

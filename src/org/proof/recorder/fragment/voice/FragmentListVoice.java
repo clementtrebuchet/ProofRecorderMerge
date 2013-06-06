@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.proof.recorder.R;
-import org.proof.recorder.adapter.voice.ObjectsAdapter;
+import org.proof.recorder.adapters.VoiceAdapter;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 
@@ -109,7 +109,7 @@ public class FragmentListVoice extends ProofFragment {
 						getActivity(),
 						view, 
 						voice, 
-						(ObjectsAdapter)listAdapter, 
+						(VoiceAdapter)listAdapter, 
 						objects, 
 						org.proof.recorder.Settings.mType.VOICE_TITLED
 				);
@@ -191,11 +191,11 @@ public class FragmentListVoice extends ProofFragment {
 			}
 			
 			for(Object item : toBeProcessed) {
-				((ObjectsAdapter)listAdapter).remove((Voice) item);
+				((VoiceAdapter)listAdapter).remove((Voice) item);
 				((ArrayList<Object>)objects).remove((Voice) item);
 			}
 			
-			((ObjectsAdapter)listAdapter).notifyDataSetChanged();			
+			((VoiceAdapter)listAdapter).notifyDataSetChanged();			
 		}
 
 		@Override
@@ -206,7 +206,7 @@ public class FragmentListVoice extends ProofFragment {
 		@Override
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
-			listAdapter = new ObjectsAdapter(context, collection, layoutId, multiSelectMode);
+			listAdapter = new VoiceAdapter(context, collection, layoutId, multiSelectMode);
 		}
 		
 		@Override

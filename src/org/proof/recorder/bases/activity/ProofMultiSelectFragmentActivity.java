@@ -17,7 +17,7 @@ import android.widget.TabHost;
 
 public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActivity {
 
-	protected static enum KIND { BASE, VOICE, CALL };
+	protected static enum KIND { BASE, VOICE, CALL, CONTACT };
 
 	protected abstract KIND getKind();
 

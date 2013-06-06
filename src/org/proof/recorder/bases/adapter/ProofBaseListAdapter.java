@@ -17,6 +17,10 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	protected Object objects;		
 	protected int layoutResourceId;
 	
+	public final int getLayoutResourceId() {
+		return layoutResourceId;
+	}
+
 	protected ViewGroup viewGroup;
 	
 	/**
