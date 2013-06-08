@@ -24,6 +24,7 @@
     <string name="notification_ogg_text">The Ogg service is currently running</string>
     
     <string name="multi_select_mode">Enable Multi Selection</string>
+    <string name="action_bar_share_with">Share with…</string>    
     
     <string name="qaction_select_all">Select All</string>
     <string name="qaction_delete">Delete</string>
@@ -36,7 +37,7 @@
     <string name="select_encoding_method">Select encoding process</string>
     <string name="encoding_title">Few Device\'s resources ?</string>
     <string name="encoding_summary">Split recording process into two steps!</string>
-    <string name="encoding_data">Encoding Audio data ...</string>
+    <string name="encoding_data">Encoding Audio data…</string>
     <string name="action_not_allowed">Action not allowed!</string>
     <string name="record_on_recording">Impossible to run recording service \ntwice at the same time!</string>
     <string name="bad_mp3_version">Your MP3 plugin is outdated, please update!</string>
@@ -48,7 +49,7 @@
     <string name="desriptionListSet">Settings</string>
     <string name="excludedFromRecordingList_desc">Excluded Contacts from recording\'s service</string>
     <!-- FIN DashBoard Description -->
-    <string name="loading">Fetching data, please wait...</string>
+    <string name="loading">Fetching data, please wait…</string>
     <!-- START Google Play -->
     <string name="gplay_title">Google Play</string>
     <string name="gplay_no_match">No match found!</string>
@@ -281,7 +282,7 @@
     </string>
     <string name="about_some_links">Some links:</string>
     <string name="contact_subject">Proof and Voice Recorder: A Question?</string>
-    <string name="contact_body">Here your message...</string>
+    <string name="contact_body">Here your message…</string>
     <string name="contact_uri">Contact</string>
     <string name="site_uri">Phone &amp; voice Recorder</string>
     <!-- End Main sub Menu -->

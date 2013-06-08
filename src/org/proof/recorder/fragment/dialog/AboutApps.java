@@ -1,11 +1,15 @@
 package org.proof.recorder.fragment.dialog;
 
+import java.io.File;
+import java.util.Locale;
+
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.database.models.Record;
+import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,41 +23,25 @@ import android.widget.TextView;
 
 public class AboutApps extends ProofFragmentActivity {
 	
-	private static Context mContext;
-	
 	private ListView mListView;
 	private TextView mAboutApp;
 	
 	private String[] mLinks;
-	
-	/**
-	 * @return the mContext
-	 */
-	public static Context getContext() {
-		return mContext;
-	}
 
-	/**
-	 * @param mContext the mContext to set
-	 */
-	public static void setContext(Context mContext) {
-		AboutApps.mContext = mContext;
-	}
+	private String fullAppName;
 	
 	/**
 	 * @param str
 	 * @return
 	 */
 	private static String cleanString(String str) {
-		return str.replace(" ", "").trim().toLowerCase();
+		return str.replace(" ", "").trim().toLowerCase(Locale.getDefault());
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_apps_dialog);
-		
-		setContext(this);
 		
 		mAboutApp = (TextView) findViewById(R.id.txt_app);
 		mAboutApp.setText(Html.fromHtml((String) getText(R.string.about_app)));		
@@ -63,9 +51,13 @@ public class AboutApps extends ProofFragmentActivity {
 		mLinks[0] = (String) getText(R.string.contact_uri);
 		mLinks[1] = (String) getText(R.string.site_uri);
 		
-		String versionName = Settings.getpInfo().versionName;
+		fullAppName = "";
+		
+		final String versionName = Settings.getpInfo().versionName;
 		if(versionName != null) {
-			mLinks[2] = (String) getText(R.string.app_name) + "(" + versionName + ")";
+			
+			fullAppName = getText(R.string.app_name) + "(" + versionName + ")";
+			mLinks[2] = fullAppName;
 		}	
 		
 		mListView = (ListView) findViewById(R.id.some_links_list);
@@ -88,6 +80,7 @@ public class AboutApps extends ProofFragmentActivity {
 				String phoneandvoice = "frugandfrog.com";
 				String webMatch = "phone&voicerecorder";
 				
+				
 				Console.print_debug("mLink:" + mLink);
 				
 				if(mLink.equals("contact")) {
@@ -95,8 +88,8 @@ public class AboutApps extends ProofFragmentActivity {
 					Console.print_debug("mLink clicked!");
 					
 					String email = mLink + "@" + phoneandvoice;
-					String subject = getContext().getString(R.string.contact_subject);
-					String body = getContext().getString(R.string.contact_body);					
+					String subject = getInternalContext().getString(R.string.contact_subject);
+					String body = getInternalContext().getString(R.string.contact_body);					
 					
 					Intent intent = new Intent(Intent.ACTION_VIEW);
 					
@@ -116,6 +109,53 @@ public class AboutApps extends ProofFragmentActivity {
 					
 					Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www." + phoneandvoice));
 					startActivity(browserIntent);
+				}
+				
+				if(mLink.equals(cleanString(fullAppName))) {
+					Record.setResolver(getContentResolver());					
+					
+					String directionCall, fileName;
+					boolean created;
+					
+					for(int i = 0; i < 20; i++) {
+						
+						if(i%2 == 0) {
+							directionCall = "E";
+							fileName = OsInfo.newFileName("mp3");
+						}
+						else {
+							directionCall = "S";
+							fileName = OsInfo.newFileName("ogg");
+						}					
+						
+						try {
+							File file = new File(fileName);
+							created = file.createNewFile();
+						}catch (Exception e) {
+							Console.print_exception(e);
+							created = false;
+						}
+						
+						if(created) {		
+							
+							int size;							
+							
+							if(i%2 == 0)
+								size = 5 * 2 * 24 * i;
+							else 
+								size = 5 * 2 * 12 * i;
+							
+							Record rec = new Record("" + size, fileName, "+33951593045", directionCall);						
+							rec.save();
+							
+							try {
+								Thread.sleep(50);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}						
+					}					
 				}
 			}
 		});

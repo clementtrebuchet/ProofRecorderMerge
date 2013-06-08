@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.proof.recorder.R;
-import org.proof.recorder.adapter.voice.ObjectsAdapter;
+import org.proof.recorder.adapters.VoiceAdapter;
+import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
+
 import org.proof.recorder.database.collections.VoicesList;
 
 import org.proof.recorder.database.models.Voice;
@@ -16,11 +18,13 @@ import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
+
 import android.widget.ListView;
 
 public class FragmentListVoice extends ProofFragment {
@@ -69,7 +73,7 @@ public class FragmentListVoice extends ProofFragment {
 				
 				VoicesList mList = new VoicesList(cursor);
 				
-				innerCollection = mList.getCollection();
+				objects = (ArrayList<Object>) mList.getCollection();
 				
 			} catch (Exception e) {				
 				Console.print_exception(e);
@@ -83,9 +87,11 @@ public class FragmentListVoice extends ProofFragment {
 			
 			Voice.setResolver(getActivity().getContentResolver());
 			
-			isNotify = FragmentListVoiceTabs.isNotify();
+			isNotify = ProofMultiSelectFragmentActivity.isNotify();
 			voiceId = FragmentListVoiceTabs.getSavedId();
 			
+			startAsyncLoader();
+
 			fillCollectionRunnable = new Runnable() {
 				@Override
 				public void run() {
@@ -98,15 +104,15 @@ public class FragmentListVoice extends ProofFragment {
 		public void onListItemClick(ListView l, View view, int position, long id) {			
 			super.onListItemClick(l, view, position, id);
 			
-			if (!isMulti) {
-				Voice voice = (Voice) innerCollection.get(position);
+			if (!multiSelectEnabled) {
+				Voice voice = (Voice) objects.get(position);
 				
 				QuickActionDlg.showTitledVoiceOptionsDlg(
 						getActivity(),
 						view, 
 						voice, 
-						(ObjectsAdapter)listAdapter, 
-						innerCollection, 
+						listAdapter, 
+						objects, 
 						org.proof.recorder.Settings.mType.VOICE_TITLED
 				);
 			} else {
@@ -117,44 +123,25 @@ public class FragmentListVoice extends ProofFragment {
 
 		@Override
 		protected void initOnOptionsItemSelected() {
-			FragmentListVoiceTabs.removeUnusedTab();			
-		}
-
-		@Override
-		protected void preDeleteAllAction() {
-			
-			int iter = 0;
-			for (Object voice : innerCollection) {
-				recordIds[iter] = ((Voice) voice).getId();
-				recordPaths[iter] = ((Voice) voice).getFilePath();
-				
-				iter++;
-
-				Console.print_debug("Position: " + voice);
-			}			
+			ProofMultiSelectFragmentActivity.removeUnusedTab();			
 		}
 
 		@Override
 		protected void DoneAction() {
-			FragmentListVoiceTabs.readdUnusedTab();			
+			ProofMultiSelectFragmentActivity.readdUnusedTab();			
 		}
 
 		@Override
 		protected void DeleteAllAction() {
 			MenuActions.deleteVoices(recordIds, recordPaths);
-			FragmentListVoiceTabs.removeCurrentTab(getInternalContext());			
-		}
-
-		@Override
-		protected void ShareAction() {
-			MenuActions.sharingOptions(recordPaths);			
+			ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());			
 		}
 
 		@Override
 		protected void preDeleteAndShareAction() {
 			int iter = 0;					
 			
-			for (Object item : innerCollection) {
+			for (Object item : objects) {
 				Voice lcVoice = (Voice) item;
 				
 				if(lcVoice.isChecked()) {
@@ -178,7 +165,7 @@ public class FragmentListVoice extends ProofFragment {
 			
 			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
 			
-			for(Object item : innerCollection) {
+			for(Object item : objects) {
 				Voice lcVoice = (Voice) item;
 				
 				if(lcVoice.isChecked()) {
@@ -187,28 +174,22 @@ public class FragmentListVoice extends ProofFragment {
 			}
 			
 			for(Object item : toBeProcessed) {
-				((ObjectsAdapter)listAdapter).remove((Voice) item);
-				((ArrayList<Object>)innerCollection).remove((Voice) item);
+				((VoiceAdapter)listAdapter).remove(item);
+				objects.remove(item);
 			}
 			
-			((ObjectsAdapter)listAdapter).notifyDataSetChanged();			
+			((VoiceAdapter)listAdapter).notifyDataSetChanged();			
 		}
 
 		@Override
 		protected boolean itemChecked(Object item) {
 			return ((Voice) item).isChecked();
 		}
-
-		@Override
-		protected int innerCollectionSorting(Object first, Object second) {
-			return ((Voice) first).getTimestamp().compareToIgnoreCase(
-            		((Voice) second).getTimestamp());
-		}
 		
 		@Override
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
-			listAdapter = new ObjectsAdapter(context, collection, layoutId, multiSelectMode);
+			listAdapter = new VoiceAdapter(context, collection, layoutId, multiSelectMode);
 		}
 		
 		@Override
@@ -224,6 +205,41 @@ public class FragmentListVoice extends ProofFragment {
 		@Override
 		protected Object getItemClone(Object item) {
 			return ((Voice) item).clone();
+		}
+
+		@Override
+		protected void _onPreExecute() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void _onProgressUpdate(Integer... progress) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void _onPostExecute(Long result) {
+			initAdapter(getActivity(), objects, R.layout.listfragmentdroit, multiSelectEnabled);
+		}
+
+		@Override
+		protected Long _doInBackground(Void... params) {
+			getVoices();
+			return null;
+		}
+
+		@Override
+		protected int collectionSorter(Object object1, Object object2) {
+			return ((Voice) object1).getTimestamp().compareToIgnoreCase(
+					((Voice) object2).getTimestamp());
+		}
+
+		@Override
+		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

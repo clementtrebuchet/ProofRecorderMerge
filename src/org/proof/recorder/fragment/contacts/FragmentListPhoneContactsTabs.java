@@ -5,7 +5,6 @@ import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.TabsPagerAdapter;
 
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -14,8 +13,7 @@ import android.widget.TabHost;
 import com.actionbarsherlock.app.ActionBar;
 
 public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
-
-	//private static final String TAG = "FragmentListPhoneContactsTabs";
+	
 	private TabHost mTabHost;
 	private ViewPager mViewPager;
 	private TabsPagerAdapter mTabsAdapter;
@@ -26,8 +24,6 @@ public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		ActionBar mBar = getSupportActionBar();
 
@@ -56,8 +52,6 @@ public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
 		if (savedInstanceState != null) {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
-
-		QuickActionDlg.setmContext(this);
 	}
 
 	@Override
@@ -86,46 +80,4 @@ public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
-	
-	/*public void getContacts() {
-		try {		
-			
-			contacts = ContactsDataHelper.getPhoneList(mContext);				
-			((ContactAdapter) getListAdapter()).notifyDataSetChanged();				
-			
-		} catch (Exception e) {
-			
-			if(Settings.isDebug())
-				Log.e(TAG, "E" + e.getMessage());
-		}
-	}
-	
-	private static ContactAdapter contactAdapter = null;
-	private static ArrayList<Contact> contacts = null;
-	private static Context mContext;
-	
-	private class LoadContactsList extends AsyncTask<Void, Integer, Long> {
-
-		 
-		 @Override
-		    protected void onProgressUpdate(Integer... values){
-		        super.onProgressUpdate(values);
-		        // Mise à jour de la ProgressBar
-		        //mProgressBar.setProgress(values[0]);
-		    }
-		 
-
-		 @Override
-	     protected void onPostExecute(Long result) {		 
-	    		 contactAdapter = new ContactAdapter(mContext,
-							R.layout.custom_contacts_list, contacts);	
-				setListAdapter(contactAdapter);	    			         
-	     }
-
-		@Override
-		protected Long doInBackground(Void... params) {
-			getContacts();
-			return null;
-		}
-	 }*/
 }

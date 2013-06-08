@@ -12,6 +12,7 @@ import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -25,12 +26,12 @@ import android.util.Log;
 
 public final class ContactsDataHelper {
 
-	private static class DupeContactComparator implements Comparator<Contact>{
+	private static class DupeContactComparator implements Comparator<Object>{
 
 		@Override
-		public int compare(Contact lhs, Contact rhs) {
-			if(!lhs.getContactName().equals("? (Contact Inconnu)"))
-				return lhs.getContactName().compareToIgnoreCase(rhs.getContactName());
+		public int compare(Object lhs, Object rhs) {
+			if(!((Contact) lhs).getContactName().equals("? (Contact Inconnu)"))
+				return ((Contact) lhs).getContactName().compareToIgnoreCase(((Contact) rhs).getContactName());
 			return -1;
 		}           
     }
@@ -47,13 +48,13 @@ public final class ContactsDataHelper {
 	private final static String TAG = "ContactsDataHelper";
 	private static Context mContext;
 
-	private static ArrayList<Contact>   mExcludedContacts, 
-										mPhoneContacts, 
-										mCallsFoldersKnownContacts, 
-										mCallsFoldersUnKnownContacts;
+	private static ArrayList<Object>   mExcludedContacts, 
+										mPhoneContacts;
 
-	static List<Object> mIncommingCalls;
-	private static List<Object> mOutGoingCalls;
+	private static List<Object> mOutGoingCalls, 
+								mIncommingCalls, 
+								mCallsFoldersKnownContacts, 
+								mCallsFoldersUnKnownContacts;
 
 	private static String[] phoneProjection = new String[] {
 			ContactsContract.Contacts.DISPLAY_NAME,
@@ -108,35 +109,16 @@ public final class ContactsDataHelper {
 				ProofDataBase.COLUMN_DISPLAY_NAME, type.EXCLUDED);
 	}
 	
-	private static void _getIncommingCalls(String mPhoneOrId, String mWhere) {
-		String appendPath;
-		
-		if(mWhere.equalsIgnoreCase("phone"))
-			appendPath = "record_tel/";
-		else if (mWhere.equalsIgnoreCase("android_id"))
-			appendPath = "records_by_android_id/";
-		else
-			throw new IllegalStateException("Bad appendPath variable line: 118 in _getIncommingCalls()");
-		
+	private static void _getIncommingCalls(String mPhoneOrId) {
 		Uri uri = Uri.withAppendedPath(
-				PersonnalProofContentProvider.CONTENT_URI, appendPath + mPhoneOrId);
-		
+				PersonnalProofContentProvider.CONTENT_URI, "record_tel/" + mPhoneOrId);		
 		getContacts(uri, InAndOutProjection,
 				null, null, ProofDataBase.COLUMN_HTIME, type.INCOMMING_CALLS);
 	}
 	
-	private static void _getOutGoingCalls(String mPhone, String mWhere) {
-		String appendPath;
-		
-		if(mWhere.equalsIgnoreCase("phone"))
-			appendPath = "record_tel/";
-		else if (mWhere.equalsIgnoreCase("android_id"))
-			appendPath = "records_by_android_id/";
-		else
-			throw new IllegalStateException("Bad appendPath variable line: 135 in _getOutGoingCalls()");
-		
+	private static void _getOutGoingCalls(String mPhone) {
 		Uri uri = Uri.withAppendedPath(
-				PersonnalProofContentProvider.CONTENT_URI, appendPath + mPhone);
+				PersonnalProofContentProvider.CONTENT_URI, "record_tel/" + mPhone);
 		getContacts(uri, InAndOutProjection,
 				null, null, ProofDataBase.COLUMN_HTIME, type.OUTGOINGS_CALLS);
 	}
@@ -148,48 +130,15 @@ public final class ContactsDataHelper {
 				type.PHONE);
 	}
 	
-	private static void _print(String message, char level) {
-		
-		if(Settings.isDebug()) {
-			switch(level) {
-			
-			case 'v':
-				Log.v(TAG, message);
-				break;
-				
-			case 'i':
-				Log.i(TAG, message);
-				break;
-			
-			case 'e':
-				Log.d(TAG, message);
-				break;
-				
-			default:
-				Log.d(TAG, message);
-				break;
-			}
-		}		
-		
-	}
-	
-	/*private static class DupeRecordComparator implements Comparator<Record>{
-
-		@Override
-		public int compare(Record lhs, Record rhs) {
-			return lhs.getmId().compareToIgnoreCase(rhs.getmId());
-		}           
-    }*/
-	
 	private static void cursorToCallsFolderAdapter(Context mContext, Cursor cursor, type t) {
 		
 		switch (t) {
 		case CALLS_FOLDER_OF_KNOWN:
-			mCallsFoldersKnownContacts = new ArrayList<Contact>();
+			mCallsFoldersKnownContacts = new ArrayList<Object>();
 			break;
 			
 		case CALLS_FOLDER_OF_UNKNOWN:
-			mCallsFoldersUnKnownContacts = new ArrayList<Contact>();
+			mCallsFoldersUnKnownContacts = new ArrayList<Object>();
 			break;
 
 		default:
@@ -225,19 +174,9 @@ public final class ContactsDataHelper {
 						
 		}
 	}
-	
-/*	private static void removeRecordsDuplicates(List<Record> list)
-	{
-	    TreeSet<Record> set = new TreeSet<Record>(new DupeRecordComparator());
-	    // this should give you a tree set without duplicates
-	    set.addAll(list);
-	
-	    list.clear();
-	    list.addAll(set);
-	}*/
 
 	private static void cursorToExcludedAdapter(Cursor cursor) {
-		mExcludedContacts = new ArrayList<Contact>();
+		mExcludedContacts = new ArrayList<Object>();
 		while (cursor.moveToNext()) {
 			
 
@@ -256,9 +195,7 @@ public final class ContactsDataHelper {
 			contact.setContractId(contractId);
 			contact.setContactName(name);
 			
-			if(Settings.isDebug()) {
-				print("Excluded contact added to collection: " + contact);
-			}
+			Console.print_debug("Excluded contact added to collection: " + contact);
 
 			mExcludedContacts.add(contact);
 		}
@@ -267,7 +204,7 @@ public final class ContactsDataHelper {
 	private static void cursorToInAndOutCallsAdapter(Cursor cursor) {
 		
 		Record.setResolver(mContext.getApplicationContext().getContentResolver());
-		
+
 		mIncommingCalls = new ArrayList<Object>();
 		mOutGoingCalls = new ArrayList<Object>();
 		
@@ -303,7 +240,7 @@ public final class ContactsDataHelper {
 	}
 	
 	private static void cursorToPhoneAdapter(Cursor cursor) {
-		mPhoneContacts = new ArrayList<Contact>();
+		mPhoneContacts = new ArrayList<Object>();
 		while (cursor.moveToNext()) {
 			
 
@@ -330,8 +267,7 @@ public final class ContactsDataHelper {
 
 			}catch(Exception e)
 			{
-				if(Settings.isDebug())
-					Log.e(TAG, e.getMessage());
+				Console.print_exception(e);
 			}
 			finally {
 				pCur.close();
@@ -344,8 +280,10 @@ public final class ContactsDataHelper {
 			
 			mPhoneContacts.add(contact);
 			
-			for (Contact c : mExcludedContacts)
+			for (Object co : mExcludedContacts)
 			{
+				Contact c = (Contact) co;
+				
 				if(c.getContactName().contains(contact.getContactName()) && 
 						c.getContractId().contains(contact.getContractId()) && 
 						c.getsPhoneNumber().get_nationalNumber().contains(
@@ -355,14 +293,14 @@ public final class ContactsDataHelper {
 		}
 	}
 	
-	public static ArrayList<Contact> getCallsFoldersOfKnown(Context context) {
+	public static List<Object> getCallsFoldersOfKnown(Context context) {
 		mContext = context;
 		_getCallsFoldersOfKnown();
 		//removeContactsDuplicates(mCallsFoldersKnownContacts);
 		return mCallsFoldersKnownContacts;
 	}
 	
-	public static ArrayList<Contact> getCallsFoldersOfUnKnown(Context context) {
+	public static List<Object> getCallsFoldersOfUnKnown(Context context) {
 		mContext = context;
 		_getCallsFoldersOfUnKnown();
 		//removeContactsDuplicates(mCallsFoldersUnKnownContacts);
@@ -418,30 +356,30 @@ public final class ContactsDataHelper {
 		}
 	}
 	
-	public static ArrayList<Contact> getExcludedList(Context context) {
+	public static ArrayList<Object> getExcludedList(Context context) {
 		mContext = context;
 		_getExcludedList();
 		removeContactsDuplicates(mExcludedContacts);
 		return mExcludedContacts;
 	}
 	
-	public static List<Object> getIncommingCalls(Context context, String mWhere, String mPhone) {
+	public static List<Object> getIncommingCalls(Context context, String mPhone) {
 		mContext = context;	
-		print("mPhone or Id" + mPhone + " mWhere: " + mWhere);
-		_getIncommingCalls(mPhone, mWhere);	
+		Console.print_debug("mPhone or Id" + mPhone);
+		_getIncommingCalls(mPhone);	
 		//removeRecordsDuplicates(mIncommingCalls);
 		return mIncommingCalls;
 	}
 	
-	public static List<Object> getOutGoingCalls(Context context, String mWhere, String mPhone) {
+	public static List<Object> getOutGoingCalls(Context context, String mPhone) {
 		mContext = context;
-		print("mPhone or Id" + mPhone + " mWhere: " + mWhere);
-		_getOutGoingCalls(mPhone, mWhere);
+		Console.print_debug("mPhone or Id" + mPhone);
+		_getOutGoingCalls(mPhone);
 		//removeRecordsDuplicates(mOutGoingCalls);
 		return mOutGoingCalls;
 	}
 	
-	public static ArrayList<Contact> getPhoneList(Context context) {
+	public static ArrayList<Object> getPhoneList(Context context) {
 		mContext = context;
 		_getExcludedList();
 		_getPhoneList();
@@ -461,25 +399,10 @@ public final class ContactsDataHelper {
 		
 		return mExcludedContacts.size() > 0;
 	}
-	
-	/**
-	 * @param message
-	 */
-	private static void print(String message) {
-		_print(message, 'd');	
-	}
 
-	/**
-	 * @param message
-	 */
-	@SuppressWarnings("unused")
-	private static void print_exception(String message) {
-		_print(message, 'e');	
-	}
-
-	private static void removeContactsDuplicates(List<Contact> list)
+	private static void removeContactsDuplicates(List<Object> list)
 	{
-	    TreeSet<Contact> set = new TreeSet<Contact>(new DupeContactComparator());
+		TreeSet<Object> set = new TreeSet<Object>(new DupeContactComparator());
 	    // this should give you a tree set without duplicates
 	    set.addAll(list);
 	

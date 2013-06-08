@@ -18,7 +18,10 @@
     <string name="excludedFromRecordingList_desc">Contact exclus de service d\'enregistrement</string>
     <!-- FIN DashBoard Description -->
     <string name="foreground_service_started">Voice Media Recorder démarré!</string>
-    <string name="loading">Récupération des données, patientez svp...</string>
+    <string name="loading">Récupération des données, patientez svp…</string>
+    
+    <string name="action_bar_share_with">Partager via…</string>
+    
     <!-- Voice Media Recorder -->
     <string name="start_recording">Début de l\'enregistrement</string>
     <string name="stop_recording">Fin de l\'enregistrement</string>
@@ -36,7 +39,7 @@
     <string name="select_encoding_method">Sélection du traitement d\'encodage</string>
     <string name="encoding_title">Peu de ressources ?</string>
     <string name="encoding_summary">Scinder l\'enregistrement en deux étapes!</string>
-    <string name="encoding_data">Encodage des données ...</string>
+    <string name="encoding_data">Encodage des données…</string>
     <string name="action_not_allowed">Action non autorisée!</string>
     <string name="record_on_recording">Impossible de lancer deux \nenregistrements en même temps!</string>
     <string name="bad_mp3_version">Votre plugin MP3 n\'est pas à jour!\nMettez-le à jour!</string>
@@ -266,7 +269,7 @@
     </string>
     <string name="about_some_links">Quelques liens:</string>
     <string name="contact_subject">Proof and Voice Recorder: Une question?</string>
-    <string name="contact_body">Ici votre message...</string>
+    <string name="contact_body">Ici votre message…</string>
     <string name="contact_uri">Contact</string>
     <string name="site_uri">Phone &amp; voice Recorder</string>
     <!-- End Main sub Menu -->

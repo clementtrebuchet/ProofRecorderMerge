@@ -1,4 +1,4 @@
-package org.proof.recorder.adapter.voice;
+package org.proof.recorder.adapters;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -18,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
+public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
 	 * @param context
@@ -30,7 +31,7 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
-	public ObjectsAdapter(Context context, int resource,
+	public VoiceAdapter(Context context, int resource,
 			int textViewResourceId, List<Object> objects,
 			int layoutResourceId, boolean multiModeEnabled) {
 		super(context, resource, textViewResourceId, objects, layoutResourceId, multiModeEnabled);
@@ -46,7 +47,7 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
-	public ObjectsAdapter(Context context, int resource,
+	public VoiceAdapter(Context context, int resource,
 			int textViewResourceId, Object[] objects, int layoutResourceId,
 			boolean multiModeEnabled) {
 		super(context, resource, textViewResourceId, objects, layoutResourceId, multiModeEnabled);
@@ -61,7 +62,7 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
-	public ObjectsAdapter(Context context, List<Object> objects, int layoutResourceId,
+	public VoiceAdapter(Context context, List<Object> objects, int layoutResourceId,
 			boolean multiModeEnabled) {
 		super(context, objects, layoutResourceId, multiModeEnabled);
 	}
@@ -75,7 +76,7 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
-	public ObjectsAdapter(Context context, Object[] objects, int layoutResourceId,
+	public VoiceAdapter(Context context, Object[] objects, int layoutResourceId,
 			boolean multiModeEnabled) {
 		super(context, objects, layoutResourceId, multiModeEnabled);
 	}
@@ -101,7 +102,7 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 			Bitmap defaultBite = BitmapFactory.decodeResource(
 					getContext().getResources(), R.drawable.mic_48);			
 			
-			id.setVisibility(TextView.INVISIBLE);
+			id.setVisibility(View.INVISIBLE);
 			
 			title.setText(voice.getNote().getTitle());
 			fileSize.setText(voice.getHumanFileSize());
@@ -110,9 +111,9 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 
 			if (this.multiModeEnabled) {
 				
-				arrow.setVisibility(ImageView.INVISIBLE);
+				arrow.setVisibility(View.INVISIBLE);
 				
-				checkbox.setVisibility(CheckBox.VISIBLE);
+				checkbox.setVisibility(View.VISIBLE);
 				
 				checkbox.setChecked(voice.isChecked());
 				
@@ -121,12 +122,13 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						voice.setChecked(isChecked);
+						sendEvent();
 					}
 				});
 				
 			} else {				
-				checkbox.setVisibility(CheckBox.INVISIBLE);
-				arrow.setVisibility(ImageView.VISIBLE);
+				checkbox.setVisibility(View.INVISIBLE);
+				arrow.setVisibility(View.VISIBLE);
 			}
 		}			
 	}
@@ -134,5 +136,11 @@ public class ObjectsAdapter extends ProofBaseMultiSelectListAdapter {
 	@Override
 	protected void handleEmptyView(final int position, View convertView) {
 		Console.print_debug("Empty list!");
+	}
+
+	@Override
+	protected void handleEvenetIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		
 	}
 }
