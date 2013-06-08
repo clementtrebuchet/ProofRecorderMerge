@@ -94,7 +94,8 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			actionProvider = (ShareActionProvider) shareItem.getActionProvider();
 			actionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 			// Note that you can set/change the intent any time,
-			// say when the user has selected an image.
+			// say when the user has selected an image.				
+			enableItems(false);
 			
 			actionProvider.setOnShareTargetSelectedListener(new OnShareTargetSelectedListener() {
 				
@@ -110,7 +111,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			return true;
 		}
 		
-		public void setItemsVisibility(boolean enable) {
+		public void enableItems(boolean enable) {
 			if(actionProvider != null && !enable) {				
 				try {
 					// Workaround on apparently android known bug
@@ -330,23 +331,6 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 			toggleChecked();
 
-/*			evaluateSelectedCount();
-
-			recordIds = new String[selectedCount];
-			recordPaths = new String[selectedCount];
-
-			this.preDeleteAndShareAction();
-
-			share = this.ShareAction();
-
-			if(share != null) {
-				actionProvider.setShareIntent(share);
-				quickActionMode.setItemsVisibility(true);
-			}
-			else {
-				quickActionMode.setItemsVisibility(false);
-			}*/
-
 			break;
 
 		case DELETE:
@@ -387,11 +371,11 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			if(share != null) {
 				actionProvider.setShareIntent(share);
 				if(quickActionMode != null)
-					quickActionMode.setItemsVisibility(true);
+					quickActionMode.enableItems(true);
 			}
 			else {
 				if(quickActionMode != null)
-					quickActionMode.setItemsVisibility(false);
+					quickActionMode.enableItems(false);
 			}
 
 			break;
