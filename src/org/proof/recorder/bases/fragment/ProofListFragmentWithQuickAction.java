@@ -111,8 +111,18 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		}
 		
 		public void setItemsVisibility(boolean enable) {
-			if(shareItem != null) {
-				shareItem.setVisible(enable);
+			if(actionProvider != null && !enable) {				
+				try {
+					// Workaround on apparently android known bug
+					// to set ShareActionProvider in disable mode state.
+					// Note that might raise Exception on some devices!
+					actionProvider.setShareIntent(null);
+				}catch (Exception e) {
+					// Fall-back for not compatible workaround devices
+					// Playing with visibility :)
+					if(shareItem != null)
+					   shareItem.setVisible(enable);
+				}
 			}
 			
 			if(deleteItem != null) {
