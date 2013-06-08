@@ -77,16 +77,19 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			shareItem = menu.findItem(R.id.menu_item_share_action_provider_action_bar);
 			
 			deleteItem = menu.add(0, DELETE, 0, 
-					getInternalContext().getString(R.string.qaction_delete));
-			
-			deleteItem.setIcon(R.drawable.icon_delete)
-			.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+					getInternalContext().getString(R.string.qaction_delete));			
 
 			selectItem = menu.add(0, SELECT_ALL, 0, 
 					getInternalContext().getString(R.string.qaction_select_all));
 			
 			selectItem.setIcon(R.drawable.icon_select_all)
-			.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+					  .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			
+			deleteItem.setIcon(R.drawable.icon_delete_disabled)					  
+			          .setEnabled(false)
+			          .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			
+			shareItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 			
 			actionProvider = (ShareActionProvider) shareItem.getActionProvider();
 			actionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
@@ -102,18 +105,23 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 					getSherlockActivity().startActivity(intent);					
 					return true;
 				}
-			});			
+			});		
 
 			return true;
 		}
 		
-		public void setItemsVisibility(boolean visible) {
+		public void setItemsVisibility(boolean enable) {
 			if(shareItem != null) {
-				shareItem.setVisible(visible);
+				shareItem.setVisible(enable);
 			}
 			
 			if(deleteItem != null) {
-				deleteItem.setVisible(visible);
+				deleteItem.setEnabled(enable);
+				
+				if(!enable)
+					deleteItem.setIcon(R.drawable.icon_delete_disabled);
+				else
+					deleteItem.setIcon(R.drawable.icon_delete);
 			}
 		}
 
@@ -368,10 +376,12 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 			if(share != null) {
 				actionProvider.setShareIntent(share);
-				quickActionMode.setItemsVisibility(true);
+				if(quickActionMode != null)
+					quickActionMode.setItemsVisibility(true);
 			}
 			else {
-				quickActionMode.setItemsVisibility(false);
+				if(quickActionMode != null)
+					quickActionMode.setItemsVisibility(false);
 			}
 
 			break;
