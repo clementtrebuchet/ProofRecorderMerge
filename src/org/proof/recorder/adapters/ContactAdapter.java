@@ -11,6 +11,7 @@ import org.proof.recorder.utils.Log.Console;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -81,9 +82,9 @@ public class ContactAdapter extends ProofBaseMultiSelectListAdapter {
 			phoneNumber.setText(contact.getPhoneNumber());	
 			
 			if(this.multiModeEnabled) {					
-				recorderLogo.setVisibility(ImageView.INVISIBLE);
+				recorderLogo.setVisibility(View.INVISIBLE);
 
-				checkbox.setVisibility(CheckBox.VISIBLE);
+				checkbox.setVisibility(View.VISIBLE);
 				
 				checkbox.setChecked(contact.isChecked());
 				
@@ -92,12 +93,13 @@ public class ContactAdapter extends ProofBaseMultiSelectListAdapter {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {						
 						contact.setChecked(isChecked);
+						sendEvent();
 					}
 				});
 			}
 			else {
-				checkbox.setVisibility(CheckBox.INVISIBLE);
-				recorderLogo.setVisibility(ImageView.VISIBLE);
+				checkbox.setVisibility(View.INVISIBLE);
+				recorderLogo.setVisibility(View.VISIBLE);
 			}
 		}		
 	}
@@ -105,6 +107,12 @@ public class ContactAdapter extends ProofBaseMultiSelectListAdapter {
 	@Override
 	protected void handleEmptyView(int item, View view) {
 		Console.print_debug("Empty list!");	
+	}
+
+	@Override
+	protected void handleEvenetIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -77,8 +77,8 @@ public class FragmentListRecordTabs extends ProofMultiSelectFragmentActivity {
 
 	@Override
 	protected boolean isMulti() {
-		return OutGoingCallsLoader.isMulti |
-			   InCommingCallsLoader.isMulti;
+		return OutGoingCallsLoader.multiSelectEnabled |
+			   InCommingCallsLoader.multiSelectEnabled;
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import java.util.Comparator;
 import org.proof.recorder.R;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListAdapter;
@@ -15,7 +14,9 @@ import android.widget.ListAdapter;
 public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragmentBase {
 	
 	private AsyncLoader collectionLoader;
-	protected boolean isLoading;
+	
+	protected volatile boolean isLoading;
+	
 	
 	protected void startAsyncLoader() {
 		collectionLoader.execute();		
@@ -24,7 +25,7 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 	protected void reStartAsyncLoader() {
 		stopAsyncLoader();
 		initializeTask();
-		collectionLoader.execute();	
+		startAsyncLoader();
 	}
 	
 	protected void stopAsyncLoader() {
@@ -91,8 +92,11 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 	        super.onPreExecute();
 	        
 	        isLoading = true;
-	        getActivity().setRequestedOrientation(
-					getActivity().getResources().getConfiguration().orientation);
+	        
+	        if(!multiSelectEnabled)
+	        	lockScreenOrientation();
+	        
+	        //displayProgress();
 	        
 	        _onPreExecute();
 	    }
@@ -111,10 +115,13 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 				setEmptyText(getActivity().getString(R.string.search_none_records_found));
 			}				
 			
-			getActivity().setRequestedOrientation(
-					ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+			if(!multiSelectEnabled)
+				unlockScreenOrientation();
 
 			this.cancel(true);
+			
+			//hideProgress();
+			
 			isLoading = false;
 		}
 

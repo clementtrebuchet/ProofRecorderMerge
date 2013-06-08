@@ -14,6 +14,7 @@ import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -226,6 +227,24 @@ public class FragmentListExcludedContacts extends Fragment {
 			// TODO Auto-generated method stub
 			return ((Contact) object1).getContactName().compareToIgnoreCase(
 					((Contact) object2).getContactName());
+		}
+
+		@Override
+		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void alertDlgOkAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void handleOnReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

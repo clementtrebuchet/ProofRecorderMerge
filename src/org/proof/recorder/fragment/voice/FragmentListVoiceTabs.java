@@ -3,6 +3,7 @@ package org.proof.recorder.fragment.voice;
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.utils.QuickActionDlg;
 
 import android.os.Bundle;
@@ -66,8 +67,8 @@ public class FragmentListVoiceTabs extends ProofMultiSelectFragmentActivity {
 
 	@Override
 	protected boolean isMulti() {
-		return FragmentListVoice.VoiceListLoader.isMulti |
-			   FragmentListVoiceUntitled.VoiceListLoader.isMulti;
+		return ProofListFragmentWithQuickAction.multiSelectEnabled |
+			   ProofListFragmentWithQuickAction.multiSelectEnabled;
 	}
 
 	@Override

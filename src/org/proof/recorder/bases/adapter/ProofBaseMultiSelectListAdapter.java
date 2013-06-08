@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 public abstract class ProofBaseMultiSelectListAdapter extends ProofBaseListAdapter {
 	
 	protected boolean multiModeEnabled;
-	
+
 	/**
 	 * @return the multiModeEnabled
 	 */
@@ -25,7 +25,7 @@ public abstract class ProofBaseMultiSelectListAdapter extends ProofBaseListAdapt
 		this.multiModeEnabled = multiModeEnabled;
 	}
 
-	public ProofBaseMultiSelectListAdapter(Context context,	Object[] objects, int layoutResourceId, boolean multiModeEnabled) {
+	public ProofBaseMultiSelectListAdapter(Context context, Object[] objects, int layoutResourceId, boolean multiModeEnabled) {
 		super(context, objects, layoutResourceId);
 		setMultiModeEnabled(multiModeEnabled);
 	}

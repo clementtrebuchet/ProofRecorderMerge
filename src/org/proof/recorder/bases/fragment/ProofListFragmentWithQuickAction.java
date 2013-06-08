@@ -1,59 +1,63 @@
 package org.proof.recorder.bases.fragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import org.proof.recorder.R;
+import org.proof.recorder.Settings;
 import org.proof.recorder.bases.adapter.ProofBaseListAdapter;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-
 import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.ShareActionProvider;
+import com.actionbarsherlock.widget.ShareActionProvider.OnShareTargetSelectedListener;
 
 public abstract class ProofListFragmentWithQuickAction extends ProofListFragmentWithAsyncLoader {	
 
 	protected final static int SELECT_ALL = 5, 
 			DELETE = 10, 
 			SHARE = 15,
-			DONE = 20;
-
-	public static boolean isMulti = false;
+			DONE = 20;	
 
 	protected ActionMode mode = null;	
-
-	protected String[] recordIds = null, recordPaths = null;	
-
-	protected Runnable fillCollectionRunnable = null;
 	
-	protected MenuItem ItemClicked = null;
+	protected String[] recordIds = null, 
+					   recordPaths = null;	
+	
+	protected Runnable fillCollectionRunnable = null;	
+	
+	protected MenuItem selectItem = null, 
+					   deleteItem = null,
+					   shareItem = null;	
+	
+	protected ShareActionProvider actionProvider = null;
 
 	private int selectedCount = 0;
-	private boolean checked = false;	
+	private boolean checked = false;
+
+	private QuickActionMode quickActionMode;	
 
 	public final class QuickActionMode implements ActionMode.Callback {
 
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			
 			int itemId = item.getItemId();
-			
-			if(itemId == SELECT_ALL)
-				ItemClicked = item;
-			
 			return onItemClicked(itemId);
 		}			
 
@@ -61,28 +65,56 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		public void onDestroyActionMode(ActionMode mode)
 		{
 
-		}
+		}		
 
 		@Override
 		public boolean onCreateActionMode(ActionMode mode,
-				com.actionbarsherlock.view.Menu menu) {				            
+				com.actionbarsherlock.view.Menu menu) {	
 
-			menu.add(0, DELETE, 0, 
-					getInternalContext().getString(R.string.qaction_delete))
-					.setIcon(R.drawable.icon_delete)
-					.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			getSherlockActivity().getSupportMenuInflater().inflate(R.menu.share_action_provider, menu);
 
-			menu.add(0, SHARE, 0, 
-					getInternalContext().getString(R.string.qaction_share))
-					.setIcon(R.drawable.icon_share)
-					.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			// Set file with share history to the provider and set the share intent.
+			shareItem = menu.findItem(R.id.menu_item_share_action_provider_action_bar);
 			
-			menu.add(0, SELECT_ALL, 0, 
-					getInternalContext().getString(R.string.qaction_select_all)
-					).setIcon(R.drawable.icon_select_all)
-					.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			deleteItem = menu.add(0, DELETE, 0, 
+					getInternalContext().getString(R.string.qaction_delete));
+			
+			deleteItem.setIcon(R.drawable.icon_delete)
+			.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+			selectItem = menu.add(0, SELECT_ALL, 0, 
+					getInternalContext().getString(R.string.qaction_select_all));
+			
+			selectItem.setIcon(R.drawable.icon_select_all)
+			.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			
+			actionProvider = (ShareActionProvider) shareItem.getActionProvider();
+			actionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
+			// Note that you can set/change the intent any time,
+			// say when the user has selected an image.
+			
+			actionProvider.setOnShareTargetSelectedListener(new OnShareTargetSelectedListener() {
+				
+				@Override
+				public boolean onShareTargetSelected(ShareActionProvider source,
+						Intent intent) {
+					uncheckAll();
+					getSherlockActivity().startActivity(intent);					
+					return true;
+				}
+			});			
 
 			return true;
+		}
+		
+		public void setItemsVisibility(boolean visible) {
+			if(shareItem != null) {
+				shareItem.setVisible(visible);
+			}
+			
+			if(deleteItem != null) {
+				deleteItem.setVisible(visible);
+			}
 		}
 
 		@Override
@@ -92,7 +124,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -101,15 +133,14 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);	
-		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		super.onActivityCreated(savedInstanceState);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 
-		isMulti = false;		
+		multiSelectEnabled = false;		
 		viewGroup = null;
 		extraData = null;
 		listAdapter = null;
@@ -131,13 +162,13 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 					getActivity(), 
 					objects, 
 					((ProofBaseListAdapter) listAdapter).getLayoutResourceId(), 
-					isMulti);
+					multiSelectEnabled);
 
 			setListAdapter((ListAdapter) listAdapter);
 		} catch (Exception e) {
 			setEmptyText(getString(R.string.none_records_dlg_msg));
 		}
-		
+
 		if(objects.size() == 0)
 			setEmptyText(getString(R.string.none_records_dlg_msg));
 
@@ -148,7 +179,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 	private void initialize() {
 		setHasOptionsMenu(true);
-		isMulti = false;
+		multiSelectEnabled = false;
 	}
 
 	private boolean onItemClicked(int itemId) {		
@@ -160,10 +191,34 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 	protected abstract void initOnOptionsItemSelected();
 
-	protected abstract void preDeleteAllAction();	
 	protected abstract void DoneAction();
 	protected abstract void DeleteAllAction();	
-	protected abstract void ShareAction();	
+
+	protected Intent ShareAction() {
+
+		Intent share = null;
+
+		if(recordPaths.length > 0) {
+
+			share = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+			share.setType("audio/*");
+
+			share.putExtra(Intent.EXTRA_SUBJECT,
+					getString(R.string.custom_intent_chooser_subject));
+			share.putExtra(Intent.EXTRA_TEXT,
+					getString(R.string.custom_intent_chooser_text));
+
+			ArrayList<Uri> uris = new ArrayList<Uri>();
+			for(String attachmentPath : recordPaths) {
+				Uri attachment = Uri.fromFile(new File(attachmentPath));
+				uris.add(attachment);						
+			}
+
+			share.putParcelableArrayListExtra(Intent.EXTRA_STREAM,	uris);
+		}		 
+
+		return share;
+	}
 
 	protected abstract void uncheckItem(Object item);
 	protected abstract void toggleItem(Object item, boolean checked);	
@@ -184,7 +239,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			boolean multiSelectMode);
 
 	protected void evaluateSelectedCount() {
-		
+
 		selectedCount = 0;
 		for(Object item : objects) {
 			if(itemChecked(item)) {
@@ -193,37 +248,45 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		}		
 	}
 
-	private boolean handleActionMode(int itemId) {	
-		
-		evaluateSelectedCount();
+	protected boolean allSelected() {
+		return objects.size() == selectedCount;
+	}
 
-		boolean noSelected = selectedCount == 0;
+	protected boolean emptySelection() {
+		return selectedCount == 0;
+	}
 
-		if(noSelected && itemId != SELECT_ALL && itemId != DONE) {
-			return false;
+	@Override
+	protected void alertDlgOkAction(DialogInterface dialog, int which) {
+
+		if(allSelected()) {
+
+			Console.print_debug("DELETE ALL: ");
+
+			mode.finish();
+
+			multiSelectEnabled = false;
+
+			unlockScreenOrientation();
+
+			this.DeleteAllAction();
 		}
-		else {			
+		else {
+			this.DeleteAction();
+			uncheckAll();
+		}	
+	}
+	
+	@Override
+	protected void handleOnReceive(Context context, Intent intent) {
+		handleActionMode(SHARE);
+	}
 
-			Console.print_debug("itemId: " + itemId);
+	public boolean handleActionMode(int itemId) {				
 
-			if (itemId == SELECT_ALL && !objects.isEmpty()) {
-
-				selectedCount = objects.size();
-
-				recordIds = new String[selectedCount];
-				recordPaths = new String[selectedCount];
-
-				this.preDeleteAllAction();
-
-			} else if (itemId != SELECT_ALL && !noSelected) {				
-
-				recordIds = new String[selectedCount];
-				recordPaths = new String[selectedCount];
-
-				this.preDeleteAndShareAction();
-
-			} else {}
-		}			
+		Console.print_debug("itemId: " + itemId);
+		
+		Intent share;
 
 		switch (itemId) {
 
@@ -231,23 +294,40 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 			Console.print_debug("DONE: " + itemId);
 
-			isMulti = false;
+			multiSelectEnabled = false;
 			selectedCount = 0;
 			checked = false;
-			
+
 			mode.finish();
-			
+
 			reStartAsyncLoader();	
-			
+
 			this.DoneAction();
 
 			break;
 
 		case SELECT_ALL:			
 
-			Console.print_debug("SELECT_ALL: " + itemId);
+			Console.print_debug("SELECT_ALL: " + itemId);			
 
 			toggleChecked();
+
+/*			evaluateSelectedCount();
+
+			recordIds = new String[selectedCount];
+			recordPaths = new String[selectedCount];
+
+			this.preDeleteAndShareAction();
+
+			share = this.ShareAction();
+
+			if(share != null) {
+				actionProvider.setShareIntent(share);
+				quickActionMode.setItemsVisibility(true);
+			}
+			else {
+				quickActionMode.setItemsVisibility(false);
+			}*/
 
 			break;
 
@@ -255,33 +335,44 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 			Console.print_debug("DELETE: " + itemId);
 
-			if(objects.size() == selectedCount) {
+			evaluateSelectedCount();
 
-				Console.print_debug("DELETE ALL: ");
-
-				mode.finish();
-
-				isMulti = false;
-
-				getSherlockActivity().setRequestedOrientation(
-						ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-
-				this.DeleteAllAction();
-
-				return true;
+			if(emptySelection()) {
+				return false;
 			}
 
-			this.DeleteAction();
+			recordIds = new String[selectedCount];
+			recordPaths = new String[selectedCount];
 
-			uncheckAll();
+			this.preDeleteAndShareAction();
+
+			if(!emptySelection()) {
+				if(Settings.isUACAssisted())
+					displayAlert();
+				else
+					alertDlgOkAction(null, 0);				
+			}				
 
 			break;
 
 		case SHARE:
 
-			this.ShareAction();
+			evaluateSelectedCount();
 
-			uncheckAll();
+			recordIds = new String[selectedCount];
+			recordPaths = new String[selectedCount];
+
+			this.preDeleteAndShareAction();
+
+			share = this.ShareAction();
+
+			if(share != null) {
+				actionProvider.setShareIntent(share);
+				quickActionMode.setItemsVisibility(true);
+			}
+			else {
+				quickActionMode.setItemsVisibility(false);
+			}
 
 			break;
 
@@ -303,9 +394,8 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 		selectedCount = 0;
 		checked = false;
-		
-		if(ItemClicked != null)
-			ItemClicked.setIcon(R.drawable.icon_select_all);
+
+		selectItem.setIcon(R.drawable.icon_select_all);
 	}
 
 	private void toggleChecked() {
@@ -313,12 +403,12 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		if(!checked) {
 			checked = true;
 			selectedCount = objects.size();
-			ItemClicked.setIcon(R.drawable.icon_all_selected);
+			selectItem.setIcon(R.drawable.icon_all_selected);
 		}			
 		else {
 			checked = false;
 			selectedCount = 0;
-			ItemClicked.setIcon(R.drawable.icon_select_all);
+			selectItem.setIcon(R.drawable.icon_select_all);
 		}
 
 		for(Object item : objects) {
@@ -330,28 +420,19 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 	protected void displayQuickActionMode() {
 
-		int orientation = getResources().getConfiguration().orientation;
-
-		if(orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-			getSherlockActivity().setRequestedOrientation(
-					ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}		
-		else {
-			getSherlockActivity().setRequestedOrientation(
-					ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		}
-
-		mode = getSherlockActivity().startActionMode(
-				new QuickActionMode());		
+		lockScreenOrientation();
+		
+		quickActionMode = new QuickActionMode();
+		mode = getSherlockActivity().startActionMode(quickActionMode);		
 
 		int doneButtonId = Resources.getSystem().getIdentifier("action_mode_close_button", "id", "android");
 		View doneButton = getSherlockActivity().findViewById(doneButtonId);
-		
+
 		if(doneButton == null | doneButtonId == 0) {
 			doneButtonId = R.id.abs__action_mode_close_button;
 			doneButton = getSherlockActivity().findViewById(doneButtonId);
 		}
-		
+
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -389,17 +470,21 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 	@Override
 	public boolean onOptionsItemSelected(
 			com.actionbarsherlock.view.MenuItem item) {
-		
-		
+
+
 		if (item.getItemId() == R.id.cm_records_list_del_file && !isLoading) {
-			isMulti = true;
+
+			multiSelectEnabled = true;		
+
+			reStartAsyncLoader();			
+
+			initOnOptionsItemSelected();
+
 			displayQuickActionMode();
-			
-			initOnOptionsItemSelected();		
-			
+
 			//initOnActivityCreated();
-			
-			reStartAsyncLoader();
+
+
 		}
 		return true;
 	}

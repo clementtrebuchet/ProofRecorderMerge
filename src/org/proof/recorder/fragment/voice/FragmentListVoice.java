@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.adapters.VoiceAdapter;
+import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 
@@ -17,6 +18,7 @@ import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -85,7 +87,7 @@ public class FragmentListVoice extends ProofFragment {
 			
 			Voice.setResolver(getActivity().getContentResolver());
 			
-			isNotify = FragmentListVoiceTabs.isNotify();
+			isNotify = ProofMultiSelectFragmentActivity.isNotify();
 			voiceId = FragmentListVoiceTabs.getSavedId();
 			
 			startAsyncLoader();
@@ -102,14 +104,14 @@ public class FragmentListVoice extends ProofFragment {
 		public void onListItemClick(ListView l, View view, int position, long id) {			
 			super.onListItemClick(l, view, position, id);
 			
-			if (!isMulti) {
+			if (!multiSelectEnabled) {
 				Voice voice = (Voice) objects.get(position);
 				
 				QuickActionDlg.showTitledVoiceOptionsDlg(
 						getActivity(),
 						view, 
 						voice, 
-						(VoiceAdapter)listAdapter, 
+						listAdapter, 
 						objects, 
 						org.proof.recorder.Settings.mType.VOICE_TITLED
 				);
@@ -121,37 +123,18 @@ public class FragmentListVoice extends ProofFragment {
 
 		@Override
 		protected void initOnOptionsItemSelected() {
-			FragmentListVoiceTabs.removeUnusedTab();			
-		}
-
-		@Override
-		protected void preDeleteAllAction() {
-			
-			int iter = 0;
-			for (Object voice : objects) {
-				recordIds[iter] = ((Voice) voice).getId();
-				recordPaths[iter] = ((Voice) voice).getFilePath();
-				
-				iter++;
-
-				Console.print_debug("Position: " + voice);
-			}			
+			ProofMultiSelectFragmentActivity.removeUnusedTab();			
 		}
 
 		@Override
 		protected void DoneAction() {
-			FragmentListVoiceTabs.readdUnusedTab();			
+			ProofMultiSelectFragmentActivity.readdUnusedTab();			
 		}
 
 		@Override
 		protected void DeleteAllAction() {
 			MenuActions.deleteVoices(recordIds, recordPaths);
-			FragmentListVoiceTabs.removeCurrentTab(getInternalContext());			
-		}
-
-		@Override
-		protected void ShareAction() {
-			MenuActions.sharingOptions(recordPaths);			
+			ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());			
 		}
 
 		@Override
@@ -191,8 +174,8 @@ public class FragmentListVoice extends ProofFragment {
 			}
 			
 			for(Object item : toBeProcessed) {
-				((VoiceAdapter)listAdapter).remove((Voice) item);
-				((ArrayList<Object>)objects).remove((Voice) item);
+				((VoiceAdapter)listAdapter).remove(item);
+				objects.remove(item);
 			}
 			
 			((VoiceAdapter)listAdapter).notifyDataSetChanged();			
@@ -238,7 +221,7 @@ public class FragmentListVoice extends ProofFragment {
 
 		@Override
 		protected void _onPostExecute(Long result) {
-			initAdapter(getActivity(), objects, R.layout.listfragmentdroit, isMulti);
+			initAdapter(getActivity(), objects, R.layout.listfragmentdroit, multiSelectEnabled);
 		}
 
 		@Override
@@ -251,6 +234,12 @@ public class FragmentListVoice extends ProofFragment {
 		protected int collectionSorter(Object object1, Object object2) {
 			return ((Voice) object1).getTimestamp().compareToIgnoreCase(
 					((Voice) object2).getTimestamp());
+		}
+
+		@Override
+		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

@@ -3,7 +3,11 @@ package org.proof.recorder.bases.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.proof.recorder.utils.Log.Console;
+
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +17,16 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	
 	protected abstract void handleView(final int item, View view);
 	protected abstract void handleEmptyView(final int item, View view);
+	protected abstract void handleEvenetIntent(Intent intent);
 	
+	protected void sendEvent() {
+		Console.print_debug("ListEventSender (send)");
+
+		Intent intent = new Intent("listEventSender");
+		handleEvenetIntent(intent);
+		LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);		  
+	}
+
 	protected Object objects;		
 	protected int layoutResourceId;
 	

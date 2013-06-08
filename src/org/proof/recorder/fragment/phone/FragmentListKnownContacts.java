@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.adapters.ContactAdapter;
+import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.models.Contact;
@@ -13,8 +14,11 @@ import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 public class FragmentListKnownContacts extends ProofFragment {
@@ -29,9 +33,9 @@ public class FragmentListKnownContacts extends ProofFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);	
-			
+
 			startAsyncLoader();
-			
+
 			fillCollectionRunnable = new Runnable() {				
 				@Override
 				public void run() {
@@ -39,7 +43,7 @@ public class FragmentListKnownContacts extends ProofFragment {
 				}
 			};
 		}		
-		
+
 		private void getContacts() {
 			try {
 				objects = (ArrayList<Object>) ContactsDataHelper.getCallsFoldersOfKnown(getActivity());
@@ -48,32 +52,37 @@ public class FragmentListKnownContacts extends ProofFragment {
 			}
 		}
 
-		 @Override
-		 public void onListItemClick(ListView l, final View v, int position, long id) {
-		
-			 super.onListItemClick(l, v, position, id);	
-			
-			Contact mContact = (Contact) objects.get(position);
-			
-			MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
-		 }
+		@Override
+		public void onListItemClick(ListView list, final View view, int position, long id) {
+
+			super.onListItemClick(list, view, position, id);	
+
+			if(!multiSelectEnabled) {				
+				Contact mContact = (Contact) objects.get(position);					
+				MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
+			}
+			else {
+				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
+				checkbox.toggle();
+			}
+		}
 
 		@Override
 		protected void _onPreExecute() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void _onProgressUpdate(Integer... progress) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void _onPostExecute(Long result) {			
 			initAdapter(getActivity(),
-					objects, R.layout.fragment_listrecord_dossiers_detail, isMulti);
+					objects, R.layout.fragment_listrecord_dossiers_detail, multiSelectEnabled);
 		}
 
 		@Override
@@ -92,40 +101,34 @@ public class FragmentListKnownContacts extends ProofFragment {
 		@Override
 		protected void preDeleteAndShareAction() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void DeleteAction() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void initOnOptionsItemSelected() {
-			FragmentListRecordFoldersTabs.removeUnusedTab();			
-		}
-
-		@Override
-		protected void preDeleteAllAction() {
-			// TODO Auto-generated method stub
-			
+			ProofMultiSelectFragmentActivity.removeUnusedTab();			
 		}
 
 		@Override
 		protected void DoneAction() {
-			FragmentListRecordFoldersTabs.readdUnusedTab();			
+			ProofMultiSelectFragmentActivity.readdUnusedTab();			
 		}
 
 		@Override
 		protected void DeleteAllAction() {
-			FragmentListRecordFoldersTabs.removeCurrentTab(getInternalContext());			
+			ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());			
 		}
 
 		@Override
-		protected void ShareAction() {
+		protected Intent ShareAction() {
 			// TODO Auto-generated method stub
-			
+			return null;
 		}
 
 		@Override
@@ -152,6 +155,12 @@ public class FragmentListKnownContacts extends ProofFragment {
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
 			listAdapter = new ContactAdapter(context, collection, layoutId, multiSelectMode);						
+		}
+
+		@Override
+		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
 		}
 
 	}

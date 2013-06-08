@@ -32,10 +32,12 @@ public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterfa
 	
 	// Initializing
 	
+	@Override
 	protected void initialize() {
 		super.initialize();
 	}
 	
+	@Override
 	protected void initialize(String phoneNumber) {
 		super.initialize(phoneNumber);
 	}

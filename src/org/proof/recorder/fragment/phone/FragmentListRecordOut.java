@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.adapters.RecordAdapter;
+import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.models.Record;
@@ -14,6 +15,7 @@ import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,25 +32,6 @@ public class FragmentListRecordOut extends ProofFragment {
 
 	public static class OutGoingCallsLoader extends ProofListFragmentWithQuickAction
 	{
-
-		/*		private void sendEventToFolderList() {
-			if(Settings.isDebug())
-			  Log.d("sender", "Broadcast: eventListNeedFolderRefreshReceiver (out)");
-
-			  Intent intent = new Intent("eventListToBeRefreshedReceiver");
-			  intent.putExtra("message", "Refresh");
-			  LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);		  
-			}
-
-		private ProofBroadcastReceiver eventListNeedFolderRefreshReceiver = new ProofBroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				super.onReceive(context, intent);
-				StaticIntents redirectIntent = StaticIntents.create(getActivity(), FragmentListKnownContacts.class);
-				startActivity(redirectIntent);
-			}
-		};*/
-
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onListItemClick(ListView l, final View view, int position,
@@ -56,7 +39,7 @@ public class FragmentListRecordOut extends ProofFragment {
 
 			super.onListItemClick(l, view, position, id);	
 
-			if(!isMulti) {				
+			if(!multiSelectEnabled) {				
 				Record mRecord = (Record) objects.get(position);				
 				QuickActionDlg.showPhoneOptionsDlg(
 						getActivity(), 
@@ -73,16 +56,12 @@ public class FragmentListRecordOut extends ProofFragment {
 
 		@Override
 		protected void initOnOptionsItemSelected() {
-			FragmentListRecordTabs.removeUnusedTab();			
+			ProofMultiSelectFragmentActivity.removeUnusedTab();			
 		}
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);		
-
-			/*LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
-					eventListNeedFolderRefreshReceiver, 
-					new IntentFilter("eventOutNeedToBeRefreshedReceiver"));*/
 
 			MenuActions.setInternalContext(getActivity());			
 			
@@ -106,33 +85,14 @@ public class FragmentListRecordOut extends ProofFragment {
 		}
 
 		@Override
-		protected void preDeleteAllAction() {
-
-			int iter = 0;
-			for (Object record : objects) {
-				recordIds[iter] = ((Record) record).getmId();
-				recordPaths[iter] = ((Record) record).getmFilePath();
-
-				iter++;
-
-				Console.print_debug("Position: " + record);
-			}			
-		}
-
-		@Override
 		protected void DoneAction() {
-			FragmentListRecordTabs.readdUnusedTab();			
+			ProofMultiSelectFragmentActivity.readdUnusedTab();			
 		}
 
 		@Override
 		protected void DeleteAllAction() {
 			MenuActions.deleteCalls(recordIds, recordPaths);
-			FragmentListRecordTabs.removeCurrentTab(getInternalContext());			
-		}
-
-		@Override
-		protected void ShareAction() {
-			MenuActions.sharingOptions(recordPaths);			
+			ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());			
 		}
 
 		@Override
@@ -172,8 +132,8 @@ public class FragmentListRecordOut extends ProofFragment {
 			}
 
 			for(Object item : toBeProcessed) {
-				((RecordAdapter)listAdapter).remove((Record) item);
-				((ArrayList<Object>)objects).remove((Record) item);
+				((RecordAdapter)listAdapter).remove(item);
+				objects.remove(item);
 			}
 
 			((RecordAdapter)listAdapter).notifyDataSetChanged();		
@@ -196,7 +156,7 @@ public class FragmentListRecordOut extends ProofFragment {
 
 		@Override
 		protected void _onPostExecute(Long result) {
-			initAdapter(getActivity(), objects, R.layout.listfragmentdroit, isMulti);			
+			initAdapter(getActivity(), objects, R.layout.listfragmentdroit, multiSelectEnabled);			
 		}
 
 		@Override
@@ -232,6 +192,12 @@ public class FragmentListRecordOut extends ProofFragment {
 		@Override
 		protected Object getItemClone(Object item) {
 			return ((Record) item).clone();
+		}
+
+		@Override
+		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

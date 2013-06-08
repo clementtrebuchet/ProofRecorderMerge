@@ -98,7 +98,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 				}
 			}			
 			else if(getKind() == KIND.CALL) {
-				String mDirection = (String) extraData.getString("Sense");
+				String mDirection = extraData.getString("Sense");
 
 				if (mDirection.equalsIgnoreCase("e")) {
 					mTabTitle = getString(tabOneResourceId());

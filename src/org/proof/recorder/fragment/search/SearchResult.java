@@ -18,6 +18,7 @@ import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class SearchResult extends ProofFragmentActivity {
 	
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
-		if(SearchListLoader.isMulti) {
+		if(ProofListFragmentWithQuickAction.multiSelectEnabled) {
 			if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && 
 					event.getAction() == KeyEvent.ACTION_UP) {
 				// handle your back button code here
@@ -273,7 +274,7 @@ public class SearchResult extends ProofFragmentActivity {
 		public void onListItemClick(ListView l, View view, int position, long id) {
 			super.onListItemClick(l, view, position, id);
 
-			if (!isMulti) {
+			if (!multiSelectEnabled) {
 				if(mCalls)
 					QuickActionDlg.showPhoneOptionsDlg(
 							getActivity(), 
@@ -380,12 +381,12 @@ public class SearchResult extends ProofFragmentActivity {
 			
 			for(Object item : toBeProcessed) {
 				if(mCalls) {
-					((org.proof.recorder.adapters.RecordAdapter)listAdapter).remove((Record) item);
-					((ArrayList<Object>)objects).remove((Record) item);
+					((org.proof.recorder.adapters.RecordAdapter)listAdapter).remove(item);
+					objects.remove(item);
 				}
 				else if(mVoices) {
-					((org.proof.recorder.adapters.VoiceAdapter)listAdapter).remove((Voice) item);
-					((ArrayList<Object>)objects).remove((Voice) item);
+					((org.proof.recorder.adapters.VoiceAdapter)listAdapter).remove(item);
+					objects.remove(item);
 				}
 			}
 			
@@ -395,28 +396,6 @@ public class SearchResult extends ProofFragmentActivity {
 			else if(mVoices) {
 				((org.proof.recorder.adapters.VoiceAdapter)listAdapter).notifyDataSetChanged();
 			}
-		}
-
-		@Override
-		protected void preDeleteAllAction() {
-			
-			int iter = 0;
-			for (Object item : objects) {
-				if(mCalls) {
-					recordIds[iter] = ((Record) item).getmId();
-					recordPaths[iter] = ((Record) item).getmFilePath();
-				}
-				else if(mVoices) {
-					recordIds[iter] = ((Voice) item).getId();
-					recordPaths[iter] = ((Voice) item).getFilePath();
-				}
-				else
-					break;
-
-				iter++;
-
-				Console.print_debug("Position: " + item);
-			}		
 		}
 
 		@Override
@@ -430,14 +409,8 @@ public class SearchResult extends ProofFragmentActivity {
 				getActivity().startActivity(StaticIntents.goVoice(getInternalContext()));
 			}
 			else
-				return;
+				return;			
 			
-			
-		}
-
-		@Override
-		protected void ShareAction() {
-			MenuActions.sharingOptions(recordPaths);			
 		}
 
 		@Override
@@ -513,7 +486,7 @@ public class SearchResult extends ProofFragmentActivity {
 			initAdapter(getActivity(), 
 					objects, 
 					R.layout.listfragmentdroit, 
-					isMulti);
+					multiSelectEnabled);
 		}
 
 		@Override
@@ -534,6 +507,12 @@ public class SearchResult extends ProofFragmentActivity {
 
 			else
 				return 0;
+		}
+
+		@Override
+		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

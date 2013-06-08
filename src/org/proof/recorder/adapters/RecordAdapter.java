@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
+
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
@@ -13,6 +14,7 @@ import org.proof.recorder.utils.Log.Console;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -61,6 +63,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
 	 * @param context
+	 * @param actionProvider 
 	 * @param textViewResourceId
 	 * @param objects
 	 * @param selectedObjects
@@ -122,7 +125,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 						uri);
 			}
 
-			id.setVisibility(TextView.INVISIBLE);			
+			id.setVisibility(View.INVISIBLE);			
 
 			if (input != null) {
 				Bitmap bitmap = BitmapFactory.decodeStream(input);
@@ -136,9 +139,9 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 			humanTime.setText(record.getmHtime());
 
 			if(this.multiModeEnabled) {					
-				arrow.setVisibility(ImageView.INVISIBLE);
+				arrow.setVisibility(View.INVISIBLE);
 
-				checkbox.setVisibility(CheckBox.VISIBLE);
+				checkbox.setVisibility(View.VISIBLE);
 				
 				checkbox.setChecked(record.isChecked());
 				
@@ -147,12 +150,13 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {						
 						record.setChecked(isChecked);
+						sendEvent();
 					}
 				});
 			}
 			else {
-				checkbox.setVisibility(CheckBox.INVISIBLE);
-				arrow.setVisibility(ImageView.VISIBLE);
+				checkbox.setVisibility(View.INVISIBLE);
+				arrow.setVisibility(View.VISIBLE);
 			}							
 		}		
 	}
@@ -160,5 +164,10 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	@Override
 	protected void handleEmptyView(final int position, View convertView) {
 		Console.print_debug("Empty list!");
+	}
+
+	@Override
+	protected void handleEvenetIntent(Intent intent) {
+		// TODO Auto-generated method stub		
 	}
 }

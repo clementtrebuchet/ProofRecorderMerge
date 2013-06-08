@@ -8,6 +8,7 @@ import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -101,7 +102,7 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 			Bitmap defaultBite = BitmapFactory.decodeResource(
 					getContext().getResources(), R.drawable.mic_48);			
 			
-			id.setVisibility(TextView.INVISIBLE);
+			id.setVisibility(View.INVISIBLE);
 			
 			title.setText(voice.getNote().getTitle());
 			fileSize.setText(voice.getHumanFileSize());
@@ -110,9 +111,9 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 
 			if (this.multiModeEnabled) {
 				
-				arrow.setVisibility(ImageView.INVISIBLE);
+				arrow.setVisibility(View.INVISIBLE);
 				
-				checkbox.setVisibility(CheckBox.VISIBLE);
+				checkbox.setVisibility(View.VISIBLE);
 				
 				checkbox.setChecked(voice.isChecked());
 				
@@ -121,12 +122,13 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						voice.setChecked(isChecked);
+						sendEvent();
 					}
 				});
 				
 			} else {				
-				checkbox.setVisibility(CheckBox.INVISIBLE);
-				arrow.setVisibility(ImageView.VISIBLE);
+				checkbox.setVisibility(View.INVISIBLE);
+				arrow.setVisibility(View.VISIBLE);
 			}
 		}			
 	}
@@ -134,5 +136,11 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 	@Override
 	protected void handleEmptyView(final int position, View convertView) {
 		Console.print_debug("Empty list!");
+	}
+
+	@Override
+	protected void handleEvenetIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		
 	}
 }

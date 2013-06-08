@@ -13,8 +13,10 @@ import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 public class FragmentListUnKnownContacts extends ProofFragment {
@@ -52,13 +54,18 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		}
 
 		@Override
-		public void onListItemClick(ListView l, final View v, int position,	long id) {
+		public void onListItemClick(ListView list, final View view, int position, long id) {
 
-			super.onListItemClick(l, v, position, id);	
-			
-			Contact mContact = (Contact) objects.get(position);
+			super.onListItemClick(list, view, position, id);	
 
-			MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());		 
+			if(!multiSelectEnabled) {				
+				Contact mContact = (Contact) objects.get(position);					
+				MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
+			}
+			else {
+				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
+				checkbox.toggle();
+			}			 
 		}
 
 		@Override
@@ -76,7 +83,7 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		@Override
 		protected void _onPostExecute(Long result) {			
 			initAdapter(getActivity(),
-					objects, R.layout.fragment_listrecord_dossiers_detail, isMulti);			
+					objects, R.layout.fragment_listrecord_dossiers_detail, multiSelectEnabled);			
 		}
 
 		@Override
@@ -109,12 +116,6 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		}
 
 		@Override
-		protected void preDeleteAllAction() {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
 		protected void DoneAction() {
 			FragmentListRecordFoldersTabs.readdUnusedTab();			
 		}
@@ -122,12 +123,6 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		@Override
 		protected void DeleteAllAction() {
 			FragmentListRecordFoldersTabs.removeCurrentTab(getInternalContext());			
-		}
-
-		@Override
-		protected void ShareAction() {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
@@ -154,6 +149,12 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
 			listAdapter = new ContactAdapter(context, collection, layoutId, multiSelectMode);						
+		}
+
+		@Override
+		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			
 		}
 
 	}

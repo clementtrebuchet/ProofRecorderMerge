@@ -3,6 +3,7 @@ package org.proof.recorder.fragment.phone;
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 
 import android.os.Bundle;
 
@@ -20,7 +21,7 @@ public class FragmentListRecordFoldersTabs extends ProofMultiSelectFragmentActiv
 
 	@Override
 	protected String idKey() {
-		return _id;
+		return "";
 	}
 
 	@Override
@@ -40,15 +41,15 @@ public class FragmentListRecordFoldersTabs extends ProofMultiSelectFragmentActiv
 	}
 
 	@Override
-	protected void setUpTabsCount() {		
+	protected void setUpTabsCount() {	
 		hasOne = ProofRecorderActivity.bKnown;
 		hasSecond = ProofRecorderActivity.bUnknown;
 	}
 
 	@Override
 	protected boolean isMulti() {
-		return FragmentListKnownContacts.KnownContactsLoader.isMulti |
-				FragmentListUnKnownContacts.UnKnownContactsLoader.isMulti;
+		return ProofListFragmentWithQuickAction.multiSelectEnabled |
+				ProofListFragmentWithQuickAction.multiSelectEnabled;
 	}
 
 	@Override
