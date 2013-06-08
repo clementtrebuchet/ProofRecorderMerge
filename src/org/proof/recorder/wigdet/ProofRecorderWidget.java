@@ -14,16 +14,17 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 public class ProofRecorderWidget extends AppWidgetProvider {
 	private final String TAG = ProofRecorderWidget.class.getName();
-	public final String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ACTION_ENABLE_SERVICE";
-	public final String ACTION_DISABLE_SERVICE = "org.proof.recorder.wigdet.ACTION_DISABLE_SERVICE";
-	public final String SET_FORMAT = "org.proof.recorder.wigdet.SET_FORMAT";
-	public final String REC = "org.proof.recorder.wigdet.REC";
+	public final String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_ENABLE_SERVICE";
+	public final String ACTION_DISABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_DISABLE_SERVICE";
+	public final String SET_FORMAT = "org.proof.recorder.wigdet.ProofRecorderWidget.SET_FORMAT";
+	public final String REC = "org.proof.recorder.wigdet.ProofRecorderWidget.REC";
 	private SharedPreferences mSharedPreferences = null;
 	private Editor mEditor = null;
-	public final String ACTION_UPDATE = "org.proof.recorder.wigdet.ACTION_DISABLE_SERVICE";
+	public final String ACTION_UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_UPDATE_SERVICE";
 	public boolean isEnable;
 	public boolean recOn;
 
@@ -40,6 +41,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 		}
 		Log.d(TAG, "onUpdate OK");
+		
 		// super.onUpdate(context, appWidgetManager, appWidgetIds);
 
 	}
@@ -54,28 +56,30 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 			int appWidgetIds) {
 
 		// initMshPref(context);
-
+		
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
 				R.layout.widget_layout);
 
 		Intent active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(ACTION_ENABLE_SERVICE);
+		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context,
 				appWidgetIds, active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonon,
 				actionPendingIntent);
 		
-	
-		active.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		
+		active = new Intent(context, ProofRecorderWidget.class);
+		active.setAction(ACTION_UPDATE);
+		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-				appWidgetIds, active, PendingIntent.FLAG_UPDATE_CURRENT);
+				appWidgetIds, active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonrefresh,
 				pendingIntent);
 
 		active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(SET_FORMAT);
+		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		actionPendingIntent = PendingIntent.getBroadcast(context, appWidgetIds,
 				active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonbox,
@@ -83,11 +87,14 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 		active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(REC);
+		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		actionPendingIntent = PendingIntent.getBroadcast(context, appWidgetIds,
 				active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec,
 				actionPendingIntent);
 		
+		//active.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		//active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		
 
 		appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
@@ -159,12 +166,16 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 				} else if (action.equals(REC)) {
 					Log.d(TAG, "REC");
-					if (recOn) {
+					if (recOn == true) {
 						recOn = false;
 					} else {
 						recOn = true;
 					}
 
+				} else if (action.equals(ACTION_UPDATE)){
+					
+					Toast.makeText(context, "Refreshed!", Toast.LENGTH_SHORT).show();
+					
 				}
 
 				RemoteViews remoteViews1 = new RemoteViews(
