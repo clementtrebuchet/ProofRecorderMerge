@@ -14,43 +14,43 @@
         
         <ImageButton
             android:id="@+id/imageButtonrefresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/action_item_btn"
-            android:padding="2dp"
-            android:src="@drawable/ic_launcher" />
-        
-        <ImageButton
-            android:id="@+id/imageButtonbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/action_item_btn"
-            android:padding="2dp"
-            android:src="@drawable/avsong" />   
-       <!--  <ImageButton
+            android:padding="1dp"
+            android:src="@drawable/auncher" />
+
+        <ImageButton
             android:id="@+id/imageSpeaker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/action_item_btn"
-            android:padding="2dp"
-            android:src="@drawable/avspeekearoff" /> -->
+            android:padding="1dp"
+            android:src="@drawable/avspeekearoff" />
 
         <ImageButton
             android:id="@+id/imageButtonon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/action_item_btn"
-            android:padding="2dp"
+            android:padding="1dp"
             android:src="@drawable/off" />
+
+        <ImageButton
+            android:id="@+id/imageButtonbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/avsong" />
 
         <ImageButton
             android:id="@+id/imageButtonstoprec"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/action_item_btn"
-            android:padding="2dp"
-            android:src="@drawable/avrec" />
+            android:padding="1dp"
+            android:src="@drawable/avplay" />
     </LinearLayout>
 
 </LinearLayout>

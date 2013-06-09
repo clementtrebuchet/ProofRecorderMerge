@@ -24,6 +24,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	private static final String START_ACTION = "android.intent.action.START_AUDIO_RECORDER";
 	private static final String STOP_ACTION = "android.intent.action.STOP_AUDIO_RECORDER";
 	public final String REC = "org.proof.recorder.wigdet.ProofRecorderWidget.REC";
+	public final String SP = "org.proof.recorder.wigdet.ProofRecorderWidget.SPEAKER";
 	private SharedPreferences mSharedPreferences = null;
 	private Editor mEditor = null;
 	public final String ACTION_UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_UPDATE_SERVICE";
@@ -32,6 +33,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	public boolean isrecording;
 	private SharedPreferences preferences;
 	private Editor mRecEditor;
+	private boolean speakerOn;
 
 	/**
 	 * 
@@ -96,6 +98,14 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		actionPendingIntent = PendingIntent.getBroadcast(context, appWidgetIds,
 				active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec,
+				actionPendingIntent);
+		
+		active = new Intent(context, ProofRecorderWidget.class);
+		active.setAction(SP);
+		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+		actionPendingIntent = PendingIntent.getBroadcast(context, appWidgetIds,
+				active, 0);
+		remoteViews.setOnClickPendingIntent(R.id.imageSpeaker,
 				actionPendingIntent);
 		
 		//active.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
@@ -191,6 +201,16 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 					I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					context.startActivity(I);
 				
+				} else if (action.equals(SP)){
+					if(speakerOn){
+						mEditor.putBoolean("SPEAK", false);
+						speakerOn = false;
+						
+					} else {
+						mEditor.putBoolean("SPEAK", true);
+						speakerOn = true;
+					}
+					mCommit();
 				}
 
 				RemoteViews remoteViews1 = new RemoteViews(
@@ -210,7 +230,17 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 							R.drawable.avstop);
 				} else {
 					remoteViews1.setImageViewResource(R.id.imageButtonstoprec,
-							R.drawable.avrec);
+							R.drawable.avplay);
+				}
+				
+				if(speakerOn){
+					
+					remoteViews1.setImageViewResource(R.id.imageSpeaker,
+							R.drawable.avspeekear);
+				} else {
+					
+					remoteViews1.setImageViewResource(R.id.imageSpeaker,
+							R.drawable.avspeekearoff);
 				}
 
 				ComponentName cn = new ComponentName(context,
@@ -260,7 +290,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 			if (mSharedPreferences == null) {
 				mSharedPreferences = PreferenceManager
 						.getDefaultSharedPreferences(context);
-				boolean incall, outcall;
+				boolean incall, outcall, sp;
 				incall = mSharedPreferences.getBoolean("INCALL", true);
 				outcall = mSharedPreferences.getBoolean("OUTCALL", true);
 				if (preferences == null) {
@@ -270,11 +300,18 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 				if(isrecording == true) {recOn = true;}
 				if(isrecording == false) {recOn = false;}
 				Log.d(TAG, "isrecording :" + isrecording + "recOn :"+recOn);
+				
+				sp = mSharedPreferences.getBoolean("SPEAK", true);
 				if (incall || outcall) {
 
 					isEnable = true;
 				} else {
 					isEnable = false;
+				}
+				if (sp){
+					speakerOn = true;
+				} else {
+					speakerOn = false;
 				}
 				Log.d(TAG, "InitMshPref OK, isEnable = " + isEnable);
 
