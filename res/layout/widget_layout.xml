@@ -10,24 +10,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="4dp" >
-
+        android:padding="1dp" >
+        
         <ImageButton
             android:id="@+id/imageButtonrefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="9dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:background="@drawable/action_item_btn"
             android:padding="2dp"
             android:src="@drawable/ic_launcher" />
-
+        
         <ImageButton
             android:id="@+id/imageButtonbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/action_item_btn"
             android:padding="2dp"
-            android:src="@drawable/box" />
+            android:src="@drawable/avsong" />   
+       <!--  <ImageButton
+            android:id="@+id/imageSpeaker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/action_item_btn"
+            android:padding="2dp"
+            android:src="@drawable/avspeekearoff" /> -->
 
         <ImageButton
             android:id="@+id/imageButtonon"
@@ -43,7 +50,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/action_item_btn"
             android:padding="2dp"
-            android:src="@drawable/avpause" />
+            android:src="@drawable/avrec" />
     </LinearLayout>
 
 </LinearLayout>

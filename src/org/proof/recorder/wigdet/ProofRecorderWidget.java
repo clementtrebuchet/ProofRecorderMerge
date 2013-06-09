@@ -207,10 +207,10 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 				if (recOn) {
 					remoteViews1.setImageViewResource(R.id.imageButtonstoprec,
-							R.drawable.avplay);
+							R.drawable.avstop);
 				} else {
 					remoteViews1.setImageViewResource(R.id.imageButtonstoprec,
-							R.drawable.avpause);
+							R.drawable.avrec);
 				}
 
 				ComponentName cn = new ComponentName(context,
