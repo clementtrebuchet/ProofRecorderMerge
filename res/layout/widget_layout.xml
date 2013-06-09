@@ -13,6 +13,23 @@
         android:padding="4dp" >
 
         <ImageButton
+            android:id="@+id/imageButtonrefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/action_item_btn"
+            android:padding="2dp"
+            android:src="@drawable/ic_launcher" />
+
+        <ImageButton
+            android:id="@+id/imageButtonbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/action_item_btn"
+            android:padding="2dp"
+            android:src="@drawable/box" />
+
+        <ImageButton
             android:id="@+id/imageButtonon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,24 +43,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/action_item_btn"
             android:padding="2dp"
-            android:src="@drawable/stoprec" />
-
-        <ImageButton
-            android:id="@+id/imageButtonbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/action_item_btn"
-            android:padding="2dp"
-            android:src="@drawable/box" />
-          <ImageButton
-            android:id="@+id/imageButtonrefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/action_item_btn"
-            android:padding="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/navigationrefresh" />
-
+            android:src="@drawable/avpause" />
     </LinearLayout>
 
 </LinearLayout>
