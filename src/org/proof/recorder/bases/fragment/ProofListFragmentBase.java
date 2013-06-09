@@ -78,17 +78,18 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 	}
 
 	private void initialize() {
-		initializedContext();
+		initializedContext();		
 		setRetainInstance(true);
+		setupDlgs();
+	}
 
-		setupAlertDlg();
-		
-		setupProgressDlg();
+	protected String getBroadcastName() {
+		return "$listEventSender$" + this.getClass().getName();
 	}
 
 	private void registerLocalBroadcastReceiver() {
 		LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
-				listEventSender, new IntentFilter("listEventSender"));
+				listEventSender, new IntentFilter(getBroadcastName()));
 	}
 	
 	private void unregisterLocalBroadcastReceiver() {
@@ -96,8 +97,17 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 				getActivity()).unregisterReceiver(listEventSender);
 	}
 	
+	private void setupDlgs() {
+		setupAlertDlg();		
+		setupProgressDlg();
+	}
+	
 	private void setupProgressDlg() {
+		
+		destroyProgress();
+		
 		progressDlg = new ProgressDialog(getInternalContext());
+		
 		progressDlg.setCancelable(false);
 		progressDlg.setIndeterminate(true);
 		
@@ -114,6 +124,16 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 	protected void hideProgress() {
 		if(progressDlg.isShowing())
 			progressDlg.hide();
+	}
+	
+	private void destroyProgress() {
+		if(progressDlg != null) {
+			if(progressDlg instanceof ProgressDialog) {
+				hideProgress();
+				progressDlg.cancel();
+				progressDlg = null;
+			}
+		}		
 	}
 	
 	private void setupAlertDlg() {
@@ -155,6 +175,14 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 
 	protected void displayAlert() {
 		alertDlg.show();
+	}
+	
+	private void destroyAlert() {
+		if(alertDlg != null) {
+			if(alertDlg instanceof AlertDialog.Builder) {
+				alertDlg = null;
+			}
+		}		
 	}
 
 	protected void lockScreenOrientation() {
@@ -202,7 +230,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		initialize();
-		registerLocalBroadcastReceiver();
+		registerLocalBroadcastReceiver();	
 	}
 
 	@Override
@@ -215,14 +243,16 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 	@Override
 	public void onPause() {		
 		unregisterLocalBroadcastReceiver();
-		progressDlg.cancel();
 		super.onPause();
 	}
 	
 	@Override
 	public void onDestroy() {		
 		unregisterLocalBroadcastReceiver();
-		progressDlg.cancel();
+		
+		destroyProgress();
+		destroyAlert();
+		
 		super.onDestroy();
 	}
 

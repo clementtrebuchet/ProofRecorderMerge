@@ -237,7 +237,7 @@ public class FragmentListRecordIn extends ProofFragment {
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
 			listAdapter = null;
-			listAdapter = new RecordAdapter(context, collection, layoutId, multiSelectMode);
+			listAdapter = new RecordAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());
 		}
 
 		@Override

@@ -26,9 +26,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class ContactAdapter extends ProofBaseMultiSelectListAdapter {
 
-	public ContactAdapter(Context context, List<Object> collection, int layoutResourceId,
-			boolean multiModeEnabled) {
-		super(context, collection, layoutResourceId, multiModeEnabled);
+	public ContactAdapter(
+			Context context, 
+			List<Object> collection, 
+			int layoutResourceId,			
+			boolean multiModeEnabled,
+			String broadcastName) {
+		
+		super(context, collection, layoutResourceId, multiModeEnabled, broadcastName);
 	}
 
 	@Override
@@ -110,7 +115,7 @@ public class ContactAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	@Override
-	protected void handleEvenetIntent(Intent intent) {
+	protected void handleEventIntent(Intent intent) {
 		// TODO Auto-generated method stub
 		
 	}

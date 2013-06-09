@@ -17,18 +17,22 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	
 	protected abstract void handleView(final int item, View view);
 	protected abstract void handleEmptyView(final int item, View view);
-	protected abstract void handleEvenetIntent(Intent intent);
+	protected abstract void handleEventIntent(Intent intent);
 	
 	protected void sendEvent() {
-		Console.print_debug("ListEventSender (send)");
-
-		Intent intent = new Intent("listEventSender");
-		handleEvenetIntent(intent);
-		LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);		  
+		
+		Console.print_debug("Event sent to: " + broadcastName);
+		
+		if(broadcastName != null) {
+			Intent intent = new Intent(broadcastName);
+			handleEventIntent(intent);
+			LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);	
+		}		  
 	}
 
 	protected Object objects;		
-	protected int layoutResourceId;
+	protected int layoutResourceId;	
+	protected String broadcastName;
 	
 	public final int getLayoutResourceId() {
 		return layoutResourceId;
@@ -51,18 +55,20 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	}
 	private void initAttributes(
 			Object objects, 
-			int layoutResourceId) {
+			int layoutResourceId,
+			String broadcastName) {
 		
 		this.objects = objects;		
 		this.layoutResourceId = layoutResourceId;
+		this.broadcastName = broadcastName;
 	}
 	
-	private void initialize(Object[] objects, int layoutResourceId) {
-		this.initAttributes(objects, layoutResourceId);
+	private void initialize(Object[] objects, int layoutResourceId, String broadcastName) {
+		this.initAttributes(objects, layoutResourceId, broadcastName);
 	}
 	
-	private void initialize(List<Object> objects, int layoutResourceId) {
-		this.initAttributes(objects, layoutResourceId);		
+	private void initialize(List<Object> objects, int layoutResourceId, String broadcastName) {
+		this.initAttributes(objects, layoutResourceId, broadcastName);		
 	}
 
 	private ProofBaseListAdapter(Context context, int textViewResourceId) {
@@ -73,26 +79,26 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 		super(context, resource, textViewResourceId);
 	}
 
-	public ProofBaseListAdapter(Context context,	Object[] objects, int layoutResourceId) {
+	public ProofBaseListAdapter(Context context,	Object[] objects, int layoutResourceId, String broadcastName) {
 		super(context, layoutResourceId, objects);
-		this.initialize(objects, layoutResourceId);
+		this.initialize(objects, layoutResourceId, broadcastName);
 	}
 
-	public ProofBaseListAdapter(Context context, List<Object> objects, int layoutResourceId) {
+	public ProofBaseListAdapter(Context context, List<Object> objects, int layoutResourceId, String broadcastName) {
 		super(context, layoutResourceId, objects);
-		this.initialize(objects, layoutResourceId);
+		this.initialize(objects, layoutResourceId, broadcastName);
 	}
 
 	public ProofBaseListAdapter(Context context, int resource,
-			int textViewResourceId, Object[] objects, int layoutResourceId) {
+			int textViewResourceId, Object[] objects, int layoutResourceId, String broadcastName) {
 		super(context, resource, textViewResourceId, objects);
-		this.initialize(objects, layoutResourceId);
+		this.initialize(objects, layoutResourceId, broadcastName);
 	}
 
 	public ProofBaseListAdapter(Context context, int resource,
-			int textViewResourceId, List<Object> objects, int layoutResourceId) {
+			int textViewResourceId, List<Object> objects, int layoutResourceId, String broadcastName) {
 		super(context, resource, textViewResourceId, objects);
-		this.initialize(objects, layoutResourceId);
+		this.initialize(objects, layoutResourceId, broadcastName);
 	}
 	
 	@Override

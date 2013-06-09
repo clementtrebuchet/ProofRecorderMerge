@@ -12,8 +12,11 @@ import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.Log.Console;
 
+import com.actionbarsherlock.view.MenuInflater;
+
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -103,6 +106,12 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 			// TODO Auto-generated method stub
 			
 		}
+		
+		@Override
+		protected Intent ShareAction() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 		@Override
 		protected void DeleteAction() {
@@ -148,13 +157,18 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		@Override
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
-			listAdapter = new ContactAdapter(context, collection, layoutId, multiSelectMode);						
+			listAdapter = new ContactAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());						
 		}
 
 		@Override
 		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
 			
+		}
+		
+		@Override
+		public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu,
+				MenuInflater inflater) {
 		}
 
 	}
