@@ -41,8 +41,8 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	 */
 	public RecordAdapter(Context context, int resource,
 			int textViewResourceId, List<Object> objects,
-			int layoutResourceId, boolean multiModeEnabled) {
-		super(context, resource, textViewResourceId, objects, layoutResourceId, multiModeEnabled);
+			int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+		super(context, resource, textViewResourceId, objects, layoutResourceId, multiModeEnabled, broadcastName);
 	}
 
 	/**
@@ -57,8 +57,8 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	 */
 	public RecordAdapter(Context context, int resource,
 			int textViewResourceId, Object[] objects, int layoutResourceId,
-			boolean multiModeEnabled) {
-		super(context, resource, textViewResourceId, objects, layoutResourceId, multiModeEnabled);
+			boolean multiModeEnabled, String broadcastName) {
+		super(context, resource, textViewResourceId, objects, layoutResourceId, multiModeEnabled, broadcastName);
 	}
 
 	/**
@@ -72,8 +72,8 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param multiModeEnabled
 	 */
 	public RecordAdapter(Context context, List<Object> objects, int layoutResourceId,
-			boolean multiModeEnabled) {
-		super(context, objects, layoutResourceId, multiModeEnabled);
+			boolean multiModeEnabled, String broadcastName) {
+		super(context, objects, layoutResourceId, multiModeEnabled, broadcastName);
 	}
 
 	/**
@@ -86,8 +86,8 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param multiModeEnabled
 	 */
 	public RecordAdapter(Context context, Object[] objects, int layoutResourceId,
-			boolean multiModeEnabled) {
-		super(context, objects, layoutResourceId, multiModeEnabled);
+			boolean multiModeEnabled, String broadcastName) {
+		super(context, objects, layoutResourceId, multiModeEnabled, broadcastName);
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	@Override
-	protected void handleEvenetIntent(Intent intent) {
+	protected void handleEventIntent(Intent intent) {
 		// TODO Auto-generated method stub		
 	}
 }

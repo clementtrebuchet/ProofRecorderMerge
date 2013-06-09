@@ -29,15 +29,33 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 
 	protected static boolean hasOne, hasSecond, isNotify;
 
-	protected static Bundle extraData = null;
+	protected Bundle extraData = null;
 
-	protected static Class<?> classOne;
-	protected static Class<?> classSecond;
+	protected Class<?> classOne;
+	protected Class<?> classSecond;
 
 	protected static String _id;
 
 	protected TabHost mTabHost;
 	protected TabsPagerAdapter mTabsAdapter;
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		setUpTabsCount();
+		setUpTabsClasses();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
 
 	/**
 	 * @param voiceId the voiceId to set

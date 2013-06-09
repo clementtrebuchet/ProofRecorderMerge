@@ -112,27 +112,38 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		}
 		
 		public void enableItems(boolean enable) {
-			if(actionProvider != null && !enable) {				
-				try {
-					// Workaround on apparently android known bug
-					// to set ShareActionProvider in disable mode state.
-					// Note that might raise Exception on some devices!
-					actionProvider.setShareIntent(null);
-				}catch (Exception e) {
+			
+			if(!enable) {
+				boolean fallback = false;
+				if(actionProvider != null) {				
+					try {
+						// Workaround on apparently android known bug
+						// to set ShareActionProvider in disable mode state.
+						// Note that might raise Exception on some devices!
+						actionProvider.setShareIntent(null);
+						
+						Console.print_debug("Share Intent set to null!");
+						
+					}catch (Exception e) {
+						fallback = true;
+					}
+				}
+				if(fallback && shareItem != null) {
 					// Fall-back for not compatible workaround devices
 					// Playing with visibility :)
-					if(shareItem != null)
-					   shareItem.setVisible(enable);
+					shareItem.setVisible(enable);
 				}
+			}
+			else {
+				if(!shareItem.isVisible())
+					shareItem.setVisible(enable);
 			}
 			
 			if(deleteItem != null) {
 				deleteItem.setEnabled(enable);
-				
-				if(!enable)
-					deleteItem.setIcon(R.drawable.icon_delete_disabled);
-				else
-					deleteItem.setIcon(R.drawable.icon_delete);
+
+				deleteItem.setIcon(
+						enable ? R.drawable.icon_delete : R.drawable.icon_delete_disabled);
 			}
 		}
 
@@ -180,7 +191,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			initAdapter(
 					getActivity(), 
 					objects, 
-					((ProofBaseListAdapter) listAdapter).getLayoutResourceId(), 
+					((ProofBaseListAdapter) listAdapter).getLayoutResourceId(),
 					multiSelectEnabled);
 
 			setListAdapter((ListAdapter) listAdapter);
@@ -212,6 +223,10 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 	protected abstract void DoneAction();
 	protected abstract void DeleteAllAction();	
+	
+	protected abstract void uncheckItem(Object item);
+	protected abstract void toggleItem(Object item, boolean checked);	
+	protected abstract boolean itemChecked(Object item);
 
 	protected Intent ShareAction() {
 
@@ -239,10 +254,6 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		return share;
 	}
 
-	protected abstract void uncheckItem(Object item);
-	protected abstract void toggleItem(Object item, boolean checked);	
-	protected abstract boolean itemChecked(Object item);
-
 	protected List<Object> cloneCollection(List<Object> list) {
 		List<Object> clone = new ArrayList<Object>(list.size());
 		for(Object item: list) clone.add(getItemClone(item));
@@ -254,7 +265,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 	protected abstract void initAdapter(
 			Context context, 
 			List<Object> collection, 
-			int layoutId, 
+			int layoutId,
 			boolean multiSelectMode);
 
 	protected void evaluateSelectedCount() {
@@ -298,6 +309,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 	
 	@Override
 	protected void handleOnReceive(Context context, Intent intent) {
+		Console.print_debug("Received notify");
 		handleActionMode(SHARE);
 	}
 
@@ -317,10 +329,12 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			selectedCount = 0;
 			checked = false;
 
-			mode.finish();
+			setListShown(false);
 
 			reStartAsyncLoader();	
-
+			//initOnActivityCreated();
+			
+			mode.finish();
 			this.DoneAction();
 
 			break;
@@ -368,14 +382,19 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 			share = this.ShareAction();
 
-			if(share != null) {
-				actionProvider.setShareIntent(share);
+			if(share != null) {				
 				if(quickActionMode != null)
 					quickActionMode.enableItems(true);
+				
+				actionProvider.setShareIntent(share);
+				
+				Console.print_debug("Share Intent set!");
 			}
 			else {
 				if(quickActionMode != null)
 					quickActionMode.enableItems(false);
+				
+				Console.print_debug("Share Intent null!");
 			}
 
 			break;
@@ -478,17 +497,16 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 		if (item.getItemId() == R.id.cm_records_list_del_file && !isLoading) {
 
-			multiSelectEnabled = true;		
+			multiSelectEnabled = true;	
+			
+			setListShown(false);
 
-			reStartAsyncLoader();			
-
-			initOnOptionsItemSelected();
+			reStartAsyncLoader();
+			//initOnActivityCreated();			
 
 			displayQuickActionMode();
-
-			//initOnActivityCreated();
-
-
+			
+			initOnOptionsItemSelected();
 		}
 		return true;
 	}

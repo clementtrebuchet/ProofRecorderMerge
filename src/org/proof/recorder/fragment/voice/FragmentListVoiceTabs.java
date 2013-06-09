@@ -4,7 +4,6 @@ import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
-import org.proof.recorder.utils.QuickActionDlg;
 
 import android.os.Bundle;
 
@@ -20,17 +19,6 @@ public class FragmentListVoiceTabs extends ProofMultiSelectFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-		return QuickActionDlg.mainUiMenuHandler(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(
-			com.actionbarsherlock.view.MenuItem item) {
-		return QuickActionDlg.mainActionsMenuHandler(item);
 	}
 
 	@Override

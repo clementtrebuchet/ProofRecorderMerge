@@ -15,8 +15,7 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 	
 	private AsyncLoader collectionLoader;
 	
-	protected volatile boolean isLoading;
-	
+	protected volatile boolean isLoading;	
 	
 	protected void startAsyncLoader() {
 		collectionLoader.execute();		
@@ -115,14 +114,19 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 				setEmptyText(getActivity().getString(R.string.search_none_records_found));
 			}				
 			
-			if(!multiSelectEnabled)
-				unlockScreenOrientation();
+			if(!multiSelectEnabled) {
+				unlockScreenOrientation();				
+			}
+			
+			try {
+				setListShown(true);
+			}
+			catch (Exception e) {}
 
 			this.cancel(true);
 			
 			//hideProgress();
-			
-			isLoading = false;
+			isLoading = false;				
 		}
 
 		@Override

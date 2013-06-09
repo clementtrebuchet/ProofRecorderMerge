@@ -25,25 +25,25 @@ public abstract class ProofBaseMultiSelectListAdapter extends ProofBaseListAdapt
 		this.multiModeEnabled = multiModeEnabled;
 	}
 
-	public ProofBaseMultiSelectListAdapter(Context context, Object[] objects, int layoutResourceId, boolean multiModeEnabled) {
-		super(context, objects, layoutResourceId);
+	public ProofBaseMultiSelectListAdapter(Context context, Object[] objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+		super(context, objects, layoutResourceId, broadcastName);
 		setMultiModeEnabled(multiModeEnabled);
 	}
 
-	public ProofBaseMultiSelectListAdapter(Context context, List<Object> objects, int layoutResourceId, boolean multiModeEnabled) {
-		super(context, objects, layoutResourceId);
-		setMultiModeEnabled(multiModeEnabled);
-	}
-
-	public ProofBaseMultiSelectListAdapter(Context context, int resource,
-			int textViewResourceId, Object[] objects, int layoutResourceId, boolean multiModeEnabled) {
-		super(context, resource, textViewResourceId, objects, layoutResourceId);
+	public ProofBaseMultiSelectListAdapter(Context context, List<Object> objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+		super(context, objects, layoutResourceId, broadcastName);
 		setMultiModeEnabled(multiModeEnabled);
 	}
 
 	public ProofBaseMultiSelectListAdapter(Context context, int resource,
-			int textViewResourceId, List<Object> objects, int layoutResourceId, boolean multiModeEnabled) {
-		super(context, resource, textViewResourceId, objects, layoutResourceId);
+			int textViewResourceId, Object[] objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+		super(context, resource, textViewResourceId, objects, layoutResourceId, broadcastName);
+		setMultiModeEnabled(multiModeEnabled);
+	}
+
+	public ProofBaseMultiSelectListAdapter(Context context, int resource,
+			int textViewResourceId, List<Object> objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+		super(context, resource, textViewResourceId, objects, layoutResourceId, broadcastName);
 		setMultiModeEnabled(multiModeEnabled);
 	}
 	
@@ -58,7 +58,7 @@ public abstract class ProofBaseMultiSelectListAdapter extends ProofBaseListAdapt
 	private void checkItemsHandler(ViewGroup vg, boolean checked) {
 
 		if(vg == null)
-			vg = viewGroup;
+			vg = viewGroup;		
 		
 		for (int i = 0; i < vg.getChildCount(); i++) {
 			View v = vg.getChildAt(i);

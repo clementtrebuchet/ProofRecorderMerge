@@ -464,11 +464,11 @@ public class SearchResult extends ProofFragmentActivity {
 
 			if(mCalls)
 				listAdapter = new org.proof.recorder.adapters.RecordAdapter(
-						context, collection, layoutId, multiSelectMode);
+						context, collection, layoutId, multiSelectMode, getBroadcastName());
 
 			if(mVoices)
 				listAdapter = new org.proof.recorder.adapters.VoiceAdapter(
-						context, collection, layoutId, multiSelectMode);
+						context, collection, layoutId, multiSelectMode, getBroadcastName());
 		}
 
 		@Override

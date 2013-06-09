@@ -13,6 +13,8 @@ import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.Log.Console;
 
+import com.actionbarsherlock.view.MenuInflater;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -152,15 +154,20 @@ public class FragmentListKnownContacts extends ProofFragment {
 		}
 
 		@Override
-		protected void initAdapter(Context context, List<Object> collection,
-				int layoutId, boolean multiSelectMode) {
-			listAdapter = new ContactAdapter(context, collection, layoutId, multiSelectMode);						
-		}
-
-		@Override
 		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		protected void initAdapter(Context context, List<Object> collection,
+				int layoutId, boolean multiSelectMode) {
+			listAdapter = new ContactAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());			
+		}
+		
+		@Override
+		public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu,
+				MenuInflater inflater) {
 		}
 
 	}

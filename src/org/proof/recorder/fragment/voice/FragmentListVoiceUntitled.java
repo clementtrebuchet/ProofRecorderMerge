@@ -175,7 +175,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 		@Override
 		protected void initAdapter(Context context, List<Object> collection,
 				int layoutId, boolean multiSelectMode) {
-			listAdapter = new VoiceAdapter(context, collection, layoutId, multiSelectMode);
+			listAdapter = new VoiceAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());
 		}
 		
 		@Override
