@@ -3,6 +3,7 @@ package org.proof.recorder.fragment.dialog;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
@@ -14,7 +15,8 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+//import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -126,7 +128,7 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 	public String getRealPathFromURI(Uri contentUri) {
 		
         String[] proj = { 
-        		MediaStore.Audio.Media.DATA 
+        		MediaColumns.DATA 
         };
         
         Cursor cursor = null;
@@ -193,9 +195,9 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 				share, 0);
 		if (!resInfo.isEmpty()) {
 			for (ResolveInfo info : resInfo) {
-				if (info.activityInfo.packageName.toLowerCase()
+				if (info.activityInfo.packageName.toLowerCase(Locale.getDefault())
 						.contains(mType)
-						|| info.activityInfo.name.toLowerCase()
+						|| info.activityInfo.name.toLowerCase(Locale.getDefault())
 								.contains(mType)) {
 
 					share.putExtra(Intent.EXTRA_SUBJECT,

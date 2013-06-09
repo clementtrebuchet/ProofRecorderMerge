@@ -3,53 +3,54 @@
     android:id="@+id/layout_wid"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dip"
     android:background="@drawable/myshape"
-    android:gravity="top"
     android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="12dp" >
+        android:padding="1dp" >
+        
+        <ImageButton
+            android:id="@+id/imageButtonrefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/auncher" />
 
         <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:src="@drawable/plug_mp3_wi" />
+            android:id="@+id/imageSpeaker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/avspeekearoff" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/imageButtonon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:src="@drawable/plug_ogg_wi" />
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/off" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/imageButtonbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="0.5dp"
-            android:src="@drawable/plug_3gp_wi" />
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/avsong" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/imageButtonstoprec"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:src="@drawable/plug_wav_wi" />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:src="@drawable/settings_wi" />
-
+            android:layout_height="match_parent"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/avplay" />
     </LinearLayout>
 
 </LinearLayout>

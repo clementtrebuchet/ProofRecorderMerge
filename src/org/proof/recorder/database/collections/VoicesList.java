@@ -10,7 +10,6 @@ import android.database.Cursor;
 
 public class VoicesList {
 	
-
 	private List<Object> _collection = null;
 	private Cursor _cursor;
 	
@@ -34,7 +33,7 @@ public class VoicesList {
 		
 		if(this.getCollection() == null)
 			this.setCollection(new ArrayList<Object>());
-		
+
 		this.getCollection().add(voice);
 		return voice;
 	}
@@ -43,6 +42,13 @@ public class VoicesList {
 	 * @return the _collection
 	 */
 	public List<Object> getCollection() {
+		return _collection;
+	}
+	
+	/**
+	 * @return the _collection
+	 */
+	public List<Object> getCollectionAsObjects() {
 		return _collection;
 	}
 

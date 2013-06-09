@@ -53,13 +53,12 @@ public class FragmentListRecordTabs extends ProofMultiSelectFragmentActivity {
 	@Override
 	protected void setUpTabsCount() {
 		
-		String mIdOrTelephone = (String) extraData.get("mIdOrTelephone");
-		String mWhereClause = (String) extraData.get("mWhereClause");		
+		String mIdOrTelephone = (String) extraData.get("mIdOrTelephone");		
 
 		int in, out;		
 
-		in = AndroidContactsHelper.getInRecordsCount(mIdOrTelephone, mWhereClause);
-		out = AndroidContactsHelper.getOutRecordsCount(mIdOrTelephone, mWhereClause);
+		in = AndroidContactsHelper.getInRecordsCount(mIdOrTelephone);
+		out = AndroidContactsHelper.getOutRecordsCount(mIdOrTelephone);
 
 		Console.print_debug("TITLED: " + in + " " + "UNTITLED: " + out);
 
@@ -78,8 +77,8 @@ public class FragmentListRecordTabs extends ProofMultiSelectFragmentActivity {
 
 	@Override
 	protected boolean isMulti() {
-		return OutGoingCallsLoader.isMulti |
-			   InCommingCallsLoader.isMulti;
+		return OutGoingCallsLoader.multiSelectEnabled |
+			   InCommingCallsLoader.multiSelectEnabled;
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.widget.Toast;
 
 public class AudioRecorderReceiver extends ProofBroadcastReceiver {
@@ -209,6 +208,12 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 	}
 	
 	private void handleStop(String AudioFormat) {
+		/**
+		 * Try to verify @Context 
+		 * when is call from plugin (after a long period of time, context will be lost (garbaged ?)
+		 * check if a context is in memory or dialog will crash
+		 */
+		isContextDialog();
 		if(AudioFormat.equalsIgnoreCase("wav") |
 				  (AudioFormat.equalsIgnoreCase("mp3") &&
 				  Settings.getPostEncoding() == 1)) {					
@@ -219,6 +224,28 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 				}
 	}
 	
+	private void isContextDialog() {
+		try {
+			
+			if (AlertDialogHelper.hasContext()) {
+				Console.print_debug("proof AlertDialogHelper.hasContext() :"
+						+ AlertDialogHelper.hasContext());
+
+			} else {
+				AlertDialogHelper.setContext(getInternalContext());
+				Console.print_debug("proof Trying to AlertDialogHelper.setContext(getInternalContext())  :"
+						+ AlertDialogHelper.hasContext());
+			}
+
+		} catch (Exception e) {
+
+			Console.print_exception("proof isContextDialog() failed with error :"
+					+ e.getMessage());
+			return;
+		}
+
+	}
+
 	private void handleDelayedSave() {
 		
 		if(isValid()) {
@@ -371,11 +398,4 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 		AudioRecorderReceiver.cnx = cnx;	
 		
 	}
-	
-	Handler mHandler = new Handler(){
-		@Override
-		  public void handleMessage(Message msg) {
-			  
-		     }
-	};
 }

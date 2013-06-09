@@ -84,6 +84,7 @@ public class ProofReflection {
 	    	
 	    final Method amethod = aclass.getDeclaredMethod(amethodname, parameterTypes);
 	    	AccessController.doPrivileged(new PrivilegedAction() {
+		@Override
 		public Object run() {
 	                amethod.setAccessible(true);
 	                return null; // nothing to return

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:key="audioformat"
+        android:title="Formats audio" >
+        <ListPreference
+            android:defaultValue="3GP"
+            android:dialogTitle="Selection du format."
+            android:key="audio_format"
+            android:summary="Format d\&apos;enregistrement."
+            android:title="Format d\&apos;enregistrement" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

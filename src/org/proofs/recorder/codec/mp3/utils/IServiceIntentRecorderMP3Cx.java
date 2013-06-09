@@ -27,6 +27,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 	/**
 	 * 
 	 */
+	@Override
 	public void onServiceConnected(ComponentName name, IBinder boundService) {
 		this.mBoundService = boundService;
 		this.service = IServiceIntentRecorderMP3.Stub.asInterface(mBoundService);
@@ -39,6 +40,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 	/**
 	 * 
 	 */
+	@Override
 	public void onServiceDisconnected(ComponentName name) {
 		service = null;
 		Log.d(TAG, "onServiceDisconnected() disconnected");

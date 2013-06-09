@@ -89,38 +89,26 @@ public final class AndroidContactsHelper {
 		return count;
 	}
 	
-	public static int getInRecordsCount(String mPhone, String mWhere) {
+	public static int getInRecordsCount(String mPhone) {
 		int count;
 		String appendWhere;
 		
-		if(mWhere.equalsIgnoreCase("phone")) {
 			SimplePhoneNumber phone = new SimplePhoneNumber(mPhone);
-			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + phone.get_nationalNumber() + "%\"";
-		}			
-		else if (mWhere.equalsIgnoreCase("android_id"))
-			appendWhere = ProofDataBase.COLUMN_CONTRACT_ID + " =" + mPhone;
-		else
-			throw new IllegalStateException("Bad appendWhere variable line: 93 in getInRecordsCount()");
-		
+			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + phone.get_nationalNumber() + "%\"";			
+
 		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_RECODINGAPP + " WHERE " +  appendWhere + " AND " + ProofDataBase.COLUMN_SENS + " LIKE \"%E%\"";
 		count = PersonnalProofContentProvider.getItemsCount(mQuery);
 		
 		return count;
 	}
 	
-	public static int getOutRecordsCount(String mPhone, String mWhere) {
+	public static int getOutRecordsCount(String mPhone) {
 		int count;
 		String appendWhere;
-		
-		if(mWhere.equalsIgnoreCase("phone")) {
+
 			SimplePhoneNumber phone = new SimplePhoneNumber(mPhone);
-			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + phone.get_nationalNumber() + "%\"";
-		}			
-		else if (mWhere.equalsIgnoreCase("android_id"))
-			appendWhere = ProofDataBase.COLUMN_CONTRACT_ID + " =" + mPhone;
-		else
-			throw new IllegalStateException("Bad appendWhere variable line: 108 in getOutRecordsCount()");
-		
+			appendWhere = ProofDataBase.COLUMN_TELEPHONE + " LIKE \"%" + phone.get_nationalNumber() + "%\"";		
+
 		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_RECODINGAPP + " WHERE " +  appendWhere + " AND " + ProofDataBase.COLUMN_SENS + " LIKE \"%S%\"";
 		
 		count = PersonnalProofContentProvider.getItemsCount(mQuery);

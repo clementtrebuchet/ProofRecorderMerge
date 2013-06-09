@@ -392,15 +392,10 @@ public class ProofRecorderActivity extends SherlockActivity {
 		voiceList.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View paramView) {
-				
-				AlertDialogHelper.openProgressDialog(null);				
+			public void onClick(View paramView) {			
 
 				if (!bTitled && !bUntitled) {
-
 					AlertDialogHelper.openNoneRecordsDialog();
-					AlertDialogHelper.hideProgressDialog();
-
 				}
 
 				else {
@@ -474,14 +469,10 @@ public class ProofRecorderActivity extends SherlockActivity {
 		phoneCallList.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View paramView) {
-				
-				AlertDialogHelper.openProgressDialog(null);				
+			public void onClick(View paramView) {		
 
 				if (!bKnown && !bUnknown) {
-
 					AlertDialogHelper.openNoneRecordsDialog();
-					AlertDialogHelper.hideProgressDialog();
 				}
 
 				else {
@@ -757,7 +748,6 @@ public class ProofRecorderActivity extends SherlockActivity {
 	@Override
 	protected void onDestroy() {
 		//mChecker.onDestroy();
-		AlertDialogHelper.closeProgressDialog();
 		super.onDestroy();
 
 		// Stop the tracker when it is no longer needed.
