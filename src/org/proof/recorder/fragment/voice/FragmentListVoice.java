@@ -87,6 +87,8 @@ public class FragmentListVoice extends ProofFragment {
 			
 			Voice.setResolver(getActivity().getContentResolver());
 			
+			reverseCollection = true;
+			
 			isNotify = ProofMultiSelectFragmentActivity.isNotify();
 			voiceId = FragmentListVoiceTabs.getSavedId();
 			

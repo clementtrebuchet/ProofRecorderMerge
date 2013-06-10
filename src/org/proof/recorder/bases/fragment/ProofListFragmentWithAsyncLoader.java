@@ -138,12 +138,18 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
             
             if(!isEmpty) {
             	try {
-    				Collections.sort(objects, new Comparator<Object>() {
+            		
+            		Comparator<Object> comp = new Comparator<Object>() {
     			        @Override
     			        public int compare(Object object1, Object object2) {
     			            return collectionSorter(object1, object2);
     			        }
-    			    });			    				
+    			    };
+    			    
+    			    if(reverseCollection)    				
+    			    	comp = Collections.reverseOrder(comp);
+    			    
+    			    Collections.sort(objects, comp);
     			}
     			catch(Exception e) {
     				Console.print_exception(e);

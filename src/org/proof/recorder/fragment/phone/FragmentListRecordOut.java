@@ -63,7 +63,9 @@ public class FragmentListRecordOut extends ProofFragment {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);		
 
-			MenuActions.setInternalContext(getActivity());			
+			MenuActions.setInternalContext(getActivity());
+			
+			reverseCollection = true;
 			
 			fillCollectionRunnable = new Runnable() {
 				@Override

@@ -75,6 +75,8 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 
 			Voice.setResolver(getActivity().getContentResolver());
 			
+			reverseCollection = true;
+			
 			startAsyncLoader();
 			
 			fillCollectionRunnable = new Runnable() {
