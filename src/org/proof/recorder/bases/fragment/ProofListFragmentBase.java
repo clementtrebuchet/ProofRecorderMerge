@@ -53,7 +53,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 
 	protected ArrayAdapter<Object> listAdapter = null;
 
-	protected volatile boolean screenLocked = false;	
+	protected volatile boolean reverseCollection = false, screenLocked = false;	
 
 	public volatile static boolean multiSelectEnabled = false;
 

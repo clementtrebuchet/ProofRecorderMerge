@@ -35,7 +35,8 @@ public class FragmentListRecordIn extends ProofFragment {
 	}
 
 	public static class InCommingCallsLoader extends ProofListFragmentWithQuickAction
-	{
+	{		
+		
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onListItemClick(ListView l, final View view, int position,
@@ -68,6 +69,8 @@ public class FragmentListRecordIn extends ProofFragment {
 			super.onCreate(savedInstanceState);			
 
 			MenuActions.setInternalContext(getActivity());
+			
+			reverseCollection = true;
 			
 			startAsyncLoader();
 

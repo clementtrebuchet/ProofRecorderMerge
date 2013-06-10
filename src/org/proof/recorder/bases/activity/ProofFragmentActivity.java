@@ -37,7 +37,7 @@ public class ProofFragmentActivity  extends SherlockFragmentActivity {
 	}
 	
 	protected void initialize() {
-		SetStaticContext.setConsoleTagName(this.getClass().getSimpleName());
+		SetStaticContext.setConsoleTagName(this.getClass().getName());
 		SetStaticContext.setStaticsContext(this, 1);
 		setInternalContext(this);
 	}
