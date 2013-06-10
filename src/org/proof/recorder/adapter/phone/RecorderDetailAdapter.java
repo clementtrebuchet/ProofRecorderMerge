@@ -1,5 +1,6 @@
 package org.proof.recorder.adapter.phone;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.proof.recorder.R;
@@ -7,6 +8,8 @@ import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.utils.ApproxRecordTime;
+import org.proof.recorder.utils.ApproxRecordTime.MSong;
 import org.proof.recorder.utils.ServiceAudioHelper;
 
 import android.content.ContentResolver;
@@ -31,6 +34,7 @@ public class RecorderDetailAdapter extends SimpleCursorAdapter {
 	private static final String TAG = "RecorderDetailAdpater";
 	private ImageView B;
 	private String f;
+	private static TextView durationTxt;
 	private static Context mcontext;
 
 	public RecorderDetailAdapter(Context context, int layout, Cursor c,
@@ -120,6 +124,18 @@ public class RecorderDetailAdapter extends SimpleCursorAdapter {
 
 		if (Settings.isDebug())
 			Log.v(TAG, wav.toString());
+		
+		try{
+			durationTxt = (TextView) view.findViewById(R.id.mDurationOfFile);
+			File g = new File(f);
+			ApproxRecordTime f = new ApproxRecordTime(g, true);
+			durationTxt.setText("Duration : "+f.run()+" mn/s");
+			
+			
+			
+		} catch (Exception e){
+			Log.v(TAG,""+e.getMessage());
+		}
 
 
 	}
