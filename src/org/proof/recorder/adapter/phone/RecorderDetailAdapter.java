@@ -9,7 +9,6 @@ import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.utils.ApproxRecordTime;
-import org.proof.recorder.utils.ApproxRecordTime.MSong;
 import org.proof.recorder.utils.ServiceAudioHelper;
 
 import android.content.ContentResolver;

@@ -8,11 +8,9 @@ import java.io.OutputStream;
 import java.util.Calendar;
 
 import org.proof.recorder.database.support.AndroidContactsHelper;
-//import org.proof.recorder.features.SpyRecorder;
 import org.proof.recorder.fragment.contacts.FragmentListPhoneContactsTabs;
 import org.proof.recorder.fragment.dialog.AboutApps;
 import org.proof.recorder.fragment.dialog.PhoneInformations;
-
 import org.proof.recorder.fragment.dialog.Search;
 import org.proof.recorder.fragment.phone.FragmentListRecordFoldersTabs;
 import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
@@ -28,8 +26,6 @@ import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.StaticNotifications;
 import org.proof.recorder.utils.Log.Console;
 
-//import android.accounts.Account;
-//import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -42,7 +38,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-//import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,11 +48,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
-//import com.google.android.vending.licensing.AESObfuscator;
-//import com.google.android.vending.licensing.LicenseChecker;
-//import com.google.android.vending.licensing.LicenseCheckerCallback;
-//import com.google.android.vending.licensing.Policy;
-//import com.google.android.vending.licensing.ServerManagedPolicy;
 
 
 public class ProofRecorderActivity extends SherlockActivity {

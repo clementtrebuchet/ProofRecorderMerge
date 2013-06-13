@@ -13,6 +13,9 @@ public class VoicesList {
 	private List<Object> _collection = null;
 	private Cursor _cursor;
 	
+	
+	
+
 	/**
 	 * 
 	 */
@@ -51,7 +54,8 @@ public class VoicesList {
 	public List<Object> getCollectionAsObjects() {
 		return _collection;
 	}
-
+	
+	
 	/**
 	 * @param _collection the _collection to set
 	 */

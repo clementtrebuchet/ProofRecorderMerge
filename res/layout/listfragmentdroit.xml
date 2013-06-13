@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_selector"
+    android:fitsSystemWindows="false"
     android:orientation="horizontal"
     android:padding="5dip" >
 
@@ -20,9 +21,10 @@
         <ImageView
             android:contentDescription="@+string/arrow_record"
             android:id="@+id/list_image"
-            android:layout_width="48dip"
-            android:layout_height="48dip"
+            android:layout_width="64dip"
+            android:layout_height="64dip"
              />
+    
     </LinearLayout>
 
     <ListView
@@ -58,16 +60,31 @@
         android:textColor="#343434"
         android:textSize="18sp"
         android:textStyle="bold" />
+    
+    <!-- android:id="@+id/songtime" -->
+    
+    <TextView
+        android:id="@+id/songtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dip"
+        android:text="@+string/songtime"
+        android:textColor="#343434"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/sens"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/number"
         android:layout_below="@+id/number"
-        android:layout_toRightOf="@+id/thumbnail"
         android:textColor="#10bcc9"
         android:textSize="13sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textIsSelectable="true" />
+
     <!-- @+id/timehumanreadable -->
 
     <TextView
@@ -102,5 +119,7 @@
         android:layout_centerVertical="true"
         android:focusable="false"
         android:focusableInTouchMode="false" />
+
+      
 
 </RelativeLayout>

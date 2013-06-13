@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
-
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
@@ -20,12 +19,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.view.View;
-
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
@@ -102,6 +100,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 			TextView phoneNumber = (TextView) view.findViewById(R.id.number);
 			TextView humanTime = (TextView) view.findViewById(R.id.timehumanreadable);
 			TextView id = (TextView) view.findViewById(R.id.idrecord);
+			TextView songTime = (TextView) view.findViewById(R.id.songtime);
 		    
 			ImageView photo = (ImageView) view.findViewById(R.id.list_image);
 			ImageView arrow = (ImageView) view.findViewById(R.id.arrow_record_detail);
@@ -137,6 +136,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
 			phoneNumber.setText(origPhone);
 			humanTime.setText(record.getmHtime());
+			songTime.setText(record.getmSongTime());
 
 			if(this.multiModeEnabled) {					
 				arrow.setVisibility(View.INVISIBLE);

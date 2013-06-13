@@ -6,14 +6,12 @@ import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceListAdapter;
 import org.proof.recorder.adapters.ContactAdapter;
-
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.fragment.dialog.ShareIntentChooser;
 import org.proof.recorder.fragment.notes.FragmentNoteTabs;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
-
 import org.proof.recorder.fragment.voice.FragmentListVoice;
 import org.proof.recorder.fragment.voice.notes.FragmentVoiceNoteTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
@@ -26,7 +24,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 

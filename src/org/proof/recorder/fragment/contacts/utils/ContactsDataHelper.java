@@ -1,5 +1,6 @@
 package org.proof.recorder.fragment.contacts.utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -7,11 +8,12 @@ import java.util.TreeSet;
 
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
@@ -21,7 +23,6 @@ import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.telephony.PhoneNumberUtils;
-
 import android.util.Log;
 
 public final class ContactsDataHelper {
@@ -231,6 +232,18 @@ public final class ContactsDataHelper {
 			
 			Record mRecord = new Record(
 					mId, mFile, mPhone, mSense, mHtime, mAndroidId);
+			try {
+				
+				File g = new File(mFile);
+				ApproxRecordTime f = new ApproxRecordTime(g);
+				String stime = f.run();
+				mRecord.setmSongTime(stime+" mn/s");
+				Console.print_debug("proof" + stime);
+
+			} catch (Exception e) {
+				
+				Console.print_exception("proof" + e.getMessage());
+			}
 			
 			if(mRecord.isIncomingCall())
 				mIncommingCalls.add(mRecord);

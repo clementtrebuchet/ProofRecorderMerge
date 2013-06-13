@@ -1,25 +1,29 @@
 package org.proof.recorder.adapters;
 
+import java.io.File;
 import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
 import org.proof.recorder.database.models.Voice;
+import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
+
+	
 
 	/**
 	 * @param context
@@ -108,6 +112,16 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 			fileSize.setText(voice.getHumanFileSize());
 			humanTime.setText(voice.getHumanTime());			
 			icon.setImageBitmap(defaultBite);
+			try {
+				TextView durationTxt = (TextView) view
+						.findViewById(R.id.songtime);
+				File g = new File(voice.getFilePath());
+				ApproxRecordTime f = new ApproxRecordTime(g, true);
+				durationTxt.setText("" + f.run() + " mn/s");
+
+			} catch (Exception e) {
+				Console.print_exception("" + e.getMessage());
+			}
 
 			if (this.multiModeEnabled) {
 				

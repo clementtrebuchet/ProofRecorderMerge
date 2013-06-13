@@ -10,7 +10,6 @@ import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.dialog.Search;
-
 import org.proof.recorder.quick.action.ActionItem;
 import org.proof.recorder.quick.action.QuickAction;
 import org.proof.recorder.utils.Log.Console;

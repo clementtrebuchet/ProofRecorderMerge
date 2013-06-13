@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.proof.recorder.R;
-
 import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithAsyncLoader;
 import org.proof.recorder.database.models.Contact;
@@ -21,7 +20,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;

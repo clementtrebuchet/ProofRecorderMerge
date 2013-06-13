@@ -6,14 +6,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.proof.recorder.adapter.phone.RecorderDetailAdapter;
-
 import android.annotation.TargetApi;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.Log;
-import android.widget.TextView;
 
 
 /**
@@ -24,31 +21,45 @@ import android.widget.TextView;
 public class ApproxRecordTime {
 	
 	private File mFile;
-	private File[] mFiles;
 	private MediaPlayer mPlayer;
 	public static ArrayList<MSong> MSongs;
 	private ArrayList<String> MSongsParam;
 	private MSong mSong;
 	private String TAG = ApproxRecordTime.class.getName();
-	private Boolean TXTV;
-	
+	private String mFormat;
+	private int mEnd = 3;
+
+	public String getmFormat() {
+		return mFormat;
+	}
+
+	public void setmFormat(String mFormat) {
+		this.mFormat = mFormat;
+	}
 	/**
 	 * 
 	 * @param song
 	 */
 	public ApproxRecordTime(File song){
 		this.mFile = song;
+		getMFormat();
 		
 	}
 	public ApproxRecordTime(File song, Boolean txt){
 		this.mFile = song;
-		this.TXTV = txt;
+		getMFormat();
 		
 	}
-	public ApproxRecordTime(File[] songs){
-		this.mFiles = songs;
-		
-	}
+	
+	private void getMFormat(){
+		int length = this.mFile.getAbsolutePath().length();
+		if(length <= mEnd){
+			setmFormat(this.mFile.getAbsolutePath());
+		}
+		int startIndex = length-mEnd;
+		setmFormat(this.mFile.getAbsolutePath().substring(startIndex));
+		Log.v(TAG, "this.mFormat:"+this.mFormat);
+	  }
 	/**
 	 * 
 	 */
@@ -65,31 +76,25 @@ public class ApproxRecordTime {
 				MSongsParam.add(getDuration());
 			} catch (Exception e) {
 				Log.e(TAG,"Exception:"+e.getMessage());
-				System.exit(1);
-			}
-		} else {
-			try {
-				MSongsParam.add(oldGetDuration());
-			} catch (IllegalArgumentException e) {
-				Log.e(TAG,"IllegalArgumentException:"+e.getMessage());
-				System.exit(1);
-			} catch (IllegalStateException e) {
-				Log.e(TAG,"IllegalStateException:"+e.getMessage());
-				System.exit(1);
-			} catch (IOException e) {
-				Log.e(TAG,"IOException:"+e.getMessage());
-				System.exit(1);
+				
+				try {
+					MSongsParam.add(oldGetDuration());
+				} catch (IllegalArgumentException e1) {
+					Log.e(TAG,"IllegalArgumentException:"+e1.getMessage());
+					
+				} catch (IllegalStateException e1) {
+					Log.e(TAG,"IllegalStateException:"+e1.getMessage());
+					
+				} catch (IOException e1) {
+					Log.e(TAG,"IOException:"+e1.getMessage());
+					
+				}
+				
 			}
 		}
 		
 		this.mSong = new MSong(MSongsParam);
-		if(MSongs == null){
-			MSongs = new ArrayList<MSong>();
-		}
-		MSongs.add(this.mSong);
-		if(this.TXTV){
-			return this.mSong.getmDuration();
-		}
+
 		return this.mSong.getmDuration();
 	}
 	
@@ -102,6 +107,7 @@ public class ApproxRecordTime {
 		
 		private String mPath;
 		private String mDuration;
+		
 
 		public String getmPath() {
 			return mPath;
@@ -118,15 +124,20 @@ public class ApproxRecordTime {
 		public void setmDuration(String mDuration) {
 			this.mDuration = mDuration;
 		}
-
+		
+		
+			
+		
 		private MSong(ArrayList<String>...strings){
 			for (ArrayList<String> st : strings){
 				this.mPath = st.get(0);
 				this.mDuration = st.get(1);
+				getMFormat();
 				
 			}
 			Log.v(TAG, "this.mPath:"+this.mPath);
 			Log.v(TAG, "this.mDuration:"+this.mDuration);
+			
 		}
 	
 	}
@@ -137,30 +148,64 @@ public class ApproxRecordTime {
 	 */
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
 	private String getDuration() {
-
+		if (this.mFormat.equalsIgnoreCase("ogg")) {
+			Log.e(TAG, "mFormat equal ogg, humm file goto MediaPlayer :(");
+			try {
+				String out = oldGetDuration();
+				return out;
+			} catch (IllegalArgumentException e) {
+				Log.e(TAG, e.getMessage());
+			} catch (IllegalStateException e) {
+				Log.e(TAG, e.getMessage());
+			} catch (IOException e) {
+				Log.e(TAG, e.getMessage());
+			}
+		}
 		MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
 		metaRetriever.setDataSource(this.mFile.getAbsolutePath());
-		String out = "";
+		
 
 		String duration = metaRetriever
 				.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-		Log.v(TAG, duration);
+		Log.v(TAG, "" + duration);
 		long dur = Long.parseLong(duration);
-		String seconds = String.valueOf((dur % 60000) / 1000);
-		Log.v(TAG, seconds);
-		String minutes = String.valueOf(dur / 60000);
-		Log.v(TAG, minutes);
-		if (seconds.length() == 1) {
-			out = "" +minutes + ":0" + seconds;
-			Log.d(TAG, "seconds.length() == 1 " + minutes + ":0" + seconds);
-
-		} else {
-			out = "" +minutes + ":" + seconds;
-			Log.d(TAG, "" + minutes + ":" + seconds);
-		}
-		Log.d(TAG, "out = " +out);
+		String time = mParseTime(dur);
 		// close object
 		metaRetriever.release();
+		return time;
+	}
+	private String mParseTime(long dur){
+		String seconds = String.valueOf((dur % 60000) / 1000);
+		Log.v(TAG, "" + seconds);
+		String minutes = String.valueOf(dur / 60000);
+		Log.v(TAG, "" + minutes);
+		String out = "";
+		if (seconds.length() == 1 && minutes.length() == 1) {
+			out = "0" + minutes + ":0" + seconds;
+			Log.d(TAG, "seconds.length() == 1 0" + minutes + ":0" + seconds);
+
+		} else if (seconds.length() == 1 && minutes.length() > 1) {
+			out = "" + minutes + ":0" + seconds;
+			Log.d(TAG, "seconds.length() == 1 " + minutes + ":0" + seconds);
+
+		} else if (seconds.length() > 1 && minutes.length() == 1) {
+			out = "0" + minutes + ":" + seconds;
+			Log.d(TAG, "minutes.length() == 1 0" + minutes + ":" + seconds);
+
+		} else if (Integer.parseInt(minutes) >= 60) {
+
+			int m = Integer.parseInt(minutes);
+			int hours = m / 60;
+			minutes = Integer.toString(hours);
+
+			out = "0" + minutes + ":" + seconds;
+			Log.d(TAG, "minutes.length() == 1 0" + minutes + ":" + seconds);
+
+		} else {
+			out = "" + minutes + ":" + seconds;
+			Log.d(TAG, "" + minutes + ":" + seconds);
+		}
+		Log.d(TAG, "out = " + out);
 		return out;
 	}
 	/**
@@ -180,10 +225,11 @@ public class ApproxRecordTime {
 		mPlayer.setDataSource(fd);
 		mPlayer.prepare(); // might be optional
 		int length = mPlayer.getDuration();
+		long dur = Long.valueOf(length);
 		mPlayer.release();
 		mPlayer = null;
-		String result = String.valueOf(length);
-		Log.v(TAG, result);
+		String result = mParseTime(dur);
+		Log.v(TAG, ""+result);
 		return result;
 	}
 

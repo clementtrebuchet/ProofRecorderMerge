@@ -1,7 +1,6 @@
 package org.proof.recorder.fragment.phone;
 
 import org.proof.recorder.R;
-
 import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.phone.FragmentListRecordIn.InCommingCallsLoader;

@@ -17,7 +17,6 @@ import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.DialogInterface;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -120,10 +119,10 @@ public class FragmentListRecordIn extends ProofFragment {
 
 						String mSense = cursor.getString(cursor
 								.getColumnIndex(ProofDataBase.COLUMN_SENS));
-
+		
+						
 						Record mRecord = new Record(
 								mId, mFile, mPhone, mSense, mHtime, mAndroidId);
-
 						if(mRecord.isIncomingCall())
 							objects.add(mRecord);
 					}

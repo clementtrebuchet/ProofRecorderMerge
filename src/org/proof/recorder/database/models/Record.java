@@ -62,7 +62,9 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	private String mSense;
 	private String mAndroidId;
 	private String mSize;
+	private String mSongTime;
 
+	
 	private DataPhoneNumber mDataNumber;
 	
 	private Contact mContact;
@@ -183,6 +185,19 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		this.initialize("-1", fileName, phone);
 		this.setmSense(sense);
 		this.setmSize(size);
+	}
+	/**
+	 * sorry for this bad thing
+	 * 
+	 * 
+	 */
+	public String getmSongTime() {
+		return mSongTime;
+	}
+
+	public void setmSongTime(String mSongTime) {
+		this.mSongTime = mSongTime;
+		
 	}
 
 	public Record (String id, String fileName) {
