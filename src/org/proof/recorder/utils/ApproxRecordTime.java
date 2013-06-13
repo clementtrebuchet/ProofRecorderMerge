@@ -226,10 +226,16 @@ public class ApproxRecordTime {
 		mPlayer.prepare(); // might be optional
 		int length = mPlayer.getDuration();
 		long dur = Long.valueOf(length);
+		/*
+		 * @avoid
+		 * http://stackoverflow.com/questions/9609479/android-mediaplayer-
+		 * went-away-with-unhandled-events
+		 */
+		mPlayer.reset();
 		mPlayer.release();
 		mPlayer = null;
 		String result = mParseTime(dur);
-		Log.v(TAG, ""+result);
+		Log.v(TAG, "" + result);
 		return result;
 	}
 
