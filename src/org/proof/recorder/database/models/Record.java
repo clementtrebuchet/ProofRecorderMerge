@@ -63,7 +63,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	private String mAndroidId;
 	private String mSize;
 	private String mSongTime;
-
+	private String Format;
 	
 	private DataPhoneNumber mDataNumber;
 	
@@ -349,6 +349,14 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	public void setmContact(Contact mContact) {
 		this.mContact = mContact;
 	}
+	
+	public String getFormat() {
+		return Format;
+	}
+
+	public void setFormat(String format) {
+		Format = format;
+	}
 
 	@SuppressWarnings("unused")
 	private String getPhoneNumberFK() {
@@ -386,5 +394,6 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	public boolean fillFromDataBase() {
 		// TODO Auto-generated method stub
 		return false;
-	}	
+	}
+
 }

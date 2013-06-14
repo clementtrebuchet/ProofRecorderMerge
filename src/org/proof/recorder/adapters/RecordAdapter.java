@@ -104,6 +104,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 		    
 			ImageView photo = (ImageView) view.findViewById(R.id.list_image);
 			ImageView arrow = (ImageView) view.findViewById(R.id.arrow_record_detail);
+			ImageView format = (ImageView) view.findViewById(R.id.format_image);
 
 			String origPhone = record.getmPhone();
 
@@ -137,7 +138,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 			phoneNumber.setText(origPhone);
 			humanTime.setText(record.getmHtime());
 			songTime.setText(record.getmSongTime());
-
+			picturesSongFormat(record, format);
 			if(this.multiModeEnabled) {					
 				arrow.setVisibility(View.INVISIBLE);
 
@@ -169,5 +170,28 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	@Override
 	protected void handleEventIntent(Intent intent) {
 		// TODO Auto-generated method stub		
+	}
+	
+	private void picturesSongFormat(Record r, ImageView v){
+		String f = r.getFormat();
+		Bitmap defaultBite;
+		if(f.equalsIgnoreCase("wav")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_wav);
+		} else if(f.equalsIgnoreCase("mp3")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_mp3);
+		} else if(f.equalsIgnoreCase("ogg")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_ogg);
+		} else if(f.equalsIgnoreCase("3gp")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_3gp);
+		} else {
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.navigationrefresh);
+		}
+		
+		v.setImageBitmap(defaultBite);
 	}
 }

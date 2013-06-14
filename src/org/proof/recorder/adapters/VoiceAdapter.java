@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
+import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.Log.Console;
@@ -101,7 +102,7 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 		    
 			ImageView icon = (ImageView) view.findViewById(R.id.list_image);
 			ImageView arrow = (ImageView) view.findViewById(R.id.arrow_record_detail);
-			
+			ImageView format = (ImageView) view.findViewById(R.id.format_image);
 			
 			Bitmap defaultBite = BitmapFactory.decodeResource(
 					getContext().getResources(), R.drawable.mic_48);			
@@ -117,8 +118,8 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 						.findViewById(R.id.songtime);
 				File g = new File(voice.getFilePath());
 				ApproxRecordTime f = new ApproxRecordTime(g, true);
-				durationTxt.setText("" + f.run() + " mn/s");
-
+				durationTxt.setText("" + f.run() + "mn/s");
+				picturesSongFormat(f.getmFormat(), format);
 			} catch (Exception e) {
 				Console.print_exception("" + e.getMessage());
 			}
@@ -151,10 +152,32 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 	protected void handleEmptyView(final int position, View convertView) {
 		Console.print_debug("Empty list!");
 	}
-
+	
 	@Override
 	protected void handleEventIntent(Intent intent) {
 		// TODO Auto-generated method stub
 		
+	}
+	private void picturesSongFormat(String r, ImageView v){
+		String f = r;
+		Bitmap defaultBite;
+		if(f.equalsIgnoreCase("wav")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_wav);
+		} else if(f.equalsIgnoreCase("mp3")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_mp3);
+		} else if(f.equalsIgnoreCase("ogg")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_ogg);
+		} else if(f.equalsIgnoreCase("3gp")){
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.plug_3gp);
+		} else {
+			defaultBite = BitmapFactory.decodeResource(
+					getContext().getResources(), R.drawable.navigationrefresh);
+		}
+		
+		v.setImageBitmap(defaultBite);
 	}
 }

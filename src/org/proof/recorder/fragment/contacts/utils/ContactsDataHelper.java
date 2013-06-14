@@ -238,6 +238,7 @@ public final class ContactsDataHelper {
 				ApproxRecordTime f = new ApproxRecordTime(g);
 				String stime = f.run();
 				mRecord.setmSongTime(stime+" mn/s");
+				mRecord.setFormat(f.getmFormat());
 				Console.print_debug("proof" + stime);
 
 			} catch (Exception e) {

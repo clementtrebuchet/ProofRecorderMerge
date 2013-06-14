@@ -120,6 +120,12 @@
         android:focusable="false"
         android:focusableInTouchMode="false" />
 
-      
+       <ImageView
+           android:id="@+id/format_image"
+           android:layout_width="24dip"
+           android:layout_height="24dip"
+           android:layout_alignLeft="@+id/idrecord"
+           android:layout_alignTop="@+id/idrecord"
+           android:contentDescription="@+string/arrow_record" />
 
 </RelativeLayout>
