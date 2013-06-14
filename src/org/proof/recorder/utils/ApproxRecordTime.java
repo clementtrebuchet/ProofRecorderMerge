@@ -42,16 +42,16 @@ public class ApproxRecordTime {
 	 */
 	public ApproxRecordTime(File song){
 		this.mFile = song;
-		getMFormat();
+		_getMFormat();
 		
 	}
 	public ApproxRecordTime(File song, Boolean txt){
 		this.mFile = song;
-		getMFormat();
+		_getMFormat();
 		
 	}
 	
-	private void getMFormat(){
+	private void _getMFormat(){
 		int length = this.mFile.getAbsolutePath().length();
 		if(length <= mEnd){
 			setmFormat(this.mFile.getAbsolutePath());
@@ -132,7 +132,7 @@ public class ApproxRecordTime {
 			for (ArrayList<String> st : strings){
 				this.mPath = st.get(0);
 				this.mDuration = st.get(1);
-				getMFormat();
+				
 				
 			}
 			Log.v(TAG, "this.mPath:"+this.mPath);
@@ -177,7 +177,7 @@ public class ApproxRecordTime {
 	private String mParseTime(long dur){
 		String seconds = String.valueOf((dur % 60000) / 1000);
 		Log.v(TAG, "" + seconds);
-		String minutes = String.valueOf(dur / 60000);
+		String minutes = String.valueOf(dur / 60000) ;
 		Log.v(TAG, "" + minutes);
 		String out = "";
 		if (seconds.length() == 1 && minutes.length() == 1) {
@@ -192,21 +192,77 @@ public class ApproxRecordTime {
 			out = "0" + minutes + ":" + seconds;
 			Log.d(TAG, "minutes.length() == 1 0" + minutes + ":" + seconds);
 
-		} else if (Integer.parseInt(minutes) >= 60) {
-
-			int m = Integer.parseInt(minutes);
-			int hours = m / 60;
-			minutes = Integer.toString(hours);
-
-			out = "0" + minutes + ":" + seconds;
-			Log.d(TAG, "minutes.length() == 1 0" + minutes + ":" + seconds);
-
 		} else {
 			out = "" + minutes + ":" + seconds;
 			Log.d(TAG, "" + minutes + ":" + seconds);
 		}
+		
+		 if (Integer.parseInt(minutes) >= 60) {
+				int m = Integer.parseInt(minutes);
+				int s = Integer.parseInt(seconds);
+				out = convertToHours(m,s);
+
+			} 
 		Log.d(TAG, "out = " + out);
 		return out;
+	}
+	/**
+	 * 
+	 * @param minutes
+	 * @param seconds
+	 * @return
+	 */
+	private String convertToHours(int minutes, int seconds) {
+		float hoursminutes = (float) minutes / 60;// 258(m)/60=4.3
+		int hour = minutes / 60;// 258(m)/60 = 4
+		float realMinutes = (float) (hoursminutes - Float.parseFloat(String
+				.valueOf(hour))) * 60;// (4.3 - 4.0) * 60
+		int minute = Math.round(realMinutes);
+		int second = seconds;
+		Log.d(TAG,
+				"hoursminutes:" + hoursminutes
+						+ " Float.parseFloat(String.valueOf(hour)): "
+						+ Float.parseFloat(String.valueOf(hour)));
+		if (hour < 10 && minute < 10 && second < 10) {
+			return "0" + hour + ":0" + minute + ":0" + second + "";
+		}
+
+		if (hour < 10 && second < 10 && minute > 10) {
+
+			return "0" + hour + ":" + minute + ":0" + second + "";
+		}
+
+		if (hour < 10 && second > 10 && minute < 10) {
+
+			return "0" + hour + ":0" + minute + ":" + second + "";
+		}
+
+		if (hour < 10 && second > 10 && minute > 10) {
+
+			return "0" + hour + ":" + minute + ":" + second + "";
+		}
+		//
+		if (hour > 10 && minute < 10 && second < 10) {
+			return "" + hour + ":0" + minute + ":0" + second + "";
+		}
+
+		if (hour > 10 && second < 10 && minute > 10) {
+
+			return "" + hour + ":" + minute + ":0" + second + "";
+		}
+
+		if (hour > 10 && second > 10 && minute < 10) {
+
+			return "" + hour + ":0" + minute + ":" + second + "";
+		}
+
+		if (hour > 10 && second > 10 && minute > 10) {
+
+			return "" + hour + ":" + minute + ":" + second + "";
+		}
+
+		return " " + hour + ":" + minute + ":" + second + "";
+
 	}
 	/**
 	 * 
