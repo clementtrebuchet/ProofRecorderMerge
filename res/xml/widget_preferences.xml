@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory
         android:key="audioformat"
-        android:title="Formats audio" >
+        android:title="Formats audio"
+        android:layout="@layout/mlayoutappwidget"
+          >
         <ListPreference
             android:defaultValue="3GP"
             android:dialogTitle="Selection du format."

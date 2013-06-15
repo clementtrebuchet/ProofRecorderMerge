@@ -569,11 +569,24 @@
         <!-- Widget Broadcast -->
         <receiver android:name=".wigdet.ProofRecorderWidget" >
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.appwidget.action.APPWIDGET_DELETED"/>
+             <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_ENABLE_SERVICE" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_UPDATE_SERVICE" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="org.proof.recorder.wigdet.ProofRecorderWidget.SET_FORMAT" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="org.proof.recorder.wigdet.ProofRecorderWidget.REC" />
             </intent-filter>
 
