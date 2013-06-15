@@ -38,14 +38,17 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	private Editor mRecEditor;
 	private boolean speakerOn;
 	private static Long defaultTimer = (long) (1);
+	private static int count = 0;
 
 	private static long mRefreshInterval() {
 
 		return defaultTimer * 60 * 1000;
 	}
-	public ProofRecorderWidget(){
-		
+
+	public ProofRecorderWidget() {
+
 	}
+
 	/**
 	 * 
 	 */
@@ -60,18 +63,17 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 								+ appWidgetIds[i] + "--"
 								+ AppWidgetManager.INVALID_APPWIDGET_ID);
 				buildUpdate(context, appWidgetManager, appWidgetIds[i]);
-			} else  {
+				setAlarm(context, false, appWidgetIds[i],
+						AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+			} else {
 				Log.d(TAG,
 						"appWidgetIds[i] == AppWidgetManager.INVALID_APPWIDGET_ID:"
 								+ appWidgetIds[i] + "--"
 								+ AppWidgetManager.INVALID_APPWIDGET_ID);
 			}
-			
 
 		}
 		Log.d(TAG, "onUpdate OK");
-
-		
 
 	}
 
@@ -106,7 +108,6 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 				remoteViews);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec, mRec);
 
-	
 		PendingIntent mSp = getControlIntent(context, appWidgetIds, SP,
 				remoteViews);
 		remoteViews.setOnClickPendingIntent(R.id.imageSpeaker, mSp);
@@ -140,9 +141,11 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	 * @return
 	 */
 	public static PendingIntent getControlIntent(Context aContext,
-			String aCommand) {
+			String aCommand, int appWidgetId) {
 		Intent commandIntent = new Intent(aContext, ProofRecorderWidget.class);
 		commandIntent.setAction(aCommand);
+		commandIntent
+				.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(aContext, 0,
 				commandIntent, 0);
 		return pendingIntent;
@@ -158,7 +161,6 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
-		setAlarm(context, false, AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 
 	}
 
@@ -179,13 +181,15 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 					Log.d(TAG,
 							"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID:"
 									+ appWidgetId + "--"
-									+ AppWidgetManager.INVALID_APPWIDGET_ID+"--"+action.toString());
+									+ AppWidgetManager.INVALID_APPWIDGET_ID
+									+ "--" + action.toString());
 					onDeleted(context, new int[] { appWidgetId });
 				} else {
 					Log.d(TAG,
 							"appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID:"
 									+ appWidgetId + "--"
-									+ AppWidgetManager.INVALID_APPWIDGET_ID+"--"+action.toString());
+									+ AppWidgetManager.INVALID_APPWIDGET_ID
+									+ "--" + action.toString());
 				}
 			} else {
 
@@ -307,11 +311,12 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 					Log.d(TAG,
 							"appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID:"
 									+ appWidgetId + "--"
-									+ AppWidgetManager.INVALID_APPWIDGET_ID+"--"+action.toString());
+									+ AppWidgetManager.INVALID_APPWIDGET_ID
+									+ "--" + action.toString());
 				}
 			}
 		} catch (java.lang.NullPointerException e) {
-			Log.d(TAG, "appWidgetId is NULL");
+			Log.d(TAG, "appWidgetId is **null**, doing nothing...");
 		}
 	}
 
@@ -319,9 +324,11 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	public void onDeleted(Context context, int[] appWidgetIds) {
 		super.onDeleted(context, appWidgetIds);
 		try {
-			for (int e: appWidgetIds){
-				
-				Log.d(TAG, "onDeleted still remain in appWidgetIds: "+e);
+			for (int e : appWidgetIds) {
+				setAlarm(context, true, e,
+						AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+				Log.d(TAG, "onDeleted still remain in appWidgetIds: " + e);
+
 			}
 			mSharedPreferences = null;
 			mEditor = null;
@@ -342,7 +349,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
-		setAlarm(context, true, AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+
 	}
 
 	/**
@@ -376,7 +383,6 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 				if (isrecording == false) {
 					recOn = false;
 				}
-				
 
 				sp = mSharedPreferences.getBoolean("SPEAK", true);
 				if (incall || outcall) {
@@ -390,8 +396,8 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 				} else {
 					speakerOn = false;
 				}
-				Log.d(TAG, "isrecording : " + isrecording + " recOn : " + recOn +" InitMshPref OK, isEnable = " + isEnable);
-				
+				Log.d(TAG, "isrecording : " + isrecording + " recOn : " + recOn
+						+ " InitMshPref OK, isEnable = " + isEnable);
 
 			}
 
@@ -438,13 +444,15 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	 * 
 	 * @param aContext
 	 * @param mCancel
+	 * @param appWidgetId
 	 * @param mAppWidgetId
 	 * @param mCommand
 	 * @param mRemoteViews
 	 */
 	private static void setAlarm(Context aContext, boolean mCancel,
-			String mCommand) {
-		PendingIntent refreshTestIntent = getControlIntent(aContext, mCommand);
+			int appWidgetId, String mCommand) {
+		PendingIntent refreshTestIntent = getControlIntent(aContext, mCommand,
+				appWidgetId);
 		AlarmManager alarms = (AlarmManager) aContext
 				.getSystemService(Context.ALARM_SERVICE);
 		if (mCancel) {
