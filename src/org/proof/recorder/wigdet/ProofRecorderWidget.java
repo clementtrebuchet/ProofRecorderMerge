@@ -4,6 +4,7 @@ import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -12,12 +13,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 public class ProofRecorderWidget extends AppWidgetProvider {
-	private final String TAG = ProofRecorderWidget.class.getName();
+	private final static String TAG = ProofRecorderWidget.class.getName();
 	public final String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_ENABLE_SERVICE";
 	public final String ACTION_DISABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_DISABLE_SERVICE";
 	public final String SET_FORMAT = "org.proof.recorder.wigdet.ProofRecorderWidget.SET_FORMAT";
@@ -27,13 +29,18 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	public final String SP = "org.proof.recorder.wigdet.ProofRecorderWidget.SPEAKER";
 	private SharedPreferences mSharedPreferences = null;
 	private Editor mEditor = null;
-	public final String ACTION_UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_UPDATE_SERVICE";
+	public final static String ACTION_UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_UPDATE_SERVICE";
 	public boolean isEnable;
 	public boolean recOn;
 	public boolean isrecording;
 	private SharedPreferences preferences;
 	private Editor mRecEditor;
 	private boolean speakerOn;
+	private static Long defaultTimer = (long) (10); 
+	private static long mRefreshInterval(){
+		
+		return defaultTimer*60*1000;
+	}
 
 	/**
 	 * 
@@ -66,59 +73,112 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
 				R.layout.widget_layout);
-
-		Intent active = new Intent(context, ProofRecorderWidget.class);
+		
+		
+		/*Intent active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(ACTION_ENABLE_SERVICE);
 		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context,
 				appWidgetIds, active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonon,
-				actionPendingIntent);
+				actionPendingIntent);*/
+		PendingIntent mActionEnableService = getControlIntent(context,
+				appWidgetIds, ACTION_ENABLE_SERVICE, remoteViews);
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonon,
+				mActionEnableService);
 		
 		
-		active = new Intent(context, ProofRecorderWidget.class);
+		/*active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(ACTION_UPDATE);
 		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
 				appWidgetIds, active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonrefresh,
-				pendingIntent);
-
-		active = new Intent(context, ProofRecorderWidget.class);
+				pendingIntent);*/
+		PendingIntent mActionUpdate = getControlIntent(context,
+				appWidgetIds, ACTION_UPDATE, remoteViews);
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonrefresh,
+				mActionUpdate);
+		
+		/*active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(SET_FORMAT);
 		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-		actionPendingIntent = PendingIntent.getBroadcast(context, appWidgetIds,
+		mActionEnableService = PendingIntent.getBroadcast(context, appWidgetIds,
 				active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonbox,
-				actionPendingIntent);
+				mActionEnableService);*/
+		PendingIntent mActionSetFormat = getControlIntent(context,
+				appWidgetIds, SET_FORMAT, remoteViews);
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonbox,
+				mActionSetFormat);
 
-		active = new Intent(context, ProofRecorderWidget.class);
+		/*active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(REC);
 		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-		actionPendingIntent = PendingIntent.getBroadcast(context, appWidgetIds,
+		mActionEnableService = PendingIntent.getBroadcast(context, appWidgetIds,
 				active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec,
-				actionPendingIntent);
+				mActionEnableService);*/
+		PendingIntent mRec = getControlIntent(context,
+				appWidgetIds, REC, remoteViews);
+		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec,
+				mRec);
 		
-		active = new Intent(context, ProofRecorderWidget.class);
+		/*active = new Intent(context, ProofRecorderWidget.class);
 		active.setAction(SP);
 		active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-		actionPendingIntent = PendingIntent.getBroadcast(context, appWidgetIds,
+		mActionEnableService = PendingIntent.getBroadcast(context, appWidgetIds,
 				active, 0);
 		remoteViews.setOnClickPendingIntent(R.id.imageSpeaker,
-				actionPendingIntent);
-		
+				mActionEnableService);*/
+		PendingIntent mSp = getControlIntent(context,
+				appWidgetIds, SP, remoteViews);
+		remoteViews.setOnClickPendingIntent(R.id.imageSpeaker,
+				mSp);
 		//active.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 		//active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-		
-
 		appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
 
 	}
-
+	
+	/**
+	 * 
+	 * @param mContext
+	 * @param mAppWidgetId
+	 * @param mCommand
+	 * @param mRemoteViews
+	 * @return
+	 */
+    public static PendingIntent getControlIntent( Context mContext, int mAppWidgetId, String mCommand, RemoteViews mRemoteViews) 
+	{
+        Intent commandIntent = new Intent( mContext, ProofRecorderWidget.class );
+        commandIntent.setAction( mCommand );
+        commandIntent.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId );
+        PendingIntent pendingIntent  = PendingIntent.getBroadcast(mContext,mAppWidgetId, commandIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
+    /**
+     * 
+     * @param aContext
+     * @param aCommand
+     * @return
+     */
+    public static PendingIntent getControlIntent( Context aContext, String aCommand ) 
+	{
+        Intent commandIntent = new Intent( aContext,  ProofRecorderWidget.class );
+        commandIntent.setAction( aCommand );
+        PendingIntent pendingIntent = PendingIntent.getService( aContext, 0, commandIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
+    /*
+     * 
+     * (non-Javadoc)
+     * @see android.appwidget.AppWidgetProvider#onEnabled(android.content.Context)
+     */
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
+		setAlarm(context, false, ACTION_UPDATE);
 
 	}
 
@@ -255,7 +315,6 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
-		// TODO Auto-generated method stub
 		super.onDeleted(context, appWidgetIds);
 		try {
 			mSharedPreferences = null;
@@ -266,10 +325,15 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 			Log.e(TAG, "onDeleted error - " + e.getMessage());
 		}
 	}
-
+	/*
+	 * 
+	 * (non-Javadoc)
+	 * @see android.appwidget.AppWidgetProvider#onDisabled(android.content.Context)
+	 */
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
+		setAlarm(context, true, ACTION_UPDATE);
 	}
 
 	/**
@@ -356,4 +420,28 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	}
 
+	/**
+	 * 
+	 * @param aContext
+	 * @param mCancel
+	 * @param mAppWidgetId
+	 * @param mCommand
+	 * @param mRemoteViews
+	 */
+	private static void setAlarm(Context aContext, boolean mCancel,String mCommand) {
+		PendingIntent refreshTestIntent = getControlIntent(aContext,mCommand);
+		AlarmManager alarms = (AlarmManager) aContext
+				.getSystemService(Context.ALARM_SERVICE);
+		if (mCancel) {
+			Log.d(TAG, "Disable Alarm");
+			alarms.cancel(refreshTestIntent);
+		} else {
+			Log.d(TAG, "Setting Alarm for " + mRefreshInterval() / 1000
+					+ " seconds");
+			alarms.cancel(refreshTestIntent);
+			alarms.setRepeating(AlarmManager.ELAPSED_REALTIME,
+					SystemClock.elapsedRealtime(), mRefreshInterval(),
+					refreshTestIntent);
+		}
+	}
 }
