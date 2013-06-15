@@ -21,7 +21,6 @@ import android.widget.RemoteViews;
 public class ProofRecorderWidget extends AppWidgetProvider {
 	private final static String TAG = ProofRecorderWidget.class.getName();
 	private final String UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE";
-	private final String mUPDATE = "android.appwidget.action.APPWIDGET_UPDATE";
 	public final String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_ENABLE_SERVICE";
 	public final String ACTION_DISABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_DISABLE_SERVICE";
 	public final String SET_FORMAT = "org.proof.recorder.wigdet.ProofRecorderWidget.SET_FORMAT";
@@ -44,7 +43,9 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 		return defaultTimer * 60 * 1000;
 	}
-
+	public ProofRecorderWidget(){
+		
+	}
 	/**
 	 * 
 	 */
@@ -55,14 +56,14 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
 				Log.d(TAG,
-						"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID"
-								+ appWidgetIds[i] + "  "
+						"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID:"
+								+ appWidgetIds[i] + "--"
 								+ AppWidgetManager.INVALID_APPWIDGET_ID);
 				buildUpdate(context, appWidgetManager, appWidgetIds[i]);
 			} else  {
 				Log.d(TAG,
-						"appWidgetIds[i] == AppWidgetManager.INVALID_APPWIDGET_ID"
-								+ appWidgetIds[i] + " "
+						"appWidgetIds[i] == AppWidgetManager.INVALID_APPWIDGET_ID:"
+								+ appWidgetIds[i] + "--"
 								+ AppWidgetManager.INVALID_APPWIDGET_ID);
 			}
 			
@@ -87,7 +88,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 				R.layout.widget_layout);
 
 		PendingIntent mActionEnableService = getControlIntent(context,
-				appWidgetIds, AppWidgetManager.ACTION_APPWIDGET_UPDATE, remoteViews);
+				appWidgetIds, ACTION_ENABLE_SERVICE, remoteViews);
 		remoteViews.setOnClickPendingIntent(R.id.imageButtonon,
 				mActionEnableService);
 
@@ -157,7 +158,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
-		setAlarm(context, false, UPDATE);
+		setAlarm(context, false, AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 
 	}
 
@@ -168,144 +169,160 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	public void onReceive(Context context, Intent intent) {
 		final String action = intent.getAction();
 		super.onReceive(context, intent);
-		if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-
+		try {
 			int appWidgetId = intent.getExtras().getInt(
-
-			AppWidgetManager.EXTRA_APPWIDGET_ID,
+					AppWidgetManager.EXTRA_APPWIDGET_ID,
 					AppWidgetManager.INVALID_APPWIDGET_ID);
 
-			if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-				Log.d(TAG,
-						"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID"
-								+ appWidgetId + "  "
-								+ AppWidgetManager.INVALID_APPWIDGET_ID);
-				onDeleted(context, new int[] { appWidgetId });
-			} else {
-				Log.d(TAG,
-						"appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID"
-								+ appWidgetId + " "
-								+ AppWidgetManager.INVALID_APPWIDGET_ID);
-			}
-		} else {
-
-			// If they gave us an intent without a valid widget Id, just bail.
-
-			
-			initmEditor(context);
-			mAssertmShareNotNull();
-
-			/*
-			 * check action @ToDo
-			 */
-			if (action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
-				if (isEnable) {
-					mEditor.putBoolean("INCALL", false);
-					mEditor.putBoolean("OUTCALL", false);
-					isEnable = false;
-					Log.d(TAG, "ACTION_ENABLE_SERVICE :" + isEnable);
+			if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
+				if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+					Log.d(TAG,
+							"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID:"
+									+ appWidgetId + "--"
+									+ AppWidgetManager.INVALID_APPWIDGET_ID+"--"+action.toString());
+					onDeleted(context, new int[] { appWidgetId });
 				} else {
-					mEditor.putBoolean("INCALL", true);
-					mEditor.putBoolean("OUTCALL", true);
-					isEnable = true;
-					Log.d(TAG, "ACTION_ENABLE_SERVICE :" + isEnable);
+					Log.d(TAG,
+							"appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID:"
+									+ appWidgetId + "--"
+									+ AppWidgetManager.INVALID_APPWIDGET_ID+"--"+action.toString());
 				}
+			} else {
 
-				mCommit();
+				if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
 
-			} else if (action.equals(ACTION_DISABLE_SERVICE)) {
+					initmEditor(context);
+					mAssertmShareNotNull();
 
-				Log.d(TAG, "ACTION_DISABLE_SERVICE OK");
+					/*
+					 * check action @ToDo
+					 */
+					if (action.equals(ACTION_ENABLE_SERVICE)) {
+						if (isEnable) {
+							mEditor.putBoolean("INCALL", false);
+							mEditor.putBoolean("OUTCALL", false);
+							isEnable = false;
+							Log.d(TAG, "ACTION_ENABLE_SERVICE :" + isEnable);
+						} else {
+							mEditor.putBoolean("INCALL", true);
+							mEditor.putBoolean("OUTCALL", true);
+							isEnable = true;
+							Log.d(TAG, "ACTION_ENABLE_SERVICE :" + isEnable);
+						}
 
-			} else if (action.equals(SET_FORMAT)) {
+						mCommit();
 
-				Intent mActivity = new Intent(context,
-						WidgetPreferenceFormat.class);
-				mActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(mActivity);
-				Log.d(TAG, "mActivity");
+					} else if (action.equals(ACTION_DISABLE_SERVICE)) {
 
-			} else if (action.equals(REC)) {
-				Log.d(TAG, "REC");
-				if (recOn) {
-					mRecEditor.putBoolean("isrecording", false).commit();
-					recOn = false;
-					Intent I = new Intent();
-					I.setAction(STOP_ACTION);
-					context.sendBroadcast(I);
+						Log.d(TAG, "ACTION_DISABLE_SERVICE OK");
+
+					} else if (action.equals(SET_FORMAT)) {
+
+						Intent mActivity = new Intent(context,
+								WidgetPreferenceFormat.class);
+						mActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						context.startActivity(mActivity);
+						Log.d(TAG, "mActivity");
+
+					} else if (action.equals(REC)) {
+						Log.d(TAG, "REC");
+						if (recOn) {
+							mRecEditor.putBoolean("isrecording", false)
+									.commit();
+							recOn = false;
+							Intent I = new Intent();
+							I.setAction(STOP_ACTION);
+							context.sendBroadcast(I);
+						} else {
+							mRecEditor.putBoolean("isrecording", true).commit();
+							recOn = true;
+							Intent I = new Intent();
+							I.setAction(START_ACTION);
+							context.sendBroadcast(I);
+						}
+
+					} else if (action
+							.equals(ProofRecorderWidget.ACTION_UPDATE_SERVICE)) {
+						Intent I = new Intent(context,
+								ProofRecorderActivity.class);
+						I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						context.startActivity(I);
+
+					} else if (action.equals(SP)) {
+						if (speakerOn) {
+							mEditor.putBoolean("SPEAK", false);
+							speakerOn = false;
+
+						} else {
+							mEditor.putBoolean("SPEAK", true);
+							speakerOn = true;
+						}
+						mCommit();
+					} else if (action.equals(UPDATE)
+							|| action
+									.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+
+						Log.e(TAG, "Refreshing the "
+								+ ProofRecorderWidget.class.getSimpleName()
+								+ " Widget...");
+
+					}
+
+					RemoteViews remoteViews1 = new RemoteViews(
+							context.getPackageName(), R.layout.widget_layout);
+					if (isEnable) {
+
+						remoteViews1.setImageViewResource(R.id.imageButtonon,
+								R.drawable.on);
+					} else {
+
+						remoteViews1.setImageViewResource(R.id.imageButtonon,
+								R.drawable.off);
+					}
+
+					if (recOn) {
+						remoteViews1.setImageViewResource(
+								R.id.imageButtonstoprec, R.drawable.avstop);
+					} else {
+						remoteViews1.setImageViewResource(
+								R.id.imageButtonstoprec, R.drawable.avplay);
+					}
+
+					if (speakerOn) {
+
+						remoteViews1.setImageViewResource(R.id.imageSpeaker,
+								R.drawable.avspeekear);
+					} else {
+
+						remoteViews1.setImageViewResource(R.id.imageSpeaker,
+								R.drawable.avspeekearoff);
+					}
+
+					ComponentName cn = new ComponentName(context,
+							ProofRecorderWidget.class);
+					AppWidgetManager.getInstance(context).updateAppWidget(cn,
+							remoteViews1);
+
 				} else {
-					mRecEditor.putBoolean("isrecording", true).commit();
-					recOn = true;
-					Intent I = new Intent();
-					I.setAction(START_ACTION);
-					context.sendBroadcast(I);
+					Log.d(TAG,
+							"appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID:"
+									+ appWidgetId + "--"
+									+ AppWidgetManager.INVALID_APPWIDGET_ID+"--"+action.toString());
 				}
-
-			} else if (action.equals(ProofRecorderWidget.ACTION_UPDATE_SERVICE)) {
-				Intent I = new Intent(context, ProofRecorderActivity.class);
-				I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(I);
-
-			} else if (action.equals(SP)) {
-				if (speakerOn) {
-					mEditor.putBoolean("SPEAK", false);
-					speakerOn = false;
-
-				} else {
-					mEditor.putBoolean("SPEAK", true);
-					speakerOn = true;
-				}
-				mCommit();
-			} else if (action.equals(UPDATE) || action.equals(mUPDATE)){
-				
-				Log.e(TAG, "Refreshing the "+ ProofRecorderWidget.class.getSimpleName() + " Widget...");
-				
 			}
-
-			RemoteViews remoteViews1 = new RemoteViews(
-					context.getPackageName(), R.layout.widget_layout);
-			if (isEnable) {
-
-				remoteViews1.setImageViewResource(R.id.imageButtonon,
-						R.drawable.on);
-			} else {
-
-				remoteViews1.setImageViewResource(R.id.imageButtonon,
-						R.drawable.off);
-			}
-
-			if (recOn) {
-				remoteViews1.setImageViewResource(R.id.imageButtonstoprec,
-						R.drawable.avstop);
-			} else {
-				remoteViews1.setImageViewResource(R.id.imageButtonstoprec,
-						R.drawable.avplay);
-			}
-
-			if (speakerOn) {
-
-				remoteViews1.setImageViewResource(R.id.imageSpeaker,
-						R.drawable.avspeekear);
-			} else {
-
-				remoteViews1.setImageViewResource(R.id.imageSpeaker,
-						R.drawable.avspeekearoff);
-			}
-
-			ComponentName cn = new ComponentName(context,
-					ProofRecorderWidget.class);
-			AppWidgetManager.getInstance(context).updateAppWidget(cn,
-					remoteViews1);
-			
-
+		} catch (java.lang.NullPointerException e) {
+			Log.d(TAG, "appWidgetId is NULL");
 		}
-
 	}
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
 		super.onDeleted(context, appWidgetIds);
 		try {
+			for (int e: appWidgetIds){
+				
+				Log.d(TAG, "onDeleted still remain in appWidgetIds: "+e);
+			}
 			mSharedPreferences = null;
 			mEditor = null;
 			Log.d(TAG, "onDeleted appWidgetIds  OK");
@@ -325,7 +342,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
-		setAlarm(context, true, UPDATE);
+		setAlarm(context, true, AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 	}
 
 	/**
