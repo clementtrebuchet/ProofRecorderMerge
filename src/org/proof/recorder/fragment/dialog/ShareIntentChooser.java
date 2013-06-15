@@ -2,42 +2,32 @@ package org.proof.recorder.fragment.dialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.utils.Log.Console;
 
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-//import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 public class ShareIntentChooser extends ProofFragmentActivity {
 	
-//	private static final int SELECT_VIDEO_REQUEST = 1000;
-//	private static final String EXTRA_LOCAL_ONLY = "android.intent.extra.LOCAL_ONLY";
-
-	/**
-	 * 
-	 */
-	private ImageButton mShareBlueToothIcon, 
-						mShareMailIcon, 
-//						mShareYouTubeIcon, 
-//						mShareFaceBookIcon, 
-//						mShareDropBoxIcon, 
-						mShareGmailIcon;
+	private ListView shareIntents;
+	private SimpleAdapter sharesAdapter;
 	
 	private static Bundle mBundle;
 	private static String[] mAttachedFiles;
+	private ArrayList<HashMap<String, String>> shareActions;
 	
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -48,147 +38,67 @@ public class ShareIntentChooser extends ProofFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.share_intent_chooser);
-		
-		/* Add this to xml file
-		 * <RadioGroup
-			android:id="@+id/widget40"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:gravity="center">
-		<ImageButton
-			android:id="@+id/mShareDropBoxIcon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:src="@drawable/share_drop_box_icon" />
-		<ImageButton
-			android:id="@+id/mShareYouTubeIcon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:src="@drawable/share_yt_icon" />
-		<ImageButton
-			android:id="@+id/mShareFaceBookIcon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:src="@drawable/share_fb_icon" />
-		</RadioGroup>
-		 *  */
 
 		mBundle = getIntent().getExtras();
 		
 		mAttachedFiles = mBundle.getStringArray("AttachedFiles");
-
-		mShareMailIcon = (ImageButton) findViewById(R.id.mShareMailIcon);
-		//mShareYouTubeIcon = (ImageButton) findViewById(R.id.mShareYouTubeIcon);
-		//mShareFaceBookIcon = (ImageButton) findViewById(R.id.mShareFaceBookIcon);
-		mShareGmailIcon = (ImageButton) findViewById(R.id.mShareGmailIcon);
-		//mShareDropBoxIcon = (ImageButton) findViewById(R.id.mShareDropBoxIcon);
-		mShareBlueToothIcon = (ImageButton) findViewById(R.id.mShareBlueToothIcon);
-
-		mShareMailIcon.setOnClickListener(mShareMailAction);
-		mShareGmailIcon.setOnClickListener(mShareGmailAction);
-		 //mShareFaceBookIcon.setOnClickListener(mShareFaceBookAction);
-		 //mShareYouTubeIcon.setOnClickListener(mShareYouTubeAction);
-		 //mShareDropBoxIcon.setOnClickListener(mShareDropBoxAction);
-		mShareBlueToothIcon.setOnClickListener(mShareBlueToothAction);
-	}
-
-	private final OnClickListener mShareMailAction = new OnClickListener() {
-
-		@Override
-		public void onClick(View arg0) {
-			startMailIntent("mail");
-		}
-	};
-	
-	private final OnClickListener mShareBlueToothAction = new OnClickListener() {
-
-		@Override
-		public void onClick(View arg0) {
-			startMailIntent("blue");
-		}
-	};
-	
-	private final OnClickListener mShareGmailAction = new OnClickListener() {
-
-		@Override
-		public void onClick(View arg0) {
-			startMailIntent("gmail");
-		}
-	};
-	
-/*	private final OnClickListener mShareDropBoxAction = new OnClickListener() {
-
-		@Override
-		public void onClick(View arg0) {
-			onBackPressed();
-		}
-	};*/
-	
-	public String getRealPathFromURI(Uri contentUri) {
 		
-        String[] proj = { 
-        		MediaColumns.DATA 
-        };
+		shareActions = new ArrayList<HashMap<String, String>>();
+		
+		HashMap<String, String> map;
+ 
+        map = new HashMap<String, String>();
+        map.put("key", "mail");
+        map.put("title", getString(R.string.share_mail_title));
+        map.put("description", getString(R.string.share_mail_desc));
+        map.put("img", String.valueOf(R.drawable.share_mail_icon));
         
-        Cursor cursor = null;
-        String path = null;
+        shareActions.add(map);
+ 
+        map = new HashMap<String, String>();
+        map.put("key", "gmail");
+        map.put("title", getString(R.string.share_gmail_title));
+        map.put("description", getString(R.string.share_gmail_desc));
+        map.put("img", String.valueOf(R.drawable.share_gmail_icon));
         
-        try {
-        	cursor = getApplicationContext().getContentResolver().query(
-            		contentUri, proj, null, null, null);
-            
-            int column_index = cursor.getColumnIndexOrThrow(proj[0]);
-            cursor.moveToFirst();
-            path = cursor.getString(column_index);
-        }
-        catch (Exception e) {
-			Console.print_exception(e);
-		}
-        finally {
-        	if(cursor != null) {
-        		cursor.close();
-        	}
-        }        
+        shareActions.add(map);
+ 
+        map = new HashMap<String, String>();
+        map.put("key", "blue");
+        map.put("title", getString(R.string.share_bluetooth_title));
+        map.put("description", getString(R.string.share_bluetooth_desc));
+        map.put("img", String.valueOf(R.drawable.share_bluetooth));
         
-        return path;
-    }
+        shareActions.add(map);
+		
+		shareIntents = (ListView) findViewById(R.id.share_choices_list);
+		
+		sharesAdapter = new SimpleAdapter(getInternalContext(), 
+										  shareActions, 
+										  R.layout.list_item_image_title_desc, 
+										  new String[] { "key", "img", "title", "description" }, 
+										  new int[] { R.id.key, R.id.img, R.id.title, R.id.description }
+		);
+		
+		shareIntents.setAdapter(sharesAdapter);
+		
+		
+		shareIntents.setOnItemClickListener(new OnItemClickListener() {
 
-/*	private final OnClickListener mShareYouTubeAction = new OnClickListener() {
-		@Override
-		public void onClick(View arg0) {
-			Intent intent = new Intent(Intent.ACTION_PICK, null).setType("video/*");	        
-	        startActivityForResult(intent, SELECT_VIDEO_REQUEST);
-			
-			ContentValues content = new ContentValues(4);
-			content.put(Video.VideoColumns.DATE_ADDED,
-			System.currentTimeMillis() / 1000);
-			content.put(Video.Media.MIME_TYPE, "audio/mpeg");
-			content.put(MediaStore.Video.Media.DATA, mAttachedFiles);
-			ContentResolver resolver = getBaseContext().getContentResolver();
-			Uri uri = resolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, content);
-			
-			Intent intent = YouTubeIntents.createUploadIntent(
-	        		getApplicationContext(), 
-	        		uri);
-	        
-	        startActivity(Intent.createChooser(intent, "Youtube"));	        
-		}
-	};*/
-
-/*	private final OnClickListener mShareFaceBookAction = new OnClickListener() {
-
-		@Override
-		public void onClick(View arg0) {
-			startMailIntent("facebook");
-		}
-	};*/
+			@SuppressWarnings("unchecked")
+			@Override
+			public void onItemClick(AdapterView<?> adapterview, View view, int position, long id) {
+				HashMap<String, String> map = (HashMap<String, String>) shareIntents.getItemAtPosition(position);
+				startMailIntent(map.get("key"));
+			}
+		});
+	}
 
 	private void startMailIntent(String mType) {
 
 		boolean found = false;
 		Intent share = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-		share.setType("audio/3gp");
+		share.setType("audio/*");
 
 		// gets the list of intents that can be loaded.
 		List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(

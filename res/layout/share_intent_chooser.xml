@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<!-- <ScrollView
 	android:id="@+id/mScroll"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
@@ -42,4 +42,18 @@
 </RadioGroup>
 </RadioGroup>
 </RelativeLayout>
-</ScrollView>
+</ScrollView> -->
+
+
+<LinearLayout
+	android:id="@+id/mLayout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<ListView
+	android:id="@+id/share_choices_list"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="5dp" />
+</LinearLayout>
