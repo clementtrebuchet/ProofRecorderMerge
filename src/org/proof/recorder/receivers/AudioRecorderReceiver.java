@@ -15,6 +15,7 @@ import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
 import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.wigdet.RecorderDetector;
 import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 
 import android.content.Context;
@@ -316,6 +317,9 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 			saveCurrentData(AudioFormat);
 			
 			startService();
+			RecorderDetector alert = new RecorderDetector(context);
+			Console.print_debug("Numbers of observers "+alert.countObservers());
+			alert.ChangeRecPosition(true);
 		}
 		
 		else if (intent.getAction().equals(STOP_ACTION)) {
@@ -350,6 +354,9 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 					}
 
 				};
+				RecorderDetector alert = new RecorderDetector(context);
+				Console.print_debug("Numbers of observers "+alert.countObservers());
+				alert.ChangeRecPosition(false);
 				Thread mThread = new Thread(R);
 				mThread.start();
 				resetCurrentData();

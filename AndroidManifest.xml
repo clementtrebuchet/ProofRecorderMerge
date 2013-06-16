@@ -498,6 +498,10 @@
         <service
             android:name=".services.OGGMiddleware"
             android:enabled="true" />
+        
+        <service
+            android:name=".wigdet.ProofRecorderWidget$MBuildUpdate"
+            android:enabled="true" />
 
         <!-- Receivers for BroadCasters -->
 

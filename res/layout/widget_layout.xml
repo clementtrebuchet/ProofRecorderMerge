@@ -4,29 +4,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/myshape"
-    android:orientation="horizontal" >
+    android:fitsSystemWindows="true"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="1dp" >
-        
-        <ImageButton
-            android:id="@+id/imageButtonrefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/action_item_btn"
-            android:padding="1dp"
-            android:src="@drawable/auncher" />
-
-        <ImageButton
-            android:id="@+id/imageSpeaker"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/action_item_btn"
-            android:padding="1dp"
-            android:src="@drawable/avspeekearoff" />
 
         <ImageButton
             android:id="@+id/imageButtonon"
@@ -37,20 +22,53 @@
             android:src="@drawable/off" />
 
         <ImageButton
-            android:id="@+id/imageButtonbox"
+            android:id="@+id/imageSpeaker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/action_item_btn"
             android:padding="1dp"
+            android:src="@drawable/avspeekearoff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="1dp" >
+
+        <ImageButton
+            android:id="@+id/imageButtonbox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
             android:src="@drawable/avsong" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="1dp" >
+
+        <ImageButton
+            android:id="@+id/imageButtonrefresh"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/auncher" />
 
         <ImageButton
             android:id="@+id/imageButtonstoprec"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/action_item_btn"
             android:padding="1dp"
             android:src="@drawable/avplay" />
+
     </LinearLayout>
 
 </LinearLayout>
