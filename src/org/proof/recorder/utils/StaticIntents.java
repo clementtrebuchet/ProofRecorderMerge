@@ -10,7 +10,6 @@ import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder;
 import org.proof.recorder.preferences.SettingsTabs;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;

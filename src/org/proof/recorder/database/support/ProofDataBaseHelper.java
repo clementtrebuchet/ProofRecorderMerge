@@ -4,6 +4,7 @@ package org.proof.recorder.database.support;
 import java.util.Locale;
 
 import org.proof.recorder.utils.Log.Console;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;

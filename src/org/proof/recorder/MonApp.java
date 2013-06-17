@@ -1,6 +1,7 @@
 package org.proof.recorder;
 
-import org.acra.*;
+import org.acra.ACRA;
+import org.acra.ACRAConfiguration;
 import org.proof.recorder.utils.Log.Console;
 
 
