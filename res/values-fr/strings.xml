@@ -61,6 +61,7 @@
     <string name="qaction_select_all">Sélectionnez tout</string>
     <string name="qaction_delete">Supprimer</string>
     <string name="qaction_share">Partager</string> 
+    <string name="qaction_share_sc">SoundCloud</string>
     <string name="qaction_done">OK</string>   
     
     <!-- START Google Play -->
@@ -506,5 +507,10 @@
     
     <string name="share_bluetooth_title">Bluetooth</string>
     <string name="share_bluetooth_desc">Envoyez cet enregistrement vers un appareil appairé</string>
+
+    <!-- SOUNDCLOUD FILE SHARE -->
     
+    <string name="sc_upload_file_msg">Upload du fichier en cours…</string>
+    <string name="sc_upload_file_msg_plural">Upload des fichiers en cours…</string>
+
 </resources>

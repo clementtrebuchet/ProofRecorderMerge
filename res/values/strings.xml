@@ -29,6 +29,7 @@
     <string name="qaction_select_all">Select All</string>
     <string name="qaction_delete">Delete</string>
     <string name="qaction_share">Share</string>
+    <string name="qaction_share_sc">SoundCloud</string>
     <string name="qaction_done">OK</string> 
     
     <string name="encode_while">Encode while recording</string>
@@ -483,6 +484,10 @@
     
     <string name="share_bluetooth_title">Bluetooth</string>
     <string name="share_bluetooth_desc">Sent this record to appaired device</string>
+
+    <!-- SOUNDCLOUD FILE SHARE -->
     
-    
+    <string name="sc_upload_file_msg">Uploading file…</string>
+    <string name="sc_upload_file_msg_plural">Uploading files…</string>
+
 </resources>

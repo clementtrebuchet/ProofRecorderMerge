@@ -498,6 +498,10 @@
         <service
             android:name=".services.OGGMiddleware"
             android:enabled="true" />
+        
+        <service
+            android:name=".services.SoundCloudBgUploader"
+            android:enabled="true" />        
 
         <!-- Receivers for BroadCasters -->
 
