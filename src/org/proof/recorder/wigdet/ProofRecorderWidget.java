@@ -24,6 +24,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 
@@ -45,9 +46,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	private SharedPreferences preferences;
 	private Editor mRecEditor;
 	private boolean speakerOn;
-	private static Long defaultTimerInMinutes = (long) (5);
+	private static Long defaultTimerInMinutes = (long) (3);
 	public RecorderDetector mRecorderDetector = null;
 	private static int mAppWId = 0;
+	public static boolean mForbbidenChFormat;
 
 	/**
 	 * @return the mAppWId
@@ -61,7 +63,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	 * @param mAppWId
 	 *            the mAppWId to set
 	 */
-	public static void setmAppWId(int mAppWId) {
+	private static void setmAppWId(int mAppWId) {
 		ProofRecorderWidget.mAppWId = mAppWId;
 		Log.d(TAG, "setmAppWId(int mAppWId) : " + ProofRecorderWidget.mAppWId);
 	}
@@ -89,8 +91,8 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		if (mRecorderDetector == null) {
-			mRecorderDetector = new RecorderDetector(context);
-			mRecorderDetector.getInstance().addObserver(
+			mRecorderDetector = RecorderDetector.getInstance(context);
+			mRecorderDetector.addObserver(
 					ProofRecorderWidget.this);
 			Log.d(TAG, "mRecorderDetector.addObserver(this) "
 					+ mRecorderDetector.countObservers());
@@ -203,17 +205,16 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 
 		@Override
 		public IBinder onBind(Intent intent) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	}
 
-	/**
+/*	*//**
 	 * 
 	 * @param context
 	 * @param appWidgetManager
 	 * @param appWidgetIds
-	 */
+	 *//*
 	public void buildUpdate(Context context, AppWidgetManager appWidgetManager,
 			int appWidgetIds) {
 
@@ -244,7 +245,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		remoteViews.setOnClickPendingIntent(R.id.imageSpeaker, mSp);
 		appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
 
-	}
+	}*/
 
 	/**
 	 * 
@@ -293,8 +294,8 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
 		if (mRecorderDetector == null) {
-			mRecorderDetector = new RecorderDetector(context);
-			mRecorderDetector.getInstance().addObserver(
+			mRecorderDetector = RecorderDetector.getInstance(context);
+			mRecorderDetector.addObserver(
 					ProofRecorderWidget.this);
 			Log.d(TAG, "mRecorderDetector.addObserver(this) "
 					+ mRecorderDetector.countObservers());
@@ -359,12 +360,16 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 						Log.d(TAG, "ACTION_DISABLE_SERVICE OK");
 
 					} else if (action.equals(SET_FORMAT)) {
-
+						Log.d(TAG, "action.equals(SET_FORMAT) mForbbidenChFormat ? :"+mForbbidenChFormat);
+						if(mForbbidenChFormat == false){
 						Intent mActivity = new Intent(context,
 								WidgetPreferenceFormat.class);
 						mActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						context.startActivity(mActivity);
-						Log.d(TAG, "mActivity");
+						Log.d(TAG, "Start format dialog mActivity");
+						} else {
+							Toast.makeText(context, "You can't change format during record!", Toast.LENGTH_LONG).show();
+						}
 
 					} else if (action.equals(REC)) {
 						Log.d(TAG, "REC");
@@ -472,8 +477,11 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			}
 			mSharedPreferences = null;
 			mEditor = null;
-			mRecorderDetector.getInstance().deleteObserver(
-					ProofRecorderWidget.this);
+			if (mRecorderDetector != null) {
+				mRecorderDetector.deleteObserver(
+						ProofRecorderWidget.this);
+				Log.d(TAG, "mRecorderDetector != null");
+			}
 			Log.d(TAG, "onDeleted appWidgetIds  OK");
 		} catch (Exception e) {
 
@@ -492,7 +500,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
 		if (mRecorderDetector != null) {
-			mRecorderDetector.getInstance().deleteObserver(
+			mRecorderDetector.deleteObserver(
 					ProofRecorderWidget.this);
 			Log.d(TAG, "mRecorderDetector != null");
 		}
@@ -617,19 +625,24 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
 	public void update(Observable observable, Object data) {
 		RecorderDetector mRecorderDetector = (RecorderDetector) data;
-		boolean recOn = mRecorderDetector.isRecOn();
-		if (recOn) {
-			recOn = false;
-		} else {
-			recOn = true;
-		}
-		Log.d(TAG, "Record position change to :" + recOn);
+		mForbbidenChFormat = mRecorderDetector.isRecOn();
+		Log.d(TAG, "****Observer Widget Event isRecOn ? " + mForbbidenChFormat
+				+ " ****");
+		Intent I = new Intent(mRecorderDetector.getmContext(),
+				ProofRecorderWidget.class);
+		I.setAction("org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE");
+		I.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+				ProofRecorderWidget.getmAppWId());
+		mRecorderDetector.getmContext().sendBroadcast(I);
+		Log.d(TAG, "this.mContext.sendBroadcast(I) action : " + I.getAction());
 
 	}
 

@@ -1,11 +1,8 @@
 package org.proof.recorder.wigdet;
 
 import java.util.Observable;
-import java.util.Observer;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
@@ -13,16 +10,41 @@ import android.util.Log;
 public class RecorderDetector extends Observable {
 
 	private static final String TAG = RecorderDetector.class.getName();
+	private static RecorderDetector mInstance = null;
 	private Context mContext;
 	private Editor mEditor;
 	private SharedPreferences preferences;
 	private boolean recOn;
 
-	public RecorderDetector() {
+	/**
+	 * 
+	 */
+	protected RecorderDetector() {
 
 	}
 
-	public RecorderDetector(Context c) {
+	/**
+	 * @@Singleton
+	 * @param c
+	 * @return
+	 */
+	public static RecorderDetector getInstance(Context c) {
+		if (mInstance == null) {
+			mInstance = new RecorderDetector(c);
+			Log.d(TAG, "getInstance mInstance == null creating instance: "
+					+ mInstance.toString());
+		} else {
+			Log.d(TAG, "getInstance mInstance != null instance is: "
+					+ mInstance.toString());
+		}
+		return mInstance;
+	}
+
+	/**
+	 * 
+	 * @param c
+	 */
+	private RecorderDetector(Context c) {
 		this.mContext = c;
 		this._initPreferences();
 
@@ -42,10 +64,10 @@ public class RecorderDetector extends Observable {
 		return recOn;
 	}
 
-	public RecorderDetector getInstance() {
-		return this;
-	}
-
+	/**
+	 * 
+	 * @param on
+	 */
 	public void ChangeRecPosition(boolean on) {
 		recOn = false;
 		mEditor = preferences.edit();
@@ -60,16 +82,16 @@ public class RecorderDetector extends Observable {
 			mEditor.putBoolean("isrecording", false).commit();
 			Log.d(TAG, "No recording");
 		}
-		this.setChanged();
-		this.notifyObservers(this);
-		Intent I = new Intent(this.mContext, ProofRecorderWidget.class);
-		I.setAction("org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE");
-		I.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, ProofRecorderWidget.getmAppWId());
-		this.mContext.sendBroadcast(I);
-		Log.d(TAG, "this.mContext.sendBroadcast(I) action : " + I.getAction());
+		setChanged();
+		notifyObservers(this);
+		
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private SharedPreferences _initPreferences() {
 		if (preferences == null) {
 			preferences = this.mContext.getSharedPreferences("RECoN", 0);
@@ -77,19 +99,4 @@ public class RecorderDetector extends Observable {
 		return preferences;
 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.util.Observable#notifyObservers(java.lang.Object)
-	 * 
-	 * @Override public void notifyObservers(Object data) { // TODO
-	 * Auto-generated method stub super.notifyObservers(data); Intent I = new
-	 * Intent(this.mContext, ProofRecorderWidget.class);
-	 * I.setAction("org.proof.recorder.wigdet.ProofRecorderWidget.REC");
-	 * I.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	 * this.mContext.sendBroadcast(I); Log.d(TAG,
-	 * "this.mContext.sendBroadcast(I) action : "+I.getAction()); }
-	 */
-
 }

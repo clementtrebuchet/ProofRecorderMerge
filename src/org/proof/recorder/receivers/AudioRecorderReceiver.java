@@ -317,13 +317,13 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 			saveCurrentData(AudioFormat);
 			
 			startService();
-			RecorderDetector alert = new RecorderDetector(context);
+			RecorderDetector alert = RecorderDetector.getInstance(context);
 			Console.print_debug("Numbers of observers "+alert.countObservers());
 			alert.ChangeRecPosition(true);
 		}
 		
 		else if (intent.getAction().equals(STOP_ACTION)) {
-			RecorderDetector alert = new RecorderDetector(context);
+			RecorderDetector alert = RecorderDetector.getInstance(context);
 			Console.print_debug("Numbers of observers "+alert.countObservers());
 			alert.ChangeRecPosition(false);
 			String audioFormat = dpm.getAudioFormat();
