@@ -7,8 +7,8 @@ import java.util.TreeSet;
 
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
@@ -21,7 +21,6 @@ import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.telephony.PhoneNumberUtils;
-
 import android.util.Log;
 
 public final class ContactsDataHelper {

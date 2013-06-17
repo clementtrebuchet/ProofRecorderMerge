@@ -5,7 +5,6 @@ import org.proof.recorder.bases.activity.ProofFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.receivers.AudioRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
-
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
 

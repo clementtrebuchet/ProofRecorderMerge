@@ -8,9 +8,7 @@ import org.proof.recorder.adapters.VoiceAdapter;
 import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
-
 import org.proof.recorder.database.collections.VoicesList;
-
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.MenuActions;
@@ -24,7 +22,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-
 import android.widget.ListView;
 
 public class FragmentListVoice extends ProofFragment {
