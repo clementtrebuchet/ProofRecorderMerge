@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
-
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
@@ -20,12 +19,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.view.View;
-
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 

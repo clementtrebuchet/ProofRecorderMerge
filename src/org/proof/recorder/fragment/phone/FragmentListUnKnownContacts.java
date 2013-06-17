@@ -12,8 +12,6 @@ import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.Log.Console;
 
-import com.actionbarsherlock.view.MenuInflater;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +19,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
+
+import com.actionbarsherlock.view.MenuInflater;
 
 public class FragmentListUnKnownContacts extends ProofFragment {
 

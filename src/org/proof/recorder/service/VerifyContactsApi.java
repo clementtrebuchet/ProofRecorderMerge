@@ -47,7 +47,6 @@ public class VerifyContactsApi extends ProofService {
 	private static final int DELTA_COUNT = 3;
 	private static int START_ID = 0;
 
-	private static Context mContext;
 	private static Cursor mCursor;
 
 	private static Uri mUri = Uri.withAppendedPath(
@@ -121,7 +120,7 @@ public class VerifyContactsApi extends ProofService {
 	 */
 	private void initializeDbConnection() {
 
-		mCursor = mContext.getContentResolver().query(
+		mCursor = getInternalContext().getContentResolver().query(
 				mUri, proofProjection, null, null, null);
 	}
 	
@@ -193,7 +192,7 @@ public class VerifyContactsApi extends ProofService {
 					
 					Console.print_debug("Unknown contact (phone): " + mPhone);
 
-					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(mContext, mPhone);
+					Contact mContact = AndroidContactsHelper.getContactInfosByNumber(getInternalContext(), mPhone);
 
 					Console.print_debug("Unknown contact (all): " + mContact);
 
@@ -206,7 +205,7 @@ public class VerifyContactsApi extends ProofService {
 						
 						Console.print_debug("Unknown contact (all): " + mContact + "\n" + "Uri: " + mUri);
 
-						mContext.getContentResolver().update(
+						getInternalContext().getContentResolver().update(
 								mUri,
 								values, 
 								" " + ProofDataBase.COLUMN_TELEPHONE + "=?",
@@ -218,7 +217,7 @@ public class VerifyContactsApi extends ProofService {
 					
 					Console.print_debug("Known contact (id): " + apiId + " - type(" + apiId.getClass().getName() + ")");
 
-					Cursor pCur = mContext.getContentResolver().query(
+					Cursor pCur = getInternalContext().getContentResolver().query(
 							CommonDataKinds.Phone.CONTENT_URI, null,
 							CommonDataKinds.Phone.CONTACT_ID + " = ?",
 							new String[] { apiId }, null);
@@ -227,7 +226,7 @@ public class VerifyContactsApi extends ProofService {
 						Console.print_debug("Deleted contact API phone Id: " + apiId);
 						ContentValues values = new ContentValues();
 						values.put(ProofDataBase.COLUMN_CONTRACT_ID, "null");
-						mContext.getContentResolver().update(
+						getInternalContext().getContentResolver().update(
 								mUri,
 								values, 
 								" " + ProofDataBase.COLUMN_CONTRACT_ID + "=?", 
@@ -240,7 +239,7 @@ public class VerifyContactsApi extends ProofService {
 						Uri mUriById = Uri.withAppendedPath(
 								PersonnalProofContentProvider.CONTENT_URI, "excluded_contract_id/" + apiId);
 
-						Cursor _cursor = mContext.getContentResolver().query(mUriById, null, null, null, null);
+						Cursor _cursor = getInternalContext().getContentResolver().query(mUriById, null, null, null, null);
 
 						if(_cursor.getCount() > 0) {
 
@@ -249,7 +248,7 @@ public class VerifyContactsApi extends ProofService {
 
 								Console.print_debug("Found Contact in excluded table! (" + name + " - " + phone + ")");
 							
-							mContext.getContentResolver().delete(mUriById, null, null);
+								getInternalContext().getContentResolver().delete(mUriById, null, null);
 							
 							Console.print_debug("Deleted!");
 						}
@@ -273,7 +272,6 @@ public class VerifyContactsApi extends ProofService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mContext = this;
 	}
 
 	@Override
@@ -315,7 +313,7 @@ public class VerifyContactsApi extends ProofService {
 				checksDeletedContacts();
 
 				Console.print_debug("Potential deleted Contacts from Phone API mapped!");
-				Console.print_debug(mContext.getString(R.string.analysis_over));
+				Console.print_debug(getInternalContext().getString(R.string.analysis_over));
 
 				setToProcess(false);
 				

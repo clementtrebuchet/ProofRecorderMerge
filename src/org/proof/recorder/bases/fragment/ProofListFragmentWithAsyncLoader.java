@@ -15,7 +15,7 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 	
 	private AsyncLoader collectionLoader;
 	
-	protected volatile boolean isLoading;	
+	protected volatile boolean isLoading;
 	
 	protected void startAsyncLoader() {
 		collectionLoader.execute();		
@@ -33,7 +33,7 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 					!collectionLoader.isCancelled()) {
 				collectionLoader.cancel(true);
 				collectionLoader = null;
-			}				
+			}			
         }
 	}
 	

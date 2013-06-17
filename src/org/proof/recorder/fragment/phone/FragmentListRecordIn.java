@@ -17,7 +17,6 @@ import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
 import android.content.DialogInterface;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;

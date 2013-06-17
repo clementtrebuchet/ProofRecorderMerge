@@ -16,7 +16,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.AudioFormat;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-//import android.util.Log;
 
 /**
  * @author namgyal.brisson

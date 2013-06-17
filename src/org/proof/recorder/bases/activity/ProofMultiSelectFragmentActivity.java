@@ -1,19 +1,18 @@
 package org.proof.recorder.bases.activity;
 
 import org.proof.recorder.R;
-
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.StaticIntents;
 import org.proof.recorder.utils.TabsPagerAdapter;
 import org.proof.recorder.utils.ViewPagerOnSwipeOff;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TabHost;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
 
 public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActivity {
 
