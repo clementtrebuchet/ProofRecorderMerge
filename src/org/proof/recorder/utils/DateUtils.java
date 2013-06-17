@@ -12,6 +12,21 @@ public class DateUtils {
 
 	private DateUtils() {}
 	
+	public static Calendar scheduleTimeFromNow(int days) {
+		
+		Calendar scheduleTime = Calendar.getInstance();
+		
+		int year = scheduleTime.get(Calendar.YEAR);
+		int month = scheduleTime.get(Calendar.MONTH);
+		int day = scheduleTime.get(Calendar.DAY_OF_MONTH) + days;
+		
+		scheduleTime.set(Calendar.YEAR, year);
+		scheduleTime.set(Calendar.MONTH, month);
+		scheduleTime.set(Calendar.DAY_OF_MONTH, day);
+		
+		return scheduleTime;
+	}
+	
 	public static long getCurrentMsDate() {
 		return System.currentTimeMillis();
 	}
