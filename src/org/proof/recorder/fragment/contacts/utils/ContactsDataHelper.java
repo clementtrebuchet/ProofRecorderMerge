@@ -200,42 +200,61 @@ public final class ContactsDataHelper {
 		}
 	}
 
-	private static void cursorToInAndOutCallsAdapter(Cursor cursor) {
+	private static ArrayList<Object> cursorToInAndOutCallsAdapter(Cursor cursor, boolean inCall, String string) {
 		
 		Record.setResolver(mContext.getApplicationContext().getContentResolver());
 
-		mIncommingCalls = new ArrayList<Object>();
-		mOutGoingCalls = new ArrayList<Object>();
+		ArrayList<Object> records = new ArrayList<Object>();
 		
-		while (cursor.moveToNext()) {
-			
-			
-			String mId = cursor.getString(cursor
-					.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID));
-			
-			String mAndroidId = cursor.getString(cursor
-					.getColumnIndex(ProofDataBase.COLUMN_CONTRACT_ID));
-			
-			String mPhone = cursor.getString(cursor
-					.getColumnIndex(ProofDataBase.COLUMN_TELEPHONE));
-			
-			String mFile = cursor.getString(cursor
-					.getColumnIndex(ProofDataBase.COLUMN_FILE));
-			
-			String mHtime = cursor.getString(cursor
-					.getColumnIndex(ProofDataBase.COLUMN_HTIME));
-			
-			String mSense = cursor.getString(cursor
-					.getColumnIndex(ProofDataBase.COLUMN_SENS));
-			
-			Record mRecord = new Record(
-					mId, mFile, mPhone, mSense, mHtime, mAndroidId);
-			
-			if(mRecord.isIncomingCall())
-				mIncommingCalls.add(mRecord);
-			else
-				mOutGoingCalls.add(mRecord);
+		try {
+		
+			while (cursor.moveToNext()) {			
+				
+				String mId = cursor.getString(cursor
+						.getColumnIndex(ProofDataBase.COLUMNRECODINGAPP_ID));
+				
+				String mAndroidId = cursor.getString(cursor
+						.getColumnIndex(ProofDataBase.COLUMN_CONTRACT_ID));
+				
+				String mPhone = cursor.getString(cursor
+						.getColumnIndex(ProofDataBase.COLUMN_TELEPHONE));
+				
+				String mFile = cursor.getString(cursor
+						.getColumnIndex(ProofDataBase.COLUMN_FILE));
+				
+				String mHtime = cursor.getString(cursor
+						.getColumnIndex(ProofDataBase.COLUMN_HTIME));
+				
+				String mSense = cursor.getString(cursor
+						.getColumnIndex(ProofDataBase.COLUMN_SENS));
+				
+				Record mRecord = new Record(
+						mId, mFile, mPhone, mSense, mHtime, mAndroidId);
+				
+				Console.print_exception(String.format("Called from: %s && In Call: %s", string, inCall));
+				
+				Console.print_exception(mRecord);
+				
+				if(mRecord.isIncomingCall() == inCall)
+					records.add(mRecord);
+			}
+		
+		} catch(Exception e) {
+			Console.print_exception(e);
 		}
+		finally {
+			cursor.close();
+		}
+		
+		return records;
+	}
+	
+	private static void cursorToInCallsAdapter(Cursor cursor) {		
+		mIncommingCalls = cursorToInAndOutCallsAdapter(cursor, true, "In");
+	}
+	
+	private static void cursorToOutCallsAdapter(Cursor cursor) {		
+		mOutGoingCalls = cursorToInAndOutCallsAdapter(cursor, false, "Out");
 	}
 	
 	private static void cursorToPhoneAdapter(Cursor cursor) {
@@ -333,11 +352,11 @@ public final class ContactsDataHelper {
 				break;
 				
 			case INCOMMING_CALLS:
-				cursorToInAndOutCallsAdapter(cursor);
+				cursorToInCallsAdapter(cursor);
 				break;
 				
 			case OUTGOINGS_CALLS:
-				cursorToInAndOutCallsAdapter(cursor);
+				cursorToOutCallsAdapter(cursor);
 				break;
 
 			default:
