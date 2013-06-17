@@ -41,11 +41,12 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 	protected ProgressDialog progressDlg;
 
 	protected int alertDlgTitle = 0, 
-			alertDlgText = 0, 
-			alertDlgCancelBtn = 0, 
-			alertDlgOkBtn = 0;
+				  alertDlgText = 0, 
+				  alertDlgCancelBtn = 0, 
+				  alertDlgOkBtn = 0;
 	
-	private int progressDlgText;
+	protected int progressDlgTextId = 0;
+	protected String preProgressDlgText = "", postProgressDlgText = "";
 
 	protected abstract void alertDlgCancelAction(DialogInterface dialog, int which);
 	protected abstract void handleOnReceive(Context context, Intent intent);
@@ -53,7 +54,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 
 	protected ArrayAdapter<Object> listAdapter = null;
 
-	protected volatile boolean reverseCollection = false, screenLocked = false;	
+	protected volatile boolean reverseCollection = false, screenLocked = false;
 
 	public volatile static boolean multiSelectEnabled = false;
 
@@ -111,14 +112,19 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		progressDlg.setCancelable(false);
 		progressDlg.setIndeterminate(true);
 		
-		progressDlg.setMessage(
+		progressDlg.setMessage(preProgressDlgText + 
 				getInternalContext().getText(
-						progressDlgText == 0 ? R.string.loading : progressDlgText));
+						progressDlgTextId == 0 ? R.string.loading : progressDlgTextId) + 
+						postProgressDlgText);
 	}
 	
 	protected void displayProgress() {
 		if(!progressDlg.isShowing())
 			progressDlg.show();
+	}
+	
+	protected void refreshProgress() {
+		setupProgressDlg();
 	}
 	
 	protected void hideProgress() {
