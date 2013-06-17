@@ -323,6 +323,9 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 		}
 		
 		else if (intent.getAction().equals(STOP_ACTION)) {
+			RecorderDetector alert = new RecorderDetector(context);
+			Console.print_debug("Numbers of observers "+alert.countObservers());
+			alert.ChangeRecPosition(false);
 			String audioFormat = dpm.getAudioFormat();
 			if (Settings.getPostEncoding() == 1
 					&& audioFormat.equalsIgnoreCase("mp3")) {
@@ -354,9 +357,6 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 					}
 
 				};
-				RecorderDetector alert = new RecorderDetector(context);
-				Console.print_debug("Numbers of observers "+alert.countObservers());
-				alert.ChangeRecPosition(false);
 				Thread mThread = new Thread(R);
 				mThread.start();
 				resetCurrentData();

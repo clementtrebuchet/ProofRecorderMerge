@@ -26,7 +26,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
-	
+
 	private final static String TAG = ProofRecorderWidget.class.getName();
 	private final String UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE";
 	public final static String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_ENABLE_SERVICE";
@@ -45,18 +45,40 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	private SharedPreferences preferences;
 	private Editor mRecEditor;
 	private boolean speakerOn;
-	private static Long defaultTimer = (long) (1);
-	private static int count = 0;
+	private static Long defaultTimerInMinutes = (long) (5);
 	public RecorderDetector mRecorderDetector = null;
+	private static int mAppWId = 0;
+
+	/**
+	 * @return the mAppWId
+	 */
+	public static int getmAppWId() {
+		Log.d(TAG, "getmAppWId() : " + ProofRecorderWidget.mAppWId);
+		return ProofRecorderWidget.mAppWId;
+	}
+
+	/**
+	 * @param mAppWId
+	 *            the mAppWId to set
+	 */
+	public static void setmAppWId(int mAppWId) {
+		ProofRecorderWidget.mAppWId = mAppWId;
+		Log.d(TAG, "setmAppWId(int mAppWId) : " + ProofRecorderWidget.mAppWId);
+	}
+
+	private static void resetAppWId() {
+
+		ProofRecorderWidget.mAppWId = 0;
+		Log.d(TAG, "resetAppWId() : " + ProofRecorderWidget.mAppWId);
+	}
 
 	private static long mRefreshInterval() {
 
-		return defaultTimer * 60 * 1000;
+		return defaultTimerInMinutes * 60 * 1000;
 	}
 
 	public ProofRecorderWidget() {
-		
-		
+
 	}
 
 	/**
@@ -66,10 +88,12 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		if(mRecorderDetector == null){
+		if (mRecorderDetector == null) {
 			mRecorderDetector = new RecorderDetector(context);
-			mRecorderDetector.addObserver(this);
-			Log.d(TAG, "mRecorderDetector.addObserver(this)");
+			mRecorderDetector.getInstance().addObserver(
+					ProofRecorderWidget.this);
+			Log.d(TAG, "mRecorderDetector.addObserver(this) "
+					+ mRecorderDetector.countObservers());
 		}
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
@@ -77,8 +101,8 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 						"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID:"
 								+ appWidgetIds[i] + "--"
 								+ AppWidgetManager.INVALID_APPWIDGET_ID);
-				//buildUpdate(context, appWidgetManager, appWidgetIds[i]);
-				serviceUpdateView(context,appWidgetIds[i]);
+				// buildUpdate(context, appWidgetManager, appWidgetIds[i]);
+				serviceUpdateView(context, appWidgetIds[i]);
 				setAlarm(context, false, appWidgetIds[i],
 						AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 			} else {
@@ -92,99 +116,97 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		Log.d(TAG, "Finnih method onUpdate OK");
 
 	}
-		
-	private void serviceUpdateView(Context mContext, int mAppWidgetId){
+
+	private void serviceUpdateView(Context mContext, int mAppWidgetId) {
 		Intent iService = new Intent(mContext, MBuildUpdate.class);
 		Bundle bService = new Bundle();
 		bService.putInt("appWidgetIds", mAppWidgetId);
 		iService.putExtras(bService);
 		mContext.startService(iService);
 	}
-	
-	 public static class MBuildUpdate extends Service
-	    {
-		    int appWidgetIds;
-		    private final String TAG = MBuildUpdate.class.getName();
-			
-			public int onStartCommand(Intent intent,int flags, int startId)
-	        {
-	            super.onStartCommand(intent, flags, startId);
-	            appWidgetIds = intent.getIntExtra("appWidgetIds", 0);
-	            //extra assertion
-	            assert(appWidgetIds != 0);
-	            // Update the widget
-	            RemoteViews remoteView = buildRemoteView(this);
-	            // Push update to homescreen
-	            pushUpdate(remoteView);
-	            // No more updates so stop the service and free resources
-	            stopSelf();
-	            Log.d(TAG, "stopSelf()");
-				return startId;
-	        }
 
-	        public RemoteViews buildRemoteView(Context context)
-	        {
-	            RemoteViews updateView = null;
+	public static class MBuildUpdate extends Service {
+		int appWidgetIds;
+		private final String TAG = MBuildUpdate.class.getName();
 
-	             updateView = new RemoteViews(context.getPackageName(),
-	    				R.layout.widget_layout);
+		public int onStartCommand(Intent intent, int flags, int startId) {
+			super.onStartCommand(intent, flags, startId);
+			appWidgetIds = intent.getIntExtra("appWidgetIds", 0);
+			// extra assertion
+			assert (appWidgetIds != 0);
+			// Update the widget
+			RemoteViews remoteView = buildRemoteView(this);
+			// Push update to homescreen
+			pushUpdate(remoteView);
+			// No more updates so stop the service and free resources
+			stopSelf();
+			Log.d(TAG, "stopSelf()");
+			return startId;
+		}
 
-	    		PendingIntent mActionEnableService = getControlIntent(context,
-	    				appWidgetIds, ProofRecorderWidget.ACTION_ENABLE_SERVICE, updateView);
-	    		updateView.setOnClickPendingIntent(R.id.imageButtonon,
-	    				mActionEnableService);
+		public RemoteViews buildRemoteView(Context context) {
+			RemoteViews updateView = null;
 
-	    		PendingIntent mActionUpdate = getControlIntent(context, appWidgetIds,
-	    				ProofRecorderWidget.ACTION_UPDATE_SERVICE, updateView);
-	    		updateView.setOnClickPendingIntent(R.id.imageButtonrefresh,
-	    				mActionUpdate);
+			updateView = new RemoteViews(context.getPackageName(),
+					R.layout.widget_layout);
 
-	    		PendingIntent mActionSetFormat = getControlIntent(context,
-	    				appWidgetIds, ProofRecorderWidget.SET_FORMAT, updateView);
-	    		updateView.setOnClickPendingIntent(R.id.imageButtonbox,
-	    				mActionSetFormat);
+			PendingIntent mActionEnableService = getControlIntent(context,
+					appWidgetIds, ProofRecorderWidget.ACTION_ENABLE_SERVICE,
+					updateView);
+			updateView.setOnClickPendingIntent(R.id.imageButtonon,
+					mActionEnableService);
 
-	    		PendingIntent mRec = getControlIntent(context, appWidgetIds, ProofRecorderWidget.REC,
-	    				updateView);
-	    		updateView.setOnClickPendingIntent(R.id.imageButtonstoprec, mRec);
+			PendingIntent mActionUpdate = getControlIntent(context,
+					appWidgetIds, ProofRecorderWidget.ACTION_UPDATE_SERVICE,
+					updateView);
+			updateView.setOnClickPendingIntent(R.id.imageButtonrefresh,
+					mActionUpdate);
 
-	    		PendingIntent mSp = getControlIntent(context, appWidgetIds, ProofRecorderWidget.SP,
-	    				updateView);
-	    		updateView.setOnClickPendingIntent(R.id.imageSpeaker, mSp);
-	    		Log.d(TAG, "Finnih method buildRemoteView OK");
-	            return updateView;
-	        }
+			PendingIntent mActionSetFormat = getControlIntent(context,
+					appWidgetIds, ProofRecorderWidget.SET_FORMAT, updateView);
+			updateView.setOnClickPendingIntent(R.id.imageButtonbox,
+					mActionSetFormat);
 
-	        @Override
-	        public void onConfigurationChanged(Configuration newConfig)
-	        {
-	            int oldOrientation = this.getResources().getConfiguration().orientation;
+			PendingIntent mRec = getControlIntent(context, appWidgetIds,
+					ProofRecorderWidget.REC, updateView);
+			updateView.setOnClickPendingIntent(R.id.imageButtonstoprec, mRec);
 
-	            if(newConfig.orientation != oldOrientation)
-	            {
-	                // Update the widget
-	                RemoteViews remoteView = buildRemoteView(this);
-	                Log.d(TAG, "newConfig.orientation != oldOrientation");
+			PendingIntent mSp = getControlIntent(context, appWidgetIds,
+					ProofRecorderWidget.SP, updateView);
+			updateView.setOnClickPendingIntent(R.id.imageSpeaker, mSp);
+			Log.d(TAG, "Finnih method buildRemoteView OK");
+			return updateView;
+		}
 
-	                // Push update to homescreen
-	                pushUpdate(remoteView);
-	            }
-	        }
+		@Override
+		public void onConfigurationChanged(Configuration newConfig) {
+			int oldOrientation = this.getResources().getConfiguration().orientation;
 
-	        private void pushUpdate(RemoteViews remoteView)
-	        {
-	            ComponentName myWidget = new ComponentName(this, ProofRecorderWidget.class);
-	            AppWidgetManager manager = AppWidgetManager.getInstance(this);
-	            manager.updateAppWidget(myWidget, remoteView);
-	            Log.d(TAG, "pushUpdate(RemoteViews remoteView)");
-	        }
+			if (newConfig.orientation != oldOrientation) {
+				// Update the widget
+				RemoteViews remoteView = buildRemoteView(this);
+				Log.d(TAG, "newConfig.orientation != oldOrientation");
 
-			@Override
-			public IBinder onBind(Intent intent) {
-				// TODO Auto-generated method stub
-				return null;
+				// Push update to homescreen
+				pushUpdate(remoteView);
 			}
-	    }
+		}
+
+		private void pushUpdate(RemoteViews remoteView) {
+			ComponentName myWidget = new ComponentName(this,
+					ProofRecorderWidget.class);
+			AppWidgetManager manager = AppWidgetManager.getInstance(this);
+			manager.updateAppWidget(myWidget, remoteView);
+			Log.d(TAG, "pushUpdate(RemoteViews remoteView)");
+
+		}
+
+		@Override
+		public IBinder onBind(Intent intent) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	}
 
 	/**
 	 * 
@@ -270,7 +292,13 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
-		
+		if (mRecorderDetector == null) {
+			mRecorderDetector = new RecorderDetector(context);
+			mRecorderDetector.getInstance().addObserver(
+					ProofRecorderWidget.this);
+			Log.d(TAG, "mRecorderDetector.addObserver(this) "
+					+ mRecorderDetector.countObservers());
+		}
 
 	}
 
@@ -379,8 +407,8 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 						Log.e(TAG, "Refreshing the "
 								+ ProofRecorderWidget.class.getSimpleName()
 								+ " Widget...");
-						
-						serviceUpdateView(context,appWidgetId);
+
+						serviceUpdateView(context, appWidgetId);
 
 					}
 
@@ -444,7 +472,8 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			}
 			mSharedPreferences = null;
 			mEditor = null;
-			mRecorderDetector.deleteObserver(this);
+			mRecorderDetector.getInstance().deleteObserver(
+					ProofRecorderWidget.this);
 			Log.d(TAG, "onDeleted appWidgetIds  OK");
 		} catch (Exception e) {
 
@@ -462,6 +491,11 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
+		if (mRecorderDetector != null) {
+			mRecorderDetector.getInstance().deleteObserver(
+					ProofRecorderWidget.this);
+			Log.d(TAG, "mRecorderDetector != null");
+		}
 
 	}
 
@@ -566,6 +600,8 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			int appWidgetId, String mCommand) {
 		PendingIntent refreshTestIntent = getControlIntent(aContext, mCommand,
 				appWidgetId);
+		ProofRecorderWidget.resetAppWId();
+		ProofRecorderWidget.setmAppWId(appWidgetId);
 		AlarmManager alarms = (AlarmManager) aContext
 				.getSystemService(Context.ALARM_SERVICE);
 		if (mCancel) {
@@ -581,11 +617,13 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable observable, Object data) {
-		boolean recOn = (boolean) ((RecorderDetector) data).isRecOn();
-		Context context = (Context) ((RecorderDetector) data).getmContext();
-		initmEditor(context);
+		RecorderDetector mRecorderDetector = (RecorderDetector) data;
+		boolean recOn = mRecorderDetector.isRecOn();
 		if (recOn) {
 			recOn = false;
 		} else {
@@ -595,5 +633,4 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 
 	}
 
-	
 }
