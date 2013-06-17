@@ -1,19 +1,17 @@
 package org.proof.recorder.utils;
 
+import java.io.File;
 import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.voice.VoiceListAdapter;
 import org.proof.recorder.adapters.ContactAdapter;
-
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
-import org.proof.recorder.fragment.dialog.ShareIntentChooser;
 import org.proof.recorder.fragment.notes.FragmentNoteTabs;
 import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
-
 import org.proof.recorder.fragment.voice.FragmentListVoice;
 import org.proof.recorder.fragment.voice.notes.FragmentVoiceNoteTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
@@ -26,7 +24,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -393,9 +390,21 @@ public final class MenuActions {
 	 * 
 	 * @param mDatas
 	 */
-	public static void sharingOptions(String[] mDatas) {
-		Intent mIntentShare = new Intent(mContext, ShareIntentChooser.class);
-		mIntentShare.putExtra("AttachedFiles", mDatas);
-		mContext.startActivity(mIntentShare);    
+	public static void sharingOptions(Context context, String[] mDatas) {
+		
+		Intent share = new Intent(android.content.Intent.ACTION_SEND);
+		share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		share.setType("audio/*");
+
+		share.putExtra(Intent.EXTRA_SUBJECT,
+				context.getString(R.string.custom_intent_chooser_subject));
+		share.putExtra(Intent.EXTRA_TEXT,
+				context.getString(R.string.custom_intent_chooser_text));
+		
+		share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(mDatas[0])));
+		context.startActivity(
+				Intent.createChooser(share, 
+						context.getString(
+											 R.string.share_intent_chooser_title)));
 	}
 }
