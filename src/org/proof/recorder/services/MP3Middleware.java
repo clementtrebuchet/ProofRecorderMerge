@@ -23,6 +23,7 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 
 	public IServiceIntentRecorderMP3 mService;
 	private static IServiceIntentRecorderMP3Cx remotePlugCnx;
+	
 	private String mFile;
 	private int mSampleRate;
 	private int audioSource;
@@ -31,6 +32,7 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	private String broadcastClass;
 	private String notificationIntent;
 	private String notificationPkg;
+	
 	private static final Class<?>[] mSetForegroundSignature = new Class[] { boolean.class };
 	private static final Class<?>[] mStartForegroundSignature = new Class[] {int.class, Notification.class };
 	private static final Class<?>[] mStopForegroundSignature = new Class[] { boolean.class };

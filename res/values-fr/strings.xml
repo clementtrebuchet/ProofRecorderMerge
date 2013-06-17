@@ -57,8 +57,10 @@
     <string name="multi_select_mode">Activer la Multi Sélection</string>
     <string name="qaction_select_all">Sélectionnez tout</string>
     <string name="qaction_delete">Supprimer</string>
-    <string name="qaction_share">Partager</string>
-    <string name="qaction_done">OK</string>
+    <string name="qaction_share">Partager</string> 
+    <string name="qaction_share_sc">SoundCloud</string>
+    <string name="qaction_done">OK</string>   
+
     <!-- START Google Play -->
     <string name="gplay_title">Google Play</string>
     <string name="gplay_no_match">Aucune correspondance trouvée!</string>
@@ -477,4 +479,34 @@
     <string name="checc">Séléction de l\'échantillonnage</string>
     <!-- PLUGUIN -->
     <string name="REQUIRED">Plugin requis</string>
+    
+    <!-- AUTO CLEAN PREFS -->
+    
+    <string name="dialog_based_phonePrefs_clean">Auto-nétoyage des Conversations</string>
+    <string name="dlgtitle_list_auto_clean">Auto-nétoyage</string>
+    <string name="summary_list_auto_clean">Programmez l\'auto nétoyage de vos conversations téléphoniques pour ne pas encombrer votre espace de stockage</string>
+    <string name="title_list_auto_clean">Sélectionnez la périodicité</string>
+    
+    <string name="yes_btn">Oui</string>
+    <string name="no_btn">Non</string>
+    
+    <string name="apply_changes_now_title">Appliquer immédiatement</string>
+    <string name="apply_changes_now_msg">Nétoyez vos conversation(s) immédiatemment, si vous clickez \'Non\' le traitement sera effectué sous 24H, tous les \'X\' fois (votre choix)</string>
+    
+    <!-- SINGLE FILE SHARE -->
+    
+    <string name="share_mail_title">Mail</string>
+    <string name="share_mail_desc">Envoyez cet enregistrement avec votre Gestionnaire de mails</string>
+    
+    <string name="share_gmail_title">GMail</string>
+    <string name="share_gmail_desc">Envoyez cet enregistrement avec votre compte GMail</string>
+    
+    <string name="share_bluetooth_title">Bluetooth</string>
+    <string name="share_bluetooth_desc">Envoyez cet enregistrement vers un appareil appairé</string>
+
+    <!-- SOUNDCLOUD FILE SHARE -->
+    
+    <string name="sc_upload_file_msg">Upload du fichier en cours…</string>
+    <string name="sc_upload_file_msg_plural">Upload des fichiers en cours…</string>
+
 </resources>

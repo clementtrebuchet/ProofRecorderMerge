@@ -38,6 +38,15 @@
             android:title="@string/title_checkbox_UAC_ASSISTED" />
     </PreferenceCategory>
     
+    <PreferenceCategory android:title="@string/dialog_based_phonePrefs_clean" >
+        <ListPreference
+            android:defaultValue="NEVER"
+            android:dialogTitle="@string/dlgtitle_list_auto_clean"
+            android:key="auto_clean"
+            android:summary="@string/summary_list_auto_clean"
+            android:title="@string/title_list_auto_clean" />
+    </PreferenceCategory>
+    
     <!-- <PreferenceCategory android:title="@string/dialog_based_preferences" > -->
     <!-- <EditTextPreference -->
     <!-- android:dialogTitle="@string/dialog_title_edittext_preference_username" -->

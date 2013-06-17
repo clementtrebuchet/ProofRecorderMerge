@@ -8,6 +8,20 @@ import android.content.Intent;
 
 public class ProofBroadcastReceiver extends BroadcastReceiver {
 	
+	protected class ProofBroadcastReceiverException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1925333564252642300L;
+		
+		public ProofBroadcastReceiverException(String detailMessage)
+	    {
+	        super(detailMessage);
+	    }
+		
+	}
+	
 	private Context internalContext = null;
 
 	@Override

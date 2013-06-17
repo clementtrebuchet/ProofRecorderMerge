@@ -28,7 +28,10 @@
     <string name="qaction_select_all">Select All</string>
     <string name="qaction_delete">Delete</string>
     <string name="qaction_share">Share</string>
-    <string name="qaction_done">OK</string>
+
+    <string name="qaction_share_sc">SoundCloud</string>
+    <string name="qaction_done">OK</string> 
+
     <string name="encode_while">Encode while recording</string>
     <string name="encode_after">Encode after recording</string>
     <string name="audio_encoder_handler">Audio Encoding Handler</string>
@@ -457,4 +460,34 @@
     <string name="checc">Séléction de l\'échantillonnage</string>
     <!-- PLUGUIN -->
     <string name="REQUIRED">Plugin requis</string>
+    
+    <!-- AUTO CLEAN PREFS -->
+    
+    <string name="dialog_based_phonePrefs_clean">Phone Calls Auto-cleaning</string>
+    <string name="dlgtitle_list_auto_clean">Auto-cleaning</string>
+    <string name="summary_list_auto_clean">Set your phone calls auto-cleaning, then decreasing disk space usage</string>
+    <string name="title_list_auto_clean">Select period</string>
+    
+    <string name="yes_btn">Yes</string>
+    <string name="no_btn">No</string>
+    
+    <string name="apply_changes_now_title">Apply Immediately</string>
+    <string name="apply_changes_now_msg">Clean your phone calls immediately, if you decline (clicking \'No\') the process will run under 24H, then every \'X\' time (your choice)</string>
+    
+    <!-- SINGLE FILE SHARE -->
+    
+    <string name="share_mail_title">Mail</string>
+    <string name="share_mail_desc">Sent this record with your default mail manager</string>
+    
+    <string name="share_gmail_title">GMail</string>
+    <string name="share_gmail_desc">Sent this record with your GMail Account</string>
+    
+    <string name="share_bluetooth_title">Bluetooth</string>
+    <string name="share_bluetooth_desc">Sent this record to appaired device</string>
+
+    <!-- SOUNDCLOUD FILE SHARE -->
+    
+    <string name="sc_upload_file_msg">Uploading file…</string>
+    <string name="sc_upload_file_msg_plural">Uploading files…</string>
+
 </resources>

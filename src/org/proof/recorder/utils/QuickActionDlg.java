@@ -84,7 +84,7 @@ public class QuickActionDlg {
 	 * @param inAdapter
 	 * @param record
 	 */
-	public static void showPhoneOptionsDlg(Context context, View v,
+	public static void showPhoneOptionsDlg(final Context context, View v,
 			final ArrayAdapter<Object> adpater, final Record record) {
 		
 		mContext = context;
@@ -119,7 +119,7 @@ public class QuickActionDlg {
 
 				case ID_SHARE:
 					String[] mDatas = new String[] { record.getmFilePath() };
-					MenuActions.sharingOptions(mDatas);
+					MenuActions.sharingOptions(context, mDatas);
 					break;
 
 				case ID_DELETE:
@@ -152,7 +152,7 @@ public class QuickActionDlg {
 	 * @param voiceListLoader
 	 */
 	public static void showTitledVoiceOptionsDlg(
-			Context context,
+			final Context context,
 			View view,
 			final Voice voice,
 			final Object adapter,
@@ -185,7 +185,7 @@ public class QuickActionDlg {
 
 				case ID_SHARE:
 					String[] mDatas = new String[] { voice.getFilePath() };
-					MenuActions.sharingOptions(mDatas);
+					MenuActions.sharingOptions(context, mDatas);
 					break;
 
 				case ID_DELETE:
@@ -280,7 +280,7 @@ public class QuickActionDlg {
 	}*/
 
 	public static void showUnTitledVoiceOptionsDlg(
-			Context context,
+			final Context context,
 			View view,
 			final Voice voice,
 			final Object listAdapter,
@@ -313,7 +313,7 @@ public class QuickActionDlg {
 
 				case ID_SHARE:
 					String[] mDatas = new String[] { voice.getFilePath() };
-					MenuActions.sharingOptions(mDatas);
+					MenuActions.sharingOptions(context, mDatas);
 					break;
 
 				case ID_DELETE:
