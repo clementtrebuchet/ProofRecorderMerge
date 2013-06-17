@@ -63,6 +63,7 @@ public class PersonnalProofContentProvider extends
 	 * Phone's Records
 	 */
 	private static final int RECORDS = 10;
+	private static final int RECORDS_OLDER_THAN = 11;
 	private static final int RECORD_ID = 20;
 	private static final int RECORD_TEL = 30;
 	private static final int RECORDS_BY_ANDROID_ID = 200;
@@ -148,6 +149,8 @@ public class PersonnalProofContentProvider extends
 
 		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
 				+ "/records";
+		public static final String CONTENT_OLDER_RECORDS_THAN = ContentResolver.CURSOR_DIR_BASE_TYPE + "/records_older_than";
+		
 		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
 				+ "/record_id";
 		public static final String CONTENT_RECORD_TEL_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
@@ -265,6 +268,8 @@ public class PersonnalProofContentProvider extends
 
 		case RECORDS:
 			return enregistrements.CONTENT_TYPE;
+		case RECORDS_OLDER_THAN:
+			return enregistrements.CONTENT_TYPE;
 		case RECORD_ID:
 			return enregistrements.CONTENT_ITEM_TYPE;
 		case RECORD_TEL:
@@ -350,6 +355,7 @@ public class PersonnalProofContentProvider extends
 	 */
 	private static final UriMatcher sURIMatcher = new UriMatcher(
 			UriMatcher.NO_MATCH);
+	
 
 	static {
 		/**
@@ -371,6 +377,7 @@ public class PersonnalProofContentProvider extends
 		 */
 
 		sURIMatcher.addURI(getAuthority(), BASE_PATH + "/records", RECORDS);
+		sURIMatcher.addURI(getAuthority(), BASE_PATH + "/records_older_than", RECORDS_OLDER_THAN);
 		sURIMatcher.addURI(getAuthority(), BASE_PATH + "/record_id/#",
 				RECORD_ID);
 		sURIMatcher.addURI(getAuthority(), BASE_PATH + "/record_tel/*",
@@ -614,6 +621,8 @@ public class PersonnalProofContentProvider extends
 			String[] selectionArgs, String sortOrder) {
 		
 		Cursor dataCursor = null;
+		
+		//boolean isDistinct = false;
 
 		// Uisng SQLiteQueryBuilder instead of query() method
 		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
@@ -680,6 +689,16 @@ public class PersonnalProofContentProvider extends
 		case RECORDS:
 			queryBuilder.setTables(ProofDataBase.TABLE_RECODINGAPP);
 			break;
+			
+		case RECORDS_OLDER_THAN:
+			// Initially designed to handle auto_cleaning service.
+			return this.deleteOlderRecordsByDate(queryBuilder, 
+											  uri, 
+											  projection, 
+											  selection, 
+											  selectionArgs, 
+											  sortOrder);
+						
 		case RECORD_ID:
 			queryBuilder.setTables(ProofDataBase.TABLE_RECODINGAPP);
 			// Adding the ID to the original query
@@ -708,14 +727,15 @@ public class PersonnalProofContentProvider extends
 			
 			queryBuilder.appendWhere(query);
 			
-			debug = "demande les entrées avec lenumero de telephone dans la table enregistrement "
-					+ uri.getLastPathSegment();
+			debug = "demande entrées avec le telephone dans enregistrement " + uri.getLastPathSegment();
 			
 			debug += " - With query: "  + query;
 			
 			debug += " - With SimplePhoneNumber: "  + mPhone;
 			
-			Console.print_debug(debug);			
+			Console.print_debug(debug);	
+			
+			//isDistinct = true;
 			
 			break;
 		case RECORD_DISTINCT_KNOWN_CONTACTS:
@@ -980,6 +1000,7 @@ public class PersonnalProofContentProvider extends
 			databaseAccess = databaseHelper.getReadableDatabase();
 		}		
 		
+		//queryBuilder.setDistinct(isDistinct);
 		dataCursor = queryBuilder.query(databaseAccess, projection, selection, selectionArgs,
 				null, null, sortOrder);
 		
@@ -1251,6 +1272,17 @@ public class PersonnalProofContentProvider extends
 		}
 		
 		
+	}
+	
+	
+	private Cursor deleteOlderRecordsByDate(SQLiteQueryBuilder queryBuilder,
+										    Uri uri, 
+										    String[] projection, 
+										    String selection,
+										    String[] selectionArgs, 
+										    String sortOrder) {
+		
+		return null;
 	}
 	
 	
