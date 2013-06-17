@@ -39,7 +39,5 @@
     	<attr format="string" name="separator" />
     </declare-styleable>
 
-
-
 </resources>
 
