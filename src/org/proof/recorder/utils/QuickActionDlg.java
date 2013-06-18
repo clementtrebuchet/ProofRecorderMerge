@@ -487,8 +487,8 @@ public class QuickActionDlg {
 			int titled,
 			untitled;
 
-			titled = AndroidContactsHelper.getTitledVoiceCount();
-			untitled = AndroidContactsHelper.getUnTitledVoiceCount();
+			titled = AndroidContactsHelper.getTitledVoiceCount(mContext);
+			untitled = AndroidContactsHelper.getUnTitledVoiceCount(mContext);
 
 			Console.print_debug("TITLED: " + titled + " " + "UNTITLED: " + untitled);
 

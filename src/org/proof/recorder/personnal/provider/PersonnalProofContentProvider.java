@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.SimplePhoneNumber;
@@ -621,6 +622,7 @@ public class PersonnalProofContentProvider extends
 			String[] selectionArgs, String sortOrder) {
 		
 		Cursor dataCursor = null;
+		String lc_query = "";
 		
 		//boolean isDistinct = false;
 
@@ -829,20 +831,21 @@ public class PersonnalProofContentProvider extends
 
 		case VOICES:
 			
-			dataCursor = databaseAccess
-					.rawQuery(
-							"SELECT voicesproof._id, voicesproof.htime, voicesproof.taille, voicesproof.timestamp, voicesproof.emplacement FROM "
-									+ ProofDataBase.TABLE_VOICES
-									+ " INNER JOIN "
-									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ " ON "
-									+ ProofDataBase.TABLE_VOICES
-									+ "._id = "
-									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ ".RecId WHERE "
-									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ ".titre !=\"Insérer un titre\"", null);
-
+			lc_query = String.format(
+					"SELECT voicesproof._id, " +
+					"voicesproof.htime, " +
+					"voicesproof.taille, " +
+					"voicesproof.timestamp, " +
+					"voicesproof.emplacement " +
+					"FROM %s INNER JOIN %s ON %s._id = %s.RecId WHERE %s.titre !=\"%s\"", 
+					ProofDataBase.TABLE_VOICES,
+					ProofDataBase.TABLE_VOICE_NOTES,
+					ProofDataBase.TABLE_VOICES,
+					ProofDataBase.TABLE_VOICE_NOTES,
+					ProofDataBase.TABLE_VOICE_NOTES,
+					getContext().getString(R.string.default_note_title));
+			
+			dataCursor = databaseAccess.rawQuery(lc_query, null);
 			dataCursor.setNotificationUri(getContext().getContentResolver(), uri);
 
 			return dataCursor;
@@ -883,22 +886,22 @@ public class PersonnalProofContentProvider extends
 
 			Console.print_debug("demande des enregistrements vocaux par le titre de leurs note: "
 								+ uri.getLastPathSegment());
-
-			dataCursor = databaseAccess
-					.rawQuery(
-							"SELECT voicesproof._id, voicesproof.htime, voicesproof.taille, voicesproof.timestamp, voicesproof.emplacement FROM "
-									+ ProofDataBase.TABLE_VOICES
-									+ " INNER JOIN "
-									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ " ON "
-									+ ProofDataBase.TABLE_VOICES
-									+ "._id="
-									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ ".RecId WHERE "
-									+ ProofDataBase.TABLE_VOICE_NOTES
-									+ ".titre==\"Insérer un titre\"",
-							null);
-
+			
+			lc_query = String.format(
+					"SELECT voicesproof._id, " +
+					"voicesproof.htime, " +
+					"voicesproof.taille, " +
+					"voicesproof.timestamp, " +
+					"voicesproof.emplacement " +
+					"FROM %s INNER JOIN %s ON %s._id = %s.RecId WHERE %s.titre ==\"%s\"", 
+					ProofDataBase.TABLE_VOICES,
+					ProofDataBase.TABLE_VOICE_NOTES,
+					ProofDataBase.TABLE_VOICES,
+					ProofDataBase.TABLE_VOICE_NOTES,
+					ProofDataBase.TABLE_VOICE_NOTES,
+					getContext().getString(R.string.default_note_title));
+			
+			dataCursor = databaseAccess.rawQuery(lc_query, null);
 			dataCursor.setNotificationUri(getContext().getContentResolver(), uri);
 
 			return dataCursor;
