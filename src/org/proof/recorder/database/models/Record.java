@@ -60,7 +60,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	private String mAndroidId;
 	private String mSize;
 	private String mSongTime;
-	private String Format;
+	private String mFormat;
 	
 	private DataPhoneNumber mDataNumber;
 	
@@ -307,11 +307,20 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	}
 	
 	public String getFormat() {
-		return Format;
+		if(this.mFormat == null) {
+			String extension = "";
+
+			int i = this.mFilePath.lastIndexOf('.');
+			if (i > 0) {
+			    extension = this.mFilePath.substring(i+1);
+			}
+			this.setFormat(extension);
+		}
+		return this.mFormat;
 	}
 
-	public void setFormat(String format) {
-		Format = format;
+	private void setFormat(String format) {
+		this.mFormat = format;
 	}
 
 	@SuppressWarnings("unused")
