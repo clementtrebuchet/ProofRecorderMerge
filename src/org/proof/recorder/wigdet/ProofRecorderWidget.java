@@ -67,47 +67,75 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		ProofRecorderWidget.mAppWId = mAppWId;
 		Log.d(TAG, "setmAppWId(int mAppWId) : " + ProofRecorderWidget.mAppWId);
 	}
-
+	/**
+	 * 
+	 */
 	private static void resetAppWId() {
 
 		ProofRecorderWidget.mAppWId = 0;
 		Log.d(TAG, "resetAppWId() : " + ProofRecorderWidget.mAppWId);
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	private static long mRefreshInterval() {
 
 		return defaultTimerInMinutes * 60 * 1000;
 	}
-
+	/**
+	 * 
+	 */
 	public ProofRecorderWidget() {
 
 	}
-
 	/**
 	 * 
+	 * @param mContext
+	 */
+	private void testIfObservers(Context mContext) {
+		try {
+			assert (mContext != null);
+			if (mRecorderDetector != null) {
+				Log.d(TAG, "mRecorderDetector.countObservers() ="
+						+ mRecorderDetector.countObservers());
+				if (mRecorderDetector.countObservers() == 0) {
+					mRecorderDetector.addObserver(ProofRecorderWidget.this);
+				}
+			}
+			if (mRecorderDetector == null) {
+				mRecorderDetector = RecorderDetector.getInstance(mContext);
+				mRecorderDetector.addObserver(ProofRecorderWidget.this);
+				Log.d(TAG, "mRecorderDetector.addObserver(this) "
+						+ mRecorderDetector.countObservers());
+				Log.d(TAG, "mRecorderDetector.countObservers() ="
+						+ mRecorderDetector.countObservers());
+
+			}
+		} catch (Exception e) {
+			Log.d(TAG,
+					"testIfObservers(Context mContext) error:" + e.getMessage());
+		}
+	}
+	/**
+	 * onDeleteObservers()
+	 */
+	private void onDeleteObservers(){
+		if (mRecorderDetector != null) {
+			mRecorderDetector.deleteObserver(
+					ProofRecorderWidget.this);
+			Log.d(TAG, "mRecorderDetector != null");
+		}
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see android.appwidget.AppWidgetProvider#onUpdate(android.content.Context, android.appwidget.AppWidgetManager, int[])
 	 */
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		
-		if (mRecorderDetector != null) {
-			Log.d(TAG,"mRecorderDetector.countObservers() ="+mRecorderDetector.countObservers());
-			if (mRecorderDetector.countObservers() == 0) {
-				mRecorderDetector.addObserver(ProofRecorderWidget.this);
-				
-			}
-		}
-		
-		if (mRecorderDetector == null) {
-			mRecorderDetector = RecorderDetector.getInstance(context);
-			mRecorderDetector.addObserver(
-					ProofRecorderWidget.this);
-			Log.d(TAG, "mRecorderDetector.addObserver(this) "
-					+ mRecorderDetector.countObservers());
-			Log.d(TAG,"mRecorderDetector.countObservers() ="+mRecorderDetector.countObservers());
-		}
-		
+		testIfObservers(context);//reconnect or connect the observers
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
 				Log.d(TAG,
@@ -129,7 +157,11 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		Log.d(TAG, "Finnih method onUpdate OK");
 
 	}
-
+	/**
+	 * 
+	 * @param mContext
+	 * @param mAppWidgetId
+	 */
 	private void serviceUpdateView(Context mContext, int mAppWidgetId) {
 		Intent iService = new Intent(mContext, MBuildUpdate.class);
 		Bundle bService = new Bundle();
@@ -137,7 +169,11 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		iService.putExtras(bService);
 		mContext.startService(iService);
 	}
-
+	/**
+	 * 
+	 * @author clement
+	 *service class@MBuildUpdate
+	 */
 	public static class MBuildUpdate extends Service {
 		int appWidgetIds;
 		private final String TAG = MBuildUpdate.class.getName();
@@ -156,7 +192,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "stopSelf()");
 			return startId;
 		}
-
+		
 		public RemoteViews buildRemoteView(Context context) {
 			RemoteViews updateView = null;
 
@@ -190,7 +226,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "Finnih method buildRemoteView OK");
 			return updateView;
 		}
-
+		/*
+		 * (non-Javadoc)
+		 * @see android.app.Service#onConfigurationChanged(android.content.res.Configuration)
+		 */
 		@Override
 		public void onConfigurationChanged(Configuration newConfig) {
 			int oldOrientation = this.getResources().getConfiguration().orientation;
@@ -204,7 +243,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 				pushUpdate(remoteView);
 			}
 		}
-
+		/**
+		 * 
+		 * @param remoteView
+		 */
 		private void pushUpdate(RemoteViews remoteView) {
 			ComponentName myWidget = new ComponentName(this,
 					ProofRecorderWidget.class);
@@ -213,51 +255,15 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "pushUpdate(RemoteViews remoteView)");
 
 		}
-
+		/*
+		 * (non-Javadoc)
+		 * @see android.app.Service#onBind(android.content.Intent)
+		 */
 		@Override
 		public IBinder onBind(Intent intent) {
 			return null;
 		}
 	}
-
-/*	*//**
-	 * 
-	 * @param context
-	 * @param appWidgetManager
-	 * @param appWidgetIds
-	 *//*
-	public void buildUpdate(Context context, AppWidgetManager appWidgetManager,
-			int appWidgetIds) {
-
-		RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-				R.layout.widget_layout);
-
-		PendingIntent mActionEnableService = getControlIntent(context,
-				appWidgetIds, ACTION_ENABLE_SERVICE, remoteViews);
-		remoteViews.setOnClickPendingIntent(R.id.imageButtonon,
-				mActionEnableService);
-
-		PendingIntent mActionUpdate = getControlIntent(context, appWidgetIds,
-				ProofRecorderWidget.ACTION_UPDATE_SERVICE, remoteViews);
-		remoteViews.setOnClickPendingIntent(R.id.imageButtonrefresh,
-				mActionUpdate);
-
-		PendingIntent mActionSetFormat = getControlIntent(context,
-				appWidgetIds, SET_FORMAT, remoteViews);
-		remoteViews.setOnClickPendingIntent(R.id.imageButtonbox,
-				mActionSetFormat);
-
-		PendingIntent mRec = getControlIntent(context, appWidgetIds, REC,
-				remoteViews);
-		remoteViews.setOnClickPendingIntent(R.id.imageButtonstoprec, mRec);
-
-		PendingIntent mSp = getControlIntent(context, appWidgetIds, SP,
-				remoteViews);
-		remoteViews.setOnClickPendingIntent(R.id.imageSpeaker, mSp);
-		appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
-
-	}*/
-
 	/**
 	 * 
 	 * @param mContext
@@ -304,13 +310,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
-		if (mRecorderDetector == null) {
-			mRecorderDetector = RecorderDetector.getInstance(context);
-			mRecorderDetector.addObserver(
-					ProofRecorderWidget.this);
-			Log.d(TAG, "mRecorderDetector.addObserver(this) "
-					+ mRecorderDetector.countObservers());
-		}
+		testIfObservers(context);//reconnect or connect the observers
 
 	}
 
@@ -379,7 +379,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 						context.startActivity(mActivity);
 						Log.d(TAG, "Start format dialog mActivity");
 						} else {
-							Toast.makeText(context, "You can't change format during record!", Toast.LENGTH_LONG).show();
+							Toast.makeText(context, context.getString(R.string.FORRBIDEN), Toast.LENGTH_LONG).show();
 						}
 
 					} else if (action.equals(REC)) {
@@ -475,7 +475,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "appWidgetId is **null**, doing nothing...");
 		}
 	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see android.appwidget.AppWidgetProvider#onDeleted(android.content.Context, int[])
+	 */
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
 		super.onDeleted(context, appWidgetIds);
@@ -488,11 +491,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			}
 			mSharedPreferences = null;
 			mEditor = null;
-			if (mRecorderDetector != null) {
-				mRecorderDetector.deleteObserver(
-						ProofRecorderWidget.this);
-				Log.d(TAG, "mRecorderDetector != null");
-			}
+			onDeleteObservers();
 			Log.d(TAG, "onDeleted appWidgetIds  OK");
 		} catch (Exception e) {
 
@@ -510,11 +509,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
-		if (mRecorderDetector != null) {
-			mRecorderDetector.deleteObserver(
-					ProofRecorderWidget.this);
-			Log.d(TAG, "mRecorderDetector != null");
-		}
+		onDeleteObservers();
 
 	}
 
@@ -573,7 +568,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param context
+	 */
 	private void initmEditor(Context context) {
 		if (mSharedPreferences != null) {
 			mEditor = mSharedPreferences.edit();
@@ -585,7 +583,9 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		}
 
 	}
-
+	/*
+	 * 
+	 */
 	@SuppressLint("NewApi")
 	private void mCommit() {
 		try {
