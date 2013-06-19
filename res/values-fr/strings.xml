@@ -498,5 +498,5 @@
     <string name="sc_upload_file_msg">Upload du fichier en cours…</string>
     <string name="sc_upload_file_msg_plural">Upload des fichiers en cours…</string>
     <!-- WIDGET -->
-    <string name="FORRBIDEN">Vous ne pouvez pas changer le format durnant l\'enregistrement !"</string>
+    <string name="FORRBIDEN">Vous ne pouvez pas changer le format durant l\'enregistrement !"</string>
 </resources>

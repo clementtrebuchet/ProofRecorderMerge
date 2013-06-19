@@ -97,7 +97,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		try {
 			assert (mContext != null);
 			if (mRecorderDetector != null) {
-				Log.d(TAG, "mRecorderDetector.countObservers() ="
+				Log.d(TAG, "mRecorderDetector.countObservers() = "
 						+ mRecorderDetector.countObservers());
 				if (mRecorderDetector.countObservers() == 0) {
 					mRecorderDetector.addObserver(ProofRecorderWidget.this);
@@ -108,7 +108,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 				mRecorderDetector.addObserver(ProofRecorderWidget.this);
 				Log.d(TAG, "mRecorderDetector.addObserver(this) "
 						+ mRecorderDetector.countObservers());
-				Log.d(TAG, "mRecorderDetector.countObservers() ="
+				Log.d(TAG, "mRecorderDetector.countObservers() = "
 						+ mRecorderDetector.countObservers());
 
 			}
