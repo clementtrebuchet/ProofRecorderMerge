@@ -10,6 +10,7 @@ import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.adapter.ProofBaseListAdapter;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
+import org.proof.recorder.services.SoundCloudBgUploader;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
@@ -30,10 +31,11 @@ import com.actionbarsherlock.widget.ShareActionProvider.OnShareTargetSelectedLis
 
 public abstract class ProofListFragmentWithQuickAction extends ProofListFragmentWithAsyncLoader {	
 
-	protected final static int SELECT_ALL = 5, 
-			DELETE = 10, 
-			SHARE = 15,
-			DONE = 20;	
+	protected final static int  SELECT_ALL = 5, 
+								DELETE = 10, 
+								SHARE = 15,
+								SHARE_SC = 20,
+								DONE = 25;	
 
 	protected ActionMode mode = null;	
 	
@@ -44,6 +46,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 	
 	protected MenuItem selectItem = null, 
 					   deleteItem = null,
+					   shareSoundCItem = null,
 					   shareItem = null;	
 	
 	protected ShareActionProvider actionProvider = null;
@@ -76,6 +79,9 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			// Set file with share history to the provider and set the share intent.
 			shareItem = menu.findItem(R.id.menu_item_share_action_provider_action_bar);
 			
+			shareSoundCItem = menu.add(0, SHARE_SC, 0, 
+					getInternalContext().getString(R.string.qaction_share_sc));
+			
 			deleteItem = menu.add(0, DELETE, 0, 
 					getInternalContext().getString(R.string.qaction_delete));			
 
@@ -88,6 +94,10 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			deleteItem.setIcon(R.drawable.icon_delete_disabled)					  
 			          .setEnabled(false)
 			          .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			
+			shareSoundCItem.setIcon(R.drawable.icon_soundcloud)
+						   .setEnabled(false)
+						   .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 			
 			shareItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 			
@@ -144,6 +154,13 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 				deleteItem.setIcon(
 						enable ? R.drawable.icon_delete : R.drawable.icon_delete_disabled);
+			}
+			
+			if(shareSoundCItem != null) {
+				shareSoundCItem.setEnabled(enable);
+
+				shareSoundCItem.setIcon(
+						enable ? R.drawable.icon_soundcloud : R.drawable.icon_soundcloud_disabled);
 			}
 		}
 
@@ -303,7 +320,6 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		}
 		else {
 			this.DeleteAction();
-			uncheckAll();
 		}	
 	}
 	
@@ -317,7 +333,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 		Console.print_debug("itemId: " + itemId);
 		
-		Intent share;
+		Intent share = null;
 
 		switch (itemId) {
 
@@ -366,12 +382,13 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 				if(Settings.isUACAssisted())
 					displayAlert();
 				else
-					alertDlgOkAction(null, 0);				
+					alertDlgOkAction(null, 0);			
 			}				
 
 			break;
-
+		
 		case SHARE:
+		case SHARE_SC:
 
 			evaluateSelectedCount();
 
@@ -379,22 +396,36 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			recordPaths = new String[selectedCount];
 
 			this.preDeleteAndShareAction();
+			
+			if(itemId == SHARE_SC) {			
 
-			share = this.ShareAction();
-
-			if(share != null) {				
-				if(quickActionMode != null)
-					quickActionMode.enableItems(true);
-				
-				actionProvider.setShareIntent(share);
-				
-				Console.print_debug("Share Intent set!");
+				if(selectedCount > 0) {
+					
+					Intent service = new Intent(getActivity(), SoundCloudBgUploader.class);
+					
+					service.putExtra("selectedCount", selectedCount);
+					service.putExtra("recordPaths", recordPaths);
+					
+					getActivity().startService(service);
+				}
 			}
 			else {
-				if(quickActionMode != null)
-					quickActionMode.enableItems(false);
-				
-				Console.print_debug("Share Intent null!");
+				share = this.ShareAction();
+	
+				if(share != null) {				
+					if(quickActionMode != null)
+						quickActionMode.enableItems(true);
+					
+					actionProvider.setShareIntent(share);
+					
+					Console.print_debug("Share Intent set!");
+				}
+				else {
+					if(quickActionMode != null)
+						quickActionMode.enableItems(false);
+					
+					Console.print_debug("Share Intent null!");
+				}
 			}
 
 			break;

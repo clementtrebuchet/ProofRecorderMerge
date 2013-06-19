@@ -6,6 +6,13 @@
         <item>Intermédiaire</item>
         <item>Basique</item>
     </string-array>
+    <string-array name="auto_clean_options">
+        <item>Ne rien faire</item>
+        <item>Antérieur à 2 jours</item>
+        <item>Antérieur à 1 semaine</item>
+        <item>Antérieur à 1 mois</item>
+        <item>Antérieur à 6 mois</item>
+    </string-array>
     <string-array name="options_values">
         <item>FULL</item>
         <item>MEDIUM</item>

@@ -60,18 +60,35 @@ public final class AndroidContactsHelper {
 		}
 	
 	
-	public static int getTitledVoiceCount() {
+	public static int getTitledVoiceCount(Context context) {
 		
-		int count;
-		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_VOICE_NOTES + " WHERE " + ProofDataBase.COLUMN_TITLE + " != \"Insérer un titre\"";
-		count = PersonnalProofContentProvider.getItemsCount(mQuery);
+		int count = 0;
+		
+		Uri uri = Uri.withAppendedPath(PersonnalProofContentProvider.CONTENT_URI, "/voices");
+		ContentResolver contentResolver = context.getContentResolver();
+		
+		Cursor objects = contentResolver.query(uri, null, null, null, null);
+		
+		if(objects != null) {
+			count = objects.getCount();
+		}
+		
 		return count;
 	}
 	
-	public static int getUnTitledVoiceCount() {
-		int count;
-		String mQuery = "SELECT _id from " + ProofDataBase.TABLE_VOICE_NOTES + " WHERE " + ProofDataBase.COLUMN_TITLE + " LIKE \"%Insérer un titre%\"";
-		count = PersonnalProofContentProvider.getItemsCount(mQuery);
+	public static int getUnTitledVoiceCount(Context context) {
+		
+		int count = 0;
+		
+		Uri uri = Uri.withAppendedPath(PersonnalProofContentProvider.CONTENT_URI, "/voices_by_untitled");
+		ContentResolver contentResolver = context.getContentResolver();
+		
+		Cursor objects = contentResolver.query(uri, null, null, null, null);
+		
+		if(objects != null) {
+			count = objects.getCount();
+		}
+		
 		return count;
 	}
 	

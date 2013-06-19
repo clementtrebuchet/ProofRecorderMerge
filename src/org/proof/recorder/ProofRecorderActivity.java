@@ -151,15 +151,15 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 	// private static final int ACTIVITY_RECORD_SOUND = 1;
 	
-	public static void refreshVoicesAndCalls() {
+	public static void refreshVoicesAndCalls(Context context) {
 		
 		int known, unknown, titled, untitled;
 
 		known = AndroidContactsHelper.getKnownFolderContactsCount();
 		unknown = AndroidContactsHelper.getUnKnownFolderContactsCount();
 		
-		titled = AndroidContactsHelper.getTitledVoiceCount();
-		untitled = AndroidContactsHelper.getUnTitledVoiceCount();
+		titled = AndroidContactsHelper.getTitledVoiceCount(context);
+		untitled = AndroidContactsHelper.getUnTitledVoiceCount(context);
 
 		if (known > 0) {
 			bKnown = true;
@@ -239,7 +239,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		Settings.setSettingscontext(this);
 		AlertDialogHelper.setContext(this);
 		
-		refreshVoicesAndCalls();
+		refreshVoicesAndCalls(this);
 	}
 
 	/** Called when the activity is first created. */
@@ -253,7 +253,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 		Settings.setSettingscontext(this);
 		AlertDialogHelper.setContext(this);
 		
-		refreshVoicesAndCalls();
+		refreshVoicesAndCalls(this);
 		
 		Settings.assertPlugVersion();		
 		

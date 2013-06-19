@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.proof.recorder.R;
 import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
-import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.Log.Console;
@@ -14,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;

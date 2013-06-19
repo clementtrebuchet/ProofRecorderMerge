@@ -137,8 +137,13 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
 			phoneNumber.setText(origPhone);
 			humanTime.setText(record.getmHtime());
+			
+			// Duration of record
 			songTime.setText(record.getmSongTime());
+			
+			// Setting format icon
 			picturesSongFormat(record, format);
+			
 			if(this.multiModeEnabled) {					
 				arrow.setVisibility(View.INVISIBLE);
 
@@ -172,26 +177,38 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 		// TODO Auto-generated method stub		
 	}
 	
-	private void picturesSongFormat(Record r, ImageView v){
-		String f = r.getFormat();
-		Bitmap defaultBite;
-		if(f.equalsIgnoreCase("wav")){
-			defaultBite = BitmapFactory.decodeResource(
-					getContext().getResources(), R.drawable.plug_wav);
-		} else if(f.equalsIgnoreCase("mp3")){
-			defaultBite = BitmapFactory.decodeResource(
-					getContext().getResources(), R.drawable.plug_mp3);
-		} else if(f.equalsIgnoreCase("ogg")){
-			defaultBite = BitmapFactory.decodeResource(
-					getContext().getResources(), R.drawable.plug_ogg);
-		} else if(f.equalsIgnoreCase("3gp")){
-			defaultBite = BitmapFactory.decodeResource(
-					getContext().getResources(), R.drawable.plug_3gp);
-		} else {
-			defaultBite = BitmapFactory.decodeResource(
-					getContext().getResources(), R.drawable.navigationrefresh);
-		}
+	private void picturesSongFormat(Record record, ImageView image) {
 		
-		v.setImageBitmap(defaultBite);
+		String format = record.getFormat();
+		
+		Console.print_exception(String.format("Format: %s for record: %s", format, record));
+		
+		Bitmap icon;
+		
+		try {
+		
+			if(format.equalsIgnoreCase("wav")){
+				icon = BitmapFactory.decodeResource(
+						getContext().getResources(), R.drawable.plug_wav);
+			} else if(format.equalsIgnoreCase("mp3")){
+				icon = BitmapFactory.decodeResource(
+						getContext().getResources(), R.drawable.plug_mp3);
+			} else if(format.equalsIgnoreCase("ogg")){
+				icon = BitmapFactory.decodeResource(
+						getContext().getResources(), R.drawable.plug_ogg);
+			} else if(format.equalsIgnoreCase("3gp")){
+				icon = BitmapFactory.decodeResource(
+						getContext().getResources(), R.drawable.plug_3gp);
+			} else {
+				icon = BitmapFactory.decodeResource(
+						getContext().getResources(), R.drawable.navigationrefresh);
+			}
+			
+			image.setImageBitmap(icon);
+		
+		}
+		catch (Exception e) {
+			Console.print_exception(e);
+		}
 	}
 }

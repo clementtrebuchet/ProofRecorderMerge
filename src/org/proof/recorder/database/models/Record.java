@@ -1,8 +1,6 @@
 package org.proof.recorder.database.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
@@ -11,7 +9,6 @@ import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
-import android.database.Cursor;
 import android.net.Uri;
 import android.telephony.PhoneNumberUtils;
 
@@ -46,8 +43,8 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	private static Uri mUriRecords = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "records");
 
-	private static Uri mUriRecordById = Uri.withAppendedPath(
-			PersonnalProofContentProvider.CONTENT_URI, "record_by_id/");
+/*	private static Uri mUriRecordById = Uri.withAppendedPath(
+			PersonnalProofContentProvider.CONTENT_URI, "record_by_id/");*/
 	
 	private static boolean hasDataLayer = false;
 	private static ContentResolver mResolver;
@@ -63,7 +60,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	private String mAndroidId;
 	private String mSize;
 	private String mSongTime;
-	private String Format;
+	private String mFormat;
 	
 	private DataPhoneNumber mDataNumber;
 	
@@ -102,47 +99,6 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 				+ ", mAndroidId=" + mAndroidId + ", mSize=" + mSize
 				+ ", mDataNumber=" + mDataNumber + ", mContact=" + mContact
 				+ ", hasDataLayer=" + hasDataLayer + "]";
-	}
-
-	public static List<Record> getAllObjects() {
-
-		List<Record> mRecordCollection =  new ArrayList<Record>();
-		Record mRecord;
-
-		Cursor mCursor = Record.getResolver().query(
-				mUriRecords, null, null, null, null);
-
-		if(mCursor.moveToFirst()) {
-			do {
-				mRecord = new Record();
-				mRecordCollection.add(mRecord);
-			}while(mCursor.moveToNext());
-		}
-
-		return mRecordCollection;		
-	}
-
-	public static Record getRecordById(String id) {
-
-		Record mRecord = null;
-
-		Uri mUri = Uri.withAppendedPath(mUriRecordById, id);
-
-		Cursor mCursor = Record.getResolver().query(
-				mUri, null, null, null, null);
-
-		if(mCursor.moveToFirst()) {
-			do {
-				mRecord = new Record();			
-			}while(mCursor.moveToNext());
-		}
-
-		return mRecord;		
-	}
-
-	public static List<Record> getRecordsByPhone(String phone) {
-
-		return null;		
 	}
 
 	public String getmTimeStamp() {
@@ -351,11 +307,20 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	}
 	
 	public String getFormat() {
-		return Format;
+		if(this.mFormat == null) {
+			String extension = "";
+
+			int i = this.mFilePath.lastIndexOf('.');
+			if (i > 0) {
+			    extension = this.mFilePath.substring(i+1);
+			}
+			this.setFormat(extension);
+		}
+		return this.mFormat;
 	}
 
-	public void setFormat(String format) {
-		Format = format;
+	private void setFormat(String format) {
+		this.mFormat = format;
 	}
 
 	@SuppressWarnings("unused")
@@ -396,4 +361,8 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		return false;
 	}
 
+	public void delete() {
+		// TODO Auto-generated method stub
+		
+	}	
 }
