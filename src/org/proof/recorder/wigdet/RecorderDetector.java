@@ -2,7 +2,9 @@ package org.proof.recorder.wigdet;
 
 import java.util.Observable;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
@@ -84,6 +86,16 @@ public class RecorderDetector extends Observable {
 		}
 		setChanged();
 		notifyObservers(this);
+		/**
+		 * make sure intent was deliver
+		 * Intent I = new Intent(mRecorderDetector.getmContext(),
+				ProofRecorderWidget.class);
+		I.setAction("org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE");
+		I.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+				ProofRecorderWidget.getmAppWId());
+		mRecorderDetector.getmContext().sendBroadcast(I);
+		Log.d(TAG, "this.mContext.sendBroadcast(I) action : " + I.getAction());
+		 */
 		
 
 	}

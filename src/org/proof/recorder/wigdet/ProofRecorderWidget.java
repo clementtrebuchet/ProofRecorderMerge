@@ -90,13 +90,24 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
+		
+		if (mRecorderDetector != null) {
+			Log.d(TAG,"mRecorderDetector.countObservers() ="+mRecorderDetector.countObservers());
+			if (mRecorderDetector.countObservers() == 0) {
+				mRecorderDetector.addObserver(ProofRecorderWidget.this);
+				
+			}
+		}
+		
 		if (mRecorderDetector == null) {
 			mRecorderDetector = RecorderDetector.getInstance(context);
 			mRecorderDetector.addObserver(
 					ProofRecorderWidget.this);
 			Log.d(TAG, "mRecorderDetector.addObserver(this) "
 					+ mRecorderDetector.countObservers());
+			Log.d(TAG,"mRecorderDetector.countObservers() ="+mRecorderDetector.countObservers());
 		}
+		
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
 				Log.d(TAG,
