@@ -1,5 +1,6 @@
 package org.proof.recorder.fragment.phone;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
 import org.proof.recorder.utils.Log.Console;
@@ -123,6 +125,21 @@ public class FragmentListRecordIn extends ProofFragment {
 						
 						Record mRecord = new Record(
 								mId, mFile, mPhone, mSense, mHtime, mAndroidId);
+						
+						try {
+
+							File g = new File(mFile);
+							ApproxRecordTime f = new ApproxRecordTime(g);
+							String stime = f.run();
+							mRecord.setmSongTime(stime);
+							Console.print_debug(stime);
+
+						} catch (Exception e) {
+
+							Console.print_exception(e);
+						}
+						
+						
 						if(mRecord.isIncomingCall())
 							objects.add(mRecord);
 					}

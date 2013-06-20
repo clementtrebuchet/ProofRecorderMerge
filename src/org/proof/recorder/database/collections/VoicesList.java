@@ -5,29 +5,25 @@ import java.util.List;
 
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.utils.Log.Console;
 
 import android.database.Cursor;
 
 public class VoicesList {
 	
-	private List<Object> _collection = null;
-	private Cursor _cursor;
-	
-	
-	
+	private List<Object> _collection = null;	
 
 	/**
 	 * 
 	 */
-	public VoicesList(String uri) {
+	public VoicesList() {
 		super();
 		
 	}
 	
 	public VoicesList(Cursor cursor) {
 		super();
-		setCursor(cursor);
-		fillCollection();
+		fillCollection(cursor);
 	}
 	
 	private Voice createVoice(String _id, String _humanTime, String _fileSize,
@@ -62,45 +58,39 @@ public class VoicesList {
 	public void setCollection(List<Object> _collection) {
 		this._collection = _collection;
 	}
-
-	/**
-	 * @return the _cursor
-	 */
-	public Cursor getCursor() {
-		return _cursor;
-	}
-
-	/**
-	 * @param _cursor the _cursor to set
-	 */
-	public void setCursor(Cursor _cursor) {
-		this._cursor = _cursor;
-	}
 	
 	/**
 	 * 
 	 */
-	private void fillCollection() {
+	public void fillCollection(Cursor dataCursor) {
 		
-		Cursor dataCursor = getCursor();
-		while (dataCursor != null && dataCursor.moveToNext()) {
-			
-			String _id = dataCursor.getString(dataCursor
-					.getColumnIndex(ProofDataBase.COLUMNVOICE_ID));
-			
-			String _timestamp = dataCursor.getString(dataCursor
-					.getColumnIndex(ProofDataBase.COLUMN_VOICE_TIMESTAMP));
-			
-			String _filePath = dataCursor.getString(dataCursor
-					.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE));
-			
-			String _fileSize = dataCursor.getString(dataCursor
-					.getColumnIndex(ProofDataBase.COLUMN_VOICE_TAILLE));
-			
-			String _humanTime = dataCursor.getString(dataCursor
-					.getColumnIndex(ProofDataBase.COLUMN_VOICE_HTIME));
-			
-			this.createVoice(_id, _humanTime, _fileSize, _timestamp, _filePath);
+		try {
+
+			while (dataCursor != null && dataCursor.moveToNext()) {
+				
+				String _id = dataCursor.getString(dataCursor
+						.getColumnIndex(ProofDataBase.COLUMNVOICE_ID));
+				
+				String _timestamp = dataCursor.getString(dataCursor
+						.getColumnIndex(ProofDataBase.COLUMN_VOICE_TIMESTAMP));
+				
+				String _filePath = dataCursor.getString(dataCursor
+						.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE));
+				
+				String _fileSize = dataCursor.getString(dataCursor
+						.getColumnIndex(ProofDataBase.COLUMN_VOICE_TAILLE));
+				
+				String _humanTime = dataCursor.getString(dataCursor
+						.getColumnIndex(ProofDataBase.COLUMN_VOICE_HTIME));
+				
+				this.createVoice(_id, _humanTime, _fileSize, _timestamp, _filePath);
+			}
+		
+		} catch (Exception e) {
+			Console.print_exception(e);
+		} finally {
+			if(dataCursor != null)
+				dataCursor.close();
 		}
 	}
 }

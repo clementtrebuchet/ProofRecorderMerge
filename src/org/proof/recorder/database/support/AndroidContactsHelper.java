@@ -4,6 +4,7 @@ import org.proof.recorder.R;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -62,31 +63,38 @@ public final class AndroidContactsHelper {
 	
 	public static int getTitledVoiceCount(Context context) {
 		
-		int count = 0;
-		
-		Uri uri = Uri.withAppendedPath(PersonnalProofContentProvider.CONTENT_URI, "/voices");
-		ContentResolver contentResolver = context.getContentResolver();
-		
-		Cursor objects = contentResolver.query(uri, null, null, null, null);
-		
-		if(objects != null) {
-			count = objects.getCount();
-		}
-		
-		return count;
+		return getCountFromUri(context, "/voices");
 	}
 	
 	public static int getUnTitledVoiceCount(Context context) {
 		
+		return getCountFromUri(context, "/voices_by_untitled");
+	}
+	
+	private static int getCountFromUri(Context context, String uriAppendPath) {
+		
 		int count = 0;
+		Cursor objects = null;
 		
-		Uri uri = Uri.withAppendedPath(PersonnalProofContentProvider.CONTENT_URI, "/voices_by_untitled");
-		ContentResolver contentResolver = context.getContentResolver();
+		Uri uri = Uri.withAppendedPath(PersonnalProofContentProvider.CONTENT_URI, 
+									   uriAppendPath);
 		
-		Cursor objects = contentResolver.query(uri, null, null, null, null);
+		try {
 		
-		if(objects != null) {
-			count = objects.getCount();
+			ContentResolver contentResolver = context.getContentResolver();
+			
+			objects = contentResolver.query(uri, null, null, null, null);
+			
+			if(objects != null) {
+				count = objects.getCount();
+			}
+		
+		} catch (Exception e) {
+			Console.print_exception(e);
+		}
+		finally {
+			if(objects != null)
+				objects.close();
 		}
 		
 		return count;

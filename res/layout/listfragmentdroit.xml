@@ -3,12 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_selector"
-    android:fitsSystemWindows="false"
     android:orientation="horizontal"
     android:padding="5dip" >
 
-    <!-- ListRow Left sied Thumbnail image -->
-
+    <!-- ListRow Left sied Thumbnail image -->    
+    
     <LinearLayout
         android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
@@ -21,17 +20,17 @@
         <ImageView
             android:contentDescription="@+string/arrow_record"
             android:id="@+id/list_image"
-            android:layout_width="64dip"
-            android:layout_height="64dip"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
              />
-    
     </LinearLayout>
 
     <ListView
         android:id="@id/android:list"
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:drawSelectorOnTop="false" />
+        android:drawSelectorOnTop="false"
+         />
 
     <!-- android:id="@+id/idrecord" -->
 
@@ -51,7 +50,7 @@
 
     <TextView
         android:id="@+id/number"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/idrecord"
         android:layout_marginTop="1dip"
@@ -76,14 +75,14 @@
 
     <TextView
         android:id="@+id/sens"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/number"
         android:layout_below="@+id/number"
         android:textColor="#10bcc9"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="false" />
 
     <!-- @+id/timehumanreadable -->
 

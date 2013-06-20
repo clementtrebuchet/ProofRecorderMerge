@@ -1,5 +1,6 @@
 package org.proof.recorder.fragment.contacts.utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.proof.recorder.database.models.SimplePhoneNumber;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.Context;
@@ -230,6 +232,19 @@ public final class ContactsDataHelper {
 				
 				Record mRecord = new Record(
 						mId, mFile, mPhone, mSense, mHtime, mAndroidId);
+				
+				try {
+
+					File g = new File(mFile);
+					ApproxRecordTime f = new ApproxRecordTime(g);
+					String stime = f.run();
+					mRecord.setmSongTime(stime);
+					Console.print_debug(stime);
+
+				} catch (Exception e) {
+
+					Console.print_exception(e);
+				}
 				
 				Console.print_exception(String.format("Called from: %s && In Call: %s", string, inCall));
 				
