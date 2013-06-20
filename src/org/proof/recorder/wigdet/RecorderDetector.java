@@ -88,14 +88,15 @@ public class RecorderDetector extends Observable {
 		notifyObservers(this);
 		/**
 		 * make sure intent was deliver
-		 * Intent I = new Intent(mRecorderDetector.getmContext(),
+		 * */
+		Intent I = new Intent(getmContext(),
 				ProofRecorderWidget.class);
 		I.setAction("org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE");
 		I.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 				ProofRecorderWidget.getmAppWId());
-		mRecorderDetector.getmContext().sendBroadcast(I);
+		getmContext().sendBroadcast(I);
 		Log.d(TAG, "this.mContext.sendBroadcast(I) action : " + I.getAction());
-		 */
+		
 		
 
 	}

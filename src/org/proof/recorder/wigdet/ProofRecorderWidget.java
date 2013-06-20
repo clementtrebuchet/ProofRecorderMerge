@@ -47,9 +47,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	private Editor mRecEditor;
 	private boolean speakerOn;
 	private static Long defaultTimerInMinutes = (long) (3);
-	public RecorderDetector mRecorderDetector = null;
+	public static RecorderDetector mRecorderDetector = null;
 	private static int mAppWId = 0;
 	public static boolean mForbbidenChFormat;
+	public static ProofRecorderWidget mProofRecorderWidget = null;
 
 	/**
 	 * @return the mAppWId
@@ -67,6 +68,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		ProofRecorderWidget.mAppWId = mAppWId;
 		Log.d(TAG, "setmAppWId(int mAppWId) : " + ProofRecorderWidget.mAppWId);
 	}
+
 	/**
 	 * 
 	 */
@@ -75,6 +77,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		ProofRecorderWidget.mAppWId = 0;
 		Log.d(TAG, "resetAppWId() : " + ProofRecorderWidget.mAppWId);
 	}
+
 	/**
 	 * 
 	 * @return
@@ -83,12 +86,44 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 
 		return defaultTimerInMinutes * 60 * 1000;
 	}
+
 	/**
 	 * 
 	 */
 	public ProofRecorderWidget() {
 
 	}
+	/**
+	 * 
+	 * @return
+	 */
+	public static boolean testIfObserversAdded() {
+		boolean result = false;
+		try {
+			if (mRecorderDetector != null) {
+				if (mRecorderDetector.countObservers() != 0) {
+					result = true;
+				} else {
+					mRecorderDetector.addObserver(mProofRecorderWidget);
+					Log.d(TAG, "Added a mProofRecorderWidget  as Observers");
+					result = true;
+				}
+
+			}
+
+		} catch (Exception e) {
+			Log.e(TAG, "" + e.getMessage());
+			result = false;
+
+		} finally {
+			Log.d(TAG, "From ProofRecorderWidget  count Observers return : "
+					+ mRecorderDetector.countObservers());
+
+		}
+		return result;
+
+	}
+
 	/**
 	 * 
 	 * @param mContext
@@ -117,25 +152,29 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 					"testIfObservers(Context mContext) error:" + e.getMessage());
 		}
 	}
+
 	/**
 	 * onDeleteObservers()
 	 */
-	private void onDeleteObservers(){
+	private void onDeleteObservers() {
 		if (mRecorderDetector != null) {
-			mRecorderDetector.deleteObserver(
-					ProofRecorderWidget.this);
+			mRecorderDetector.deleteObserver(ProofRecorderWidget.this);
 			Log.d(TAG, "mRecorderDetector != null");
 		}
 	}
+
 	/*
 	 * (non-Javadoc)
-	 * @see android.appwidget.AppWidgetProvider#onUpdate(android.content.Context, android.appwidget.AppWidgetManager, int[])
+	 * 
+	 * @see
+	 * android.appwidget.AppWidgetProvider#onUpdate(android.content.Context,
+	 * android.appwidget.AppWidgetManager, int[])
 	 */
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		testIfObservers(context);//reconnect or connect the observers
+		testIfObservers(context);// reconnect or connect the observers
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
 				Log.d(TAG,
@@ -157,6 +196,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		Log.d(TAG, "Finnih method onUpdate OK");
 
 	}
+
 	/**
 	 * 
 	 * @param mContext
@@ -169,10 +209,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		iService.putExtras(bService);
 		mContext.startService(iService);
 	}
+
 	/**
 	 * 
-	 * @author clement
-	 *service class@MBuildUpdate
+	 * @author clement service class@MBuildUpdate
 	 */
 	public static class MBuildUpdate extends Service {
 		int appWidgetIds;
@@ -192,7 +232,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "stopSelf()");
 			return startId;
 		}
-		
+
 		public RemoteViews buildRemoteView(Context context) {
 			RemoteViews updateView = null;
 
@@ -226,9 +266,12 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "Finnih method buildRemoteView OK");
 			return updateView;
 		}
+
 		/*
 		 * (non-Javadoc)
-		 * @see android.app.Service#onConfigurationChanged(android.content.res.Configuration)
+		 * 
+		 * @see android.app.Service#onConfigurationChanged(android.content.res.
+		 * Configuration)
 		 */
 		@Override
 		public void onConfigurationChanged(Configuration newConfig) {
@@ -243,6 +286,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 				pushUpdate(remoteView);
 			}
 		}
+
 		/**
 		 * 
 		 * @param remoteView
@@ -255,8 +299,10 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "pushUpdate(RemoteViews remoteView)");
 
 		}
+
 		/*
 		 * (non-Javadoc)
+		 * 
 		 * @see android.app.Service#onBind(android.content.Intent)
 		 */
 		@Override
@@ -264,6 +310,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			return null;
 		}
 	}
+
 	/**
 	 * 
 	 * @param mContext
@@ -310,7 +357,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
-		testIfObservers(context);//reconnect or connect the observers
+		testIfObservers(context);// reconnect or connect the observers
 
 	}
 
@@ -371,15 +418,19 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 						Log.d(TAG, "ACTION_DISABLE_SERVICE OK");
 
 					} else if (action.equals(SET_FORMAT)) {
-						Log.d(TAG, "action.equals(SET_FORMAT) mForbbidenChFormat ? :"+mForbbidenChFormat);
-						if(mForbbidenChFormat == false){
-						Intent mActivity = new Intent(context,
-								WidgetPreferenceFormat.class);
-						mActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						context.startActivity(mActivity);
-						Log.d(TAG, "Start format dialog mActivity");
+						Log.d(TAG,
+								"action.equals(SET_FORMAT) mForbbidenChFormat ? :"
+										+ mForbbidenChFormat);
+						if (mForbbidenChFormat == false) {
+							Intent mActivity = new Intent(context,
+									WidgetPreferenceFormat.class);
+							mActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							context.startActivity(mActivity);
+							Log.d(TAG, "Start format dialog mActivity");
 						} else {
-							Toast.makeText(context, context.getString(R.string.FORRBIDEN), Toast.LENGTH_LONG).show();
+							Toast.makeText(context,
+									context.getString(R.string.FORRBIDEN),
+									Toast.LENGTH_LONG).show();
 						}
 
 					} else if (action.equals(REC)) {
@@ -475,9 +526,13 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 			Log.d(TAG, "appWidgetId is **null**, doing nothing...");
 		}
 	}
+
 	/*
 	 * (non-Javadoc)
-	 * @see android.appwidget.AppWidgetProvider#onDeleted(android.content.Context, int[])
+	 * 
+	 * @see
+	 * android.appwidget.AppWidgetProvider#onDeleted(android.content.Context,
+	 * int[])
 	 */
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
@@ -510,6 +565,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
 		onDeleteObservers();
+		mProofRecorderWidget = null;
 
 	}
 
@@ -568,6 +624,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		}
 
 	}
+
 	/**
 	 * 
 	 * @param context
@@ -583,6 +640,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		}
 
 	}
+
 	/*
 	 * 
 	 */
@@ -643,6 +701,12 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	 */
 	@Override
 	public void update(Observable observable, Object data) {
+		if (mProofRecorderWidget == null) {
+			mProofRecorderWidget = this;
+			Log.d(TAG, "mProofRecorderWidget was null");
+		} else {
+			Log.d(TAG, "mProofRecorderWidget is not null");
+		}
 		RecorderDetector mRecorderDetector = (RecorderDetector) data;
 		mForbbidenChFormat = mRecorderDetector.isRecOn();
 		Log.d(TAG, "****Observer Widget Event isRecOn ? " + mForbbidenChFormat

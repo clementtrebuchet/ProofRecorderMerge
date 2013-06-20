@@ -181,19 +181,19 @@ public class ApproxRecordTime {
 		Log.v(TAG, "" + minutes);
 		String out = "";
 		if (seconds.length() == 1 && minutes.length() == 1) {
-			out = "0" + minutes + ":0" + seconds;
+			out = "00:0" + minutes + ":0" + seconds;
 			Log.d(TAG, "seconds.length() == 1 0" + minutes + ":0" + seconds);
 
 		} else if (seconds.length() == 1 && minutes.length() > 1) {
-			out = "" + minutes + ":0" + seconds;
+			out = "00:" + minutes + ":0" + seconds;
 			Log.d(TAG, "seconds.length() == 1 " + minutes + ":0" + seconds);
 
 		} else if (seconds.length() > 1 && minutes.length() == 1) {
-			out = "0" + minutes + ":" + seconds;
+			out = "00:0" + minutes + ":" + seconds;
 			Log.d(TAG, "minutes.length() == 1 0" + minutes + ":" + seconds);
 
 		} else {
-			out = "" + minutes + ":" + seconds;
+			out = "00:" + minutes + ":" + seconds;
 			Log.d(TAG, "" + minutes + ":" + seconds);
 		}
 		

@@ -119,7 +119,7 @@ public class FragmentListRecordIn extends ProofFragment {
 
 						String mSense = cursor.getString(cursor
 								.getColumnIndex(ProofDataBase.COLUMN_SENS));
-		
+						
 						
 						Record mRecord = new Record(
 								mId, mFile, mPhone, mSense, mHtime, mAndroidId);
