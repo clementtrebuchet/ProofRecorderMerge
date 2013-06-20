@@ -116,7 +116,7 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 						.findViewById(R.id.songtime);
 				File g = new File(voice.getFilePath());
 				ApproxRecordTime f = new ApproxRecordTime(g, true);
-				durationTxt.setText("" + f.run() + "mn/s");
+				durationTxt.setText("" + f.run());
 				picturesSongFormat(f.getmFormat(), format);
 			} catch (Exception e) {
 				Console.print_exception("" + e.getMessage());
