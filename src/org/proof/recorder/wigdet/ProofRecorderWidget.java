@@ -1,8 +1,5 @@
 package org.proof.recorder.wigdet;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 
@@ -26,7 +23,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
+public class ProofRecorderWidget extends AppWidgetProvider {
 
 	private final static String TAG = ProofRecorderWidget.class.getName();
 	private final String UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE";
@@ -47,10 +44,9 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	private Editor mRecEditor;
 	private boolean speakerOn;
 	private static Long defaultTimerInMinutes = (long) (3);
-	public static RecorderDetector mRecorderDetector = null;
+	public RecorderDetector mRecorderDetector = null;
 	private static int mAppWId = 0;
 	public static boolean mForbbidenChFormat;
-	public static ProofRecorderWidget mProofRecorderWidget = null;
 
 	/**
 	 * @return the mAppWId
@@ -93,58 +89,22 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public ProofRecorderWidget() {
 
 	}
-	/**
-	 * 
-	 * @return
-	 */
-	public static boolean testIfObserversAdded() {
-		boolean result = false;
-		try {
-			if (mRecorderDetector != null) {
-				if (mRecorderDetector.countObservers() != 0) {
-					result = true;
-				} else {
-					mRecorderDetector.addObserver(mProofRecorderWidget);
-					Log.d(TAG, "Added a mProofRecorderWidget  as Observers");
-					result = true;
-				}
-
-			}
-
-		} catch (Exception e) {
-			Log.e(TAG, "" + e.getMessage());
-			result = false;
-
-		} finally {
-			Log.d(TAG, "From ProofRecorderWidget  count Observers return : "
-					+ mRecorderDetector.countObservers());
-
-		}
-		return result;
-
-	}
 
 	/**
 	 * 
 	 * @param mContext
 	 */
-	private void testIfObservers(Context mContext) {
+	private void testIfmRecorderDetector(Context mContext) {
 		try {
 			assert (mContext != null);
 			if (mRecorderDetector != null) {
-				Log.d(TAG, "mRecorderDetector.countObservers() = "
-						+ mRecorderDetector.countObservers());
-				if (mRecorderDetector.countObservers() == 0) {
-					mRecorderDetector.addObserver(ProofRecorderWidget.this);
-				}
+				Log.d(TAG, "mRecorderDetector instance ready : "+mRecorderDetector.toString());
+
 			}
 			if (mRecorderDetector == null) {
 				mRecorderDetector = RecorderDetector.getInstance(mContext);
-				mRecorderDetector.addObserver(ProofRecorderWidget.this);
-				Log.d(TAG, "mRecorderDetector.addObserver(this) "
-						+ mRecorderDetector.countObservers());
-				Log.d(TAG, "mRecorderDetector.countObservers() = "
-						+ mRecorderDetector.countObservers());
+
+				Log.d(TAG, "mRecorderDetector was null-instanciating : "+mRecorderDetector.toString());
 
 			}
 		} catch (Exception e) {
@@ -158,8 +118,8 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	 */
 	private void onDeleteObservers() {
 		if (mRecorderDetector != null) {
-			mRecorderDetector.deleteObserver(ProofRecorderWidget.this);
-			Log.d(TAG, "mRecorderDetector != null");
+			mRecorderDetector = null;
+			Log.d(TAG, "mRecorderDetector deleted");
 		}
 	}
 
@@ -174,7 +134,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		testIfObservers(context);// reconnect or connect the observers
+		testIfmRecorderDetector(context);// reconnect or connect the observers
 		for (int i = 0; i < appWidgetIds.length; i++) {
 			if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
 				Log.d(TAG,
@@ -357,7 +317,7 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
-		testIfObservers(context);// reconnect or connect the observers
+		testIfmRecorderDetector(context);// reconnect or connect the observers
 
 	}
 
@@ -369,6 +329,15 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 		final String action = intent.getAction();
 		super.onReceive(context, intent);
 		try {
+			if (mRecorderDetector != null) {
+				mForbbidenChFormat = mRecorderDetector.isRecOn();
+				Log.d(TAG, "mRecorderDetector was not null");
+			} else {
+				testIfmRecorderDetector(context);
+				mForbbidenChFormat = mRecorderDetector.isRecOn();
+				Log.d(TAG, "mRecorderDetector was  null");
+			}
+			Log.d(TAG, "mForbbidenChFormat : " + mForbbidenChFormat);
 			int appWidgetId = intent.getExtras().getInt(
 					AppWidgetManager.EXTRA_APPWIDGET_ID,
 					AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -565,7 +534,6 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
 		onDeleteObservers();
-		mProofRecorderWidget = null;
 
 	}
 
@@ -693,32 +661,4 @@ public class ProofRecorderWidget extends AppWidgetProvider implements Observer {
 					refreshTestIntent);
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	@Override
-	public void update(Observable observable, Object data) {
-		if (mProofRecorderWidget == null) {
-			mProofRecorderWidget = this;
-			Log.d(TAG, "mProofRecorderWidget was null");
-		} else {
-			Log.d(TAG, "mProofRecorderWidget is not null");
-		}
-		RecorderDetector mRecorderDetector = (RecorderDetector) data;
-		mForbbidenChFormat = mRecorderDetector.isRecOn();
-		Log.d(TAG, "****Observer Widget Event isRecOn ? " + mForbbidenChFormat
-				+ " ****");
-		Intent I = new Intent(mRecorderDetector.getmContext(),
-				ProofRecorderWidget.class);
-		I.setAction("org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE");
-		I.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-				ProofRecorderWidget.getmAppWId());
-		mRecorderDetector.getmContext().sendBroadcast(I);
-		Log.d(TAG, "this.mContext.sendBroadcast(I) action : " + I.getAction());
-
-	}
-
 }

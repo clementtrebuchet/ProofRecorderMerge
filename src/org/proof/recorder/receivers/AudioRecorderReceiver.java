@@ -15,7 +15,6 @@ import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
 import org.proof.recorder.utils.Log.Console;
-import org.proof.recorder.wigdet.ProofRecorderWidget;
 import org.proof.recorder.wigdet.RecorderDetector;
 import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 
@@ -318,18 +317,12 @@ public class AudioRecorderReceiver extends ProofBroadcastReceiver {
 			saveCurrentData(AudioFormat);
 			
 			startService();
-			boolean result = ProofRecorderWidget.testIfObserversAdded();
-			Console.print_debug("Observers Added : "+result);
 			RecorderDetector alert = RecorderDetector.getInstance(context);
-			Console.print_debug("Numbers of observers "+alert.countObservers());
 			alert.ChangeRecPosition(true);
 		}
 		
 		else if (intent.getAction().equals(STOP_ACTION)) {
-			boolean result = ProofRecorderWidget.testIfObserversAdded();
-			Console.print_debug("Observers Added : "+result);
 			RecorderDetector alert = RecorderDetector.getInstance(context);
-			Console.print_debug("Numbers of observers "+alert.countObservers());
 			alert.ChangeRecPosition(false);
 			String audioFormat = dpm.getAudioFormat();
 			if (Settings.getPostEncoding() == 1
