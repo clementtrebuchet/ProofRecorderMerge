@@ -1,6 +1,5 @@
 package org.proof.recorder.adapters;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
 import org.proof.recorder.database.models.Contact;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.Log.Console;
 
 import android.content.ContentResolver;
