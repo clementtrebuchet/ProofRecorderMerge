@@ -70,6 +70,7 @@ public class ApproxRecordTime {
 	@SuppressWarnings("unused")
 	private String getAndroidVersion() {
 		
+		
 		String version = "UNKNOWN";
 
 		switch (android.os.Build.VERSION.SDK_INT) {
