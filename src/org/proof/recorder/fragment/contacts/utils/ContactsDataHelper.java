@@ -233,6 +233,19 @@ public final class ContactsDataHelper {
 				Record mRecord = new Record(
 						mId, mFile, mPhone, mSense, mHtime, mAndroidId);
 				
+				try {
+
+					File g = new File(mFile);
+					ApproxRecordTime f = new ApproxRecordTime(g);
+					String stime = f.run();
+					mRecord.setmSongTime(stime);
+					Console.print_debug(stime);
+
+				} catch (Exception e) {
+
+					Console.print_exception(e);
+				}
+				
 				Console.print_exception(String.format("Called from: %s && In Call: %s", string, inCall));
 				
 				Console.print_exception(mRecord);

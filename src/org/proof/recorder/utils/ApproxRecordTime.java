@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+
+import org.proof.recorder.utils.Log.Console;
+// import java.util.ArrayList;
 
 import android.annotation.TargetApi;
 import android.media.MediaMetadataRetriever;
@@ -20,11 +22,12 @@ import android.util.Log;
  */
 public class ApproxRecordTime {
 	
+	// public static ArrayList<MSong> MSongs;
+	
 	private File mFile;
-	private MediaPlayer mPlayer;
-	public static ArrayList<MSong> MSongs;
-	private ArrayList<String> MSongsParam;
-	private MSong mSong;
+	private MediaPlayer mPlayer;	
+	// private ArrayList<String> MSongsParam;
+	// private MSong mSong;
 	private String TAG = ApproxRecordTime.class.getName();
 	private String mFormat;
 	private int mEnd = 3;
@@ -40,18 +43,20 @@ public class ApproxRecordTime {
 	 * 
 	 * @param song
 	 */
-	public ApproxRecordTime(File song){
-		this.mFile = song;
-		_getMFormat();
-		
-	}
-	public ApproxRecordTime(File song, Boolean txt){
+	public ApproxRecordTime(File song) {
 		this.mFile = song;
 		_getMFormat();
 		
 	}
 	
-	private void _getMFormat(){
+	public ApproxRecordTime(File song, Boolean txt) {
+		this.mFile = song;
+		_getMFormat();
+		
+	}
+	
+	private void _getMFormat() {
+		
 		int length = this.mFile.getAbsolutePath().length();
 		if(length <= mEnd){
 			setmFormat(this.mFile.getAbsolutePath());
@@ -59,43 +64,140 @@ public class ApproxRecordTime {
 		int startIndex = length-mEnd;
 		setmFormat(this.mFile.getAbsolutePath().substring(startIndex));
 		Log.v(TAG, "this.mFormat:"+this.mFormat);
+		
 	  }
+	
+	@SuppressWarnings("unused")
+	private String getAndroidVersion() {
+		
+		String version = "UNKNOWN";
+
+		switch (android.os.Build.VERSION.SDK_INT) {
+
+		case Build.VERSION_CODES.BASE:
+			version = "BASE";
+			break;
+
+		case Build.VERSION_CODES.BASE_1_1:
+			version = "BASE_1_1";
+			break;
+
+		case Build.VERSION_CODES.CUPCAKE:
+			version = "CUPCAKE";
+			break;
+
+		case Build.VERSION_CODES.CUR_DEVELOPMENT:
+			version = "CUR_DEVELOPMENT";
+			break;
+
+		case Build.VERSION_CODES.DONUT:
+			version = "DONUT";
+			break;
+
+		case Build.VERSION_CODES.ECLAIR:
+			version = "ECLAIR";
+			break;
+
+		case Build.VERSION_CODES.ECLAIR_0_1:
+			version = "ECLAIR_0_1";
+			break;
+
+		case Build.VERSION_CODES.ECLAIR_MR1:
+			version = "ECLAIR_MR1";
+			break;
+
+		case Build.VERSION_CODES.FROYO:
+			version = "FROYO";
+			break;
+
+		case Build.VERSION_CODES.GINGERBREAD:
+			version = "GINGERBREAD";
+			break;
+
+		case Build.VERSION_CODES.GINGERBREAD_MR1:
+			version = "GINGERBREAD_MR1";
+			break;
+
+		case Build.VERSION_CODES.HONEYCOMB:
+			version = "HONEYCOMB";
+			break;
+
+		case Build.VERSION_CODES.HONEYCOMB_MR1:
+			version = "HONEYCOMB_MR1";
+			break;
+
+		case Build.VERSION_CODES.HONEYCOMB_MR2:
+			version = "HONEYCOMB_MR2";
+			break;
+
+		case Build.VERSION_CODES.ICE_CREAM_SANDWICH:
+			version = "ICE_CREAM_SANDWICH";
+			break;
+
+		case Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1:
+			version = "ICE_CREAM_SANDWICH_MR1";
+			break;
+
+		case Build.VERSION_CODES.JELLY_BEAN:
+			version = "JELLY_BEAN";
+			break;
+
+		case Build.VERSION_CODES.JELLY_BEAN_MR1:
+			version = "JELLY_BEAN_MR1";
+			break;
+
+		default:
+			break;
+		}
+		
+		return version;
+	}
+	
 	/**
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
 	public String run() {
 		
-		if(MSongsParam == null){
+		String duration = "";
+		
+		/*if(MSongsParam == null) {
 			MSongsParam = new ArrayList<String>();
 		}
-		MSongsParam.add(this.mFile.getAbsolutePath());
-		if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1){
+		
+		MSongsParam.add(this.mFile.getAbsolutePath());*/
+		
+		// Console.print_debug(getAndroidVersion());
+		
+		if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1) {
 			
 			try {
-				MSongsParam.add(getDuration());
+				// MSongsParam.add(getDuration());
+				duration = getDuration();
 			} catch (Exception e) {
-				Log.e(TAG,"Exception:"+e.getMessage());
+				Console.print_exception(e);
 				
 				try {
-					MSongsParam.add(oldGetDuration());
+					// MSongsParam.add(oldGetDuration());
+					duration = oldGetDuration();
 				} catch (IllegalArgumentException e1) {
-					Log.e(TAG,"IllegalArgumentException:"+e1.getMessage());
+					Console.print_exception(e);
 					
 				} catch (IllegalStateException e1) {
-					Log.e(TAG,"IllegalStateException:"+e1.getMessage());
+					Console.print_exception(e);
 					
 				} catch (IOException e1) {
-					Log.e(TAG,"IOException:"+e1.getMessage());
+					Console.print_exception(e);
 					
 				}
 				
 			}
 		}
 		
-		this.mSong = new MSong(MSongsParam);
+		// this.mSong = new MSong(MSongsParam);
 
-		return this.mSong.getmDuration();
+		// return this.mSong.getmDuration();
+		
+		return duration;
 	}
 	
 	/**
@@ -103,7 +205,7 @@ public class ApproxRecordTime {
 	 * @author clement
 	 *
 	 */
-	public class MSong{
+	/*public class MSong{
 		
 		private String mPath;
 		private String mDuration;
@@ -123,24 +225,22 @@ public class ApproxRecordTime {
 
 		public void setmDuration(String mDuration) {
 			this.mDuration = mDuration;
-		}
+		}		
 		
-		
+		private MSong(ArrayList<String>... strings) {
 			
-		
-		private MSong(ArrayList<String>...strings){
-			for (ArrayList<String> st : strings){
+			for (ArrayList<String> st : strings) {
+				
 				this.mPath = st.get(0);
-				this.mDuration = st.get(1);
-				
-				
+				this.mDuration = st.get(1);				
 			}
+			
 			Log.v(TAG, "this.mPath:"+this.mPath);
 			Log.v(TAG, "this.mDuration:"+this.mDuration);
 			
 		}
 	
-	}
+	}*/
 
 	/**
 	 * 
@@ -148,30 +248,39 @@ public class ApproxRecordTime {
 	 */
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
 	private String getDuration() {
+		
 		if (this.mFormat.equalsIgnoreCase("ogg")) {
+			
 			Log.e(TAG, "mFormat equal ogg, humm file goto MediaPlayer :(");
 			try {
 				String out = oldGetDuration();
 				return out;
 			} catch (IllegalArgumentException e) {
-				Log.e(TAG, e.getMessage());
+				Console.print_exception(e);
 			} catch (IllegalStateException e) {
-				Log.e(TAG, e.getMessage());
+				Console.print_exception(e);
 			} catch (IOException e) {
-				Log.e(TAG, e.getMessage());
+				Console.print_exception(e);
 			}
+			
 		}
-		MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
-		metaRetriever.setDataSource(this.mFile.getAbsolutePath());
 		
+		MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
+		
+		metaRetriever.setDataSource(this.mFile.getAbsolutePath());	
 
 		String duration = metaRetriever
 				.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+		
 		Log.v(TAG, "" + duration);
+		
 		long dur = Long.parseLong(duration);
+		
 		String time = mParseTime(dur);
+		
 		// close object
 		metaRetriever.release();
+		
 		return time;
 	}
 	private String mParseTime(long dur){
