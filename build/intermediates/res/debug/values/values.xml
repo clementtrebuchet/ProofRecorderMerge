@@ -1,0 +1,1479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/arrays.xml -->
+    <eat-comment/>
+    <string-array name="audio_format">
+        <item>3GP</item>
+        <item>WAV</item>
+        <item>MP3</item>
+        <item>OGG</item>
+    </string-array>
+    <string-array name="auto_clean_options">
+        <item>Do nothing</item>
+        <item>Before 2 days</item>
+        <item>Before 1 week</item>
+        <item>Before 1 month</item>
+        <item>Before 6 months</item>
+    </string-array>
+    <string-array name="compress_quality_mp3">
+        <item>64</item>
+        <item>80</item>
+        <item>96</item>
+        <item>112</item>
+        <item>128</item>
+        <item>160</item>
+        <item>192</item>
+        <item>224</item>
+        <item>320</item>
+    </string-array>
+    <string-array name="days_options">
+        <item>Lundi</item>
+        <item>Mardi</item>
+        <item>Mercredi</item>
+        <item>Jeudi</item>
+        <item>Vendredi</item>
+        <item>Samedi</item>
+        <item>Dimanche</item>
+    </string-array>
+    <string-array name="days_options_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="options">
+        <item>Professionnelle</item>
+        <item>Intermédiaire</item>
+        <item>Basique</item>
+    </string-array>
+    <string-array name="options_values">
+        <item>FULL</item>
+        <item>MEDIUM</item>
+        <item>SIMPLE</item>
+    </string-array>
+    <string-array name="rec_quality">
+        <item>44100</item>
+        <item>22050</item>
+        <item>11025</item>
+        <item>8000</item>
+    </string-array>
+    <string-array name="rec_quality_ogg">
+        <item>Bonne</item>
+        <item>Très bonne</item>
+        <item>Excellente</item>
+    </string-array>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <attr format="reference|color" name="background"/>
+    <attr format="reference|color" name="backgroundSplit"/>
+    <attr format="reference" name="divider"/>
+    <attr format="dimension" name="height"/>
+    <attr format="reference" name="subtitleTextStyle"/>
+    <attr format="reference" name="titleTextStyle"/>
+    <bool name="abs__action_bar_embed_tabs">false</bool>
+    <bool name="abs__action_bar_expanded_action_views_exclusive">true</bool>
+    <bool name="abs__config_actionMenuItemAllCaps">true</bool>
+    <bool name="abs__config_allowActionMenuItemTextWithIcon">false</bool>
+    <bool name="abs__config_showMenuShortcutsWhenKeyboardPresent">false</bool>
+    <bool name="abs__split_action_bar_is_narrow">true</bool>
+    <color name="abs__background_holo_dark">#ff000000</color>
+    <color name="abs__background_holo_light">#fff3f3f3</color>
+    <color name="abs__bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+    <color name="abs__bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="abs__bright_foreground_holo_dark">@color/abs__background_holo_light</color>
+    <color name="abs__bright_foreground_holo_light">@color/abs__background_holo_dark</color>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="accent_1">#ff29549f</color>
+    <color name="actionbar_text">#ff29549f</color>
+    <color name="actionbar_title_color">#224894</color>
+    <color name="all_track_color">#ff222222</color>
+    <color name="background_1">#ffffffff</color>
+    <color name="block_column_1">#ff0fabff</color>
+    <color name="block_column_2">#ffdf1831</color>
+    <color name="block_column_3">#ff009939</color>
+    <color name="body_text_1">#ff000000</color>
+    <color name="body_text_1_inverse">#ffffffff</color>
+    <color name="body_text_2">#99000000</color>
+    <color name="body_text_2_inverse">#99ffffff</color>
+    <color name="body_text_disabled">#66000000</color>
+    <color name="error_message">#ffc00000</color>
+    <color name="hyperlink">#ffff549f</color>
+    <color name="light_grey">#FEF8EE</color>
+    <color name="orange">#E87D24</color>
+    <color name="search_background">#f8f9fe</color>
+    <color name="whats_on_separator">#4d000000</color>
+    <color name="white">#FFFFFF</color>
+    <declare-styleable name="AppTheme"><attr format="reference" name="actionbarCompatButtonStyle"/><attr format="reference" name="actionbarCompatProgressIndicatorStyle"/><attr format="reference" name="actionbarCompatSeparatorStyle"/><attr format="reference" name="actionbarCompatLogoStyle"/><attr format="reference" name="actionbarCompatTextStyle"/><attr format="integer" name="textHeaderMaxLines"/><attr format="integer" name="trackAbstractMaxLines"/><attr format="reference" name="actionbarCompatTitleStyle"/><attr format="reference" name="actionbarCompatItemStyle"/><attr format="reference" name="actionbarCompatItemHomeStyle"/></declare-styleable>
+    <declare-styleable name="BezelImageView"><attr format="reference" name="maskDrawable"/><attr format="reference" name="borderDrawable"/></declare-styleable>
+    <declare-styleable name="BlocksLayout"><attr format="integer" name="columns"/></declare-styleable>
+    <declare-styleable name="ListPreferenceMultiSelect"><attr format="string" name="checkAll"/><attr format="string" name="separator"/></declare-styleable>
+    <declare-styleable name="SherlockActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr format="string" name="title"/><attr format="string" name="subtitle"/><attr name="titleTextStyle"/><attr name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr name="divider"/><attr name="background"/><attr format="reference|color" name="backgroundStacked"/><attr name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr format="dimension" name="itemPadding"/></declare-styleable>
+    <declare-styleable name="SherlockActionMenuItemView"><attr name="android:minWidth"/></declare-styleable>
+    <declare-styleable name="SherlockActionMode"><attr name="titleTextStyle"/><attr name="subtitleTextStyle"/><attr name="background"/><attr name="backgroundSplit"/><attr name="height"/></declare-styleable>
+    <declare-styleable name="SherlockActivityChooserView"><attr format="string" name="initialActivityCount"/><attr format="reference" name="expandActivityOverflowButtonDrawable"/><attr name="android:background"/></declare-styleable>
+    <declare-styleable name="SherlockMenuGroup"><attr name="android:id"/><attr name="android:menuCategory"/><attr name="android:orderInCategory"/><attr name="android:checkableBehavior"/><attr name="android:visible"/><attr name="android:enabled"/></declare-styleable>
+    <declare-styleable name="SherlockMenuItem"><attr name="android:id"/><attr name="android:menuCategory"/><attr name="android:orderInCategory"/><attr name="android:title"/><attr name="android:titleCondensed"/><attr name="android:icon"/><attr name="android:alphabeticShortcut"/><attr name="android:numericShortcut"/><attr name="android:checkable"/><attr name="android:checked"/><attr name="android:visible"/><attr name="android:enabled"/><attr name="android:onClick"/><attr name="android:showAsAction"/><attr name="android:actionLayout"/><attr name="android:actionViewClass"/><attr name="android:actionProviderClass"/></declare-styleable>
+    <declare-styleable name="SherlockMenuView"><attr format="reference" name="itemTextAppearance"/><attr format="reference" name="horizontalDivider"/><attr format="reference" name="verticalDivider"/><attr format="color|reference" name="headerBackground"/><attr format="color|reference" name="itemBackground"/><attr format="reference" name="windowAnimationStyle"/><attr format="float" name="itemIconDisabledAlpha"/><attr format="boolean" name="preserveIconSpacing"/></declare-styleable>
+    <declare-styleable name="SherlockSearchView"><attr format="boolean" name="iconifiedByDefault"/><attr name="android:maxWidth"/><attr format="string" name="queryHint"/><attr name="android:imeOptions"/><attr name="android:inputType"/></declare-styleable>
+    <declare-styleable name="SherlockSpinner"><attr name="android:prompt"/><attr name="android:dropDownSelector"/><attr name="android:popupBackground"/><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/><attr name="android:dropDownWidth"/><attr name="android:popupPromptView"/><attr name="android:gravity"/></declare-styleable>
+    <declare-styleable name="SherlockTheme"><attr format="reference" name="actionBarTabStyle"/><attr format="reference" name="actionBarTabBarStyle"/><attr format="reference" name="actionBarTabTextStyle"/><attr format="reference" name="actionOverflowButtonStyle"/><attr format="reference" name="actionBarStyle"/><attr format="reference" name="actionBarSplitStyle"/><attr format="reference" name="actionBarWidgetTheme"/><attr format="dimension" name="actionBarSize"><enum name="wrap_content" value="0"/></attr><attr format="reference" name="actionBarDivider"/><attr format="reference" name="actionBarItemBackground"/><attr format="reference" name="actionMenuTextAppearance"/><attr format="color|reference" name="actionMenuTextColor"/><attr format="reference" name="actionModeStyle"/><attr format="reference" name="actionModeCloseButtonStyle"/><attr format="reference" name="actionModeBackground"/><attr format="reference" name="actionModeSplitBackground"/><attr format="reference" name="actionModeCloseDrawable"/><attr format="reference" name="actionModeShareDrawable"/><attr format="reference" name="actionModePopupWindowStyle"/><attr format="reference" name="buttonStyleSmall"/><attr format="reference" name="selectableItemBackground"/><attr format="reference" name="windowContentOverlay"/><attr format="reference" name="textAppearanceLargePopupMenu"/><attr format="reference" name="textAppearanceSmallPopupMenu"/><attr format="reference" name="textAppearanceSmall"/><attr format="color" name="textColorPrimary"/><attr format="color" name="textColorPrimaryDisableOnly"/><attr format="color" name="textColorPrimaryInverse"/><attr format="reference" name="spinnerItemStyle"/><attr format="reference" name="spinnerDropDownItemStyle"/><attr format="reference" name="searchAutoCompleteTextView"/><attr format="reference" name="searchDropdownBackground"/><attr format="reference" name="searchViewCloseIcon"/><attr format="reference" name="searchViewGoIcon"/><attr format="reference" name="searchViewSearchIcon"/><attr format="reference" name="searchViewVoiceIcon"/><attr format="reference" name="searchViewEditQuery"/><attr format="reference" name="searchViewEditQueryBackground"/><attr format="reference" name="searchViewTextField"/><attr format="reference" name="searchViewTextFieldRight"/><attr format="reference|color" name="textColorSearchUrl"/><attr format="dimension" name="searchResultListItemHeight"/><attr format="reference" name="textAppearanceSearchResultTitle"/><attr format="reference" name="textAppearanceSearchResultSubtitle"/><attr format="dimension" name="listPreferredItemHeightSmall"/><attr format="dimension" name="listPreferredItemPaddingLeft"/><attr format="dimension" name="listPreferredItemPaddingRight"/><attr format="reference" name="textAppearanceListItemSmall"/><attr format="dimension" name="windowMinWidthMajor"/><attr format="dimension" name="windowMinWidthMinor"/><attr format="reference" name="dividerVertical"/><attr format="reference" name="actionDropDownStyle"/><attr format="reference" name="actionButtonStyle"/><attr format="reference" name="homeAsUpIndicator"/><attr format="reference" name="dropDownListViewStyle"/><attr format="reference" name="popupMenuStyle"/><attr format="dimension" name="dropdownListPreferredItemHeight"/><attr format="reference" name="actionSpinnerItemStyle"/><attr format="boolean" name="windowNoTitle"/><attr format="boolean" name="windowActionBar"/><attr format="boolean" name="windowActionBarOverlay"/><attr format="boolean" name="windowActionModeOverlay"/><attr format="boolean" name="windowSplitActionBar"/><attr format="reference" name="listPopupWindowStyle"/><attr format="reference" name="activityChooserViewStyle"/><attr format="reference" name="activatedBackgroundIndicator"/><attr format="reference" name="dropDownHintAppearance"/></declare-styleable>
+    <declare-styleable name="SherlockView"><attr name="android:focusable"/></declare-styleable>
+    <declare-styleable name="TimeRulerView"><attr format="dimension" name="headerWidth"/><attr format="dimension" name="hourHeight"/><attr format="dimension" name="labelPaddingLeft"/><attr format="color" name="labelColor"/><attr format="color" name="dividerColor"/><attr format="integer" name="startHour"/><attr format="integer" name="endHour"/></declare-styleable>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="abs__action_bar_default_height">48dip</dimen>
+    <dimen name="abs__action_bar_icon_vertical_padding">8dip</dimen>
+    <dimen name="abs__action_bar_subtitle_bottom_margin">5dip</dimen>
+    <dimen name="abs__action_bar_subtitle_text_size">14dp</dimen>
+    <dimen name="abs__action_bar_subtitle_top_margin">-3dp</dimen>
+    <dimen name="abs__action_bar_title_text_size">18dp</dimen>
+    <dimen name="abs__action_button_min_width">56dip</dimen>
+    <dimen name="abs__config_prefDialogWidth">320dp</dimen>
+    <dimen name="abs__dropdownitem_icon_width">32dip</dimen>
+    <dimen name="abs__dropdownitem_text_padding_left">8dip</dimen>
+    <dimen name="abs__dropdownitem_text_padding_right">8dip</dimen>
+    <dimen name="abs__search_view_preferred_width">320dip</dimen>
+    <dimen name="abs__search_view_text_min_width">160dip</dimen>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="actionbar_compat_button_home_width">56dp</dimen>
+    <dimen name="actionbar_compat_button_width">48dp</dimen>
+    <dimen name="actionbar_compat_height">96dp</dimen>
+    <dimen name="body_padding_large">10dp</dimen>
+    <dimen name="body_padding_medium">10dp</dimen>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/dimensions.xml -->
+    <eat-comment/>
+    <dimen name="border_offset">-0.2dp</dimen>
+    <dimen name="border_width">0.2dp</dimen>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="colorstrip_height">6dp</dimen>
+    <dimen name="schedule_header_padding">10dp</dimen>
+    <dimen name="schedule_hour_height">60dp</dimen>
+    <dimen name="schedule_label_header_width">46dp</dimen>
+    <dimen name="schedule_label_padding">5dp</dimen>
+    <dimen name="speaker_image_padding">8dp</dimen>
+    <dimen name="speaker_image_size">36dp</dimen>
+    <dimen name="star_button_padding">3dp</dimen>
+    <dimen name="tab_height">38dp</dimen>
+    <dimen name="tab_side_padding">2dp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_xlarge">18sp</dimen>
+    <dimen name="track_icon_padding">4dp</dimen>
+    <dimen name="track_icon_width">40dp</dimen>
+    <dimen name="vendor_image_size">100dp</dimen>
+    <dimen name="whats_on_button_right_padding">20dp</dimen>
+    <dimen name="whats_on_height">70dp</dimen>
+    <dimen name="whats_on_item_padding">10dp</dimen>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <item name="abs__action_menu_divider" type="id"/>
+    <item name="abs__action_menu_presenter" type="id"/>
+    <item name="abs__home" type="id"/>
+    <item name="abs__progress_circular" type="id"/>
+    <item name="abs__progress_horizontal" type="id"/>
+    <item name="abs__up" type="id"/>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/ids.xml -->
+    <eat-comment/>
+    <item name="actionbar_compat" type="id"/>
+    <item name="actionbar_compat_container" type="id"/>
+    <item name="actionbar_compat_item_refresh" type="id"/>
+    <item name="actionbar_compat_item_refresh_progress" type="id"/>
+    <item name="actionbar_compat_logo" type="id"/>
+    <item name="actionbar_compat_text" type="id"/>
+    <item name="actionbar_compat_title" type="id"/>
+    <item name="blocks_now" type="id"/>
+    <item name="blocks_ruler" type="id"/>
+    <item name="dialog_discard_confirm" type="id"/>
+    <item name="dialog_moderator" type="id"/>
+    <item name="fragment_session_detail" type="id"/>
+    <item name="fragment_sessions" type="id"/>
+    <item name="fragment_vendor_detail" type="id"/>
+    <item name="fragment_vendors" type="id"/>
+    <item name="menu_refresh" type="id"/>
+    <item name="menu_refresh_progress" type="id"/>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <integer name="abs__max_action_buttons">2</integer>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/config.xml -->
+    <eat-comment/>
+    <integer name="fling_animation_duration">350</integer>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/integers.xml -->
+    <eat-comment/>
+    <integer name="text_header_max_lines">3</integer>
+    <integer name="track_abstract_max_lines">2</integer>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="ERROR1">Erreur-RC1, contacter le support</string>
+    <string name="ERROR800">Synchronisation echouée</string>
+    <string name="ERROR81">Nom d\'utilisateur et/ou mot de passe incorrect</string>
+    <string name="ERROR82">Permission refusé</string>
+    <string name="ERROR900">Aucune donnée à synchroniser, merci.</string>
+    <string name="Echantillonnage">Echantillonnage</string>
+    <string name="FORRBIDEN">You can\'t change format during record !"</string>
+    <string name="FTPAUTHKO">L\'authentification a échouée !!</string>
+    <string name="FTPAUTHOK">L\'authentification a réussi, bienvenue.</string>
+    <string name="FTPCONOFF">Deconnection</string>
+    <string name="FTPCONON">Connection</string>
+    <string name="FTPDWKO">Le fichier ne peut pas être downloader !!</string>
+    <string name="FTPDWOK">Le fichier a été downloader avec succès</string>
+    <string name="FTPFATALERROR">Opération intérrompu, contacter le support technique, svp.</string>
+    <string name="FTPUPKO">Le fichier ne peut pas être uploader !!</string>
+    <string name="FTPUPOK">Le fichier a été uploader avec succès</string>
+    <string name="Hz">Hz</string>
+    <string name="REQUIRED">Plugin requis</string>
+    <string name="RESTOROK">Synchronisation Réussie !!</string>
+    <string name="STARTOP">Début des opérations de Synchronisation</string>
+    <string name="SyncronUi_13"/>
+    <string name="SyncronUi_14">Tips :\r\nVos données sont désynchronisées, faites une sauvegarde \!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
+    <string name="SyncronUi_15">Tips :\r\n Vos données sont deja synchronisées, sauvegarde inutile\!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
+    <string name="SyncronUi_16">Tips :\r\nVos données sont désynchronisées, l\'option force est désactivé\r\n</string>
+    <string name="SyncronUi_17">Vos données sont désynchronisées, l\'option force est désactivé</string>
+    <string name="SyncronUi_18">Erreur la checksum reste à sa valeur initial de 1000</string>
+    <string name="SyncronUi_19">Tips :\r\nVos données étaient désynchronisées,nous avons purger les données\r\nprésentent sur le serveur avant de les sauvegardées\r\n</string>
+    <string name="SyncronUi_20">Tips :\r\nVos données étaient désynchronisées, l\'option force est désactivé\r\n</string>
+    <string name="SyncronUi_21">Vos données sont désynchronisées, l\'option force est désactivé</string>
+    <string name="SyncronUi_22">Tips :\r\n Vos données étaient deja synchronisées\r\n</string>
+    <string name="SyncronUi_23">La sauvegarde des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_24">La sauvegarde des notes des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_25">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_26">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_27">La sauvegarde des appels est ok\r\n</string>
+    <string name="SyncronUi_28">La sauvegarde des notes des appels  est ok\r\n</string>
+    <string name="SyncronUi_29">La sauvegarde des enregistrement  est okr\r\n</string>
+    <string name="SyncronUi_30">La sauvegarde des notes des enregistrement  est ok\r\n</string>
+    <string name="SyncronUi_31">La sauvegarde des appels est ok\r\n</string>
+    <string name="SyncronUi_32">La sauvegarde des notes des appels  est ok\r\n</string>
+    <string name="SyncronUi_33">La sauvegarde des enregistrement  est okr\r\n</string>
+    <string name="SyncronUi_34">La sauvegarde des notes des enregistrement  est ok\r\n</string>
+    <string name="SyncronUi_35">Toutes les opérations ce sont déroulées avec succès\r\n</string>
+    <string name="SyncronUi_36">Toutes les mise à jour ce sont déroulées avec succès\r\n</string>
+    <string name="SyncronUi_37">La sauvegarde des données des appels à échouée\r\n</string>
+    <string name="SyncronUi_38">La sauvegarde des données des notes des appels à échouée\r\n</string>
+    <string name="SyncronUi_39">La sauvegarde des données des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_40">La sauvegarde des données des notes des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_41">La sauvegarde des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_42">La sauvegarde des notes des appels est déja à jour\r\n</string>
+    <string name="SyncronUi_43">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_44">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
+    <string name="SyncronUi_45">Toutes les restaurations de données ce sont déroulées avec succès\r\n</string>
+    <string name="SyncronUi_46">La restaurations des données des appels à échouée\r\n</string>
+    <string name="SyncronUi_47">La restaurations des donnéese des notes des appels à échouée\r\n</string>
+    <string name="SyncronUi_48">La restaurations des données des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_49">La restaurations des données des notes des enregistrement vocaux à échouée\r\n</string>
+    <string name="SyncronUi_54">Bienvenue\r\n</string>
+    <string name="ab_contacts_list_icon_desc">Contacts icons</string>
+    <string name="ab_contacts_list_text">Contacts\' List</string>
+    <string name="ab_default_text">Frug\'n Frog\'s Apps :)</string>
+    <string name="about_app">
+        
+        &amp;lt;p&amp;gt;
+	        This software allows you to:
+	        &amp;lt;ul&amp;gt;
+		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;Record&amp;lt;/u&amp;gt; in different format (mp3, wav, ogg, ...)&amp;lt;br&amp;gt; your phone calls or simply your voice.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;Associate&amp;lt;/u&amp;gt; a note and title to each record of any kind.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;Filter&amp;lt;/u&amp;gt; recorder service based on your own Contacts list.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+	        &amp;lt;/ul&amp;gt;
+	        And more ...
+        &amp;lt;/p&amp;gt;
+        
+    </string>
+    <string name="about_some_links">Some links:</string>
+    <string name="about_us">About Us</string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <string name="abs__action_bar_home_description">Navigate home</string>
+    <string name="abs__action_bar_up_description">Navigate up</string>
+    <string name="abs__action_menu_overflow_description">More options</string>
+    <string name="abs__action_mode_done">Done</string>
+    <string name="abs__activity_chooser_view_see_all">See all...</string>
+    <string name="abs__activitychooserview_choose_application">Choose an application</string>
+    <string name="abs__searchview_description_clear">Clear query</string>
+    <string name="abs__searchview_description_query">Search query</string>
+    <string name="abs__searchview_description_search">Search</string>
+    <string name="abs__searchview_description_submit">Submit query</string>
+    <string name="abs__searchview_description_voice">Voice search</string>
+    <string name="abs__shareactionprovider_share_with">Share with</string>
+    <string name="abs__shareactionprovider_share_with_application">Share with <ns1:g example="Bluetooth" id="application_name">%s</ns1:g></string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_bar_share_with">Share with…</string>
+    <string name="action_not_allowed">Action not allowed!</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+    <string name="alert_dialog_ok">Validate</string>
+    <string name="alert_dlg_datepicker_title">Dates &amp; Calendars</string>
+    <string name="allow">Permission authorized</string>
+    <string name="already_registered"/>
+    <string name="analysis_over">Analyse terminée</string>
+    <string name="android_test_canceled">android.test.canceled</string>
+    <string name="android_test_item_unavailable">android.test.item unavailable</string>
+    <string name="android_test_purchased">android.test.purchased</string>
+    <string name="android_test_refunded">android.test.refunded</string>
+    <string name="app_name">Phone &amp; Voice Recorder</string>
+    <string name="application_error">A problem occur</string>
+    <string name="apply_changes_now_msg">Clean your phone calls immediately, if you decline (clicking \'No\') the process will run under 24H, then every \'X\' time (your choice)</string>
+    <string name="apply_changes_now_title">Apply Immediately</string>
+    <string name="apr">April</string>
+    <string name="arrow_record">arrow image</string>
+    <string name="audio_encoder_handler">Audio Encoding Handler</string>
+    <string name="aug">August</string>
+    <string name="bad_mp3_version">Your MP3 plugin is outdated, please update!</string>
+    <string name="bad_ogg_version">Your OGG plugin is outdated, please update!</string>
+    <string name="billing_not_supported_message">The Market billing
+     service is not available at this time.  You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string name="billing_not_supported_title">Can\'t make purchases</string>
+    <string name="bitrate">bitrate</string>
+    <string name="btn_ok">OK</string>
+    <string name="buy">Buy</string>
+    <string name="buy_button">Upgrade</string>
+    <string name="cannot_connect_message">This app cannot connect to Market.
+     Your version of Market may be out of date.
+     You can continue to use this app but you
+     won\'t be able to make purchases.</string>
+    <string name="cannot_connect_title">Can\'t connect to Market</string>
+    <string name="checc">Séléction de l\'échantillonnage</string>
+    <string name="checking_license">Checking Licence</string>
+    <string name="cm_records_list_del_all_file_txt">Delete All</string>
+    <string name="cm_records_list_del_file_txt">Delete</string>
+    <string name="cm_records_list_details_txt">Display details</string>
+    <string name="cm_records_list_display_txt">Display</string>
+    <string name="cm_records_list_read_wav_txt">Play</string>
+    <string name="cm_records_list_sharing_opts_txt">Share</string>
+    <string name="condition_eula">Licence</string>
+    <string name="contact_body">Here your message…</string>
+    <string name="contact_subject">Proof and Voice Recorder: A Question?</string>
+    <string name="contact_uri">Contact</string>
+    <string name="convdir">Convert to Mp3 format</string>
+    <string name="conversion_ready">MP3 is ready</string>
+    <string name="convert_later">Convert later</string>
+    <string name="converting">MP3 is converting</string>
+    <string name="custom_intent_chooser_subject">Voice Proof Recorder Share</string>
+    <string name="custom_intent_chooser_text">Write a comment with this share</string>
+    <string name="dashboard_dialog_title">DashBoard</string>
+    <string name="dashbord_dialog_app_space">Space occupation by ProofRecorder:</string>
+    <string name="dashbord_dialog_battery_state">Battery state:</string>
+    <string name="dashbord_dialog_calls">Number or recorded calls:</string>
+    <string name="dashbord_dialog_excluded_contacts">Excluded contacts from service:</string>
+    <string name="dashbord_dialog_free_space">Free space (on SD card):</string>
+    <string name="dashbord_dialog_network">Network used:</string>
+    <string name="dashbord_dialog_non_excluded_contacts">Non-Excluded contacts:</string>
+    <string name="dashbord_dialog_voices">Number or recorded voices:</string>
+    <string name="debutRec">Starting recording</string>
+    <string name="dec">December</string>
+    <string name="default_note_text">No text note for this record</string>
+    <string name="default_note_title">Insert a title note</string>
+    <string name="deleted_contact">Contact supprimé: </string>
+    <string name="descriptionListeP">Calls\' Records List</string>
+    <string name="descriptionVoix">Voice Recorder</string>
+    <string name="desriptionListSet">Settings</string>
+    <string name="desriptionListV">Voices\' Records List</string>
+    <string name="dialog_based_audoiSourceBestConf">Set the best configuration</string>
+    <string name="dialog_based_audoiSourcePrefs">Audio Source</string>
+    <string name="dialog_based_phonePrefs">Communications</string>
+    <string name="dialog_based_phonePrefs_clean">Phone Calls Auto-cleaning</string>
+    <string name="dialog_based_phonePrefs_ergo">Security and Ergonomy</string>
+    <string name="dlgmenu_img_desc">Action Bar icon (cd)</string>
+    <string name="dlgtitle_list_auto_clean">Auto-cleaning</string>
+    <string name="dont_allow">Permission refused</string>
+    <string name="echantillon">Fréquence d\'échantillonnage</string>
+    <string name="edit_payload">Edit Payload</string>
+    <string name="edit_payload_accept">Set</string>
+    <string name="edit_payload_clear">No Payload</string>
+    <string name="edit_payload_title">Edit the developer payload associated with this purchase</string>
+    <string name="edit_subscriptions">Edit Subscriptions</string>
+    <string name="encode_after">Encode after recording</string>
+    <string name="encode_while">Encode while recording</string>
+    <string name="encoding_data">Encoding Audio data…</string>
+    <string name="encoding_summary">Split recording process into two steps!</string>
+    <string name="encoding_title">Few Device\'s resources ?</string>
+    <string name="enregistreDebut">recording Starting</string>
+    <string name="enregistreFin">recording ending</string>
+    <string name="enregistreNote">record</string>
+    <string name="error_config"/>
+    <string name="eula_accept">Accept</string>
+    <string name="eula_refuse">Refuse</string>
+    <string name="eula_title">Licence Contract</string>
+    <string name="excludedFromRecordingList_desc">Excluded Contacts from recording\'s service</string>
+    <string name="extra_checkbox_INFORMATION">(peu ne pas fonctionner suivant les capacitées matériels du mobile)</string>
+    <string name="feb">February</string>
+    <string name="finRec">Ending Recording</string>
+    <string name="footer">Proof Recorder</string>
+    <string name="foreground_service_started">Voice Media Recorder started!</string>
+    <string name="ftpstore">Pluguin FTP (save on your own FTP)</string>
+    <string name="gcm_deleted"/>
+    <string name="gcm_error"/>
+    <string name="gcm_message"/>
+    <string name="gcm_recoverable_error"/>
+    <string name="gcm_registered"/>
+    <string name="gcm_unregistered"/>
+    <string name="gdevApiKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlJHQPCfccFjpEBQPG29jnh18AWwDqovEKOOZ4ms2aYWvoUUabaJT3NPCJ9XlgQYhB7wsC9ZYt9jHZBYX+WbMJ1XJs14EoNbWIJYK2urIbNTYGd2yjH4bE0irf7AYmLchuOfO3AJzdUi0LYbY7A+LS+CGSOSTCNGlRFzsWAEqF0phQudbYE4rzyPNxs8wj192sI188GYiPhTAv77yVcqI8ppnaaVCDpq7XY+g4IunoltTg9Xtz6h5m/Upr44kLmjB1FPM0rvAe75EW2uXXjImXQKCxLhZy6Q07uMqSwXpc6shnLr9OifzbQI3zpxfPStoTmmcc3MmfuMdLIoueShPwIDAQAB</string>
+    <string name="google_analytics_ua">UA\-33072114\-1</string>
+    <string name="gplay_no_match">No match found!</string>
+    <string name="gplay_title">Google Play</string>
+    <string formatted="false" name="help_url">http://market.android.com/support/bin/answer.py?answer=1050566&amp;hl=%lang%&amp;dl=%region%</string>
+    <string name="hz">En hertz</string>
+    <string name="ic_stat_gcm"/>
+    <string name="info_phone">Phone\'s details</string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/styles.xml -->
+    <eat-comment/>
+    <string name="input.button_done.label">I\'m done</string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="items_for_sale">Items for sale</string>
+    <string name="items_you_own">Items you own</string>
+    <string name="jan">January</string>
+    <string name="jul">July</string>
+    <string name="jun">June</string>
+    <string name="learn_more">Learn more</string>
+    <string name="list_details_image">Contact</string>
+    <string name="list_details_image_cd">Contact</string>
+    <string name="loading">Fetching data, please wait…</string>
+    <string name="mar">March</string>
+    <string name="may">May</string>
+    <string name="mp3c">Séléction de la Compression</string>
+    <string name="multi_select_mode">Enable Multi Selection</string>
+    <string name="no_btn">No</string>
+    <string name="none_records_dialog_title">For Information</string>
+    <string name="none_records_dlg_msg">You haven\'t any records yet!</string>
+    <string name="noteContextualMenuDelete">Delete Note</string>
+    <string name="noteContextualMenuUpdate">Save Note</string>
+    <string name="noteTabDetail">Detail</string>
+    <string name="noteTabNote">Note</string>
+    <string name="note_add">add</string>
+    <string name="note_sup">delete</string>
+    <string name="notification_3gp_text">The 3gp service is currently running</string>
+    <string name="notification_3gp_title">3gp service running</string>
+    <string name="notification_mp3_text">The Mp3 service is currently running</string>
+    <string name="notification_mp3_title">Mp3 service running</string>
+    <string name="notification_ogg_text">The Ogg service is currently running</string>
+    <string name="notification_ogg_title">Ogg service running</string>
+    <string name="notification_wav_text">The Wav service is currently running</string>
+    <string name="notification_wav_title">Wav service running</string>
+    <string name="notifyEndOfCallOne">PhoneCall (</string>
+    <string name="notifyEndOfCallTwo">) Saved!</string>
+    <string name="notifyEndOfVoice">Voice Record Saved!</string>
+    <string name="nov">November</string>
+    <string name="oct">October</string>
+    <string name="offers_dlg_title">Offres disponibles</string>
+    <string name="offers_options">Performances</string>
+    <string name="offers_options_list">Partage</string>
+    <string name="oggqual">Qualitée Ogg</string>
+    <string name="oggtit">Qualitée du format Ogg</string>
+    <string name="ok">OK</string>
+    <string name="options_clear"/>
+    <string name="options_exit"/>
+    <string name="plug_ftp_link">ftp_link</string>
+    <string name="plug_ftp_title">FTP Data Transport</string>
+    <string name="plug_ftp_txt">
+        This plugins allows you to synchronize 
+        your voice and call records to your own server 
+        via FTP transport.
+        All records with embbed information ensuring complete transparency.
+	</string>
+    <string name="plug_mp3_link">org.proofs.recorder.codec.mp3</string>
+    <string name="plug_mp3_title">MP3 Audio Engine</string>
+    <string name="plug_mp3_txt">
+        This plugins allows you to record 
+        through high quality and compressed audio stream
+        via MP3 codec implementation.
+    </string>
+    <string name="plug_ogg_link">org.proofs.recorder.codec.ogg</string>
+    <string name="plug_ogg_title">OGG Audio Engine</string>
+    <string name="plug_ogg_txt">
+		This plugins allows you to record 
+        through high quality and compressed audio stream
+        via OGG codec implementation.
+	</string>
+    <string name="prog_msg">MP3 is now converting.</string>
+    <string name="qaction_delete">Delete</string>
+    <string name="qaction_done">OK</string>
+    <string name="qaction_select_all">Select All</string>
+    <string name="qaction_share">Share</string>
+    <string name="qaction_share_sc">SoundCloud</string>
+    <string name="quit_button">Quit</string>
+    <string name="recent_transactions">Recent activity</string>
+    <string name="record_on_recording">Impossible to run recording service \ntwice at the same time!</string>
+    <string name="restoring_transactions">Restoring transactions</string>
+    <string name="retry_button">new try</string>
+    <string name="sc_upload_file_msg">Uploading file…</string>
+    <string name="sc_upload_file_msg_plural">Uploading files…</string>
+    <string name="search_aoc_default_text">Your search</string>
+    <string name="search_by_date">By Date</string>
+    <string name="search_by_date_period">For a period</string>
+    <string name="search_by_date_period_end">Ending date</string>
+    <string name="search_by_date_period_start">Starting date</string>
+    <string name="search_by_date_precise">For a precise date</string>
+    <string name="search_by_date_validate">Validate</string>
+    <string name="search_call_records_choice">Calls Records</string>
+    <string name="search_dialog_title">Search Engine</string>
+    <string name="search_hint">Quick Search</string>
+    <string name="search_none_records_found">None of records matching your search request! \nPlease, try with other criteria.</string>
+    <string name="search_quick_dlg_msg">Search</string>
+    <string name="search_run_search">Go Search</string>
+    <string name="search_selected_date">Selected date</string>
+    <string name="search_voice_records_choice">Voices Records</string>
+    <string name="select_encoding_method">Select encoding process</string>
+    <string name="select_item">Select an item</string>
+    <string name="sep">September</string>
+    <string name="server_register_error"/>
+    <string name="server_registered"/>
+    <string name="server_registering"/>
+    <string name="server_unregister_error"/>
+    <string name="server_unregistered"/>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/styles.xml -->
+    <eat-comment/>
+    <string name="settings.local_dir.default">/ProofRecorder</string>
+    <string name="settings.remote_dir.default">/</string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="shakestore">Get recording your friends by checking!</string>
+    <string name="share_bluetooth_desc">Sent this record to appaired device</string>
+    <string name="share_bluetooth_title">Bluetooth</string>
+    <string name="share_gmail_desc">Sent this record with your GMail Account</string>
+    <string name="share_gmail_title">GMail</string>
+    <string name="share_intent_chooser_title">Share this record</string>
+    <string name="share_mail_desc">Sent this record with your default mail manager</string>
+    <string name="share_mail_title">Mail</string>
+    <string name="site_uri">Phone &amp; voice Recorder</string>
+    <string name="songtime">00:00 mn/s</string>
+    <string name="soundopt">Qualitée d\'enregistrement</string>
+    <string name="start_recording">Starting Recording</string>
+    <string name="stats">Usage Stats</string>
+    <string name="stop_recording">Stopping Recording</string>
+    <string name="strABCallRecordDetail">Detail for </string>
+    <string name="strABCallRecords">Calls Records</string>
+    <string name="strABDashBoardPerf">Informations &amp; Performances</string>
+    <string name="strABVoiceRecorder">Voice Recorder</string>
+    <string name="strABVoiceRecords">Voices Records</string>
+    <string name="strCallRecords">Call Records</string>
+    <string name="strContactManager">Contact Manager</string>
+    <string name="strDetailsRecords">Detail for</string>
+    <string name="strExcludedTab">Excluded Contacts</string>
+    <string name="strGlobalSettings">Global Settings</string>
+    <string name="strHome">Home</string>
+    <string name="strIncommingTab">Incomming Calls</string>
+    <string name="strKnownContactsTab">Known Contacts</string>
+    <string name="strNotExcludedTab">Contacts List</string>
+    <string name="strOutcommingTab">OutGoing Calls</string>
+    <string name="strPlugins">Plugins</string>
+    <string name="strSettingsDeviceCapabilities">Audio Capabilities</string>
+    <string name="strSettingsGlobalServices">Service Configuration</string>
+    <string name="strSettingsOptions">Options</string>
+    <string name="strStartStopPlayer">Play</string>
+    <string name="strStartStopRecorder">Record</string>
+    <string name="strTitledVoicesTab">Titled Record</string>
+    <string name="strUACCancelBtn">Cancel</string>
+    <string name="strUACConfirmBtn">Confirm</string>
+    <string name="strUACDeleteFolder">You\'re about to delete \nall records of the selected contact! \nAre you sure ?</string>
+    <string name="strUACDeleteRecord">You\'re about to delete \n the selected Record! \nAre you sure ?</string>
+    <string name="strUACTitle">Warning!</string>
+    <string name="strUnKnownContactsTab">Unknown Contacts</string>
+    <string name="strUnTitledVoicesTab">Titleless Record</string>
+    <string name="strVoiceRecorder">Voice Recorder</string>
+    <string name="strVoiceRecords">Voice Records</string>
+    <string name="subscription_monthly">Synchro Subscription monthly</string>
+    <string name="subscription_yearly">Synchro Subscription yearly</string>
+    <string name="subscriptions_not_supported_message">The Market billing
+     service on this device does not support subscriptions at this time.</string>
+    <string name="subscriptions_not_supported_title">Can\'t purchase subscriptions</string>
+    <string name="summary_checkbox_BESTCONF">Detected:\nBest theorical audio source</string>
+    <string name="summary_checkbox_CAM">Optimized Source:\nFrontal Microphone</string>
+    <string name="summary_checkbox_EULA_SUM">Accept the terms of use</string>
+    <string name="summary_checkbox_INCALL">Record Incomming Calls</string>
+    <string name="summary_checkbox_MIC">Optimized Source:\nMicrophone</string>
+    <string name="summary_checkbox_NOTIFICATION">Activate / Deactivate application\'s notifications</string>
+    <string name="summary_checkbox_OFFERS">Offres disponibles</string>
+    <string name="summary_checkbox_OFFER_FTP">Plugin Ftp Sauvegarde Perso</string>
+    <string name="summary_checkbox_OFFER_MP3">Plugin son mp3 gratuit(Free)</string>
+    <string name="summary_checkbox_OFFER_OGG">Plugin son Ogg(Free)</string>
+    <string name="summary_checkbox_OUTCALL">Record Outcomming Calls</string>
+    <string name="summary_checkbox_UAC_ASSISTED">Activate / Deactivate control options on deleting actions (alerts dialog)</string>
+    <string name="summary_checkbox_VOICE_CALL">Optimized Source:\nVocals Calls</string>
+    <string name="summary_checkbox_VOICE_COM">Optimized Source:\nPhone Call Conversations</string>
+    <string name="summary_checkbox_VOICE_DOWN">Optimized Source:\nCaller Voice</string>
+    <string name="summary_checkbox_VOICE_RECO">Optimized Source:\nVoice Recognition</string>
+    <string name="summary_checkbox_VOICE_UP">Optimized Source:\nYour Voice</string>
+    <string name="summary_checkbox_speaker">Needed for a good recording quality</string>
+    <string name="summary_list_auto_clean">Set your phone calls auto-cleaning, then decreasing disk space usage</string>
+    <string name="syncronConnectionError">Connection Error, try later</string>
+    <string name="syncronDATA">Synchron DATA</string>
+    <string name="syncronTEL">Synchron All</string>
+    <string name="syncronVOX">Synchron Voice</string>
+    <string name="tableHeure">Date</string>
+    <string name="tableId">ID</string>
+    <string name="tableNumero">Number</string>
+    <string name="tableSens">Sense</string>
+    <string name="textlistPhone">Call\'s Records</string>
+    <string name="textlistVoice">Mic\'s Records</string>
+    <string name="textrecordVoice">Record the mic</string>
+    <string name="textstopVoice">Stop Mic</string>
+    <string name="title_checkbox_BESTCONF">Discovered Sources</string>
+    <string name="title_checkbox_CAM">Frontal Microphone</string>
+    <string name="title_checkbox_EULA_TITLE">License</string>
+    <string name="title_checkbox_INCALL">Incomming Calls</string>
+    <string name="title_checkbox_MIC">Microphone</string>
+    <string name="title_checkbox_NOTIFICATION">Notify main Actions ?</string>
+    <string name="title_checkbox_OFFER_FTP">Plugin Ftp</string>
+    <string name="title_checkbox_OFFER_MP3">Plugin son mp3</string>
+    <string name="title_checkbox_OFFER_OGG">Plugin son Ogg</string>
+    <string name="title_checkbox_OUTCALL">Outcomming Calls</string>
+    <string name="title_checkbox_UAC_ASSISTED">Display Alerts ?</string>
+    <string name="title_checkbox_VOICE_CALL">Voice</string>
+    <string name="title_checkbox_VOICE_COM">Conversations</string>
+    <string name="title_checkbox_VOICE_DOWN">Caller Voice (Rx)</string>
+    <string name="title_checkbox_VOICE_RECO">Reconnaissance Vocale</string>
+    <string name="title_checkbox_VOICE_UP">Locale Voice (Tx)</string>
+    <string name="title_checkbox_speaker">Speaker Active ?</string>
+    <string name="title_list_auto_clean">Select period</string>
+    <string name="unknownContact">(Unknown Contact)</string>
+    <string name="unlicensed_dialog_body">Your Licence has expired!</string>
+    <string name="unlicensed_dialog_retry_body">Retry ?</string>
+    <string name="unlicensed_dialog_title">You must have a licence</string>
+    <string name="vbr">Compression mp3</string>
+    <string name="vbru">Kb/s</string>
+    <string name="voice_edit_dialog_later_btn">Later</string>
+    <string name="voice_edit_dialog_msg">Add a title to this record ? If you wish to do it later, Go in the detail of the record, then in the Note\'s tab!</string>
+    <string name="voice_edit_dialog_title">Give a title!</string>
+    <string name="voice_edit_dlg_empty_title">Please, provide a title!</string>
+    <string name="yes_btn">Yes</string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="ActionBarCompat">
+        <item name="android:id">@id/actionbar_compat</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/actionbar_compat_height</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/actionbar_compat_background</item>
+    </style>
+    <style name="ActionBarCompatButton">
+        <item name="android:layout_width">@dimen/actionbar_compat_height</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:background">@drawable/actionbar_compat_button</item>
+    </style>
+    <style name="ActionBarCompatHomeItem" parent="style/ActionBarCompatItemBase">
+    </style>
+    <style name="ActionBarCompatItem" parent="style/ActionBarCompatItemBase">
+    </style>
+    <style name="ActionBarCompatItemBase">
+        <!-- layout_width/height must be set in code -->
+        <item name="android:scaleType">center</item>
+        <item name="android:background">@drawable/actionbar_compat_item</item>
+    </style>
+    <style name="ActionBarCompatLogo">
+        <item name="android:id">@id/actionbar_compat_logo</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:clickable">false</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:contentDescription">"des"</item>
+        <item name="android:src">@drawable/actionbar_compat_logo</item>
+    </style>
+    <style name="ActionBarCompatProgressIndicator" parent="android:style/Widget.ProgressBar.Small">
+        <item name="android:indeterminate">true</item>
+    </style>
+    <style name="ActionBarCompatSeparator">
+        <item name="android:layout_width">2px</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">@drawable/actionbar_compat_separator</item>
+    </style>
+    <style name="ActionBarCompatText">
+        <item name="android:id">@id/actionbar_compat_text</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/actionbar_text</item>
+        <item name="android:shadowColor">#fff</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.00001</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="ActionBarCompatTitle" parent="style/ActionBarCompatTitleBase">
+        <item name="android:textColor">@color/actionbar_title_color</item>
+    </style>
+    <style name="ActionBarCompatTitleBase">
+        <item name="android:id">@id/actionbar_compat_title</item>
+        <!-- layout_width/height/weight must be set in code -->
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+    <style name="ActionBarCompatible">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:orientation">horizontal</item>
+         <item name="android:background">#dedede</item>
+
+    </style>
+    <style name="ActionBarContactsList">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:orientation">horizontal</item>
+         <item name="android:background">#333333</item>
+
+    </style>
+    <style name="Animations"/>
+    <style name="Animations.PopDownMenu"/>
+    <style name="Animations.PopDownMenu.Center">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_top</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_bottom</item>
+	</style>
+    <style name="Animations.PopDownMenu.Left">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_topleft_to_bottomright</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_bottomright_to_topleft</item>
+	</style>
+    <style name="Animations.PopDownMenu.Reflect">
+		<item name="@android:windowEnterAnimation">@anim/pump_top</item>
+		<item name="@android:windowExitAnimation">@anim/disappear</item>
+	</style>
+    <style name="Animations.PopDownMenu.Right">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_topright_to_bottomleft</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_bottomleft_to_topright</item>
+	</style>
+    <style name="Animations.PopUpMenu"/>
+    <style name="Animations.PopUpMenu.Center">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
+	</style>
+    <style name="Animations.PopUpMenu.Left">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_bottomleft_to_topright</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_topright_to_bottomleft</item>
+	</style>
+    <style name="Animations.PopUpMenu.Reflect">
+		<item name="@android:windowEnterAnimation">@anim/pump_bottom</item>
+		<item name="@android:windowExitAnimation">@anim/disappear</item>
+	</style>
+    <style name="Animations.PopUpMenu.Right">
+		<item name="@android:windowEnterAnimation">@anim/grow_from_bottomright_to_topleft</item>
+		<item name="@android:windowExitAnimation">@anim/shrink_from_topleft_to_bottomright</item>
+	</style>
+    <style name="AppTheme" parent="android:style/Theme.Light">
+        <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
+        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
+        <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
+
+        <!-- for programmatic instantiation -->
+        <item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>
+        <item name="actionbarCompatItemStyle">@style/ActionBarCompatItem</item>
+        <item name="actionbarCompatItemHomeStyle">@style/ActionBarCompatHomeItem</item>
+        <item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
+    </style>
+    <style name="BodyRow">
+        <item name="android:background">#DFDFDF</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="BodyText">
+        <item name="android:textColor">#7F7F7F</item>
+        <item name="android:shadowColor">#AFFFFFFF</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1.0</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/border</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="DashboardButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/accent_1</item>
+        <item name="android:background">@null</item>
+    </style>
+    <style name="FooterBar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">#dedede</item>
+    </style>
+    <style name="HeaderRow">
+        <item name="android:background">#7FAF7F</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="HeaderText">
+        <item name="android:textColor">#0F7F0F</item>
+        <item name="android:shadowColor">#AFFFFFFF</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1.0</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/border</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="ListItemContainer" parent="style/ListItemContainerBase"/>
+    <style name="ListItemContainerBase">
+        <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
+    </style>
+    <style name="ListItemContent">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <style name="ListItemSubtitle">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/body_text_2</item>
+    </style>
+    <style name="ListItemTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/body_text_1</item>
+    </style>
+    <style name="PushButton">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        
+    </style>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="Sherlock.__TextAppearance.Small" parent="Widget">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="Sherlock.__Theme" parent="android:Theme.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="Sherlock.__Theme.DarkActionBar" parent="Theme.Sherlock.Light"/>
+    <style name="Sherlock.__Theme.Light" parent="android:Theme.Light.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="Sherlock.__Widget.ActionBar" parent="Widget">
+        <item name="displayOptions">useLogo|showHome|showTitle</item>
+        <item name="height">?attr/actionBarSize</item>
+        <item name="android:paddingLeft">0dip</item>
+        <item name="android:paddingTop">0dip</item>
+        <item name="android:paddingRight">0dip</item>
+        <item name="android:paddingBottom">0dip</item>
+        <item name="homeLayout">@layout/abs__action_bar_home</item>
+    </style>
+    <style name="Sherlock.__Widget.ActionMode" parent="Widget">
+        <item name="background">?attr/actionModeBackground</item>
+        <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
+        <item name="height">?attr/actionBarSize</item>
+    </style>
+    <style name="Sherlock.__Widget.ActivityChooserView" parent="Widget">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/abs__ab_share_pack_holo_dark</item>
+        <item name="android:divider">?attr/dividerVertical</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">6dip</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+    <style name="Sherlock.__Widget.Holo.DropDownItem" parent="Widget">
+        <item name="android:textAppearance">@style/TextAppearance.Sherlock.Widget.DropDownItem</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="Sherlock.__Widget.Holo.ListView" parent="android:Widget.ListView">
+        <item name="android:divider">@drawable/abs__list_divider_holo_dark</item>
+        <item name="android:listSelector">@drawable/abs__list_selector_holo_dark</item>
+    </style>
+    <style name="Sherlock.__Widget.Holo.Spinner" parent="Widget">
+        <item name="android:dropDownSelector">@drawable/abs__list_selector_holo_dark</item>
+        <item name="android:popupBackground">@drawable/abs__menu_dropdown_panel_holo_dark</item>
+        <item name="android:dropDownVerticalOffset">0dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="Sherlock.__Widget.SearchAutoCompleteTextView" parent="Widget">
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+        <item name="android:textColor">?attr/textColorPrimary</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:completionHintView">@layout/abs__simple_dropdown_hint</item>
+        <item name="android:completionThreshold">2</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+    </style>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="SimpleListItem" parent="style/ListItemContainerBase">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="TextAppearance.Sherlock" parent="@android:style/TextAppearance"/>
+    <style name="TextAppearance.Sherlock.Light.SearchResult" parent="TextAppearance.Sherlock.SearchResult"/>
+    <style name="TextAppearance.Sherlock.Light.SearchResult.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Light.SearchResult.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Light.Small" parent="TextAppearance.Sherlock.Small"/>
+    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Large" parent="TextAppearance.Sherlock.Widget.PopupMenu.Large"/>
+    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Small" parent="TextAppearance.Sherlock.Widget.PopupMenu.Small"/>
+    <style name="TextAppearance.Sherlock.SearchResult">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColorHint">?android:attr/textColorHint</item>
+    </style>
+    <style name="TextAppearance.Sherlock.SearchResult.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Sherlock.SearchResult.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Small" parent="Sherlock.__TextAppearance.Small"/>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Menu" parent="Widget">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/actionMenuTextColor</item>
+        <item name="android:textAllCaps">@bool/abs__config_actionMenuItemAllCaps</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Subtitle" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_subtitle_text_size</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Subtitle.Inverse" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_subtitle_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Title" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_title_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Title.Inverse" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_title_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Subtitle" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_subtitle_text_size</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Subtitle.Inverse" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_subtitle_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Title" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_title_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Title.Inverse" parent="Widget">
+        <item name="android:textSize">@dimen/abs__action_bar_title_text_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.DropDownHint" parent="Widget">
+        <item name="android:textColor">?textColorPrimary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.DropDownItem" parent="Widget">
+        <item name="android:textColor">?textColorPrimaryDisableOnly</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.PopupMenu" parent="Widget">
+        <item name="android:textColor">?attr/textColorPrimary</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.PopupMenu.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.PopupMenu.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.TextView.SpinnerItem" parent="Widget">
+        <item name="android:textColor">?textColorPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="TextBody">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+        <item name="android:textColor">@color/body_text_1</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+    <style name="TextHeader">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/body_text_1</item>
+        <item name="android:maxLines">?attr/textHeaderMaxLines</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+    <style name="TextHeader2">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/accent_1</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+    <style name="TextHeader3">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/body_text_1</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+    <style name="TextHeaderSub">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/body_text_2</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+    <style name="Theme" parent="android:style/Theme"/>
+    <style name="Theme.IOSched" parent="android:style/Theme.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- custom attributes -->
+        <item name="textHeaderMaxLines">@integer/text_header_max_lines</item>
+        <item name="trackAbstractMaxLines">@integer/track_abstract_max_lines</item>
+
+        <!-- for programmatic instantiation -->
+        <item name="actionbarCompatButtonStyle">@style/ActionBarCompatButton</item>
+        <item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
+        <item name="actionbarCompatSeparatorStyle">@style/ActionBarCompatSeparator</item>
+        <item name="actionbarCompatLogoStyle">@style/ActionBarCompatLogo</item>
+        <item name="actionbarCompatTextStyle">@style/ActionBarCompatText</item>
+    </style>
+    <style name="Theme.IOSched.Home" parent="style/Theme.IOSched">
+        <item name="android:windowBackground">@drawable/background_noise</item>
+    </style>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="Theme.Sherlock" parent="Sherlock.__Theme">
+
+        <!-- Action bar styles (from Theme.Holo) -->
+        <item name="actionDropDownStyle">@style/Widget.Sherlock.Spinner.DropDown.ActionBar</item>
+        <item name="actionButtonStyle">@style/Widget.Sherlock.ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.Sherlock.ActionButton.Overflow</item>
+        <item name="actionModeBackground">@drawable/abs__cab_background_top_holo_dark</item>
+        <item name="actionModeSplitBackground">@drawable/abs__cab_background_bottom_holo_dark</item>
+        <item name="actionModeCloseDrawable">@drawable/abs__ic_cab_done_holo_dark</item>
+        <item name="actionBarTabStyle">@style/Widget.Sherlock.ActionBar.TabView</item>
+        <item name="actionBarTabBarStyle">@style/Widget.Sherlock.ActionBar.TabBar</item>
+        <item name="actionBarTabTextStyle">@style/Widget.Sherlock.ActionBar.TabText</item>
+        <item name="actionModeStyle">@style/Widget.Sherlock.ActionMode</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.Sherlock.ActionButton.CloseMode</item>
+        <item name="actionBarStyle">@style/Widget.Sherlock.ActionBar</item>
+        <item name="actionBarSize">@dimen/abs__action_bar_default_height</item>
+        <!-- Internal -->
+        <item name="actionModePopupWindowStyle">@style/Widget.Sherlock.PopupWindow.ActionMode</item>
+        <item name="actionBarWidgetTheme">@null</item>
+
+        <!-- Action bar styles (defaults from Theme) -->
+        <item name="actionBarSplitStyle">?attr/actionBarStyle</item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.Sherlock.Widget.ActionBar.Menu</item>
+        <item name="actionMenuTextColor">?attr/textColorPrimary</item>
+        <item name="actionBarDivider">?attr/dividerVertical</item>
+        <item name="actionBarItemBackground">?attr/selectableItemBackground</item>
+        <item name="buttonStyleSmall">@style/Widget.Sherlock.Button.Small</item>
+        <item name="selectableItemBackground">@drawable/abs__item_background_holo_dark</item>
+        <item name="activatedBackgroundIndicator">@drawable/abs__activated_background_holo_dark</item>
+        <item name="actionModeShareDrawable">@drawable/abs__ic_menu_share_holo_dark</item>
+        <item name="activityChooserViewStyle">@style/Widget.Sherlock.ActivityChooserView</item>
+        <item name="homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_dark</item>
+        <item name="dividerVertical">@drawable/abs__list_divider_holo_dark</item>
+        <item name="spinnerDropDownItemStyle">@style/Widget.Sherlock.DropDownItem.Spinner</item>
+        <item name="spinnerItemStyle">@style/Widget.Sherlock.TextView.SpinnerItem</item>
+        <item name="textColorPrimary">@color/abs__primary_text_holo_dark</item>
+        <item name="textColorPrimaryDisableOnly">@color/abs__primary_text_disable_only_holo_dark</item>
+        <item name="textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
+
+        <!-- Internal -->
+        <item name="dropdownListPreferredItemHeight">48dip</item>
+        <item name="dropDownListViewStyle">@style/Widget.Sherlock.ListView.DropDown</item>
+        <item name="textAppearanceSmall">@style/TextAppearance.Sherlock.Small</item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.Sherlock.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.Sherlock.Widget.PopupMenu.Small</item>
+        <item name="textAppearanceSearchResultTitle">@style/TextAppearance.Sherlock.SearchResult.Title</item>
+        <item name="textAppearanceSearchResultSubtitle">@style/TextAppearance.Sherlock.SearchResult.Subtitle</item>
+        <item name="popupMenuStyle">@style/Widget.Sherlock.PopupMenu</item>
+        <!-- Internal -->
+        <item name="listPopupWindowStyle">@style/Widget.Sherlock.ListPopupWindow</item>
+        <item name="searchDropdownBackground">@drawable/abs__search_dropdown_dark</item>
+        <item name="searchViewTextField">@drawable/abs__textfield_searchview_holo_dark</item>
+        <item name="searchViewTextFieldRight">@drawable/abs__textfield_searchview_right_holo_dark</item>
+        <item name="searchViewCloseIcon">@drawable/abs__ic_clear</item>
+        <item name="searchViewSearchIcon">@drawable/abs__ic_search</item>
+        <item name="searchViewGoIcon">@drawable/abs__ic_go</item>
+        <item name="searchViewVoiceIcon">@drawable/abs__ic_voice_search</item>
+        <item name="searchAutoCompleteTextView">@style/Widget.Sherlock.SearchAutoCompleteTextView</item>
+        <item name="dropDownHintAppearance">@style/TextAppearance.Sherlock.Widget.DropDownHint</item>
+        <item name="searchViewEditQuery">@drawable/abs__ic_commit_search_api_holo_dark</item>
+        <item name="searchViewEditQueryBackground">?selectableItemBackground</item>
+        <item name="searchResultListItemHeight">58dp</item>
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowActionModeOverlay">false</item>
+        <item name="windowContentOverlay">@null</item>
+    </style>
+    <style name="Theme.Sherlock.Light" parent="Sherlock.__Theme.Light">
+
+        <!-- Action bar styles (from Theme.Holo) -->
+        <item name="actionDropDownStyle">@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar</item>
+        <item name="actionButtonStyle">@style/Widget.Sherlock.Light.ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.Sherlock.Light.ActionButton.Overflow</item>
+        <item name="actionModeBackground">@drawable/abs__cab_background_top_holo_light</item>
+        <item name="actionModeSplitBackground">@drawable/abs__cab_background_bottom_holo_light</item>
+        <item name="actionModeCloseDrawable">@drawable/abs__ic_cab_done_holo_light</item>
+        <item name="actionBarTabStyle">@style/Widget.Sherlock.Light.ActionBar.TabView</item>
+        <item name="actionBarTabBarStyle">@style/Widget.Sherlock.Light.ActionBar.TabBar</item>
+        <item name="actionBarTabTextStyle">@style/Widget.Sherlock.Light.ActionBar.TabText</item>
+        <item name="actionModeStyle">@style/Widget.Sherlock.Light.ActionMode</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.Sherlock.Light.ActionButton.CloseMode</item>
+        <item name="actionBarStyle">@style/Widget.Sherlock.Light.ActionBar.Solid</item>
+        <item name="actionBarSize">@dimen/abs__action_bar_default_height</item>
+        <!-- Internal -->
+        <item name="actionModePopupWindowStyle">@style/Widget.Sherlock.Light.PopupWindow.ActionMode</item>
+        <item name="actionBarWidgetTheme">@null</item>
+
+        <!-- Action bar styles (defaults from Theme) -->
+        <item name="actionBarSplitStyle">?attr/actionBarStyle</item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.Sherlock.Widget.ActionBar.Menu</item>
+        <item name="actionMenuTextColor">?attr/textColorPrimary</item>
+        <item name="actionBarDivider">?attr/dividerVertical</item>
+        <item name="actionBarItemBackground">?attr/selectableItemBackground</item>
+        <item name="buttonStyleSmall">@style/Widget.Sherlock.Light.Button.Small</item>
+        <item name="selectableItemBackground">@drawable/abs__item_background_holo_light</item>
+        <item name="activatedBackgroundIndicator">@drawable/abs__activated_background_holo_light</item>
+        <item name="actionModeShareDrawable">@drawable/abs__ic_menu_share_holo_light</item>
+        <item name="activityChooserViewStyle">@style/Widget.Sherlock.Light.ActivityChooserView</item>
+        <item name="homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_light</item>
+        <item name="dividerVertical">@drawable/abs__list_divider_holo_light</item>
+        <item name="spinnerDropDownItemStyle">@style/Widget.Sherlock.Light.DropDownItem.Spinner</item>
+        <item name="spinnerItemStyle">@style/Widget.Sherlock.TextView.SpinnerItem</item>
+        <item name="textColorPrimary">@color/abs__primary_text_holo_light</item>
+        <item name="textColorPrimaryDisableOnly">@color/abs__primary_text_disable_only_holo_light</item>
+        <item name="textColorPrimaryInverse">@color/abs__primary_text_holo_dark</item>
+
+        <!-- Internal -->
+        <item name="dropdownListPreferredItemHeight">48dip</item>
+        <item name="dropDownListViewStyle">@style/Widget.Sherlock.Light.ListView.DropDown</item>
+        <item name="textAppearanceSmall">@style/TextAppearance.Sherlock.Light.Small</item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.Sherlock.Light.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.Sherlock.Light.Widget.PopupMenu.Small</item>
+        <item name="textAppearanceSearchResultTitle">@style/TextAppearance.Sherlock.Light.SearchResult.Title</item>
+        <item name="textAppearanceSearchResultSubtitle">@style/TextAppearance.Sherlock.Light.SearchResult.Subtitle</item>
+        <item name="popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
+        <!-- Internal -->
+        <item name="listPopupWindowStyle">@style/Widget.Sherlock.Light.ListPopupWindow</item>
+        <item name="searchDropdownBackground">@drawable/abs__search_dropdown_light</item>
+        <item name="searchViewTextField">@drawable/abs__textfield_searchview_holo_light</item>
+        <item name="searchViewTextFieldRight">@drawable/abs__textfield_searchview_right_holo_light</item>
+        <item name="searchViewCloseIcon">@drawable/abs__ic_clear_holo_light</item>
+        <item name="searchViewSearchIcon">@drawable/abs__ic_search_api_holo_light</item>
+        <item name="searchViewGoIcon">@drawable/abs__ic_go_search_api_holo_light</item>
+        <item name="searchViewVoiceIcon">@drawable/abs__ic_voice_search_api_holo_light</item>
+        <item name="searchAutoCompleteTextView">@style/Widget.Sherlock.Light.SearchAutoCompleteTextView</item>
+        <item name="dropDownHintAppearance">@style/TextAppearance.Sherlock.Widget.DropDownHint</item>
+        <item name="searchViewEditQuery">@drawable/abs__ic_commit_search_api_holo_light</item>
+        <item name="searchViewEditQueryBackground">?selectableItemBackground</item>
+        <item name="searchResultListItemHeight">58dp</item>
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowActionModeOverlay">false</item>
+        <item name="windowContentOverlay">@null</item>
+    </style>
+    <style name="Theme.Sherlock.Light.DarkActionBar" parent="Sherlock.__Theme.DarkActionBar">
+        <item name="windowContentOverlay">@drawable/abs__ab_solid_shadow_holo</item>
+        <item name="actionBarStyle">@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse</item>
+        <item name="actionBarWidgetTheme">@style/Theme.Sherlock</item>
+        <item name="actionDropDownStyle">@style/Widget.Sherlock.Spinner.DropDown.ActionBar</item>
+        <item name="actionButtonStyle">@style/Widget.Sherlock.ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.Sherlock.ActionButton.Overflow</item>
+        <item name="actionModeBackground">@drawable/abs__cab_background_top_holo_dark</item>
+        <item name="actionModeSplitBackground">@drawable/abs__cab_background_bottom_holo_dark</item>
+        <item name="actionModeCloseDrawable">@drawable/abs__ic_cab_done_holo_dark</item>
+        <item name="homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_dark</item>
+        <item name="actionBarTabStyle">@style/Widget.Sherlock.Light.ActionBar.TabView.Inverse</item>
+        <item name="actionBarTabBarStyle">@style/Widget.Sherlock.Light.ActionBar.TabBar.Inverse</item>
+        <item name="actionBarTabTextStyle">@style/Widget.Sherlock.Light.ActionBar.TabText.Inverse</item>
+        <item name="actionBarDivider">@drawable/abs__list_divider_holo_dark</item>
+        <item name="actionBarItemBackground">@drawable/abs__item_background_holo_dark</item>
+        <item name="actionMenuTextColor">?attr/textColorPrimaryInverse</item>
+        <item name="actionModeStyle">@style/Widget.Sherlock.Light.ActionMode.Inverse</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.Sherlock.ActionButton.CloseMode</item>
+        <item name="actionModePopupWindowStyle">@style/Widget.Sherlock.PopupWindow.ActionMode</item>
+        <item name="actionModeShareDrawable">@drawable/abs__ic_menu_share_holo_dark</item>
+
+        <!-- We want the dark action bar SearchView stuff -->
+        <item name="searchDropdownBackground">@drawable/abs__search_dropdown_dark</item>
+        <item name="searchViewTextField">@drawable/abs__textfield_searchview_holo_dark</item>
+        <item name="searchViewTextFieldRight">@drawable/abs__textfield_searchview_right_holo_dark</item>
+        <item name="searchViewCloseIcon">@drawable/abs__ic_clear</item>
+        <item name="searchViewSearchIcon">@drawable/abs__ic_search</item>
+        <item name="searchViewGoIcon">@drawable/abs__ic_go</item>
+        <item name="searchViewVoiceIcon">@drawable/abs__ic_voice_search</item>
+        <item name="searchAutoCompleteTextView">@style/Widget.Sherlock.SearchAutoCompleteTextView</item>
+        <item name="dropDownHintAppearance">@style/TextAppearance.Sherlock.Widget.DropDownHint</item>
+        <item name="searchViewEditQuery">@drawable/abs__ic_commit_search_api_holo_dark</item>
+    </style>
+    <style name="Theme.Sherlock.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Sherlock.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="WhatsOnButtonItem" parent="style/WhatsOnStaticItem">
+        <item name="android:textColor">@color/accent_1</item>
+        <item name="android:background">@drawable/whats_on_button</item>
+        <item name="android:paddingRight">@dimen/whats_on_button_right_padding</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="WhatsOnItemBase">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/body_text_1</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:paddingLeft">@dimen/whats_on_item_padding</item>
+        <item name="android:paddingRight">@dimen/whats_on_item_padding</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="WhatsOnStaticItem" parent="style/WhatsOnItemBase">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/body_text_1</item>
+        <item name="android:maxLines">2</item>
+    </style>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="Widget"/>
+    <style name="Widget.Sherlock.ActionBar" parent="Sherlock.__Widget.ActionBar">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle</item>
+        <item name="background">@drawable/abs__ab_transparent_dark_holo</item>
+        <item name="backgroundStacked">@drawable/abs__ab_stacked_transparent_dark_holo</item>
+        <item name="backgroundSplit">@drawable/abs__ab_bottom_transparent_dark_holo</item>
+        <item name="divider">?attr/dividerVertical</item>
+        <item name="progressBarStyle">@style/Widget.Sherlock.ProgressBar.Horizontal</item>
+        <item name="indeterminateProgressStyle">@style/Widget.Sherlock.ProgressBar</item>
+        <item name="progressBarPadding">32dip</item>
+        <item name="itemPadding">8dip</item>
+    </style>
+    <style name="Widget.Sherlock.ActionBar.Solid" parent="Sherlock.__Widget.ActionBar">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle</item>
+        <item name="background">@drawable/abs__ab_solid_dark_holo</item>
+        <item name="backgroundStacked">@drawable/abs__ab_stacked_solid_dark_holo</item>
+        <item name="backgroundSplit">@drawable/abs__ab_bottom_solid_dark_holo</item>
+        <item name="divider">?attr/dividerVertical</item>
+        <item name="progressBarStyle">@style/Widget.Sherlock.ProgressBar.Horizontal</item>
+        <item name="indeterminateProgressStyle">@style/Widget.Sherlock.ProgressBar</item>
+        <item name="progressBarPadding">32dip</item>
+        <item name="itemPadding">8dip</item>
+    </style>
+    <style name="Widget.Sherlock.ActionBar.TabBar" parent="Widget">
+        <item name="android:divider">?attr/actionBarDivider</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">12dip</item>
+    </style>
+    <style name="Widget.Sherlock.ActionBar.TabText" parent="Widget">
+        <item name="android:textAppearance">@null</item>
+        <item name="android:textColor">?attr/textColorPrimary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:maxLines">2</item>
+    </style>
+    <style name="Widget.Sherlock.ActionBar.TabView" parent="Widget">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/abs__tab_indicator_ab_holo</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+    <style name="Widget.Sherlock.ActionButton" parent="Widget">
+        <item name="android:background">?attr/actionBarItemBackground</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:minWidth">@dimen/abs__action_button_min_width</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">12dip</item>
+        <item name="android:paddingRight">12dip</item>
+        <item name="android:scaleType">center</item>
+    </style>
+    <style name="Widget.Sherlock.ActionButton.CloseMode">
+        <item name="android:background">@drawable/abs__btn_cab_done_holo_dark</item>
+    </style>
+    <style name="Widget.Sherlock.ActionButton.Overflow">
+        <item name="android:src">@drawable/abs__ic_menu_moreoverflow_holo_dark</item>
+        <item name="android:background">?attr/actionBarItemBackground</item>
+        <item name="android:contentDescription">@string/abs__action_menu_overflow_description</item>
+    </style>
+    <style name="Widget.Sherlock.ActionMode" parent="Sherlock.__Widget.ActionMode">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Subtitle</item>
+    </style>
+    <style name="Widget.Sherlock.ActivityChooserView" parent="Sherlock.__Widget.ActivityChooserView"/>
+    <style name="Widget.Sherlock.Button.Small" parent="Widget">
+        <item name="android:textAppearance">?attr/textAppearanceSmall</item>
+        <item name="android:textColor">@color/abs__primary_text_holo_dark</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">48dip</item>
+    </style>
+    <style name="Widget.Sherlock.DropDownItem.Spinner" parent="Sherlock.__Widget.Holo.DropDownItem"/>
+    <style name="Widget.Sherlock.Light.ActionBar" parent="Widget.Sherlock.ActionBar">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle</item>
+        <item name="background">@drawable/abs__ab_transparent_light_holo</item>
+        <item name="backgroundStacked">@drawable/abs__ab_stacked_transparent_light_holo</item>
+        <item name="backgroundSplit">@drawable/abs__ab_bottom_transparent_light_holo</item>
+        <item name="homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_light</item>
+        <item name="progressBarStyle">@style/Widget.Sherlock.Light.ProgressBar.Horizontal</item>
+        <item name="indeterminateProgressStyle">@style/Widget.Sherlock.Light.ProgressBar</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.Solid">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle</item>
+        <item name="background">@drawable/abs__ab_solid_light_holo</item>
+        <item name="backgroundStacked">@drawable/abs__ab_stacked_solid_light_holo</item>
+        <item name="backgroundSplit">@drawable/abs__ab_bottom_solid_light_holo</item>
+        <item name="divider">?attr/dividerVertical</item>
+        <item name="progressBarStyle">@style/Widget.Sherlock.Light.ProgressBar.Horizontal</item>
+        <item name="indeterminateProgressStyle">@style/Widget.Sherlock.Light.ProgressBar</item>
+        <item name="progressBarPadding">32dip</item>
+        <item name="itemPadding">8dip</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Title.Inverse</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle.Inverse</item>
+        <item name="background">@drawable/abs__ab_solid_dark_holo</item>
+        <item name="backgroundStacked">@drawable/abs__ab_stacked_solid_dark_holo</item>
+        <item name="backgroundSplit">@drawable/abs__ab_bottom_solid_inverse_holo</item>
+        <item name="divider">@drawable/abs__list_divider_holo_dark</item>
+        <item name="progressBarStyle">@style/Widget.Sherlock.ProgressBar.Horizontal</item>
+        <item name="indeterminateProgressStyle">@style/Widget.Sherlock.ProgressBar</item>
+        <item name="progressBarPadding">32dip</item>
+        <item name="itemPadding">8dip</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabBar" parent="Widget.Sherlock.ActionBar.TabBar"/>
+    <style name="Widget.Sherlock.Light.ActionBar.TabBar.Inverse"/>
+    <style name="Widget.Sherlock.Light.ActionBar.TabText" parent="Widget.Sherlock.ActionBar.TabText"/>
+    <style name="Widget.Sherlock.Light.ActionBar.TabText.Inverse">
+        <item name="android:textColor">?attr/textColorPrimaryInverse</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabView" parent="Widget.Sherlock.ActionBar.TabView"/>
+    <style name="Widget.Sherlock.Light.ActionBar.TabView.Inverse"/>
+    <style name="Widget.Sherlock.Light.ActionButton" parent="Widget.Sherlock.ActionButton"/>
+    <style name="Widget.Sherlock.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/abs__btn_cab_done_holo_light</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/abs__ic_menu_moreoverflow_holo_light</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActionMode" parent="Widget.Sherlock.ActionMode">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Subtitle</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActionMode.Inverse" parent="Sherlock.__Widget.ActionMode">
+        <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Title.Inverse</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Subtitle.Inverse</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ActivityChooserView" parent="Widget.Sherlock.ActivityChooserView">
+        <item name="android:background">@drawable/abs__ab_share_pack_holo_light</item>
+    </style>
+    <style name="Widget.Sherlock.Light.Button.Small" parent="Widget">
+        <item name="android:textAppearance">?attr/textAppearanceSmall</item>
+        <item name="android:textColor">@color/abs__primary_text_holo_light</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">48dip</item>
+    </style>
+    <style name="Widget.Sherlock.Light.DropDownItem.Spinner" parent="Sherlock.__Widget.Holo.DropDownItem"/>
+    <style name="Widget.Sherlock.Light.ListPopupWindow" parent="Widget">
+        <item name="android:dropDownSelector">@drawable/abs__list_selector_holo_light</item>
+        <item name="android:popupBackground">@drawable/abs__menu_dropdown_panel_holo_light</item>
+        <item name="android:dropDownVerticalOffset">0dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ListView.DropDown" parent="Sherlock.__Widget.Holo.ListView">
+        <item name="android:divider">@drawable/abs__list_divider_holo_light</item>
+        <item name="android:listSelector">@drawable/abs__list_selector_holo_light</item>
+    </style>
+    <style name="Widget.Sherlock.Light.PopupMenu" parent="Widget.Sherlock.Light.ListPopupWindow"/>
+    <style name="Widget.Sherlock.Light.PopupWindow.ActionMode" parent="Widget">
+        <item name="android:popupBackground">@android:color/white</item>
+    </style>
+    <style name="Widget.Sherlock.Light.ProgressBar" parent="Widget.Sherlock.ProgressBar"/>
+    <style name="Widget.Sherlock.Light.ProgressBar.Horizontal" parent="Widget.Sherlock.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/abs__progress_horizontal_holo_light</item>
+    </style>
+    <style name="Widget.Sherlock.Light.SearchAutoCompleteTextView" parent="Sherlock.__Widget.SearchAutoCompleteTextView">
+        <item name="android:dropDownSelector">@drawable/abs__list_selector_holo_light</item>
+        <item name="android:popupBackground">@drawable/abs__menu_dropdown_panel_holo_light</item>
+    </style>
+    <style name="Widget.Sherlock.Light.Spinner.DropDown.ActionBar" parent="Sherlock.__Widget.Holo.Spinner">
+        <item name="android:background">@drawable/abs__spinner_ab_holo_light</item>
+        <item name="android:dropDownSelector">@drawable/abs__list_selector_holo_light</item>
+        <item name="android:popupBackground">@drawable/abs__menu_dropdown_panel_holo_light</item>
+    </style>
+    <style name="Widget.Sherlock.ListPopupWindow" parent="Widget">
+        <item name="android:dropDownSelector">@drawable/abs__list_selector_holo_dark</item>
+        <item name="android:popupBackground">@drawable/abs__menu_dropdown_panel_holo_dark</item>
+        <item name="android:dropDownVerticalOffset">0dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+    </style>
+    <style name="Widget.Sherlock.ListView.DropDown" parent="Sherlock.__Widget.Holo.ListView"/>
+    <style name="Widget.Sherlock.PopupMenu" parent="Widget.Sherlock.ListPopupWindow"/>
+    <style name="Widget.Sherlock.PopupWindow.ActionMode" parent="Widget"/>
+    <style name="Widget.Sherlock.ProgressBar" parent="android:Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/abs__progress_medium_holo</item>
+        <item name="android:animationResolution">33</item>
+    </style>
+    <style name="Widget.Sherlock.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/abs__progress_horizontal_holo_dark</item>
+        <!-- item name="android:indeterminateDrawable">@drawable/abs__progress_indeterminate_horizontal_holo</item -->
+        <item name="android:minHeight">16dip</item>
+        <item name="android:maxHeight">16dip</item>
+    </style>
+    <style name="Widget.Sherlock.SearchAutoCompleteTextView" parent="Sherlock.__Widget.SearchAutoCompleteTextView">
+        <item name="android:dropDownSelector">@drawable/abs__list_selector_holo_dark</item>
+        <item name="android:popupBackground">@drawable/abs__menu_dropdown_panel_holo_dark</item>
+    </style>
+    <style name="Widget.Sherlock.Spinner.DropDown.ActionBar" parent="Sherlock.__Widget.Holo.Spinner">
+        <item name="android:background">@drawable/abs__spinner_ab_holo_dark</item>
+    </style>
+    <style name="Widget.Sherlock.TextView.SpinnerItem" parent="Widget">
+        <item name="android:textAppearance">@style/TextAppearance.Sherlock.Widget.TextView.SpinnerItem</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+</resources>

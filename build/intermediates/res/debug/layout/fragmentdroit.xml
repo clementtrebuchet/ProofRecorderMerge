@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f8f9fe"
+    android:orientation="vertical" >
+	
+    <FrameLayout
+        android:id="@+id/Content_FragmentOne"
+        android:name=" .fragment.FragmentListRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+    </FrameLayout>
+    
+    <!--  Include Footer -->
+    <include layout="@layout/footer_layout"/>
+</LinearLayout><!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/layout/fragmentdroit.xml -->
