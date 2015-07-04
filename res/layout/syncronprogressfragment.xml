@@ -3,7 +3,7 @@
     android:layout_width="400dip"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:theme="@style/Theme.Sherlock.Light.Dialog" >
+    android:theme="@style/Theme.Sherlock" >
 
     
     <TextView

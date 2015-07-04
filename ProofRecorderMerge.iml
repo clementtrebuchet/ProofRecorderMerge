@@ -104,10 +104,10 @@
     <orderEntry type="library" exported="" name="libphonenumber-5.4" level="project" />
     <orderEntry type="library" exported="" name="signpost-core-1.2.1.2" level="project" />
     <orderEntry type="library" exported="" name="apache-mime4j-0.6" level="project" />
-    <orderEntry type="library" exported="" name="actionbarsherlock-4.4.0" level="project" />
     <orderEntry type="library" exported="" name="commons-net-3.1" level="project" />
     <orderEntry type="library" exported="" name="httpclient-4.2.5" level="project" />
     <orderEntry type="library" exported="" name="android-support-v7-gridlayout" level="project" />
     <orderEntry type="library" exported="" name="signpost-commonshttp4-1.2.1.1" level="project" />
+    <orderEntry type="module" module-name="Sherlock" exported="" />
   </component>
 </module>

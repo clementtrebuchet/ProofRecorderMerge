@@ -11,7 +11,7 @@
     <dimen name="abs__action_bar_subtitle_text_size">14dp</dimen>
     <dimen name="abs__action_bar_subtitle_top_margin">-3dp</dimen>
     <dimen name="abs__action_bar_title_text_size">18dp</dimen>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values-sw600dp/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values-sw600dp-v13/values.xml -->
     <eat-comment/>
     <dimen name="abs__action_button_min_width">64dip</dimen>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values-sw600dp/abs__dimens.xml -->

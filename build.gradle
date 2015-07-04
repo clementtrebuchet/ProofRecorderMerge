@@ -15,15 +15,24 @@ allprojects {
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'com.android.support:support-v4:18.0.+'
+    compile fileTree(include: '*.jar', dir: 'libs')
+    //compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
+    //compile 'com.android.support:support-v4:22.2.0'
+    //compile group:'com.android.support', name:'appcompat-v7', version:'22.2.0'
+    //compile 'com.android.support:appcompat-v7:22.2.0'
+    compile project(':Sherlock')
 }
 
 android {
+    signingConfigs {
+        keyStore {
+            keyPassword 'sonyaltec'
+            storeFile file('/home/clement/Projects/Java/keystore_android/key')
+            storePassword 'sonyaltec'
+        }
+    }
     compileSdkVersion 17
-    buildToolsVersion "21.1.2"
-
+    buildToolsVersion '19.1.0'
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -34,7 +43,6 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
-
 
         // Move the tests to tests/java, tests/res, etc...
         instrumentTest.setRoot('tests')

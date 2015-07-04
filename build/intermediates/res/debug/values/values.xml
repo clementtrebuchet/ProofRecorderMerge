@@ -65,7 +65,7 @@
         <item>Très bonne</item>
         <item>Excellente</item>
     </string-array>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference|color" name="background"/>
     <attr format="reference|color" name="backgroundSplit"/>
@@ -123,7 +123,7 @@
     <declare-styleable name="SherlockTheme"><attr format="reference" name="actionBarTabStyle"/><attr format="reference" name="actionBarTabBarStyle"/><attr format="reference" name="actionBarTabTextStyle"/><attr format="reference" name="actionOverflowButtonStyle"/><attr format="reference" name="actionBarStyle"/><attr format="reference" name="actionBarSplitStyle"/><attr format="reference" name="actionBarWidgetTheme"/><attr format="dimension" name="actionBarSize"><enum name="wrap_content" value="0"/></attr><attr format="reference" name="actionBarDivider"/><attr format="reference" name="actionBarItemBackground"/><attr format="reference" name="actionMenuTextAppearance"/><attr format="color|reference" name="actionMenuTextColor"/><attr format="reference" name="actionModeStyle"/><attr format="reference" name="actionModeCloseButtonStyle"/><attr format="reference" name="actionModeBackground"/><attr format="reference" name="actionModeSplitBackground"/><attr format="reference" name="actionModeCloseDrawable"/><attr format="reference" name="actionModeShareDrawable"/><attr format="reference" name="actionModePopupWindowStyle"/><attr format="reference" name="buttonStyleSmall"/><attr format="reference" name="selectableItemBackground"/><attr format="reference" name="windowContentOverlay"/><attr format="reference" name="textAppearanceLargePopupMenu"/><attr format="reference" name="textAppearanceSmallPopupMenu"/><attr format="reference" name="textAppearanceSmall"/><attr format="color" name="textColorPrimary"/><attr format="color" name="textColorPrimaryDisableOnly"/><attr format="color" name="textColorPrimaryInverse"/><attr format="reference" name="spinnerItemStyle"/><attr format="reference" name="spinnerDropDownItemStyle"/><attr format="reference" name="searchAutoCompleteTextView"/><attr format="reference" name="searchDropdownBackground"/><attr format="reference" name="searchViewCloseIcon"/><attr format="reference" name="searchViewGoIcon"/><attr format="reference" name="searchViewSearchIcon"/><attr format="reference" name="searchViewVoiceIcon"/><attr format="reference" name="searchViewEditQuery"/><attr format="reference" name="searchViewEditQueryBackground"/><attr format="reference" name="searchViewTextField"/><attr format="reference" name="searchViewTextFieldRight"/><attr format="reference|color" name="textColorSearchUrl"/><attr format="dimension" name="searchResultListItemHeight"/><attr format="reference" name="textAppearanceSearchResultTitle"/><attr format="reference" name="textAppearanceSearchResultSubtitle"/><attr format="dimension" name="listPreferredItemHeightSmall"/><attr format="dimension" name="listPreferredItemPaddingLeft"/><attr format="dimension" name="listPreferredItemPaddingRight"/><attr format="reference" name="textAppearanceListItemSmall"/><attr format="dimension" name="windowMinWidthMajor"/><attr format="dimension" name="windowMinWidthMinor"/><attr format="reference" name="dividerVertical"/><attr format="reference" name="actionDropDownStyle"/><attr format="reference" name="actionButtonStyle"/><attr format="reference" name="homeAsUpIndicator"/><attr format="reference" name="dropDownListViewStyle"/><attr format="reference" name="popupMenuStyle"/><attr format="dimension" name="dropdownListPreferredItemHeight"/><attr format="reference" name="actionSpinnerItemStyle"/><attr format="boolean" name="windowNoTitle"/><attr format="boolean" name="windowActionBar"/><attr format="boolean" name="windowActionBarOverlay"/><attr format="boolean" name="windowActionModeOverlay"/><attr format="boolean" name="windowSplitActionBar"/><attr format="reference" name="listPopupWindowStyle"/><attr format="reference" name="activityChooserViewStyle"/><attr format="reference" name="activatedBackgroundIndicator"/><attr format="reference" name="dropDownHintAppearance"/></declare-styleable>
     <declare-styleable name="SherlockView"><attr name="android:focusable"/></declare-styleable>
     <declare-styleable name="TimeRulerView"><attr format="dimension" name="headerWidth"/><attr format="dimension" name="hourHeight"/><attr format="dimension" name="labelPaddingLeft"/><attr format="color" name="labelColor"/><attr format="color" name="dividerColor"/><attr format="integer" name="startHour"/><attr format="integer" name="endHour"/></declare-styleable>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abs__action_bar_default_height">48dip</dimen>
     <dimen name="abs__action_bar_icon_vertical_padding">8dip</dimen>
@@ -171,7 +171,7 @@
     <dimen name="whats_on_button_right_padding">20dp</dimen>
     <dimen name="whats_on_height">70dp</dimen>
     <dimen name="whats_on_item_padding">10dp</dimen>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <item name="abs__action_menu_divider" type="id"/>
     <item name="abs__action_menu_presenter" type="id"/>
@@ -198,7 +198,7 @@
     <item name="fragment_vendors" type="id"/>
     <item name="menu_refresh" type="id"/>
     <item name="menu_refresh_progress" type="id"/>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <integer name="abs__max_action_buttons">2</integer>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/config.xml -->
@@ -286,7 +286,7 @@
     </string>
     <string name="about_some_links">Some links:</string>
     <string name="about_us">About Us</string>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="abs__action_bar_home_description">Navigate home</string>
     <string name="abs__action_bar_up_description">Navigate up</string>
@@ -853,16 +853,17 @@
         <item name="android:textSize">@dimen/text_size_small</item>
         
     </style>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <style name="Sherlock.__TextAppearance.Small" parent="Widget">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+      <item name="android:textSize">14sp</item>
+      <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
     <style name="Sherlock.__Theme" parent="android:Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <style name="Sherlock.__Theme.DarkActionBar" parent="Theme.Sherlock.Light"/>
+    <style name="Sherlock.__Theme.DarkActionBar" parent="Theme.Sherlock.Light">
+    </style>
     <style name="Sherlock.__Theme.Light" parent="android:Theme.Light.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
     </style>
@@ -927,7 +928,7 @@
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
     </style>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <style name="TextAppearance.Sherlock" parent="@android:style/TextAppearance"/>
     <style name="TextAppearance.Sherlock.Light.SearchResult" parent="TextAppearance.Sherlock.SearchResult"/>
@@ -938,9 +939,12 @@
     <style name="TextAppearance.Sherlock.Light.SearchResult.Title">
         <item name="android:textSize">18sp</item>
     </style>
-    <style name="TextAppearance.Sherlock.Light.Small" parent="TextAppearance.Sherlock.Small"/>
-    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Large" parent="TextAppearance.Sherlock.Widget.PopupMenu.Large"/>
-    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Small" parent="TextAppearance.Sherlock.Widget.PopupMenu.Small"/>
+    <style name="TextAppearance.Sherlock.Light.Small" parent="TextAppearance.Sherlock.Small">
+    </style>
+    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Large" parent="TextAppearance.Sherlock.Widget.PopupMenu.Large">
+    </style>
+    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Small" parent="TextAppearance.Sherlock.Widget.PopupMenu.Small">
+    </style>
     <style name="TextAppearance.Sherlock.SearchResult">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
@@ -953,7 +957,8 @@
     <style name="TextAppearance.Sherlock.SearchResult.Title">
         <item name="android:textSize">18sp</item>
     </style>
-    <style name="TextAppearance.Sherlock.Small" parent="Sherlock.__TextAppearance.Small"/>
+    <style name="TextAppearance.Sherlock.Small" parent="Sherlock.__TextAppearance.Small">
+    </style>
     <style name="TextAppearance.Sherlock.Widget.ActionBar.Menu" parent="Widget">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
@@ -1068,10 +1073,9 @@
     <style name="Theme.IOSched.Home" parent="style/Theme.IOSched">
         <item name="android:windowBackground">@drawable/background_noise</item>
     </style>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.Sherlock" parent="Sherlock.__Theme">
-
         <!-- Action bar styles (from Theme.Holo) -->
         <item name="actionDropDownStyle">@style/Widget.Sherlock.Spinner.DropDown.ActionBar</item>
         <item name="actionButtonStyle">@style/Widget.Sherlock.ActionButton</item>
@@ -1086,8 +1090,7 @@
         <item name="actionModeCloseButtonStyle">@style/Widget.Sherlock.ActionButton.CloseMode</item>
         <item name="actionBarStyle">@style/Widget.Sherlock.ActionBar</item>
         <item name="actionBarSize">@dimen/abs__action_bar_default_height</item>
-        <!-- Internal -->
-        <item name="actionModePopupWindowStyle">@style/Widget.Sherlock.PopupWindow.ActionMode</item>
+        <!-- Internal --><item name="actionModePopupWindowStyle">@style/Widget.Sherlock.PopupWindow.ActionMode</item>
         <item name="actionBarWidgetTheme">@null</item>
 
         <!-- Action bar styles (defaults from Theme) -->
@@ -1096,30 +1099,38 @@
         <item name="actionMenuTextColor">?attr/textColorPrimary</item>
         <item name="actionBarDivider">?attr/dividerVertical</item>
         <item name="actionBarItemBackground">?attr/selectableItemBackground</item>
+
         <item name="buttonStyleSmall">@style/Widget.Sherlock.Button.Small</item>
+
         <item name="selectableItemBackground">@drawable/abs__item_background_holo_dark</item>
+
         <item name="activatedBackgroundIndicator">@drawable/abs__activated_background_holo_dark</item>
         <item name="actionModeShareDrawable">@drawable/abs__ic_menu_share_holo_dark</item>
         <item name="activityChooserViewStyle">@style/Widget.Sherlock.ActivityChooserView</item>
+
         <item name="homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_dark</item>
+
         <item name="dividerVertical">@drawable/abs__list_divider_holo_dark</item>
+
         <item name="spinnerDropDownItemStyle">@style/Widget.Sherlock.DropDownItem.Spinner</item>
         <item name="spinnerItemStyle">@style/Widget.Sherlock.TextView.SpinnerItem</item>
+
         <item name="textColorPrimary">@color/abs__primary_text_holo_dark</item>
         <item name="textColorPrimaryDisableOnly">@color/abs__primary_text_disable_only_holo_dark</item>
         <item name="textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
 
-        <!-- Internal -->
-        <item name="dropdownListPreferredItemHeight">48dip</item>
+        <!-- Internal --><item name="dropdownListPreferredItemHeight">48dip</item>
         <item name="dropDownListViewStyle">@style/Widget.Sherlock.ListView.DropDown</item>
+
         <item name="textAppearanceSmall">@style/TextAppearance.Sherlock.Small</item>
         <item name="textAppearanceLargePopupMenu">@style/TextAppearance.Sherlock.Widget.PopupMenu.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.Sherlock.Widget.PopupMenu.Small</item>
         <item name="textAppearanceSearchResultTitle">@style/TextAppearance.Sherlock.SearchResult.Title</item>
         <item name="textAppearanceSearchResultSubtitle">@style/TextAppearance.Sherlock.SearchResult.Subtitle</item>
+
         <item name="popupMenuStyle">@style/Widget.Sherlock.PopupMenu</item>
-        <!-- Internal -->
-        <item name="listPopupWindowStyle">@style/Widget.Sherlock.ListPopupWindow</item>
+        <!-- Internal --><item name="listPopupWindowStyle">@style/Widget.Sherlock.ListPopupWindow</item>
+
         <item name="searchDropdownBackground">@drawable/abs__search_dropdown_dark</item>
         <item name="searchViewTextField">@drawable/abs__textfield_searchview_holo_dark</item>
         <item name="searchViewTextFieldRight">@drawable/abs__textfield_searchview_right_holo_dark</item>
@@ -1132,13 +1143,13 @@
         <item name="searchViewEditQuery">@drawable/abs__ic_commit_search_api_holo_dark</item>
         <item name="searchViewEditQueryBackground">?selectableItemBackground</item>
         <item name="searchResultListItemHeight">58dp</item>
+
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
         <item name="windowActionModeOverlay">false</item>
         <item name="windowContentOverlay">@null</item>
     </style>
     <style name="Theme.Sherlock.Light" parent="Sherlock.__Theme.Light">
-
         <!-- Action bar styles (from Theme.Holo) -->
         <item name="actionDropDownStyle">@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar</item>
         <item name="actionButtonStyle">@style/Widget.Sherlock.Light.ActionButton</item>
@@ -1153,8 +1164,7 @@
         <item name="actionModeCloseButtonStyle">@style/Widget.Sherlock.Light.ActionButton.CloseMode</item>
         <item name="actionBarStyle">@style/Widget.Sherlock.Light.ActionBar.Solid</item>
         <item name="actionBarSize">@dimen/abs__action_bar_default_height</item>
-        <!-- Internal -->
-        <item name="actionModePopupWindowStyle">@style/Widget.Sherlock.Light.PopupWindow.ActionMode</item>
+        <!-- Internal --><item name="actionModePopupWindowStyle">@style/Widget.Sherlock.Light.PopupWindow.ActionMode</item>
         <item name="actionBarWidgetTheme">@null</item>
 
         <!-- Action bar styles (defaults from Theme) -->
@@ -1163,30 +1173,38 @@
         <item name="actionMenuTextColor">?attr/textColorPrimary</item>
         <item name="actionBarDivider">?attr/dividerVertical</item>
         <item name="actionBarItemBackground">?attr/selectableItemBackground</item>
+
         <item name="buttonStyleSmall">@style/Widget.Sherlock.Light.Button.Small</item>
+
         <item name="selectableItemBackground">@drawable/abs__item_background_holo_light</item>
+
         <item name="activatedBackgroundIndicator">@drawable/abs__activated_background_holo_light</item>
         <item name="actionModeShareDrawable">@drawable/abs__ic_menu_share_holo_light</item>
         <item name="activityChooserViewStyle">@style/Widget.Sherlock.Light.ActivityChooserView</item>
+
         <item name="homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_light</item>
+
         <item name="dividerVertical">@drawable/abs__list_divider_holo_light</item>
+
         <item name="spinnerDropDownItemStyle">@style/Widget.Sherlock.Light.DropDownItem.Spinner</item>
         <item name="spinnerItemStyle">@style/Widget.Sherlock.TextView.SpinnerItem</item>
+
         <item name="textColorPrimary">@color/abs__primary_text_holo_light</item>
         <item name="textColorPrimaryDisableOnly">@color/abs__primary_text_disable_only_holo_light</item>
         <item name="textColorPrimaryInverse">@color/abs__primary_text_holo_dark</item>
 
-        <!-- Internal -->
-        <item name="dropdownListPreferredItemHeight">48dip</item>
+        <!-- Internal --><item name="dropdownListPreferredItemHeight">48dip</item>
         <item name="dropDownListViewStyle">@style/Widget.Sherlock.Light.ListView.DropDown</item>
+
         <item name="textAppearanceSmall">@style/TextAppearance.Sherlock.Light.Small</item>
         <item name="textAppearanceLargePopupMenu">@style/TextAppearance.Sherlock.Light.Widget.PopupMenu.Large</item>
         <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.Sherlock.Light.Widget.PopupMenu.Small</item>
         <item name="textAppearanceSearchResultTitle">@style/TextAppearance.Sherlock.Light.SearchResult.Title</item>
         <item name="textAppearanceSearchResultSubtitle">@style/TextAppearance.Sherlock.Light.SearchResult.Subtitle</item>
+
         <item name="popupMenuStyle">@style/Widget.Sherlock.Light.PopupMenu</item>
-        <!-- Internal -->
-        <item name="listPopupWindowStyle">@style/Widget.Sherlock.Light.ListPopupWindow</item>
+        <!-- Internal --><item name="listPopupWindowStyle">@style/Widget.Sherlock.Light.ListPopupWindow</item>
+
         <item name="searchDropdownBackground">@drawable/abs__search_dropdown_light</item>
         <item name="searchViewTextField">@drawable/abs__textfield_searchview_holo_light</item>
         <item name="searchViewTextFieldRight">@drawable/abs__textfield_searchview_right_holo_light</item>
@@ -1199,6 +1217,7 @@
         <item name="searchViewEditQuery">@drawable/abs__ic_commit_search_api_holo_light</item>
         <item name="searchViewEditQueryBackground">?selectableItemBackground</item>
         <item name="searchResultListItemHeight">58dp</item>
+
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
         <item name="windowActionModeOverlay">false</item>
@@ -1208,6 +1227,7 @@
         <item name="windowContentOverlay">@drawable/abs__ab_solid_shadow_holo</item>
         <item name="actionBarStyle">@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse</item>
         <item name="actionBarWidgetTheme">@style/Theme.Sherlock</item>
+
         <item name="actionDropDownStyle">@style/Widget.Sherlock.Spinner.DropDown.ActionBar</item>
         <item name="actionButtonStyle">@style/Widget.Sherlock.ActionButton</item>
         <item name="actionOverflowButtonStyle">@style/Widget.Sherlock.ActionButton.Overflow</item>
@@ -1224,6 +1244,7 @@
         <item name="actionModeStyle">@style/Widget.Sherlock.Light.ActionMode.Inverse</item>
         <item name="actionModeCloseButtonStyle">@style/Widget.Sherlock.ActionButton.CloseMode</item>
         <item name="actionModePopupWindowStyle">@style/Widget.Sherlock.PopupWindow.ActionMode</item>
+
         <item name="actionModeShareDrawable">@drawable/abs__ic_menu_share_holo_dark</item>
 
         <!-- We want the dark action bar SearchView stuff -->
@@ -1273,9 +1294,10 @@
         <item name="android:textColor">@color/body_text_1</item>
         <item name="android:maxLines">2</item>
     </style>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
     <eat-comment/>
-    <style name="Widget"/>
+    <style name="Widget">
+    </style>
     <style name="Widget.Sherlock.ActionBar" parent="Sherlock.__Widget.ActionBar">
         <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Title</item>
         <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle</item>
@@ -1323,6 +1345,7 @@
     <style name="Widget.Sherlock.ActionButton" parent="Widget">
         <item name="android:background">?attr/actionBarItemBackground</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
+
         <item name="android:minWidth">@dimen/abs__action_button_min_width</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">12dip</item>
@@ -1341,14 +1364,16 @@
         <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Title</item>
         <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionMode.Subtitle</item>
     </style>
-    <style name="Widget.Sherlock.ActivityChooserView" parent="Sherlock.__Widget.ActivityChooserView"/>
-    <style name="Widget.Sherlock.Button.Small" parent="Widget">
-        <item name="android:textAppearance">?attr/textAppearanceSmall</item>
-        <item name="android:textColor">@color/abs__primary_text_holo_dark</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:minWidth">48dip</item>
+    <style name="Widget.Sherlock.ActivityChooserView" parent="Sherlock.__Widget.ActivityChooserView">
     </style>
-    <style name="Widget.Sherlock.DropDownItem.Spinner" parent="Sherlock.__Widget.Holo.DropDownItem"/>
+    <style name="Widget.Sherlock.Button.Small" parent="Widget">
+      <item name="android:textAppearance">?attr/textAppearanceSmall</item>
+      <item name="android:textColor">@color/abs__primary_text_holo_dark</item>
+      <item name="android:minHeight">48dip</item>
+      <item name="android:minWidth">48dip</item>
+    </style>
+    <style name="Widget.Sherlock.DropDownItem.Spinner" parent="Sherlock.__Widget.Holo.DropDownItem">
+    </style>
     <style name="Widget.Sherlock.Light.ActionBar" parent="Widget.Sherlock.ActionBar">
         <item name="titleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Title</item>
         <item name="subtitleTextStyle">@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle</item>
@@ -1383,15 +1408,21 @@
         <item name="progressBarPadding">32dip</item>
         <item name="itemPadding">8dip</item>
     </style>
-    <style name="Widget.Sherlock.Light.ActionBar.TabBar" parent="Widget.Sherlock.ActionBar.TabBar"/>
-    <style name="Widget.Sherlock.Light.ActionBar.TabBar.Inverse"/>
-    <style name="Widget.Sherlock.Light.ActionBar.TabText" parent="Widget.Sherlock.ActionBar.TabText"/>
+    <style name="Widget.Sherlock.Light.ActionBar.TabBar" parent="Widget.Sherlock.ActionBar.TabBar">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabBar.Inverse">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabText" parent="Widget.Sherlock.ActionBar.TabText">
+    </style>
     <style name="Widget.Sherlock.Light.ActionBar.TabText.Inverse">
         <item name="android:textColor">?attr/textColorPrimaryInverse</item>
     </style>
-    <style name="Widget.Sherlock.Light.ActionBar.TabView" parent="Widget.Sherlock.ActionBar.TabView"/>
-    <style name="Widget.Sherlock.Light.ActionBar.TabView.Inverse"/>
-    <style name="Widget.Sherlock.Light.ActionButton" parent="Widget.Sherlock.ActionButton"/>
+    <style name="Widget.Sherlock.Light.ActionBar.TabView" parent="Widget.Sherlock.ActionBar.TabView">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabView.Inverse">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionButton" parent="Widget.Sherlock.ActionButton">
+    </style>
     <style name="Widget.Sherlock.Light.ActionButton.CloseMode">
         <item name="android:background">@drawable/abs__btn_cab_done_holo_light</item>
     </style>
@@ -1410,12 +1441,13 @@
         <item name="android:background">@drawable/abs__ab_share_pack_holo_light</item>
     </style>
     <style name="Widget.Sherlock.Light.Button.Small" parent="Widget">
-        <item name="android:textAppearance">?attr/textAppearanceSmall</item>
-        <item name="android:textColor">@color/abs__primary_text_holo_light</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:minWidth">48dip</item>
+      <item name="android:textAppearance">?attr/textAppearanceSmall</item>
+      <item name="android:textColor">@color/abs__primary_text_holo_light</item>
+      <item name="android:minHeight">48dip</item>
+      <item name="android:minWidth">48dip</item>
     </style>
-    <style name="Widget.Sherlock.Light.DropDownItem.Spinner" parent="Sherlock.__Widget.Holo.DropDownItem"/>
+    <style name="Widget.Sherlock.Light.DropDownItem.Spinner" parent="Sherlock.__Widget.Holo.DropDownItem">
+    </style>
     <style name="Widget.Sherlock.Light.ListPopupWindow" parent="Widget">
         <item name="android:dropDownSelector">@drawable/abs__list_selector_holo_light</item>
         <item name="android:popupBackground">@drawable/abs__menu_dropdown_panel_holo_light</item>
@@ -1427,11 +1459,13 @@
         <item name="android:divider">@drawable/abs__list_divider_holo_light</item>
         <item name="android:listSelector">@drawable/abs__list_selector_holo_light</item>
     </style>
-    <style name="Widget.Sherlock.Light.PopupMenu" parent="Widget.Sherlock.Light.ListPopupWindow"/>
+    <style name="Widget.Sherlock.Light.PopupMenu" parent="Widget.Sherlock.Light.ListPopupWindow">
+    </style>
     <style name="Widget.Sherlock.Light.PopupWindow.ActionMode" parent="Widget">
         <item name="android:popupBackground">@android:color/white</item>
     </style>
-    <style name="Widget.Sherlock.Light.ProgressBar" parent="Widget.Sherlock.ProgressBar"/>
+    <style name="Widget.Sherlock.Light.ProgressBar" parent="Widget.Sherlock.ProgressBar">
+    </style>
     <style name="Widget.Sherlock.Light.ProgressBar.Horizontal" parent="Widget.Sherlock.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/abs__progress_horizontal_holo_light</item>
     </style>
@@ -1451,16 +1485,19 @@
         <item name="android:dropDownHorizontalOffset">0dip</item>
         <item name="android:dropDownWidth">wrap_content</item>
     </style>
-    <style name="Widget.Sherlock.ListView.DropDown" parent="Sherlock.__Widget.Holo.ListView"/>
-    <style name="Widget.Sherlock.PopupMenu" parent="Widget.Sherlock.ListPopupWindow"/>
-    <style name="Widget.Sherlock.PopupWindow.ActionMode" parent="Widget"/>
+    <style name="Widget.Sherlock.ListView.DropDown" parent="Sherlock.__Widget.Holo.ListView">
+    </style>
+    <style name="Widget.Sherlock.PopupMenu" parent="Widget.Sherlock.ListPopupWindow">
+    </style>
+    <style name="Widget.Sherlock.PopupWindow.ActionMode" parent="Widget">
+    </style>
     <style name="Widget.Sherlock.ProgressBar" parent="android:Widget.ProgressBar">
         <item name="android:indeterminateDrawable">@drawable/abs__progress_medium_holo</item>
         <item name="android:animationResolution">33</item>
     </style>
     <style name="Widget.Sherlock.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/abs__progress_horizontal_holo_dark</item>
-        <!-- item name="android:indeterminateDrawable">@drawable/abs__progress_indeterminate_horizontal_holo</item -->
+        <!--item name="android:indeterminateDrawable">@drawable/abs__progress_indeterminate_horizontal_holo</item-->
         <item name="android:minHeight">16dip</item>
         <item name="android:maxHeight">16dip</item>
     </style>

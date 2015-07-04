@@ -36,4 +36,4 @@ enabled.
          android:foregroundGravity="fill_horizontal|top"
          android:foreground="?attr/windowContentOverlay" />
 </LinearLayout>
-<!-- From: file:/Users/jw/dev/ActionBarSherlock/target/checkout/actionbarsherlock/res/layout/abs__screen_simple.xml --><!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/com.actionbarsherlock/actionbarsherlock/4.4.0/res/layout/abs__screen_simple.xml -->
+<!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/Sherlock/res/layout/abs__screen_simple.xml --><!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/layout/abs__screen_simple.xml -->
