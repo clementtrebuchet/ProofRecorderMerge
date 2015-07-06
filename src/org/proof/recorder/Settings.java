@@ -27,7 +27,7 @@ public final class Settings {
 	 * CONSTANTES COMMUNES A L'ENSEMBLE DE L'APPLICATION @PUBLIC
 	 * 
 	 * @author appconceptlab
-	 * 
+	 *
 	 */
 
 	private static String OVERRIDE_MODE;
