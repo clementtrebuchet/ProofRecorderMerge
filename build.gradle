@@ -28,8 +28,11 @@ android {
         keyStore {
             keyPassword 'sonyaltec'
             storeFile file('/home/clement/Projects/Java/keystore_android/key')
-            storePassword 'sonyaltec'
+            storePassword 'sonyaltec'	    
         }
+	lintOptions {
+        abortOnError false
+     }
     }
     compileSdkVersion 17
     buildToolsVersion '19.1.0'
