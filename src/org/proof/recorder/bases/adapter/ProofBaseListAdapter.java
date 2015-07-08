@@ -1,10 +1,5 @@
 package org.proof.recorder.bases.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -12,6 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	
@@ -30,21 +30,21 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 		}		  
 	}
 
-	protected Object objects;		
-	protected int layoutResourceId;	
-	protected String broadcastName;
+	private Object objects;
+	private int layoutResourceId;
+	private String broadcastName;
 	
 	public final int getLayoutResourceId() {
 		return layoutResourceId;
 	}
 
-	protected ViewGroup viewGroup;
+	ViewGroup viewGroup;
 	
 	/**
 	 * @return the objects
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Object> getObjects() {
+	protected ArrayList<Object> getObjects() {
 		return (ArrayList<Object>) objects;
 	}
 	/**
@@ -79,24 +79,24 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 		super(context, resource, textViewResourceId);
 	}
 
-	public ProofBaseListAdapter(Context context,	Object[] objects, int layoutResourceId, String broadcastName) {
+	ProofBaseListAdapter(Context context, Object[] objects, int layoutResourceId, String broadcastName) {
 		super(context, layoutResourceId, objects);
 		this.initialize(objects, layoutResourceId, broadcastName);
 	}
 
-	public ProofBaseListAdapter(Context context, List<Object> objects, int layoutResourceId, String broadcastName) {
+	ProofBaseListAdapter(Context context, List<Object> objects, int layoutResourceId, String broadcastName) {
 		super(context, layoutResourceId, objects);
 		this.initialize(objects, layoutResourceId, broadcastName);
 	}
 
-	public ProofBaseListAdapter(Context context, int resource,
-			int textViewResourceId, Object[] objects, int layoutResourceId, String broadcastName) {
+	ProofBaseListAdapter(Context context, int resource,
+						 int textViewResourceId, Object[] objects, int layoutResourceId, String broadcastName) {
 		super(context, resource, textViewResourceId, objects);
 		this.initialize(objects, layoutResourceId, broadcastName);
 	}
 
-	public ProofBaseListAdapter(Context context, int resource,
-			int textViewResourceId, List<Object> objects, int layoutResourceId, String broadcastName) {
+	ProofBaseListAdapter(Context context, int resource,
+						 int textViewResourceId, List<Object> objects, int layoutResourceId, String broadcastName) {
 		super(context, resource, textViewResourceId, objects);
 		this.initialize(objects, layoutResourceId, broadcastName);
 	}

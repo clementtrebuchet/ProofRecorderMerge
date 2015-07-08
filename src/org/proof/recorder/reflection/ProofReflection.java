@@ -4,8 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.Arrays;
 
-public class ProofReflection {
+class ProofReflection {
 	
 	public static class CCException extends Exception {
 		/**
@@ -20,7 +21,7 @@ public class ProofReflection {
 		 * @param detailMessage
 		 * @param throwable
 		 */
-		protected CCException(String detailMessage, Throwable throwable) {
+		CCException(String detailMessage, Throwable throwable) {
 			super(detailMessage, throwable);
 			// TODO Auto-generated constructor stub
 		}
@@ -98,9 +99,9 @@ public class ProofReflection {
 	    } catch (final NoSuchMethodException e) {
 	    	throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_NOT_FOUND", e);
 	    } catch (final IllegalArgumentException e) {
-	    	throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_ILLEGAL_ARGUMENTS " + String.valueOf(parameters), e);
-	    } catch (final IllegalAccessException e) {
-	    	throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_ACCESS_RESTRICTION", e);
+			throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_ILLEGAL_ARGUMENTS " + Arrays.toString(parameters), e);
+		} catch (final IllegalAccessException e) {
+			throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_ACCESS_RESTRICTION", e);
 	    } catch (final InvocationTargetException e) {
 		throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_INVOCATION_ISSUE", e);
 	    } 

@@ -1,10 +1,5 @@
 package org.proof.recorder.fragment.contacts;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.TabsPagerAdapter;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -12,14 +7,14 @@ import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.TabsPagerAdapter;
+
 public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
 	
 	private TabHost mTabHost;
-	private ViewPager mViewPager;
-	private TabsPagerAdapter mTabsAdapter;
-
-	private static Class<?> clsPhoneContacts;
-	private static Class<?> clsExcludedContacts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +25,24 @@ public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
 		mBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		mBar.setHomeButtonEnabled(true);
 
-		clsPhoneContacts = FragmentListPhoneContacts.PhoneContactsLoader.class;
-		clsExcludedContacts = FragmentListExcludedContacts.ExcludedContactsLoader.class;
+		Class<?> clsPhoneContacts = FragmentListPhoneContacts.PhoneContactsLoader.class;
+		Class<?> clsExcludedContacts = FragmentListExcludedContacts.ExcludedContactsLoader.class;
 
 		setContentView(R.layout.fragment_contacts_tabs);
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+		ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 		mTabHost.setup();
 
-		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
+		TabsPagerAdapter mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
 
 		mTabsAdapter.addTab(
 				mBar.newTab().setText(
 						this.getString(R.string.strNotExcludedTab)),
-				clsPhoneContacts, null);
+				clsPhoneContacts);
 
 		mTabsAdapter.addTab(
 				mBar.newTab().setText(this.getString(R.string.strExcludedTab)),
-				clsExcludedContacts, null);
+				clsExcludedContacts);
 
 		if (savedInstanceState != null) {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));

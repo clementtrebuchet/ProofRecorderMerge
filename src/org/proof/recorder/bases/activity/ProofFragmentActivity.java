@@ -1,24 +1,22 @@
 package org.proof.recorder.bases.activity;
 
-import org.proof.recorder.bases.utils.SetStaticContext;
-
 import android.content.Context;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
+import org.proof.recorder.bases.utils.SetStaticContext;
+
 public class ProofFragmentActivity  extends SherlockFragmentActivity {
 	
 	private Context internalContext = null;
-	
-	protected Bundle savedInstance;
 
 	@Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        savedInstance = icicle;
-        initialize();
-    }
+		Bundle savedInstance = icicle;
+		initialize();
+	}
 	
 	@Override
 	public void onResume() {
@@ -35,8 +33,8 @@ public class ProofFragmentActivity  extends SherlockFragmentActivity {
 	public void onDestroy() {
 		super.onDestroy();
 	}
-	
-	protected void initialize() {
+
+	private void initialize() {
 		SetStaticContext.setConsoleTagName(this.getClass().getName());
 		SetStaticContext.setStaticsContext(this, 1);
 		setInternalContext(this);

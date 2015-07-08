@@ -7,7 +7,7 @@
 <RelativeLayout
 	android:id="@+id/relDates"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="wrap_content">
 <RadioGroup
 	android:id="@+id/rdgDates"
 	android:layout_width="match_parent"

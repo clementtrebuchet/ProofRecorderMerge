@@ -1,13 +1,5 @@
 package org.proof.recorder.adapter.phone;
 
-import java.io.InputStream;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.database.support.ProofDataBase;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -23,7 +15,15 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-public class RecorderListAdapter extends SimpleCursorAdapter implements
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.database.support.ProofDataBase;
+
+import java.io.InputStream;
+
+class RecorderListAdapter extends SimpleCursorAdapter implements
 		SectionIndexer {
 
 	private static final String TAG = "RecorderListAdpater";
@@ -68,6 +68,7 @@ public class RecorderListAdapter extends SimpleCursorAdapter implements
 	 * End of Separator Logic
 	 */
 
+	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
 

@@ -12,8 +12,7 @@ public class ConnectivityInfo {
 
 	public static boolean WIFI;
 	public static boolean TROISG;
-	public static boolean NONETWORK;
-	
+
 	public ConnectivityInfo() {
 
 	}
@@ -33,6 +32,7 @@ public class ConnectivityInfo {
 		final android.net.NetworkInfo mobile = connMgr
 				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
+		boolean NONETWORK;
 		if (wifi.isAvailable()) {
 			final NetworkInfo activeNetwork = connMgr.getActiveNetworkInfo();
 			if (activeNetwork != null

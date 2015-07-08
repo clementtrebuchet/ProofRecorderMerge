@@ -1,14 +1,14 @@
 package org.proof.recorder.utils;
 
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-
 import android.content.ContentResolver;
 import android.content.Context;
 
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+
 public class DeviceInfo {
-	
-	private ConnectivityInfo mNetwork;
-	private OsInfo mOsInfo;
+
+	private final ConnectivityInfo mNetwork;
+	private final OsInfo mOsInfo;
 	private static Context mContext;
 	
 	public DeviceInfo(
@@ -23,7 +23,6 @@ public class DeviceInfo {
 	
 	/**
 	 * Get free space on device -> mOsInfo	
-	 * @param externalIncluded
 	 * @return String
 	 */
 	public String getFreeSpaceOnDevice() {

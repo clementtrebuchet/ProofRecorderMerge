@@ -1,9 +1,5 @@
 package org.proof.recorder.place.de.marche;
 
-import java.io.InputStream;
-
-import org.proof.recorder.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,12 +8,16 @@ import android.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import org.proof.recorder.R;
+
+import java.io.InputStream;
+
 public class Eula {
 
 
-	static String TAG = "Eula";
+	private static final String TAG = "Eula";
 	SharedPreferences preference;
-	public static CheckBoxPreference eu;
+	private static CheckBoxPreference eu;
 	private static Eula mSingleTon;
 	private static Eula getYnique(){
 		if(null == mSingleTon)
@@ -93,6 +93,7 @@ public class Eula {
 		try {
 			InputStream in_s = activity.getResources().openRawResource(eula);
 			byte[] b = new byte[in_s.available()];
+			//noinspection ResultOfMethodCallIgnored
 			in_s.read(b);
 			return new String(b);
 

@@ -1,8 +1,5 @@
 package org.proof.recorder.utils;
 
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,9 +9,12 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+
 public class StaticNotifications {
 
-	public static enum ICONS {
+	public enum ICONS {
 		NONE, DEFAULT, CUSTOM
 	}
 
@@ -63,11 +63,9 @@ public class StaticNotifications {
 	}
 
 	/**
-	 * @param mDefaultIcon
-	 *            the mDefaultIcon to set
 	 */
-	private static void setmDefaultIcon(int mDefaultIcon) {
-		StaticNotifications.mDefaultIcon = mDefaultIcon;
+	private static void setmDefaultIcon() {
+		StaticNotifications.mDefaultIcon = R.drawable.ic_home;
 	}
 
 	/**
@@ -148,7 +146,7 @@ public class StaticNotifications {
 		setmBuilder(new NotificationCompat.Builder(getmContext()));
 		setmNM((NotificationManager) getmContext().getSystemService(NS));
 		setmRessources(getmContext().getResources());
-		setmDefaultIcon(R.drawable.ic_home);
+		setmDefaultIcon();
 
 		StaticIntents notificationIntent = StaticIntents.create(getmContext(),
 				destination, b);
@@ -161,8 +159,8 @@ public class StaticNotifications {
 	 */
 
 	public static void show(Context context, Class<?> destination, Bundle b,
-			CharSequence title, CharSequence info, CharSequence text,
-			ICONS opt, boolean autoCancel, boolean flashLight, int icon) {
+							CharSequence title, CharSequence info, CharSequence text,
+							ICONS opt, boolean autoCancel, boolean flashLight) {
 
 		if (Settings.showNotifications()) {
 			if (Settings.isDebug())
@@ -174,17 +172,16 @@ public class StaticNotifications {
 					.setContentTitle(title).setTicker(title)
 					.setContentInfo(info).setContentText(text)
 					.setWhen(System.currentTimeMillis())
-					.setAutoCancel(autoCancel);
+					.setAutoCancel(true);
 
-			if (flashLight)
-				getmBuilder().setLights(0xff00ff00, 300, 1000);
+			getmBuilder().setLights(0xff00ff00, 300, 1000);
 
-			switch (opt) {
+			switch (ICONS.DEFAULT) {
 			case NONE:
 				break;
 
 			case CUSTOM:
-				getmBuilder().setSmallIcon(icon);
+				getmBuilder().setSmallIcon(0);
 				break;
 
 			default:

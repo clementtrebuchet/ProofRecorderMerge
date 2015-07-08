@@ -1,10 +1,5 @@
 package org.proof.recorder.bases.service;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.proof.recorder.R;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,11 +7,16 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.util.Log;
 
+import org.proof.recorder.R;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public abstract class ProofFrontService extends ProofService {
 
 	// ForGround Service Mechanic
 
-	protected static final int NOTIFICATION_ID = 1234567890;
+	private static final int NOTIFICATION_ID = 1234567890;
 
 	private static final Class<?>[] mSetForegroundSignature = new Class[] { boolean.class };
 	private static final Class<?>[] mStartForegroundSignature = new Class[] {
@@ -27,27 +27,21 @@ public abstract class ProofFrontService extends ProofService {
 	private Method mSetForeground;
 	private Method mStartForeground;
 	private Method mStopForeground;
-	private Object[] mSetForegroundArgs = new Object[1];
-	private Object[] mStartForegroundArgs = new Object[2];
-	private Object[] mStopForegroundArgs = new Object[1];
-	private Notification lNotif;
-	
-	protected int notifIcon = R.drawable.icon_soundcloud;
-	protected int notifText = R.string.sc_upload_file_msg;
-	
-	protected int EventInfoText = R.string.sc_upload_file_msg;
-	protected int EventInfoSubText = R.string.sc_upload_file_msg;
+	private final Object[] mSetForegroundArgs = new Object[1];
+	private final Object[] mStartForegroundArgs = new Object[2];
+	private final Object[] mStopForegroundArgs = new Object[1];
 
 	@SuppressWarnings("deprecation")
-	public Notification mNotification(){
-		Notification note=new Notification(notifIcon,
+	private Notification mNotification() {
+		int notifText = R.string.sc_upload_file_msg;
+		int notifIcon = R.drawable.icon_soundcloud;
+		return new Notification(notifIcon,
 				getString(notifText),
 				System.currentTimeMillis());
-		return note;
 	}
 
 	@SuppressWarnings("deprecation")
-	public void mInitNotification(Notification N){
+	private void mInitNotification(Notification N) {
 
 
 		Intent intent = new Intent();
@@ -66,15 +60,17 @@ public abstract class ProofFrontService extends ProofService {
 
 		PendingIntent pi=PendingIntent.getActivity(this, 0, intent, 0);
 
-		N.setLatestEventInfo(this, 
-				getString(EventInfoText), 
-				getString(EventInfoSubText),
+		int eventInfoSubText = R.string.sc_upload_file_msg;
+		int eventInfoText = R.string.sc_upload_file_msg;
+		N.setLatestEventInfo(this,
+				getString(eventInfoText),
+				getString(eventInfoSubText),
 				pi);
 
 		N.flags|=Notification.FLAG_NO_CLEAR;
 	}
 
-	void invokeMethod(Method method, Object[] args) {
+	private void invokeMethod(Method method, Object[] args) {
 		try {
 			method.invoke(this, args);
 		} catch (InvocationTargetException e) {
@@ -90,10 +86,10 @@ public abstract class ProofFrontService extends ProofService {
 	 * This is a wrapper around the new startForeground method, using the older
 	 * APIs if it is not available.
 	 */
-	void startForegroundCompat(int id, Notification notification) {
+	private void startForegroundCompat(Notification notification) {
 		// If we have the new startForeground API, then use it.
 		if (mStartForeground != null) {
-			mStartForegroundArgs[0] = Integer.valueOf(id);
+			mStartForegroundArgs[0] = ProofFrontService.NOTIFICATION_ID;
 			mStartForegroundArgs[1] = notification;
 			invokeMethod(mStartForeground, mStartForegroundArgs);
 			return;
@@ -102,14 +98,14 @@ public abstract class ProofFrontService extends ProofService {
 		// Fall back on the old API.
 		mSetForegroundArgs[0] = Boolean.TRUE;
 		invokeMethod(mSetForeground, mSetForegroundArgs);
-		mNM.notify(id, notification);
+		mNM.notify(ProofFrontService.NOTIFICATION_ID, notification);
 	}
 
 	/**
 	 * This is a wrapper around the new stopForeground method, using the older
 	 * APIs if it is not available.
 	 */
-	void stopForegroundCompat(int id) {
+	private void stopForegroundCompat() {
 		// If we have the new stopForeground API, then use it.
 		if (mStopForeground != null) {
 			mStopForegroundArgs[0] = Boolean.TRUE;
@@ -119,7 +115,7 @@ public abstract class ProofFrontService extends ProofService {
 
 		// Fall back on the old API. Note to cancel BEFORE changing the
 		// foreground state, since we could be killed at that point.
-		mNM.cancel(id);
+		mNM.cancel(ProofFrontService.NOTIFICATION_ID);
 		mSetForegroundArgs[0] = Boolean.FALSE;
 		invokeMethod(mSetForeground, mSetForegroundArgs);
 	}
@@ -153,7 +149,7 @@ public abstract class ProofFrontService extends ProofService {
 		/*
 		 * stopping ForegroundCompat
 		 */
-		stopForegroundCompat(NOTIFICATION_ID);
+		stopForegroundCompat();
 	}
 
 	// End ForeGround
@@ -163,16 +159,16 @@ public abstract class ProofFrontService extends ProofService {
 		_onStartCommand(intent, flags, startId);		
 		/*
 		 * start startForegroundCompat
-		 */		
-		lNotif = mNotification();
+		 */
+		Notification lNotif = mNotification();
 		mInitNotification(lNotif);
-		startForegroundCompat(NOTIFICATION_ID, lNotif);
+		startForegroundCompat(lNotif);
 
 		return (START_STICKY);
 	}
-	
-	protected String pendingIntent = null;
-	protected String pendingIntentPackage = null;
+
+	private final String pendingIntent = null;
+	private final String pendingIntentPackage = null;
 
 	protected abstract void _onStartCommand(Intent intent, int flags, int startId);
 	protected abstract void _onDestroy();

@@ -1,10 +1,5 @@
 package org.proof.recorder.wigdet;
 
-import java.util.ArrayList;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,10 +10,14 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+
+import java.util.ArrayList;
+
 public class WidgetPreferenceFormat extends SherlockPreferenceActivity {
 
-	private ListPreference mFormat;
-	protected final String TAG = WidgetPreferenceFormat.class.getName();
+	private final String TAG = WidgetPreferenceFormat.class.getName();
 
 	private ArrayList<String> pluginMyForma() {
 		String required = getApplicationContext().getResources().getString(
@@ -43,7 +42,8 @@ public class WidgetPreferenceFormat extends SherlockPreferenceActivity {
 
 		return mlPlug;
 	}
-	public  boolean assertPlugExist(int plugId) {
+
+	private boolean assertPlugExist(int plugId) {
 
 		PackageManager mPackageManager = getBaseContext().getPackageManager();
 		String plugIntent;
@@ -67,7 +67,7 @@ public class WidgetPreferenceFormat extends SherlockPreferenceActivity {
 				Log.d(TAG,"Pluguin exist :" + plugIntent);
 				return true;
 			}
-			Log.d(TAG,"Pluguin dont't exist :" + plugIntent + " Intent:" + mIntent);
+			Log.d(TAG, "Pluguin dont't exist :" + plugIntent + " Intent:" + null);
 			return false;
 		} catch (Exception e) {
 			Log.d(TAG,"Pluguin dont't exist :" + plugIntent);
@@ -94,7 +94,7 @@ public class WidgetPreferenceFormat extends SherlockPreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.widget_preferences);
-		mFormat = (ListPreference) getPreferenceScreen().findPreference(
+		ListPreference mFormat = (ListPreference) getPreferenceScreen().findPreference(
 				"audio_format");
 		mFormat.setOnPreferenceClickListener(spinClick);
 		ArrayList<String> formatList = pluginMyForma();
@@ -111,12 +111,12 @@ public class WidgetPreferenceFormat extends SherlockPreferenceActivity {
 
 	}
 
-	private OnPreferenceClickListener spinClick = new OnPreferenceClickListener() {
+	private final OnPreferenceClickListener spinClick = new OnPreferenceClickListener() {
 		@Override
 		public boolean onPreferenceClick(
 				android.preference.Preference preference) {
 			if (Settings.isDebug())
-				Log.e(TAG, "" + preference.getKey().toString());
+				Log.e(TAG, "" + preference.getKey());
 			if (preference.getKey().contains("Plugin")) {
 				preference.setEnabled(false);
 			}

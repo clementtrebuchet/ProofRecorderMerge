@@ -6,10 +6,10 @@ import android.os.Bundle;
 public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivity {
 	
 	private AsyncLoader collectionLoader;
-	
-	protected volatile boolean isLoading;	
-	
-	protected void startAsyncLoader() {
+
+	private volatile boolean isLoading;
+
+	private void startAsyncLoader() {
 		this.collectionLoader.execute();		
 	}
 	
@@ -18,8 +18,8 @@ public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivi
 		this.initializeTask();
 		this.startAsyncLoader();
 	}
-	
-	protected void stopAsyncLoader() {
+
+	private void stopAsyncLoader() {
 		if (this.collectionLoader != null) {
 			if(this.collectionLoader.getStatus() != AsyncTask.Status.FINISHED &&
 					!this.collectionLoader.isCancelled()) {
@@ -36,7 +36,8 @@ public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivi
 	protected abstract void _onPreExecute();
 	protected abstract void _onProgressUpdate(Integer... progress);
 	protected abstract void _onPostExecute(Long result);
-	protected abstract Long _doInBackground(Void... params);
+
+	protected abstract void _doInBackground(Void... params);
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,8 @@ public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivi
 		super.onDestroy();
 		stopAsyncLoader();
 	}
-	
-	protected class AsyncLoader extends AsyncTask<Void, Integer, Long> {
+
+	private class AsyncLoader extends AsyncTask<Void, Integer, Long> {
 
 		@Override
 		protected void onProgressUpdate(Integer... progress) {

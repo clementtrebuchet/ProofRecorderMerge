@@ -1,18 +1,5 @@
 package org.proof.recorder.bases.fragment;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.adapter.ProofBaseListAdapter;
-import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
-import org.proof.recorder.services.SoundCloudBgUploader;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,27 +16,40 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 import com.actionbarsherlock.widget.ShareActionProvider.OnShareTargetSelectedListener;
 
-public abstract class ProofListFragmentWithQuickAction extends ProofListFragmentWithAsyncLoader {	
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.adapter.ProofBaseListAdapter;
+import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
+import org.proof.recorder.services.SoundCloudBgUploader;
+import org.proof.recorder.utils.Log.Console;
 
-	protected final static int  SELECT_ALL = 5, 
-								DELETE = 10, 
-								SHARE = 15,
-								SHARE_SC = 20,
-								DONE = 25;	
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-	protected ActionMode mode = null;	
+public abstract class ProofListFragmentWithQuickAction extends ProofListFragmentWithAsyncLoader {
+
+	private final static int SELECT_ALL = 5;
+	private final static int DELETE = 10;
+	private final static int SHARE = 15;
+	private final static int SHARE_SC = 20;
+	private final static int DONE = 25;
+
+	private ActionMode mode = null;
 	
 	protected String[] recordIds = null, 
-					   recordPaths = null;	
-	
-	protected Runnable fillCollectionRunnable = null;	
-	
-	protected MenuItem selectItem = null, 
-					   deleteItem = null,
-					   shareSoundCItem = null,
-					   shareItem = null;	
-	
-	protected ShareActionProvider actionProvider = null;
+					   recordPaths = null;
+
+	protected Runnable fillCollectionRunnable = null;
+
+	private MenuItem selectItem = null;
+	private MenuItem deleteItem = null;
+	private MenuItem shareSoundCItem = null;
+	private MenuItem shareItem = null;
+
+	private ShareActionProvider actionProvider = null;
 
 	private int selectedCount = 0;
 	private boolean checked = false;
@@ -141,11 +141,13 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 				if(fallback && shareItem != null) {
 					// Fall-back for not compatible workaround devices
 					// Playing with visibility :)
+					//noinspection ConstantConditions
 					shareItem.setVisible(enable);
 				}
 			}
 			else {
 				if(!shareItem.isVisible())
+					//noinspection ConstantConditions
 					shareItem.setVisible(enable);
 			}
 			
@@ -285,7 +287,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			int layoutId,
 			boolean multiSelectMode);
 
-	protected void evaluateSelectedCount() {
+	private void evaluateSelectedCount() {
 
 		selectedCount = 0;
 		for(Object item : objects) {
@@ -295,11 +297,11 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		}		
 	}
 
-	protected boolean allSelected() {
+	private boolean allSelected() {
 		return objects.size() == selectedCount;
 	}
 
-	protected boolean emptySelection() {
+	private boolean emptySelection() {
 		return selectedCount == 0;
 	}
 
@@ -329,11 +331,11 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		handleActionMode(SHARE);
 	}
 
-	public boolean handleActionMode(int itemId) {				
+	private boolean handleActionMode(int itemId) {
 
 		Console.print_debug("itemId: " + itemId);
-		
-		Intent share = null;
+
+		Intent share;
 
 		switch (itemId) {
 
@@ -470,9 +472,9 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		}
 
 		((ProofBaseMultiSelectListAdapter) listAdapter).toggleChecked(checked);
-	}	
+	}
 
-	protected void displayQuickActionMode() {
+	private void displayQuickActionMode() {
 
 		lockScreenOrientation();
 		

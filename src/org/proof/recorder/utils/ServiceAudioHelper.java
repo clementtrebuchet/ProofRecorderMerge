@@ -7,8 +7,7 @@ import android.util.Log;
 
 public class ServiceAudioHelper {
 	private static final String TAG = "ServiceAudioHelper";
-	Context mContext;
-	SharedPreferences preferences;
+	private final Context mContext;
 
 	public ServiceAudioHelper(Context m) {
 		mContext = m;
@@ -41,7 +40,7 @@ public class ServiceAudioHelper {
 
 	private int getMaConfAudio() {
 
-		preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 		boolean mic = preferences.getBoolean("MIC", false);
 		boolean voice_up = preferences.getBoolean("VOICE_UP", false);
 		boolean voice_down = preferences.getBoolean("VOICE_DOWN", false);

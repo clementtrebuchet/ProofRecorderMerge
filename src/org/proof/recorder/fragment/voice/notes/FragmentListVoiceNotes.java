@@ -1,13 +1,5 @@
 package org.proof.recorder.fragment.voice.notes;
 
-import java.util.Date;
-
-import org.proof.recorder.R;
-import org.proof.recorder.bases.fragment.ProofFragment;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,19 +16,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.fragment.ProofFragment;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.Date;
+
 public class FragmentListVoiceNotes extends ProofFragment {
 
-	static Bundle mBundle;
-	static String id;
+	private static Bundle mBundle;
 
 	private static final String[] from = new String[] {
 			ProofDataBase.COLUMNVOICE_TITLE, ProofDataBase.COLUMNVOICE_NOTE,
 			ProofDataBase.COLUMNVOICE_DATE_CREATION, ProofDataBase.COLUMNVOICE_NOTES_ID };
 
-	EditText mTitre;
-	EditText mNote;
-	TextView mCreation; 
-	String idNote;
+	private EditText mTitre;
+	private EditText mNote;
+	private String idNote;
 	int i;
 
 	@Override
@@ -58,8 +56,8 @@ public class FragmentListVoiceNotes extends ProofFragment {
 		registerForContextMenu(getView());
 		mTitre = (EditText) getView().findViewById(R.id.titreNotes);
 		mNote = (EditText) getView().findViewById(R.id.notesContenu);
-		mCreation = (TextView) getView().findViewById(R.id.notesCreation);
-		id = (String) mBundle.get("id");
+		TextView mCreation = (TextView) getView().findViewById(R.id.notesCreation);
+		String id = (String) mBundle.get("id");
 		
 		Console.print_debug("<<VOICE's NOTE NUMERO>>" + id);
 		
@@ -111,7 +109,8 @@ public class FragmentListVoiceNotes extends ProofFragment {
 			return false;
 		}
 	};
-	
+
+	@SuppressWarnings("UnusedAssignment")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -144,7 +143,7 @@ public class FragmentListVoiceNotes extends ProofFragment {
 		return super.onContextItemSelected(item);
 	}
 
-	public void enregistrerNote() {
+	private void enregistrerNote() {
 
 		ContentValues valuesNote = new ContentValues();
 		final String titre = mTitre.getText().toString();

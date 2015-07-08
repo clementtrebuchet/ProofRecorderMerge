@@ -149,8 +149,8 @@ public class MP3Decoder {
     public static native int[] getSupportedRates();
 
     private static native int[] getEncodings();
-    
-    public static Encoding[] getSupportedEncodings()
+
+    static Encoding[] getSupportedEncodings()
     {
         int[] encodings = getEncodings();
         
@@ -175,7 +175,7 @@ public class MP3Decoder {
      * 
      * @param filename the filename
      */
-    public MP3Decoder(String filename)
+    MP3Decoder(String filename)
     {
         handle = openFile(filename);
 
@@ -198,8 +198,8 @@ public class MP3Decoder {
     }
     
     private native long openFile (String filename);
- 
-    public void dispose()
+
+    private void dispose()
     {
         if(handle != 0)
         {
@@ -214,7 +214,7 @@ public class MP3Decoder {
         dispose();
     }
 
-    public int readSamples (ShortBuffer samples)
+    int readSamples(ShortBuffer samples)
     {
         int read = readSamples(handle, samples, samples.capacity());
         samples.position(0);

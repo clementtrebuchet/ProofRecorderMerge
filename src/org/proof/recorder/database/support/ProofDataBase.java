@@ -1,13 +1,13 @@
 package org.proof.recorder.database.support;
 
-import org.proof.recorder.Settings;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import org.proof.recorder.Settings;
 
 public class ProofDataBase {
 	/*
@@ -16,7 +16,7 @@ public class ProofDataBase {
 
 	// Phone Call Records
 
-	public static String TABLE_RECODINGAPP = "recordsproof";
+	public static final String TABLE_RECODINGAPP = "recordsproof";
 	public static final String COLUMNRECODINGAPP_ID = "_id";
 	public static final String COLUMN_TELEPHONE = "telephone";
 	public static final String COLUMN_CONTRACT_ID = "contract_id";
@@ -30,7 +30,7 @@ public class ProofDataBase {
 
 	// Voice Records
 
-	public static String TABLE_VOICES = "voicesproof";
+	public static final String TABLE_VOICES = "voicesproof";
 	public static final String COLUMNVOICE_ID = "_id";
 	public static final String COLUMN_VOICE_TIMESTAMP = "timestamp";
 	public static final String COLUMN_VOICE_FILE = "emplacement";
@@ -40,7 +40,7 @@ public class ProofDataBase {
 
 	// Phone's Notes
 
-	public static String TABLE_NOTES = "notesproof";
+	public static final String TABLE_NOTES = "notesproof";
 	public static final String COLUMNNOTES_ID = "_id";
 	public static final String COLUMN_ID_COLUMNRECODINGAPP_ID = "RecId";
 	public static final String COLUMN_TITLE = "titre";
@@ -50,7 +50,7 @@ public class ProofDataBase {
 
 	// Voice's Notes
 
-	public static String TABLE_VOICE_NOTES = "voicenotesproof";
+	public static final String TABLE_VOICE_NOTES = "voicenotesproof";
 	public static final String COLUMNVOICE_NOTES_ID = "_id";
 	public static final String COLUMNVOICE_ID_COLUMNVOICE_ID = "RecId";
 	public static final String COLUMNVOICE_TITLE = "titre";
@@ -59,17 +59,17 @@ public class ProofDataBase {
 	public static final String COLUMN_ISYNC_NOV = "Isync";
 	
 	// Mapping excluded Contacts
-	public static String TABLE_EXCLUDED_CONTACTS = "excludedcontactsproof";
+	public static final String TABLE_EXCLUDED_CONTACTS = "excludedcontactsproof";
 	public static final String COLUMN_CONTACT_ID = "_id";
 	public static final String COLUMN_CONTRACT_CONTACTS_ID = "contacts_id";
 	public static final String COLUMN_DISPLAY_NAME = "display_name";
 	public static final String COLUMN_PHONE_NUMBER = "phone_number";
 
-	private Context context;
+	private final Context context;
 	private SQLiteDatabase database;
 	private ProofDataBaseHelper dbHelper;
 
-	public ProofDataBase(Context context) {
+	private ProofDataBase(Context context) {
 		this.context = context;
 	}
 

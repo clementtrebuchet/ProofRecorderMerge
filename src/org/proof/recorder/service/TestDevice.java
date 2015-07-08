@@ -1,14 +1,14 @@
 package org.proof.recorder.service;
 
-import java.io.File;
-
-import org.proof.recorder.Settings;
-
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
+import org.proof.recorder.Settings;
+
+import java.io.File;
 
 /**
  * @author clement
@@ -18,29 +18,27 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 	
 	private static boolean toProcess = true;
 
-	private int bufferSize = 0;
-	
-	public static  boolean mic;
-	public static  boolean voice_call;
-	public static  boolean voice_com ;
-	public static  boolean voice_reco;
-	public static  boolean voice_up ;
-	public static  boolean voice_down ;
-	public static  boolean cam ;
-	
-	public static  boolean[] all = {
-		mic, 
-		voice_up, 
+    private static boolean mic;
+    private static boolean voice_call;
+    private static boolean voice_com;
+    private static boolean voice_reco;
+    private static boolean voice_up;
+    private static boolean voice_down;
+    private static boolean cam;
+
+    private static final boolean[] all = {
+            mic,
+            voice_up,
 		voice_down, 
 		voice_call,
 		cam, 
 		voice_reco, 
 		voice_com
 	};
-	
-	public static String[] toStr = {
-		"mic",
-		"voice_up", 
+
+    private static final String[] toStr = {
+            "mic",
+            "voice_up",
 		"voice_down",
 		"voice_call",
 		"cam", 
@@ -48,10 +46,10 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 		"voice_com"
 	};
 
-	public static Bundle BUNDLECONFIGURATIONAUDIO = new Bundle();
-	
-	/**
-	 * @param message
+    public static final Bundle BUNDLECONFIGURATIONAUDIO = new Bundle();
+
+    /**
+     * @param message
 	 */
 	private void print(String message) {
 		if(Settings.isDebug())
@@ -71,7 +69,8 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 
 	}
 
-	private void makeDirectoriesStructure(){
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void makeDirectoriesStructure() {
 
 		for (String path : Settings.DEFAULT_FILE_PATHS)
 		{
@@ -82,25 +81,26 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 		}
 	}
 
-	private void recorder(int source, boolean resultat){
-		
-		AudioRecord recorder = null;
-		
-		try{
-			bufferSize = AudioRecord.getMinBufferSize(Settings.RECORDER_SAMPLERATE,
-					Settings.RECORDER_CHANNELS, Settings.RECORDER_AUDIO_ENCODING);			
-			
-			recorder = new AudioRecord(
-					source,
+    private void recorder(int source) {
+
+        AudioRecord recorder = null;
+
+        boolean resultat;
+        try {
+            int bufferSize = AudioRecord.getMinBufferSize(Settings.RECORDER_SAMPLERATE,
+                    Settings.RECORDER_CHANNELS, Settings.RECORDER_AUDIO_ENCODING);
+
+            recorder = new AudioRecord(
+                    source,
 					Settings.RECORDER_SAMPLERATE, Settings.RECORDER_CHANNELS,
 					Settings.RECORDER_AUDIO_ENCODING, bufferSize);
 			
 			recorder.startRecording();
 			
 			resultat = true;
-			BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source-1], resultat);
+            BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source - 1], true);
 
-			print("position : " + toStr[source-1] + " capabilitie : " + resultat);
+            print("position : " + toStr[source - 1] + " capabilitie : " + true);
 
 			recorder.stop();
 			recorder.release();
@@ -112,29 +112,28 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 			print_exception("Capabilitie for " + toStr[source-1] + " : " + e);
 
 			resultat = false;
-			BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source-1], resultat);
-			
-			if(recorder != null) {
-				try {
+            BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source - 1], false);
+
+            if (recorder != null) {
+                try {
 					recorder.release();
-					recorder = null;
 				}
 				catch (Exception exc) {
-					recorder = null;
-				}
-			}
+                    Log.d(this.getClass().getName(), e.getMessage());
+                }
+            }
 		}
 	}
 
-	private void testAll(int[] all, boolean[] res){
+    private void testAll(boolean[] res) {
 
-		recorder(all[0], res[0]);
-		recorder(all[1], res[1]);
-		recorder(all[2], res[2]);
-		recorder(all[3], res[3]);
-		recorder(all[4], res[4]);
-		recorder(all[5], res[5]);
-		recorder(all[6], res[6]);
+        recorder(capabiltiesHw.all[0]);
+        recorder(capabiltiesHw.all[1]);
+        recorder(capabiltiesHw.all[2]);
+        recorder(capabiltiesHw.all[3]);
+        recorder(capabiltiesHw.all[4]);
+        recorder(capabiltiesHw.all[5]);
+        recorder(capabiltiesHw.all[6]);
 
 	}
 
@@ -145,17 +144,17 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 	
 	interface capabiltiesHw {
 
-		public static final int mic = MediaRecorder.AudioSource.MIC;						//1
-		public static final int voice_up = MediaRecorder.AudioSource.VOICE_UPLINK; 			//2
-		public static final int voice_down = MediaRecorder.AudioSource.VOICE_DOWNLINK;		//3
-		public static final int voice_call = MediaRecorder.AudioSource.VOICE_CALL; 			//4
-		public static final int cam = MediaRecorder.AudioSource.CAMCORDER;					//5
-		public static final int voice_reco = MediaRecorder.AudioSource.VOICE_RECOGNITION; 	//6
-		public static final int voice_com = MediaRecorder.AudioSource.VOICE_COMMUNICATION; 	//7
-				
-		public static final int[] all = {
-			mic, 
-			voice_up, 
+        int mic = MediaRecorder.AudioSource.MIC;                        //1
+        int voice_up = MediaRecorder.AudioSource.VOICE_UPLINK;            //2
+        int voice_down = MediaRecorder.AudioSource.VOICE_DOWNLINK;        //3
+        int voice_call = MediaRecorder.AudioSource.VOICE_CALL;            //4
+        int cam = MediaRecorder.AudioSource.CAMCORDER;                    //5
+        int voice_reco = MediaRecorder.AudioSource.VOICE_RECOGNITION;    //6
+        int voice_com = MediaRecorder.AudioSource.VOICE_COMMUNICATION;    //7
+
+        int[] all = {
+                mic,
+                voice_up,
 			voice_down, 
 			voice_call,
 			cam, 
@@ -168,27 +167,26 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 	protected Void doInBackground(Void... arg0) {
 		
 		if(isToProcess()) {
-			makeDirectoriesStructure();		 
-			testAll(capabiltiesHw.all, all);
-			setToProcess(false);
-		}
-		
-		return null;
+            makeDirectoriesStructure();
+            testAll(all);
+            setToProcess();
+        }
+
+        return null;
 	}
 
 	/**
 	 * @return the toProcess
 	 */
-	public static boolean isToProcess() {
-		return toProcess;
-	}
+    private static boolean isToProcess() {
+        return toProcess;
+    }
 
 	/**
-	 * @param toProcess the toProcess to set
-	 */
-	public static void setToProcess(boolean toProcess) {
-		TestDevice.toProcess = toProcess;
-	}
+     */
+    private static void setToProcess() {
+        TestDevice.toProcess = false;
+    }
 
 }
 

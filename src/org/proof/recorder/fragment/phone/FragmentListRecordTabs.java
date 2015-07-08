@@ -1,13 +1,13 @@
 package org.proof.recorder.fragment.phone;
 
+import android.os.Bundle;
+
 import org.proof.recorder.R;
 import org.proof.recorder.bases.activity.ProofMultiSelectFragmentActivity;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.fragment.phone.FragmentListRecordIn.InCommingCallsLoader;
 import org.proof.recorder.fragment.phone.FragmentListRecordOut.OutGoingCallsLoader;
 import org.proof.recorder.utils.Log.Console;
-
-import android.os.Bundle;
 
 public class FragmentListRecordTabs extends ProofMultiSelectFragmentActivity {
 
@@ -61,17 +61,9 @@ public class FragmentListRecordTabs extends ProofMultiSelectFragmentActivity {
 
 		Console.print_debug("TITLED: " + in + " " + "UNTITLED: " + out);
 
-		if (in > 0) {
-			hasOne = true;
-		}
-		else
-			hasOne = false;
+		hasOne = in > 0;
 
-		if (out > 0) {
-			hasSecond = true;
-		}
-		else
-			hasSecond = false;
+		hasSecond = out > 0;
 	}
 
 	@Override

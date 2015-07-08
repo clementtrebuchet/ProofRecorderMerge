@@ -1,6 +1,6 @@
 package org.proof.recorder.service.jni;
 
-public class SimpleLame {
+class SimpleLame {
 	
 	private static final String TAG = "SimpleLame";
 
@@ -49,8 +49,6 @@ public class SimpleLame {
 	 *            PCM data for left channel.
 	 * @param buffer_r
 	 *            PCM data for right channel.
-	 * @param sambles
-	 *            number of samples per channel.
 	 * @param mp3buf
 	 *            result encoded MP3 stream. You must specified
 	 *            "7200 + (1.25 * buffer_l.length)" length array.

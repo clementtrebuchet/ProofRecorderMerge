@@ -1,11 +1,11 @@
 package org.proof.recorder.bases.service;
 
-import org.proof.recorder.bases.utils.SetStaticContext;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+
+import org.proof.recorder.bases.utils.SetStaticContext;
 
 public class ProofService extends Service {
 	
@@ -21,8 +21,8 @@ public class ProofService extends Service {
 		super.onCreate();
 		initialize();
 	}
-	
-	protected void initialize() {
+
+	private void initialize() {
 		SetStaticContext.setConsoleTagName(this.getClass().getSimpleName());
 		SetStaticContext.setStaticsContext(this, 0);
 		setInternalContext(this);

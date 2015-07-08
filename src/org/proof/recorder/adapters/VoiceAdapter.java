@@ -1,14 +1,5 @@
 package org.proof.recorder.adapters;
 
-import java.io.File;
-import java.util.List;
-
-import org.proof.recorder.R;
-import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
-import org.proof.recorder.database.models.Voice;
-import org.proof.recorder.utils.ApproxRecordTime;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +11,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
+import org.proof.recorder.database.models.Voice;
+import org.proof.recorder.utils.ApproxRecordTime;
+import org.proof.recorder.utils.Log.Console;
+
+import java.io.File;
+import java.util.List;
+
 public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 
 	
@@ -29,8 +29,6 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param resource
 	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
@@ -45,8 +43,6 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param resource
 	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
@@ -58,10 +54,7 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
 	 * @param context
-	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
@@ -72,10 +65,7 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
 	 * @param context
-	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
@@ -115,7 +105,7 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 				TextView durationTxt = (TextView) view
 						.findViewById(R.id.songtime);
 				File g = new File(voice.getFilePath());
-				ApproxRecordTime f = new ApproxRecordTime(g, true);
+				ApproxRecordTime f = new ApproxRecordTime(g);
 				durationTxt.setText("" + f.run());
 				picturesSongFormat(f.getmFormat(), format);
 			} catch (Exception e) {
@@ -157,18 +147,17 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 		
 	}
 	private void picturesSongFormat(String r, ImageView v){
-		String f = r;
 		Bitmap defaultBite;
-		if(f.equalsIgnoreCase("wav")){
+		if (r.equalsIgnoreCase("wav")) {
 			defaultBite = BitmapFactory.decodeResource(
 					getContext().getResources(), R.drawable.plug_wav);
-		} else if(f.equalsIgnoreCase("mp3")){
+		} else if (r.equalsIgnoreCase("mp3")) {
 			defaultBite = BitmapFactory.decodeResource(
 					getContext().getResources(), R.drawable.plug_mp3);
-		} else if(f.equalsIgnoreCase("ogg")){
+		} else if (r.equalsIgnoreCase("ogg")) {
 			defaultBite = BitmapFactory.decodeResource(
 					getContext().getResources(), R.drawable.plug_ogg);
-		} else if(f.equalsIgnoreCase("3gp")){
+		} else if (r.equalsIgnoreCase("3gp")) {
 			defaultBite = BitmapFactory.decodeResource(
 					getContext().getResources(), R.drawable.plug_3gp);
 		} else {

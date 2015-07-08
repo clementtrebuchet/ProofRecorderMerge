@@ -1,17 +1,17 @@
 package org.proof.recorder.database.models;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.net.Uri;
+
 import org.proof.recorder.R;
 import org.proof.recorder.database.support.AndroidContactsHelper;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.receivers.holders.PhoneRecordHolder;
 import org.proof.recorder.utils.DateUtils;
-import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.Log.Console;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.net.Uri;
+import org.proof.recorder.utils.OsInfo;
 
 public class PhoneRecord {
 	
@@ -35,7 +35,6 @@ public class PhoneRecord {
 	// OsInfo.getBaseNameWithNoExt(phoneAudioFile)
 
 	/**
-	 * @param contentResolver 
 	 * 
 	 */
 	public PhoneRecord(Context context) {
@@ -102,13 +101,13 @@ public class PhoneRecord {
 		
 		return values;
 	}
-	
-	public boolean save() {
+
+	public void save() {
 		
 		boolean saved = false;
 		
 		if(!toBeInserted())
-			return saved;
+			return;
 		
 		Uri rowId = getResolver().insert(PhoneRecordHolder.INSERT_VOICE_URI, toValues(null));
 		setSavedId(Long.parseLong(rowId.toString()));
@@ -116,8 +115,7 @@ public class PhoneRecord {
 			getResolver().insert(PhoneRecordHolder.INSERT_VNOTE_URI, toValues(rowId.toString()));
 			saved = true;
 		}
-		
-		return saved;
+
 	}
 	
 	public boolean toBeInserted() {
@@ -157,7 +155,6 @@ public class PhoneRecord {
 	}
 
 	/**
-	 * @param resolver the resolver to set
 	 */
 	private static void setContext(Context context) {
 		PhoneRecord.context = context;
@@ -173,8 +170,8 @@ public class PhoneRecord {
 	/**
 	 * @return if the phoneAudioFile is different from const NULL, true else false.
 	 */
-	public boolean hasPhoneAudioFile() {
-		return phoneAudioFile != NULL;
+	private boolean hasPhoneAudioFile() {
+		return !phoneAudioFile.equals(NULL);
 	}
 
 	/**
@@ -195,8 +192,8 @@ public class PhoneRecord {
 	/**
 	 * @return if the phoneNumber is different from const NULL, true else false.
 	 */
-	public boolean hasPhoneNumber() {
-		return phoneNumber != NULL;
+	private boolean hasPhoneNumber() {
+		return !phoneNumber.equals(NULL);
 	}
 
 	/**
@@ -216,12 +213,11 @@ public class PhoneRecord {
 	/**
 	 * @return if the directionCall is different from const NULL, true else false.
 	 */
-	public boolean hasDirectionCall() {
-		return directionCall != NULL;
+	private boolean hasDirectionCall() {
+		return !directionCall.equals(NULL);
 	}
 
 	/**
-	 * @param directionCall the directionCall to set
 	 */
 	public void setDirectionCall(String direction) {
 		this.directionCall = direction;
@@ -271,8 +267,6 @@ public class PhoneRecord {
 				return false;
 		} else if (!phoneNumber.equals(other.phoneNumber))
 			return false;
-		if (savedId != other.savedId)
-			return false;
-		return true;
-	}	
+		return savedId == other.savedId;
+	}
 }

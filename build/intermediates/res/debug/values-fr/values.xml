@@ -140,19 +140,19 @@
     <string name="ab_contacts_list_icon_desc">Icône des Contacts</string>
     <string name="ab_contacts_list_text">Liste des Contacts</string>
     <string name="ab_default_text">Frug\'n Frog\'s Apps :)</string>
-    <string name="about_app">        
-        
-        &amp;lt;p&amp;gt;
+    <string name="about_app"><![CDATA[
+
+        &lt;p&gt;
 	        Cette application vous permet:
-	        &amp;lt;ul&amp;gt;
-		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;D\'enregister&amp;lt;/u&amp;gt; en different format (mp3, wav, ogg, ...)&amp;lt;br&amp;gt; vos appels téléphoniques ou plus simplement votre voix.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;D\'Associer&amp;lt;/u&amp;gt; un titre, ainsi qu\'une note pour tout type d\'enregistrement.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-		        &amp;lt;li&amp;gt;&amp;lt;u&amp;gt;De Filtrer&amp;lt;/u&amp;gt; ce service d\'enregistrements,&amp;lt;br&amp;gt; sur la base de votre propre liste de contacts.&amp;lt;/li&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-	        &amp;lt;/ul&amp;gt;
+	        &lt;ul&gt;
+		        &lt;li&gt;&lt;u&gt;D\'enregister&lt;/u&gt; en different format (mp3, wav, ogg, …)&lt;br&gt; vos appels téléphoniques ou plus simplement votre voix.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
+		        &lt;li&gt;&lt;u&gt;D\'Associer&lt;/u&gt; un titre, ainsi qu\'une note pour tout type d\'enregistrement.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
+		        &lt;li&gt;&lt;u&gt;De Filtrer&lt;/u&gt; ce service d\'enregistrements,&lt;br&gt; sur la base de votre propre liste de contacts.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
+	        &lt;/ul&gt;
 	        Et plus ...
-        &amp;lt;/p&amp;gt;    
-                    
-    </string>
+        &lt;/p&gt;
+
+    ]]></string>
     <string name="about_some_links">Quelques liens:</string>
     <string name="about_us">A propos</string>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values-fr/abs__string.xml -->
@@ -162,7 +162,7 @@
     <string name="abs__action_menu_overflow_description">More options</string>
     <string name="abs__action_mode_done">Done</string>
     <string name="abs__activity_chooser_view_dialog_title_default">Select activity</string>
-    <string name="abs__activity_chooser_view_see_all">See all...</string>
+    <string name="abs__activity_chooser_view_see_all">See all…</string>
     <string name="abs__activitychooserview_choose_application">Choose an application</string>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values-fr/strings.xml -->
     <eat-comment/>
@@ -173,7 +173,7 @@
     <string name="abs__searchview_description_voice">Voice search</string>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values-fr/abs__string.xml -->
     <eat-comment/>
-    <string name="abs__share_action_provider_share_with">Share with...</string>
+    <string name="abs__share_action_provider_share_with">Share with…</string>
     <string name="abs__shareactionprovider_share_with">Share with</string>
     <string name="abs__shareactionprovider_share_with_application">Share with <ns1:g example="Bluetooth" id="application_name">%s</ns1:g></string>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values-fr/strings.xml -->

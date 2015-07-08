@@ -1,11 +1,11 @@
 package org.proof.recorder.utils;
 
-import java.io.File;
-import java.util.Stack;
-
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
+
+import java.io.File;
+import java.util.Stack;
 
 public class OsInfo {
 	
@@ -75,14 +75,14 @@ public class OsInfo {
 	        File dirCurrent = dirlist.pop();
 
 	        File[] fileList = dirCurrent.listFiles();
-	        for (int i = 0; i < fileList.length; i++) {
+			for (File aFileList : fileList) {
 
-	            if(fileList[i].isDirectory())
-	                dirlist.push(fileList[i]);
-	            else
-	                result += fileList[i].length();
-	        }
-	    }
+				if (aFileList.isDirectory())
+					dirlist.push(aFileList);
+				else
+					result += aFileList.length();
+			}
+		}
 
 	    return ServiceAudioHelper.transByteToKo(result + "");
 	}

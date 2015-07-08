@@ -1,13 +1,13 @@
 package org.proof.recorder.graphics;
 
-import org.proof.recorder.Settings;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import org.proof.recorder.Settings;
 
 /**
  * @author clement
@@ -16,10 +16,10 @@ import android.util.Log;
 public class ManipulateUi {
 	
 	private static final String TAG = "ManipulateUi";
-	public CheckBoxPreference CB;
+	private CheckBoxPreference CB;
 	public Context mContext;
 	SharedPreferences preferences;
-	Editor prefEdit;
+
 	/**
 	 * @category Valoriser les préférences, manipuler l'UI
 	 */
@@ -33,7 +33,7 @@ public class ManipulateUi {
 	 * @category Passe un tableau de chk et les désactives tous
 	 */
 	public void disableArrayChk(CheckBoxPreference[] chk){
-		int i = 0;
+		int i;
 		for (i=0; i < chk.length; i++){
 			CB = chk[i];
 			CB.setEnabled(false);
@@ -47,7 +47,7 @@ public class ManipulateUi {
 	 * @category Passe un tableau de chk et les actives tous
 	 */
 	public void enabledArrayChk(CheckBoxPreference[] chk){
-		int i = 0;
+		int i;
 		for (i=0; i < chk.length; i++){
 			CB = chk[i];
 			CB.setEnabled(true);
@@ -63,7 +63,7 @@ public class ManipulateUi {
 	 * @category Passe un tableau de chk et les décoches tous
 	 */
 	public void noCheckedArrayChk(CheckBoxPreference[] chk){
-		int i = 0;
+		int i;
 		for (i=0; i < chk.length; i++){
 			CB = chk[i];
 			CB.setChecked(false);
@@ -78,7 +78,7 @@ public class ManipulateUi {
 	 * @category Passe un tableau de chk et les coches tous
 	 */
 	public void checkedArrayChk(CheckBoxPreference[] chk){
-		int i = 0;
+		int i;
 		for (i=0; i < chk.length; i++){
 			CB = chk[i];
 			CB.setChecked(true);
@@ -96,8 +96,8 @@ public class ManipulateUi {
 	 * @category valoriser un tableau (String optionsName true OR false)
 	 */
 	public void setArrayBoolean(String[] chk ,Context mCont, boolean position){
-		prefEdit = PreferenceManager.getDefaultSharedPreferences(mCont).edit();
-		int i = 0;
+		Editor prefEdit = PreferenceManager.getDefaultSharedPreferences(mCont).edit();
+		int i;
 		for (i=0; i < chk.length; i++){
 			
 			prefEdit.putBoolean(chk[i], position);

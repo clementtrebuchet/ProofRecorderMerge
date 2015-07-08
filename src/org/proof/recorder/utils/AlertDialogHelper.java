@@ -1,19 +1,18 @@
 package org.proof.recorder.utils;
 
-import org.proof.recorder.R;
-import org.proof.recorder.fragment.dialog.NoneRecordsDialog;
-import org.proof.recorder.fragment.dialog.VoiceEditDialog;
-import org.proof.recorder.utils.Log.Console;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import org.proof.recorder.R;
+import org.proof.recorder.fragment.dialog.NoneRecordsDialog;
+import org.proof.recorder.fragment.dialog.VoiceEditDialog;
+import org.proof.recorder.utils.Log.Console;
+
 public class AlertDialogHelper {
-	
-	private static AlertDialog.Builder mDialog = null;
+
 	private static ProgressDialog progressDialog = null;
 	
 	private static Context mContext = null;
@@ -38,8 +37,8 @@ public class AlertDialogHelper {
 	}
 	
 	public static void openSimpleNoMatchDialog() {
-		
-		mDialog = new AlertDialog.Builder(getContext());
+
+		AlertDialog.Builder mDialog = new AlertDialog.Builder(getContext());
 		mDialog.setTitle(getContext().getString(R.string.gplay_title));
 
 		mDialog.setMessage(getContext().getString(R.string.gplay_no_match));
@@ -61,8 +60,8 @@ public class AlertDialogHelper {
 			progressDialog = null;
 		}
 	}
-	
-	public static void openProgressDialog(Object stringId) {
+
+	public static void openProgressDialog() {
 		
 		//closeProgressDialog();
 		
@@ -70,7 +69,7 @@ public class AlertDialogHelper {
 		
 		try {
 			progressDialog.setMessage(getContext().getText(
-					stringId  != null ? (Integer)stringId : R.string.loading));
+					(Object) R.string.encoding_data != null ? (Integer) R.string.encoding_data : R.string.loading));
 			
 			progressDialog.setIndeterminate(true);
 			progressDialog.setCancelable(false);

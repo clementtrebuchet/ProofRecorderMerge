@@ -17,19 +17,19 @@ import android.widget.PopupWindow;
  * @author Lorensius W. L. T <lorenz@londatiga.net>
  *
  */
-public class PopupWindows {
-	protected Context mContext;
-	protected PopupWindow mWindow;
-	protected View mRootView;
-	protected Drawable mBackground = null;
-	protected WindowManager mWindowManager;
+class PopupWindows {
+	private final Context mContext;
+	final PopupWindow mWindow;
+	View mRootView;
+	private Drawable mBackground = null;
+	final WindowManager mWindowManager;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * @param context Context
 	 */
-	public PopupWindows(Context context) {
+	PopupWindows(Context context) {
 		mContext	= context;
 		mWindow 	= new PopupWindow(context);
 
@@ -58,14 +58,14 @@ public class PopupWindows {
 	/**
 	 * On show
 	 */
-	protected void onShow() {		
+	private void onShow() {
 	}
 
 	/**
 	 * On pre show
 	 */
 	@SuppressWarnings("deprecation")
-	protected void preShow() {
+	void preShow() {
 		if (mRootView == null) 
 			throw new IllegalStateException("setContentView was not called with a view to display.");
 	
@@ -99,7 +99,7 @@ public class PopupWindows {
 	 * 
 	 * @param root Root view
 	 */
-	public void setContentView(View root) {
+	void setContentView(View root) {
 		mRootView = root;
 		
 		mWindow.setContentView(root);
@@ -121,14 +121,14 @@ public class PopupWindows {
 	 * 
 	 * @param listener
 	 */
-	public void setOnDismissListener(PopupWindow.OnDismissListener listener) {
+	void setOnDismissListener(PopupWindow.OnDismissListener listener) {
 		mWindow.setOnDismissListener(listener);  
 	}
 
 	/**
 	 * Dismiss the popup window.
 	 */
-	public void dismiss() {
+	void dismiss() {
 		mWindow.dismiss();
 	}
 }

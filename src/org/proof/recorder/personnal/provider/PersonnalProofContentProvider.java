@@ -1,23 +1,5 @@
 package org.proof.recorder.personnal.provider;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.database.models.Record;
-import org.proof.recorder.database.models.SimplePhoneNumber;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.database.support.ProofDataBaseHelper;
-import org.proof.recorder.utils.Log.Console;
-
 import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -32,6 +14,24 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.SimplePhoneNumber;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.database.support.ProofDataBaseHelper;
+import org.proof.recorder.utils.Log.Console;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * @author clement
  * 
@@ -40,15 +40,16 @@ import android.text.TextUtils;
  * @author devel.machine
  *
  */
+@SuppressWarnings("ConstantConditions")
 public class PersonnalProofContentProvider extends
 
 		SearchRecentSuggestionsProvider {
 
 	private static ProofDataBaseHelper databaseHelper = null;
-	private static Locale mLocal = Locale.getDefault();
-	
+    private static final Locale mLocal = Locale.getDefault();
 
-	// Used for the UriMacher
+
+    // Used for the UriMacher
 
 	/*
 	 * Search Module
@@ -108,8 +109,8 @@ public class PersonnalProofContentProvider extends
 
 	// ///////////////////////////////////////////////////////////
 
-	public static final String AUTHORITY = "org.proof.recorder.personnal.provider.PersonnalProofContentProvider";
-	private static final String BASE_PATH = "personnal.provider";
+    private static final String AUTHORITY = "org.proof.recorder.personnal.provider.PersonnalProofContentProvider";
+    private static final String BASE_PATH = "personnal.provider";
 
 	public static final Uri CONTENT_URI = Uri.parse("content://"
 			+ getAuthority() + "/" + BASE_PATH);
@@ -117,29 +118,29 @@ public class PersonnalProofContentProvider extends
 	// ///////////////////////////////////////////////////////////
 
 	interface searchModule {
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/" + SearchManager.SUGGEST_URI_PATH_QUERY;
+        String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/" + SearchManager.SUGGEST_URI_PATH_QUERY;
 
-		public static final String CONTENT_INSERT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/suggestions";
+        String CONTENT_INSERT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/suggestions";
 
 		/**
 		 * CUSTOM SEARCH MODULE
 		 */
 
-		public static final String CONTENT_VOICES_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/search_voices" + SearchManager.SUGGEST_URI_PATH_QUERY;
+        String CONTENT_VOICES_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/search_voices" + SearchManager.SUGGEST_URI_PATH_QUERY;
 
-		public static final String CONTENT_CALLS_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/search_calls" + SearchManager.SUGGEST_URI_PATH_QUERY;
+        String CONTENT_CALLS_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/search_calls" + SearchManager.SUGGEST_URI_PATH_QUERY;
 
-		public static final String CONTENT_VOICES_BY_DATE_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/search_voices_by_date"
-				+ SearchManager.SUGGEST_URI_PATH_QUERY;
+        String CONTENT_VOICES_BY_DATE_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/search_voices_by_date"
+                + SearchManager.SUGGEST_URI_PATH_QUERY;
 
-		public static final String CONTENT_CALLS_BY_DATE__TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/search_calls_by_date"
-				+ SearchManager.SUGGEST_URI_PATH_QUERY;
+        String CONTENT_CALLS_BY_DATE__TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/search_calls_by_date"
+                + SearchManager.SUGGEST_URI_PATH_QUERY;
 
 		// public static final String CONTENT_DELETE_TYPE =
 		// ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -148,98 +149,98 @@ public class PersonnalProofContentProvider extends
 
 	interface enregistrements {
 
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/records";
-		public static final String CONTENT_OLDER_RECORDS_THAN = ContentResolver.CURSOR_DIR_BASE_TYPE + "/records_older_than";
-		
-		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/record_id";
-		public static final String CONTENT_RECORD_TEL_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/record_tel/";
-		/*
-		 * 
-		 */
-		public static String CONTENT_RECORD_CASE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/record_unic_tel/";
-		/*
-		 * 
-		 */
-		public static String CONTENT_RECORD_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/record_sync/";
-		public static final String CONTENT_RECORDS_BY_ANDROID_ID = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/records_by_android_id/";
-		/*
-		 * 
-		 */
-		public static String CONTENT_RECORD_DISTINCT_KNOWN_CONTACTS = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/record_distinct_known_contacts/";
+        String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/records";
+        String CONTENT_OLDER_RECORDS_THAN = ContentResolver.CURSOR_DIR_BASE_TYPE + "/records_older_than";
 
-		public static String CONTENT_RECORD_DISTINCT_UNKNOWN_CONTACTS = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/record_distinct_unknown_contacts/";
-	}
+        String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/record_id";
+        String CONTENT_RECORD_TEL_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/record_tel/";
+        /*
+		 * 
+		 */
+        String CONTENT_RECORD_CASE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/record_unic_tel/";
+        /*
+		 * 
+		 */
+        String CONTENT_RECORD_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/record_sync/";
+        String CONTENT_RECORDS_BY_ANDROID_ID = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/records_by_android_id/";
+        /*
+		 * 
+		 */
+        String CONTENT_RECORD_DISTINCT_KNOWN_CONTACTS = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/record_distinct_known_contacts/";
+
+        String CONTENT_RECORD_DISTINCT_UNKNOWN_CONTACTS = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/record_distinct_unknown_contacts/";
+    }
 
 	interface priseDeNotes {
 
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/notes";
-		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/note_id";
-		public static final String CONTENT_REC_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/note_recordid/";
-		/*
+        String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/notes";
+        String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/note_id";
+        String CONTENT_REC_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/note_recordid/";
+        /*
 		 * 
 		 */
-		public static String CONTENT_NOTE_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/note_sync/";
-	}
+        String CONTENT_NOTE_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/note_sync/";
+    }
 
 	interface VoiceNotes {
 
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/vnotes";
-		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/vnote_id";
-		public static final String CONTENT_REC_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/vnote_recordid/";
-		public static String VOICE_NOTE_NON_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/vnote_sync/";
-	}
+        String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/vnotes";
+        String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/vnote_id";
+        String CONTENT_REC_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/vnote_recordid/";
+        String VOICE_NOTE_NON_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/vnote_sync/";
+    }
 
 	interface enregistrementsVocal {
 
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/voices";
-		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/voice_id";
-		public static final String CONTENT_BY_TITLE_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/voices_by_title";
+        String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/voices";
+        String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/voice_id";
+        String CONTENT_BY_TITLE_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/voices_by_title";
 
-		public static final String CONTENT_BY_UNTITLED_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/voices_by_untitled";
-		public static String VOICE_NON_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/voice_sync/";
-	}
+        String CONTENT_BY_UNTITLED_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/voices_by_untitled";
+        String VOICE_NON_SYNC = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/voice_sync/";
+    }
 
 	interface excludedContacts {
 
-		public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-				+ "/excluded_contacts";
-		
-		public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/excluded_contact_id";
-		
-		public static final String CONTENT_BY_API_ID = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/excluded_contract_id";
-		
-		public static final String CONTENT_BY_PHONE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-				+ "/excluded_contact_phone";
-	}
+        String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+                + "/excluded_contacts";
+
+        String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/excluded_contact_id";
+
+        String CONTENT_BY_API_ID = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/excluded_contract_id";
+
+        String CONTENT_BY_PHONE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+                + "/excluded_contact_phone";
+    }
 
 	/**
 	 * Search Suggestions
 	 */
 
-	public final static int MODE = DATABASE_MODE_QUERIES;
+    private final static int MODE = DATABASE_MODE_QUERIES;
 
 	public PersonnalProofContentProvider() {
 		super();
@@ -247,7 +248,7 @@ public class PersonnalProofContentProvider extends
 		Console.setTagName(this.getClass().getSimpleName());
 	}
 
-	@Override
+
 	public String getType(Uri uri) {
 		final int match = sURIMatcher.match(uri);
 		switch (match) {
@@ -435,22 +436,21 @@ public class PersonnalProofContentProvider extends
 	}
 
 	/**
-	 * @param absolutePath: song file's path.
-	 * @param type String
-	 * @return the count of databaseHelper song(s) matching this path
-	 */
+     * @param absolutePath : song file's path.
+     * @return the count of databaseHelper song(s) matching this path
+     */
 	public static int isRecordInDb(
-			String absolutePath, Settings.mType type) {
-		
-		SQLiteDatabase databaseAccess = null;
-		Cursor dataCursor = null;
+            String absolutePath) {
+
+        SQLiteDatabase databaseAccess = null;
+        Cursor dataCursor = null;
 		
 		String query = "SELECT _id from ";
 		int _count = -2;
 
-		switch (type) {
-		case CALL:
-			query += "recordsproof";
+        switch (Settings.mType.CALL) {
+            case CALL:
+                query += "recordsproof";
 			break;
 		case VOICE_TITLED:
 		case VOICE_UNTITLED:
@@ -510,9 +510,6 @@ public class PersonnalProofContentProvider extends
 			Console.print_exception(e);
 		}
 		finally {
-			if(dataCursor != null) {
-				dataCursor.close();
-			}
 			databaseAccess.close();
 		}		
 
@@ -620,11 +617,11 @@ public class PersonnalProofContentProvider extends
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
-		
-		Cursor dataCursor = null;
-		String lc_query = "";
-		
-		//boolean isDistinct = false;
+
+        Cursor dataCursor;
+        String lc_query;
+
+        //boolean isDistinct = false;
 
 		// Uisng SQLiteQueryBuilder instead of query() method
 		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
@@ -997,11 +994,11 @@ public class PersonnalProofContentProvider extends
 		default:
 			throw new IllegalArgumentException("query -> Unknown URI: " + uri);
 		}
-			
-			
-		if(databaseAccess == null | !databaseAccess.isOpen()) {
-			databaseAccess = databaseHelper.getReadableDatabase();
-		}		
+
+
+        if (databaseAccess == null | !(databaseAccess != null && databaseAccess.isOpen())) {
+            databaseAccess = databaseHelper.getReadableDatabase();
+        }
 		
 		//queryBuilder.setDistinct(isDistinct);
 		dataCursor = queryBuilder.query(databaseAccess, projection, selection, selectionArgs,
@@ -1025,15 +1022,15 @@ public class PersonnalProofContentProvider extends
 	private Cursor searchRecordVoicesByDate(SQLiteQueryBuilder queryBuilder, Uri uri,
 			String[] projection, String selection, String[] selectionArgs,
 			String sortOrder) {
-		
-		Cursor dataCursor = null;
-		
-		long mStart, mEnd, mPreciseStart, mPreciseEnd;
-		String mFinalQuery, query = uri.getLastPathSegment();
-		String[] tmpQueriesParts = null;
-		tmpQueriesParts = query.split(";");
-		
-		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
+
+        Cursor dataCursor;
+
+        long mStart, mEnd, mPreciseStart, mPreciseEnd;
+        String mFinalQuery, query = uri.getLastPathSegment();
+        String[] tmpQueriesParts;
+        tmpQueriesParts = query.split(";");
+
+        SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
 		
 		mFinalQuery = tmpQueriesParts[0].trim();	
 		
@@ -1049,16 +1046,15 @@ public class PersonnalProofContentProvider extends
 			try
 			{
 			  date = df.parse(tmpQueriesParts[1].trim() + " 00:00:01");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
-			
-			mStart = date.getTime();
-			
-			try
-			{
+
+            mStart = date != null ? date.getTime() : 0;
+
+            try {
 			  date = df.parse(tmpQueriesParts[2].trim() + " 23:59:59");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
 			
@@ -1095,16 +1091,15 @@ public class PersonnalProofContentProvider extends
 			try
 			{
 			  date = df.parse(tmpQueriesParts[1].trim() + " 00:00:01");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
-			
-			mPreciseStart = date.getTime();
-			
-			try
-			{
+
+            mPreciseStart = date != null ? date.getTime() : 0;
+
+            try {
 			  date = df.parse(tmpQueriesParts[1].trim() + " 23:59:59");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
 			
@@ -1152,11 +1147,11 @@ public class PersonnalProofContentProvider extends
 	private Cursor searchRecordVoices(SQLiteQueryBuilder queryBuilder, Uri uri,
 			String[] projection, String selection, String[] selectionArgs,
 			String sortOrder) {
-		
-		Cursor dataCursor = null;
-		String query = uri.getLastPathSegment();
-		
-		Console.print_debug("Demandes des enregistrements Voices: "
+
+        Cursor dataCursor;
+        String query = uri.getLastPathSegment();
+
+        Console.print_debug("Demandes des enregistrements Voices: "
 							+ query);
 
 		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
@@ -1268,14 +1263,13 @@ public class PersonnalProofContentProvider extends
 		else {
 			queryBuilder.appendWhere(ProofDataBase.COLUMN_TELEPHONE
 					+ " LIKE " + "\"%" + mPhone + "%\"");
-			
-			Cursor cursor = queryBuilder.query(databaseAccess, projection, selection,
-					selectionArgs, null, null, sortOrder);
-			return cursor;
-		}
-		
-		
-	}
+
+            return queryBuilder.query(databaseAccess, projection, selection,
+                    selectionArgs, null, null, sortOrder);
+        }
+
+
+    }
 	
 	
 	private Cursor deleteOlderRecordsByDate(SQLiteQueryBuilder queryBuilder,
@@ -1307,11 +1301,11 @@ public class PersonnalProofContentProvider extends
 		Cursor[] cursors;
 		long mStart, mEnd, mPreciseStart, mPreciseEnd;
 		String mFinalQuery, query = uri.getLastPathSegment();
-		String[] tmpQueriesParts = null;
-		tmpQueriesParts = query.split(";");
-		
+        String[] tmpQueriesParts;
+        tmpQueriesParts = query.split(";");
 
-		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
+
+        SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
 		
 		mFinalQuery = tmpQueriesParts[0].trim();	
 		
@@ -1324,16 +1318,15 @@ public class PersonnalProofContentProvider extends
 			try
 			{
 			  date = df.parse(tmpQueriesParts[1].trim() + " 00:00:01");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
-			
-			mStart = date.getTime();
-			
-			try
-			{
+
+            mStart = date != null ? date.getTime() : 0;
+
+            try {
 			  date = df.parse(tmpQueriesParts[2].trim() + " 23:59:59");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
 			
@@ -1400,29 +1393,27 @@ public class PersonnalProofContentProvider extends
 				queryBuilder.appendWhere("CAST(" + ProofDataBase.COLUMN_TIMESTAMP
 						+ " AS INTEGER) BETWEEN CAST(" + mStart + " AS INTEGER) AND CAST(" + mEnd + " AS INTEGER) AND telephone"
 						+ " LIKE " + "\"%" + mFinalQuery + "%\"");
-				
-				Cursor cursor = queryBuilder.query(databaseAccess, projection, selection,
-						selectionArgs, null, null, sortOrder);
-				return cursor;
-			}	
-			
-		}
+
+                return queryBuilder.query(databaseAccess, projection, selection,
+                        selectionArgs, null, null, sortOrder);
+            }
+
+        }
 		
 		else {
 			
 			try
 			{
 			  date = df.parse(tmpQueriesParts[1].trim() + " 00:00:01");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
-			
-			mPreciseStart = date.getTime();
-			
-			try
-			{
+
+            mPreciseStart = date != null ? date.getTime() : 0;
+
+            try {
 			  date = df.parse(tmpQueriesParts[1].trim() + " 23:59:59");
-			} catch (ParseException e){
+            } catch (ParseException ignored) {
 
 			}
 			
@@ -1493,12 +1484,11 @@ public class PersonnalProofContentProvider extends
 						+ " AS INTEGER) BETWEEN CAST(" + mPreciseStart + " AS INTEGER) AND CAST(" + mPreciseEnd + " AS INTEGER) AND telephone"
 						+ " LIKE " + "\"%" + mFinalQuery + "%\"");
 
-				
-				Cursor cursor = queryBuilder.query(databaseAccess, projection, selection,
-						selectionArgs, null, null, sortOrder);
-				return cursor;
-			}			
-		}				
+
+                return queryBuilder.query(databaseAccess, projection, selection,
+                        selectionArgs, null, null, sortOrder);
+            }
+        }
 	}
 	
 	/* (non-Javadoc)
@@ -1509,9 +1499,9 @@ public class PersonnalProofContentProvider extends
 		
 		int uriType = sURIMatcher.match(uri);
 
-		long id = 0;
-		
-		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();		
+        long id;
+
+        SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
 
 		databaseAccess.execSQL(" PRAGMA foreign_keys = ON ");
 
@@ -1564,10 +1554,10 @@ public class PersonnalProofContentProvider extends
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		int uriType = sURIMatcher.match(uri);
-		int rowsDeleted = 0;
-		String idExcluded;
-		
-		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
+        int rowsDeleted;
+        String idExcluded;
+
+        SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
 
 		databaseAccess.execSQL(" PRAGMA foreign_keys = ON ");
 
@@ -1727,9 +1717,9 @@ public class PersonnalProofContentProvider extends
 			String[] selectionArgs) {
 
 		int uriType = sURIMatcher.match(uri);
-		int rowsUpdated = 0;
-		
-		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
+        int rowsUpdated;
+
+        SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
 
 		databaseAccess.execSQL(" PRAGMA foreign_keys = ON ");
 
@@ -1927,9 +1917,9 @@ public class PersonnalProofContentProvider extends
 	/**
 	 * @return the authority
 	 */
-	public static String getAuthority() {
-		return AUTHORITY;
-	}
+    private static String getAuthority() {
+        return AUTHORITY;
+    }
 
 	/**
 	 * CUSTOM REQUESTS DB
@@ -2014,9 +2004,9 @@ public class PersonnalProofContentProvider extends
 	public static String[] getVoicesAndCallsCount() {
 		
 		SQLiteDatabase databaseAccess = null;
-		Cursor dataCursor = null;
-		String[] AllCounts = new String[] {
-			"-1", 
+        Cursor dataCursor;
+        String[] AllCounts = new String[]{
+                "-1",
 			"-1"		
 		};
 		
@@ -2033,8 +2023,9 @@ public class PersonnalProofContentProvider extends
 				Console.print_exception(e);
 			}
 			finally {
-				dataCursor.close();
-			}
+                assert dataCursor != null;
+                dataCursor.close();
+            }
 			
 			query = "SELECT count(*) from voicesproof";
 			dataCursor = databaseAccess.rawQuery(query, null);		
@@ -2047,15 +2038,17 @@ public class PersonnalProofContentProvider extends
 				Console.print_exception(e);
 			}
 			finally {
-				dataCursor.close();			
-			}
-		}
+                assert dataCursor != null;
+                dataCursor.close();
+            }
+        }
 		catch(Exception e) {
 			Console.print_exception(e);
 		}
 		finally {
-			databaseAccess.close();
-		}	
+            assert databaseAccess != null;
+            databaseAccess.close();
+        }
 
 		return AllCounts;
 	}
@@ -2072,10 +2065,10 @@ public class PersonnalProofContentProvider extends
 			};
 		
 		SQLiteDatabase databaseAccess = null;
-		Cursor dataCursor = null;
-		Cursor cursor = null;		
-		
-		try {
+        Cursor dataCursor;
+        Cursor cursor = null;
+
+        try {
 			String query = "SELECT count(*) from excludedcontactsproof";		
 			databaseAccess = databaseHelper.getReadableDatabase();		
 			dataCursor = databaseAccess.rawQuery(query, null);
@@ -2125,10 +2118,10 @@ public class PersonnalProofContentProvider extends
 	public static List<Record> getRecordsFilesList1(Settings.mType type) {
 		
 		SQLiteDatabase databaseAccess = null;
-		Cursor dataCursor = null;
-		
-		List<Record> list = new ArrayList<Record>();
-		String query = "";
+        Cursor dataCursor;
+
+        List<Record> list = new ArrayList<Record>();
+        String query = "";
 
 		switch (type) {
 		case CALL:
@@ -2210,9 +2203,9 @@ public class PersonnalProofContentProvider extends
 	/**
 	 * @param mContext the mContext to set
 	 */
-	public static void setContext(Context mContext) {
-		PersonnalProofContentProvider.mContext = mContext;
-	}
+    private static void setContext(Context mContext) {
+        PersonnalProofContentProvider.mContext = mContext;
+    }
 
 
 

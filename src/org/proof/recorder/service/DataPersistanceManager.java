@@ -34,8 +34,7 @@ public class DataPersistanceManager {
 		try {
 			if(Integer.parseInt(mProcessing) == 1)
 				return true;
-		}
-		catch(NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 			
 		}		
 		return false;

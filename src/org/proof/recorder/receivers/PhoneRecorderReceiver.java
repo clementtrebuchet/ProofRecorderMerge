@@ -1,6 +1,9 @@
 package org.proof.recorder.receivers;
 
-import java.util.Locale;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
@@ -12,17 +15,14 @@ import org.proof.recorder.fragment.phone.FragmentListRecordTabs;
 import org.proof.recorder.receivers.holders.PhoneRecordHolder;
 import org.proof.recorder.service.DataPersistanceManager;
 import org.proof.recorder.services.MP3Middleware;
+import org.proof.recorder.utils.Log.Console;
 import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 import org.proof.recorder.utils.StaticNotifications;
-import org.proof.recorder.utils.Log.Console;
 import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3;
 import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
+import java.util.Locale;
 
 public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	
@@ -34,15 +34,13 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	private static final String SAVE_KEPT_DATA = "android.intent.action.SAVE_PHONE_KEPT_DATA";
 
 	private static Intent service = null;
-	
-	private static int mAudioSource;	
-	
+
 	private DataPersistanceManager dpm;
 	IServiceIntentRecorderMP3Cx connection;
 	IServiceIntentRecorderMP3 mService = null;
 	private PhoneRecordHolder holder = null;
 	private PhoneRecord record = null;
-	static IServiceIntentRecorderMP3Cx cnx = null;
+	private static IServiceIntentRecorderMP3Cx cnx = null;
 	
 	private void notifyUser() {
 		
@@ -86,7 +84,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 			
 		StaticNotifications.show(getInternalContext(), destination, extraNotification,
 				title, info, text, StaticNotifications.ICONS.DEFAULT, true,
-				true, 0);
+				true);
 	}
 	
 	private Bundle prepareExtras() {
@@ -94,8 +92,8 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		
 		String audioFormat = dpm.getAudioFormat();
 		String audioFile = record.getPhoneAudioFile();
-		
-		mAudioSource = new ServiceAudioHelper(getInternalContext()).maConfAudio();		
+
+		int mAudioSource = new ServiceAudioHelper(getInternalContext()).maConfAudio();
 		
 		extras.putInt("audioSource", mAudioSource);
 		
@@ -312,6 +310,7 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 		dpm.save();
 	}
 
+	@SuppressWarnings("StatementWithEmptyBody")
 	private void handleStop() {
 		
 		if(dpm.getAudioFormat().equalsIgnoreCase("wav") |

@@ -1,7 +1,5 @@
 package org.proofs.recorder.codec.ogg.utils;
 
-import org.proof.recorder.services.OGGMiddleware;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,13 +8,14 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import org.proof.recorder.services.OGGMiddleware;
+
 public class IServiceRecorderOggCx implements ServiceConnection{
 	
 	
 	private final OGGMiddleware parent;
 	private IServiceRecorderOgg service;
-	private IBinder mBoundService;
-	private String TAG = IServiceRecorderOggCx.class.getName();
+	private final String TAG = IServiceRecorderOggCx.class.getName();
 
 	public IServiceRecorderOggCx(OGGMiddleware parent){
 		
@@ -26,7 +25,7 @@ public class IServiceRecorderOggCx implements ServiceConnection{
 
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder boundService) {
-		this.mBoundService = boundService;
+		IBinder mBoundService = boundService;
 		this.service = IServiceRecorderOgg.Stub.asInterface(mBoundService);
 		Log.d(TAG, "onServiceConnected() connected service is " + this.service);
 		this.parent.callWhenReady();

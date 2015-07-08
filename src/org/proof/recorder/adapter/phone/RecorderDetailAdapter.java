@@ -1,16 +1,5 @@
 package org.proof.recorder.adapter.phone;
 
-import java.io.File;
-import java.io.InputStream;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.utils.ApproxRecordTime;
-import org.proof.recorder.utils.ServiceAudioHelper;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -28,21 +17,31 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.utils.ApproxRecordTime;
+import org.proof.recorder.utils.ServiceAudioHelper;
+
+import java.io.File;
+import java.io.InputStream;
+
 public class RecorderDetailAdapter extends SimpleCursorAdapter {
 
 	private static final String TAG = "RecorderDetailAdpater";
-	private ImageView B;
 	private String f;
-	private static TextView durationTxt;
 	private static Context mcontext;
 
 	public RecorderDetailAdapter(Context context, int layout, Cursor c,
-			String[] from, int[] to, int flag) {
-		super(context, layout, c, from, to, flag);
+								 String[] from, int[] to) {
+		super(context, R.layout.record_detail, null, from, to, android.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		mcontext = context;
 
 	}
 
+	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
 		
@@ -79,7 +78,7 @@ public class RecorderDetailAdapter extends SimpleCursorAdapter {
 
 		TextView userTxt = (TextView) view.findViewById(R.id.mPhoneContact);
 
-		if (mContact.getContactName() == "")
+		if (mContact.getContactName().equals(""))
 			mContact.setContactName("Contact Inconnu");
 
 		userTxt.setText(mContact.getContactName());
@@ -115,20 +114,20 @@ public class RecorderDetailAdapter extends SimpleCursorAdapter {
 		f = cursor.getString(cursor.getColumnIndex(ProofDataBase.COLUMN_FILE));
 
 		if (Settings.isDebug())
-			Log.v(TAG, f.toString());
+			Log.v(TAG, f);
 
 		Uri wav = Uri.parse("content://" + f);
-		B = (ImageView) view.findViewById(R.id.mPlayFile);
-		B.setOnClickListener(ButtonOnClickListener);
+		ImageView b = (ImageView) view.findViewById(R.id.mPlayFile);
+		b.setOnClickListener(ButtonOnClickListener);
 
 		if (Settings.isDebug())
 			Log.v(TAG, wav.toString());
 		
 		try{
-			durationTxt = (TextView) view.findViewById(R.id.mDurationOfFile);
+			TextView durationTxt = (TextView) view.findViewById(R.id.mDurationOfFile);
 			File g = new File(f);
-			ApproxRecordTime f = new ApproxRecordTime(g, true);
-			durationTxt.setText("Duration : "+f.run()+" mn/s");
+			ApproxRecordTime f = new ApproxRecordTime(g);
+			durationTxt.setText("Duration : " + f.run() + " mn/s");
 			
 			
 			
@@ -139,7 +138,7 @@ public class RecorderDetailAdapter extends SimpleCursorAdapter {
 
 	}
 
-	public OnClickListener ButtonOnClickListener = new OnClickListener() {
+	private final OnClickListener ButtonOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			Log.v(TAG, "button click");

@@ -1,12 +1,5 @@
 package org.proof.recorder.preferences;
 
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.activity.ProofPreferenceActivity;
-import org.proof.recorder.place.de.marche.Eula;
-import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.StaticIntents;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,17 +11,21 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofPreferenceActivity;
+import org.proof.recorder.place.de.marche.Eula;
+import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.StaticIntents;
+
 public class FormulaPreferences extends ProofPreferenceActivity {
 
 	private final static String TAG = "FormulaPreferences";
 
-	private AlertDialog.Builder mDialog;
-
 	private CheckBoxPreference mp3;
 	private CheckBoxPreference ogg;
 	//private CheckBoxPreference ftp;
-	public CheckBoxPreference eula;
-	public CheckBoxPreference hide;
+	private CheckBoxPreference eula;
 	private static Context mContext;
 
 	@SuppressWarnings("deprecation")
@@ -37,13 +34,12 @@ public class FormulaPreferences extends ProofPreferenceActivity {
 		super.onCreate(savedInstanceState);
 		mContext = this;
 
-		mDialog = new AlertDialog.Builder(mContext);
+		AlertDialog.Builder mDialog = new AlertDialog.Builder(mContext);
 
 		mDialog.setNegativeButton("Annuler",
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						return;
 					}
 				});
 
@@ -57,7 +53,7 @@ public class FormulaPreferences extends ProofPreferenceActivity {
 		//		"OFFER_FTP");
 		eula = (CheckBoxPreference) getPreferenceScreen().findPreference(
 				"PREFERENCE_EULA_ACCEPTED");
-		hide = (CheckBoxPreference) getPreferenceScreen().findPreference(
+		CheckBoxPreference hide = (CheckBoxPreference) getPreferenceScreen().findPreference(
 				"FIRSTINSTALL");
 		hide.setEnabled(false);
 		PreferenceCategory mCategory = (PreferenceCategory) findPreference("EULA");
@@ -122,13 +118,13 @@ public class FormulaPreferences extends ProofPreferenceActivity {
 		}
 	}
 
-	private OnPreferenceClickListener mFormulaClick = new OnPreferenceClickListener() {
+	private final OnPreferenceClickListener mFormulaClick = new OnPreferenceClickListener() {
 
 		@Override
 		public boolean onPreferenceClick(
 				android.preference.Preference preference) {
 			if (Settings.isDebug())
-				Log.e(TAG, "" + preference.getKey().toString());
+				Log.e(TAG, "" + preference.getKey());
 
 			/*if (preference.getKey().equals("OFFER_FTP")) {
 				assertFtp();

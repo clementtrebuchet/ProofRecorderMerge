@@ -1,9 +1,5 @@
 package org.proof.recorder.bases.fragment;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
-import org.proof.recorder.bases.utils.SetStaticContext;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,9 +17,13 @@ import android.widget.ArrayAdapter;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.bases.utils.SetStaticContext;
+
 public abstract class ProofListFragmentBase extends SherlockListFragment {
 
-	private ProofBroadcastReceiver listEventSender = new ProofBroadcastReceiver() {
+	private final ProofBroadcastReceiver listEventSender = new ProofBroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			super.onReceive(context, intent);
@@ -33,20 +33,17 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 
 	private Context internalContext = null;
 
-	protected ViewGroup viewGroup = null;
+	ViewGroup viewGroup = null;
 	protected Bundle extraData = null;
 
-	protected AlertDialog.Builder alertDlg;
-	
-	protected ProgressDialog progressDlg;
+	private AlertDialog.Builder alertDlg;
 
-	protected int alertDlgTitle = 0, 
-				  alertDlgText = 0, 
-				  alertDlgCancelBtn = 0, 
-				  alertDlgOkBtn = 0;
-	
-	protected int progressDlgTextId = 0;
-	protected String preProgressDlgText = "", postProgressDlgText = "";
+	private ProgressDialog progressDlg;
+
+	private int alertDlgTitle = 0;
+	private int alertDlgText = 0;
+	private int alertDlgCancelBtn = 0;
+	private int alertDlgOkBtn = 0;
 
 	protected abstract void alertDlgCancelAction(DialogInterface dialog, int which);
 	protected abstract void handleOnReceive(Context context, Intent intent);
@@ -54,7 +51,8 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 
 	protected ArrayAdapter<Object> listAdapter = null;
 
-	protected volatile boolean reverseCollection = false, screenLocked = false;
+	protected volatile boolean reverseCollection = false;
+	private volatile boolean screenLocked = false;
 
 	public volatile static boolean multiSelectEnabled = false;
 
@@ -111,11 +109,14 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		
 		progressDlg.setCancelable(false);
 		progressDlg.setIndeterminate(true);
-		
-		progressDlg.setMessage(preProgressDlgText + 
+
+		String postProgressDlgText = "";
+		String preProgressDlgText = "";
+		int progressDlgTextId = 0;
+		progressDlg.setMessage(preProgressDlgText +
 				getInternalContext().getText(
-						progressDlgTextId == 0 ? R.string.loading : progressDlgTextId) + 
-						postProgressDlgText);
+						progressDlgTextId == 0 ? R.string.loading : progressDlgTextId) +
+				postProgressDlgText);
 	}
 	
 	protected void displayProgress() {
@@ -126,14 +127,15 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 	protected void refreshProgress() {
 		setupProgressDlg();
 	}
-	
-	protected void hideProgress() {
+
+	private void hideProgress() {
 		if(progressDlg.isShowing())
 			progressDlg.hide();
 	}
 	
 	private void destroyProgress() {
 		if(progressDlg != null) {
+			//noinspection ConstantConditions
 			if(progressDlg instanceof ProgressDialog) {
 				hideProgress();
 				progressDlg.cancel();
@@ -179,19 +181,20 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 				});	
 	}
 
-	protected void displayAlert() {
+	void displayAlert() {
 		alertDlg.show();
 	}
 	
 	private void destroyAlert() {
 		if(alertDlg != null) {
+			//noinspection ConstantConditions
 			if(alertDlg instanceof AlertDialog.Builder) {
 				alertDlg = null;
 			}
 		}		
 	}
 
-	protected void lockScreenOrientation() {
+	void lockScreenOrientation() {
 
 		if(!screenLocked) {
 			switch (getResources().getConfiguration().orientation) {
@@ -227,7 +230,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		}	
 	}
 
-	protected void unlockScreenOrientation() {
+	void unlockScreenOrientation() {
 		getSherlockActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		screenLocked = false;
 	}

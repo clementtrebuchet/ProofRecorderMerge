@@ -1,9 +1,5 @@
 package org.proof.recorder.broadcastr.phone;
 
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,14 +10,16 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.utils.Log.Console;
+
 public class AppelsSortants extends ProofBroadcastReceiver {
 
-	public boolean OUTCALL;
-	public boolean SPEAKERON;
-	
-	ObservateurTelephone customPhoneListener = null;
+	private boolean OUTCALL;
+	private boolean SPEAKERON;
 
-	private static String phoneNumber = "";
+	private ObservateurTelephone customPhoneListener = null;
 
 	private void getPreferences(Context context) {
 
@@ -31,10 +29,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 		OUTCALL = preferences.getBoolean("OUTCALL", true);
 
 		try {
-			if (customPhoneListener.isExcluded()) {
-				SPEAKERON = false;
-			} else
-				SPEAKERON = preferences.getBoolean("SPEAK", false);
+			SPEAKERON = !customPhoneListener.isExcluded() && preferences.getBoolean("SPEAK", false);
 		} catch (Exception e) {
 			SPEAKERON = preferences.getBoolean("SPEAK", false);
 		}
@@ -43,9 +38,9 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		super.onReceive(context, intent);		
+		super.onReceive(context, intent);
 
-		phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);		
+		String phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
 		Bundle bundle = intent.getExtras();
 
 		if (null == bundle)
@@ -55,7 +50,7 @@ public class AppelsSortants extends ProofBroadcastReceiver {
 		
 		getPreferences(context);
 
-		if (OUTCALL == false) {
+		if (!OUTCALL) {
 
 			Console.print_debug(
 					"PhoneOutGoingBroadCastReceiver OUTCALL INCALL OFF");

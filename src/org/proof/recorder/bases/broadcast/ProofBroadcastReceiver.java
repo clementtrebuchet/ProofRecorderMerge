@@ -1,10 +1,10 @@
 package org.proof.recorder.bases.broadcast;
 
-import org.proof.recorder.bases.utils.SetStaticContext;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import org.proof.recorder.bases.utils.SetStaticContext;
 
 public class ProofBroadcastReceiver extends BroadcastReceiver {
 	
@@ -28,8 +28,8 @@ public class ProofBroadcastReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		initialize(context);
 	}
-	
-	protected void initialize(Context context) {
+
+	private void initialize(Context context) {
 		SetStaticContext.setConsoleTagName(this.getClass().getSimpleName());
 		SetStaticContext.setStaticsContext(context, 0);
 		setInternalContext(context);

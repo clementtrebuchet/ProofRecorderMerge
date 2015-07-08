@@ -1,15 +1,15 @@
 package org.proof.recorder.database.models;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.net.Uri;
+
 import org.proof.recorder.R;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.receivers.holders.VoiceRecordHolder;
 import org.proof.recorder.utils.DateUtils;
 import org.proof.recorder.utils.OsInfo;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.net.Uri;
 
 public class VoiceRecord {
 	
@@ -33,7 +33,6 @@ public class VoiceRecord {
 	}
 
 	/**
-	 * @param contentResolver 
 	 * 
 	 */
 	public VoiceRecord(Context context) {
@@ -74,22 +73,14 @@ public class VoiceRecord {
 		
 		return values;
 	}
-	
-	public boolean save() {
-		
-		boolean saved = false;
-		
-		if(!toBeInserted())
-			return saved;
-		
+
+	public void save() {
 		Uri rowId = getResolver().insert(VoiceRecordHolder.INSERT_VOICE_URI, toValues(null));
 		setSavedId(Long.parseLong(rowId.toString()));
 		if(getSavedId() != -1) {
 			getResolver().insert(VoiceRecordHolder.INSERT_VNOTE_URI, toValues(rowId.toString()));
-			saved = true;
+
 		}
-		
-		return saved;
 	}
 	
 	public boolean toBeInserted() {
@@ -128,7 +119,6 @@ public class VoiceRecord {
 	}
 
 	/**
-	 * @param resolver the resolver to set
 	 */
 	private static void setContext(Context context) {
 		VoiceRecord.context = context;
@@ -144,8 +134,8 @@ public class VoiceRecord {
 	/**
 	 * @return if the audioFile is different from const NULL, true else false.
 	 */
-	public boolean hasAudioFile() {
-		return audioFile != NULL;
+	private boolean hasAudioFile() {
+		return !audioFile.equals(NULL);
 	}
 
 	/**
@@ -167,8 +157,8 @@ public class VoiceRecord {
 	/**
 	 * @return if the audioTitle is different from const NULL, true else false.
 	 */
-	public boolean hasAudioTitle() {
-		return audioTitle != NULL;
+	private boolean hasAudioTitle() {
+		return !audioTitle.equals(NULL);
 	}
 
 	/**
@@ -188,8 +178,8 @@ public class VoiceRecord {
 	/**
 	 * @return if the timeStamp is different from const NULL, true else false.
 	 */
-	public boolean hasTimeStamp() {
-		return timeStamp != NULL;
+	private boolean hasTimeStamp() {
+		return !timeStamp.equals(NULL);
 	}
 
 	/**

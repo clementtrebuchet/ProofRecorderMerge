@@ -1,33 +1,34 @@
 package org.proof.recorder.database.collections;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.net.Uri;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class RecordsList {
 
 	private List<Record> _collection = null;
 	private Cursor _cursor = null;
-	private ContentResolver _resolver = null;
-	private Calendar calendar = null;
+	private final ContentResolver _resolver = null;
 	private String periodic = null;
-	private Uri innerUri = null;
-	
-	private String[] projection = null, selectionArgs;
-	private String selection, sortOrder = null;
+	private final Uri innerUri = null;
+
+	private final String[] projection = null;
+	private String[] selectionArgs;
+	private String selection;
+	private final String sortOrder = null;
 	
 	private boolean onlyIds = false;
-	
-	public boolean autoClean(String periodic) {
+
+	public void autoClean(String periodic) {
 		
 		Console.print_debug(
 				String.format(
@@ -35,7 +36,7 @@ public class RecordsList {
 						periodic));
 		
 		if(this.periodic.equals("NEVER")) {
-			return true;
+			return;
 		}
 		
 		this._collection.clear(); // clearing all objects left.
@@ -46,8 +47,7 @@ public class RecordsList {
 		this.queryCursor();
 		this.fillCollection();
 		this.fullClean();
-		
-		return true;
+
 	}
 	
 	private void queryCursor() {
@@ -59,50 +59,52 @@ public class RecordsList {
 				selectionArgs,  // selectionArgs
 				sortOrder); // sortOrder		
 	}
-	
+
+	@SuppressWarnings("StatementWithEmptyBody")
 	private void prepareSelection() {
 		
 		Date beforeThat = null;
 		boolean rollback = false;
-		
-		this.calendar = Calendar.getInstance();
+
+		Calendar calendar = Calendar.getInstance();
 		
 		if(this.periodic.equals("2DAYS")) {
-			this.calendar.roll(Calendar.DAY_OF_MONTH, rollback);
-			this.calendar.roll(Calendar.DAY_OF_MONTH, 2);
-			beforeThat = (Date) this.calendar.getTime();
+			calendar.roll(Calendar.DAY_OF_MONTH, false);
+			calendar.roll(Calendar.DAY_OF_MONTH, 2);
+			beforeThat = calendar.getTime();
 		}
 		else if(this.periodic.equals("1WEEK")) {
-			this.calendar.roll(Calendar.DAY_OF_MONTH, rollback);
-			this.calendar.roll(Calendar.DAY_OF_MONTH, 7);
-			beforeThat = (Date) this.calendar.getTime();
+			calendar.roll(Calendar.DAY_OF_MONTH, false);
+			calendar.roll(Calendar.DAY_OF_MONTH, 7);
+			beforeThat = calendar.getTime();
 		}
 		else if(this.periodic.equals("1MONTH")) {
-			this.calendar.roll(Calendar.DAY_OF_MONTH, rollback);
-			this.calendar.roll(Calendar.DAY_OF_MONTH, 30);
-			beforeThat = (Date) this.calendar.getTime();
+			calendar.roll(Calendar.DAY_OF_MONTH, false);
+			calendar.roll(Calendar.DAY_OF_MONTH, 30);
+			beforeThat = calendar.getTime();
 		}
 		else if(this.periodic.equals("6MONTHS")) {
-			this.calendar.roll(Calendar.DAY_OF_MONTH, rollback);
-			this.calendar.roll(Calendar.DAY_OF_MONTH, 180);
-			beforeThat = (Date) this.calendar.getTime();
+			calendar.roll(Calendar.DAY_OF_MONTH, false);
+			calendar.roll(Calendar.DAY_OF_MONTH, 180);
+			beforeThat = calendar.getTime();
 		}
 		else {} // Should never happened!
 		
 		String select = "WHERE %s<=?";
 		this.selection = String.format(select, ProofDataBase.COLUMN_TIMESTAMP);
+		assert beforeThat != null;
 		this.selectionArgs = new String[] {
 				beforeThat.toString()
 		};
 	}
 
-	private Record createRecord(
-			   String id, 
-			   String fileName, 
-			   String phone, 
-			   String sense, 
-			   String htime, 
-			   String mAndroidId) {
+	private void createRecord(
+			String id,
+			String fileName,
+			String phone,
+			String sense,
+			String htime,
+			String mAndroidId) {
 		
 		Record record = new Record(id, fileName, phone, sense, htime, mAndroidId);
 		
@@ -110,15 +112,13 @@ public class RecordsList {
 			this._collection = new ArrayList<Record>();
 
 		this._collection.add(record);
-		
-		return record;
+
 	}
-	
-	private Report fullClean() {
+
+	private void fullClean() {
 		for(Record rec : this._collection) {
 			rec.delete();
-		}		
-		return null;
+		}
 	}
 	
 	private void fillCollection() {
@@ -152,7 +152,7 @@ public class RecordsList {
 		}
 	}
 
-	private Record createRecord(String id) {
+	private void createRecord(String id) {
 		Record record = new Record();
 		record.setmId(id);
 		
@@ -160,8 +160,6 @@ public class RecordsList {
 			this._collection = new ArrayList<Record>();
 
 		this._collection.add(record);
-		
-		return record;		
 	}
 	
 }

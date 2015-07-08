@@ -1,31 +1,5 @@
 package org.proof.recorder;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Calendar;
-
-import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.fragment.contacts.FragmentListPhoneContactsTabs;
-import org.proof.recorder.fragment.dialog.AboutApps;
-import org.proof.recorder.fragment.dialog.PhoneInformations;
-import org.proof.recorder.fragment.dialog.Search;
-import org.proof.recorder.fragment.phone.FragmentListRecordFoldersTabs;
-import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
-import org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder;
-import org.proof.recorder.place.de.marche.AnalyticsRecorderProof;
-import org.proof.recorder.place.de.marche.Eula;
-import org.proof.recorder.preferences.SettingsTabs;
-import org.proof.recorder.scheduling.VerifyContactsApiReceiver;
-import org.proof.recorder.service.TestDevice;
-import org.proof.recorder.utils.AlertDialogHelper;
-import org.proof.recorder.utils.ConnectivityInfo;
-import org.proof.recorder.utils.StaticIntents;
-import org.proof.recorder.utils.StaticNotifications;
-import org.proof.recorder.utils.Log.Console;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -49,9 +23,35 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
+import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.fragment.contacts.FragmentListPhoneContactsTabs;
+import org.proof.recorder.fragment.dialog.AboutApps;
+import org.proof.recorder.fragment.dialog.PhoneInformations;
+import org.proof.recorder.fragment.dialog.Search;
+import org.proof.recorder.fragment.phone.FragmentListRecordFoldersTabs;
+import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
+import org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder;
+import org.proof.recorder.place.de.marche.AnalyticsRecorderProof;
+import org.proof.recorder.place.de.marche.Eula;
+import org.proof.recorder.preferences.SettingsTabs;
+import org.proof.recorder.scheduling.VerifyContactsApiReceiver;
+import org.proof.recorder.service.TestDevice;
+import org.proof.recorder.utils.AlertDialogHelper;
+import org.proof.recorder.utils.ConnectivityInfo;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.StaticIntents;
+import org.proof.recorder.utils.StaticNotifications;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Calendar;
+
 
 public class ProofRecorderActivity extends SherlockActivity {
-	private static final String TAG = "ProofRecorderActivity";
+	public static final String TAG = "ProofRecorderActivity";
 	private static final String BR  = "\n";
 
 	// private static boolean initTestDevice = true;
@@ -150,8 +150,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 	}
 
 	// private static final int ACTIVITY_RECORD_SOUND = 1;
-	
-	public static void refreshVoicesAndCalls(Context context) {
+
+	private static void refreshVoicesAndCalls(Context context) {
 		
 		int known, unknown, titled, untitled;
 
@@ -161,33 +161,18 @@ public class ProofRecorderActivity extends SherlockActivity {
 		titled = AndroidContactsHelper.getTitledVoiceCount(context);
 		untitled = AndroidContactsHelper.getUnTitledVoiceCount(context);
 
-		if (known > 0) {
-			bKnown = true;
-		} else {
-			bKnown = false;
-		}			
+		bKnown = known > 0;
 
-		if (unknown > 0) {
-			bUnknown = true;
-		} else {
-			bUnknown = false;
-		}					
+		bUnknown = unknown > 0;
 
-		if (titled > 0) {
-			bTitled = true;
-		} else {
-			bTitled = false;
-		}			
+		bTitled = titled > 0;
 
-		if (untitled > 0) {
-			bUntitled = true;
-		} else {
-			bUntitled = false;
-		}			
+		bUntitled = untitled > 0;
 	}
 	
 	// DEBUG MODE TO COPY DATABASE TO SDCARD
-	
+
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void copyDatabase(Context c, String DATABASE_NAME) {
         String databasePath = c.getDatabasePath(DATABASE_NAME).getPath();
         File f = new File(databasePath);
@@ -215,20 +200,18 @@ public class ProofRecorderActivity extends SherlockActivity {
                 }
 
                 myOutput.flush();
-            } catch (Exception e) {
-            } finally {
-                try {
+			} catch (Exception ignored) {
+			} finally {
+				try {
                     if (myOutput != null) {
                         myOutput.close();
-                        myOutput = null;
-                    }
-                    if (myInput != null) {
-                        myInput.close();
-                        myInput = null;
-                    }
-                } catch (Exception e) {
-                }
-            }
+					}
+					if (myInput != null) {
+						myInput.close();
+					}
+				} catch (Exception ignored) {
+				}
+			}
         }
     }
 	
@@ -282,7 +265,7 @@ public class ProofRecorderActivity extends SherlockActivity {
 
 		if (ConnectivityInfo.WIFI || ConnectivityInfo.TROISG) {
 			AnalyticsRecorderProof trackerd = new AnalyticsRecorderProof(
-					getApplicationContext(), TAG);
+					getApplicationContext());
 
 			trackerd.execute();
 			TestDevice bt = new TestDevice();
@@ -494,7 +477,8 @@ public class ProofRecorderActivity extends SherlockActivity {
 			date.setTimeInMillis(System.currentTimeMillis());
 
 			Calendar midnight = Calendar.getInstance();
-			
+
+			//noinspection ConstantConditions
 			if(isTesting)
 				midnight.set(
 						date.get(Calendar.YEAR), 

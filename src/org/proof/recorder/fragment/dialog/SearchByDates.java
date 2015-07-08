@@ -1,12 +1,5 @@
 package org.proof.recorder.fragment.dialog;
 
-import java.util.Calendar;
-
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.utils.DateUtils;
-import org.proof.recorder.utils.Log.Console;
-
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
@@ -23,12 +16,17 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.utils.DateUtils;
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.Calendar;
+
 public class SearchByDates extends ProofFragmentActivity {
 	
 	private Context mContext;
-	
-	private int mDay, mMonth, mYear;
-	
+
 	private Intent mIntentForResult;
 	
 	private CheckBox mPreciseDateChoice;
@@ -36,14 +34,11 @@ public class SearchByDates extends ProofFragmentActivity {
 	
 	private CheckBox mStartingDate;
 	private CheckBox mEndingDate;
-	
-	private TextView txtStartingDateOrPrecise, txtEndingDate;	
-	
-	private Button btnValidateDates;
-	
+
+	private TextView txtStartingDateOrPrecise, txtEndingDate;
+
 	private DatePickerDialog mDatePickDiag = null;
-	private Calendar mCal;
-	
+
 	private boolean mPrecise, mStarting, mEnding;
 
 	@Override
@@ -60,9 +55,9 @@ public class SearchByDates extends ProofFragmentActivity {
 			Console.print_debug("The date is " + dayOfMonth + "/" + month + "/"
 					+ year + " pointeur(ref): " + arg0);
 
-			mDay = dayOfMonth;
-			mMonth = month + 1;
-			mYear = year;
+			int mDay = dayOfMonth;
+			int mMonth = month + 1;
+			int mYear = year;
 			
 			String mSqlDate = mYear + "-" + mMonth + "-" + mDay;
 			
@@ -73,8 +68,7 @@ public class SearchByDates extends ProofFragmentActivity {
 				try {
 					mIntentForResult.removeExtra("mStartingDate");
 					mIntentForResult.removeExtra("endingDate");
-				}
-				catch(Exception e) {
+				} catch (Exception ignored) {
 					
 				}			
 				
@@ -87,8 +81,7 @@ public class SearchByDates extends ProofFragmentActivity {
 				
 				try {
 					mIntentForResult.removeExtra("preciseDate");
-				}
-				catch(Exception e) {
+				} catch (Exception ignored) {
 					
 				}
 				
@@ -102,8 +95,7 @@ public class SearchByDates extends ProofFragmentActivity {
 				
 				try {
 					mIntentForResult.removeExtra("preciseDate");
-				}
-				catch(Exception e) {
+				} catch (Exception ignored) {
 					
 				}
 				
@@ -130,8 +122,8 @@ public class SearchByDates extends ProofFragmentActivity {
 		mContext = this;
 		
 		mIntentForResult = new Intent();
-		
-		mCal = Calendar.getInstance();
+
+		Calendar mCal = Calendar.getInstance();
 		
 		if(mDatePickDiag == null) {
 			mDatePickDiag = new DatePickerDialog(
@@ -177,8 +169,8 @@ public class SearchByDates extends ProofFragmentActivity {
 		
 		txtStartingDateOrPrecise = (TextView) findViewById(R.id.txtStartingDateOrPrecise);
 		txtEndingDate = (TextView) findViewById(R.id.txtEndingDate);
-		
-		btnValidateDates = (Button) findViewById(R.id.btnValidateDates);
+
+		Button btnValidateDates = (Button) findViewById(R.id.btnValidateDates);
 		
 		mPeriodDateChoice.setOnCheckedChangeListener( new OnCheckedChangeListener() {
 			
@@ -265,35 +257,32 @@ public class SearchByDates extends ProofFragmentActivity {
 		});
 		
 		btnValidateDates.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				int RESULT;
-				
-				if (mPeriodDateChoice.isChecked() && 
+
+				if (mPeriodDateChoice.isChecked() &&
 						!(mStartingDate.isChecked() && mEndingDate.isChecked())
-					){
-					
+						) {
+
 					if (!mStartingDate.isChecked()) {
 						txtStartingDateOrPrecise.setText("Veuillez sélectionner une date!");
 						txtStartingDateOrPrecise.setVisibility(View.VISIBLE);
-					}
-					else if (!mEndingDate.isChecked()) {
+					} else {
 						txtEndingDate.setText("Veuillez sélectionner une date!");
 						txtEndingDate.setVisibility(View.VISIBLE);
 					}
-					else {}
 					return;
 				}
-				
-				if(mPreciseDateChoice.isChecked() || mPeriodDateChoice.isChecked())	{
-					RESULT = RESULT_OK;					
-				}
-				else {
+
+				if (mPreciseDateChoice.isChecked() || mPeriodDateChoice.isChecked()) {
+					RESULT = RESULT_OK;
+				} else {
 					RESULT = RESULT_CANCELED;
 				}
-				setResult(RESULT, mIntentForResult);				
+				setResult(RESULT, mIntentForResult);
 				onBackPressed();
 			}
 		});

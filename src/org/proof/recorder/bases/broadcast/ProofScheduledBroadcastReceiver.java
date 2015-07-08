@@ -1,20 +1,18 @@
 package org.proof.recorder.bases.broadcast;
 
-import java.util.Calendar;
-
-import org.proof.recorder.utils.DateUtils;
-import org.proof.recorder.utils.Log.Console;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import org.proof.recorder.utils.DateUtils;
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.Calendar;
+
 public abstract class ProofScheduledBroadcastReceiver extends ProofBroadcastReceiver {
 
-	protected int numOfScheduledDays = 1;
-	
-	protected int requestCode = 0;	
+	protected int requestCode = 0;
 	protected Class<?> service = null;
 	
 	@Override
@@ -38,7 +36,7 @@ public abstract class ProofScheduledBroadcastReceiver extends ProofBroadcastRece
 	
 	protected abstract void handleJobInfo();
 
-	protected void startService() throws ProofBroadcastReceiverException {
+	private void startService() throws ProofBroadcastReceiverException {
 		
 		if(service == null) {
 			throw new ProofBroadcastReceiverException(
@@ -50,8 +48,8 @@ public abstract class ProofScheduledBroadcastReceiver extends ProofBroadcastRece
 		Intent mIntent = new Intent(getInternalContext(), service);
 		getInternalContext().startService(mIntent);
 	}
-	
-	protected void scheduleNextCall() throws ProofBroadcastReceiverException {
+
+	private void scheduleNextCall() throws ProofBroadcastReceiverException {
 		
 		if(requestCode == 0) {
 			throw new ProofBroadcastReceiverException(
@@ -59,6 +57,7 @@ public abstract class ProofScheduledBroadcastReceiver extends ProofBroadcastRece
 		}
 		
 		// We schedule next run to 'numOfScheduledDays' day(s) from now.
+		int numOfScheduledDays = 1;
 		Calendar nextSchedule = DateUtils.scheduleTimeFromNow(numOfScheduledDays);
 		
 		AlarmManager am = (AlarmManager) getInternalContext().getSystemService(Context.ALARM_SERVICE);

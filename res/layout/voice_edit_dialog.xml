@@ -7,7 +7,7 @@
 <RelativeLayout
 	android:id="@+id/mLayout"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="wrap_content">
 <RadioGroup
 	android:id="@+id/mWrapper"
 	android:layout_width="fill_parent"
@@ -62,7 +62,7 @@
 	android:layout_height="wrap_content"
 	android:text="@string/voice_edit_dialog_later_btn"
 	android:gravity="center"
-	android:layout_gravity="right" />
+	android:layout_gravity="end" />
 </RadioGroup>
 </RadioGroup>
 </RelativeLayout>

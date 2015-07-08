@@ -1,10 +1,13 @@
 package org.proof.recorder.fragment.contacts.utils;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.BaseColumns;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds;
+import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Contact;
@@ -16,14 +19,11 @@ import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.ApproxRecordTime;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.BaseColumns;
-import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds;
-import android.telephony.PhoneNumberUtils;
-import android.util.Log;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.TreeSet;
 
 public final class ContactsDataHelper {
 
@@ -37,7 +37,7 @@ public final class ContactsDataHelper {
 		}           
     }
 
-	private static enum type {
+	private enum type {
 		EXCLUDED, 
 		PHONE, 
 		CALLS_FOLDER_OF_KNOWN, 
@@ -57,22 +57,22 @@ public final class ContactsDataHelper {
 								mCallsFoldersKnownContacts, 
 								mCallsFoldersUnKnownContacts;
 
-	private static String[] phoneProjection = new String[] {
+	private static final String[] phoneProjection = new String[]{
 			ContactsContract.Contacts.DISPLAY_NAME,
 			ContactsContract.Contacts.HAS_PHONE_NUMBER,
 			ContactsContract.Contacts._ID };
-	
-	private static String[] excludedProjection = new String[] {
+
+	private static final String[] excludedProjection = new String[]{
 			ProofDataBase.COLUMN_CONTACT_ID,
 			ProofDataBase.COLUMN_CONTRACT_CONTACTS_ID,
 			ProofDataBase.COLUMN_DISPLAY_NAME,
 			ProofDataBase.COLUMN_PHONE_NUMBER };
-	
-	private static String[] callsFolderProjection = new String[] {
+
+	private static final String[] callsFolderProjection = new String[]{
 		ProofDataBase.COLUMNRECODINGAPP_ID,
 		ProofDataBase.COLUMN_TELEPHONE};
 
-	private static String[] InAndOutProjection = new String[] { 
+	private static final String[] InAndOutProjection = new String[]{
 	ProofDataBase.COLUMNRECODINGAPP_ID,
 	ProofDataBase.COLUMN_TELEPHONE, ProofDataBase.COLUMN_SENS,
 	ProofDataBase.COLUMN_HTIME, ProofDataBase.COLUMN_FILE, 

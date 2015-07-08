@@ -12,14 +12,13 @@ public class RecorderDetector {
 	private static final String TAG = RecorderDetector.class.getName();
 	private static RecorderDetector mInstance = null;
 	private Context mContext;
-	private Editor mEditor;
 	private SharedPreferences preferences;
 	private boolean recOn;
 
 	/**
 	 * 
 	 */
-	protected RecorderDetector() {
+	private RecorderDetector() {
 
 	}
 
@@ -53,7 +52,7 @@ public class RecorderDetector {
 	/**
 	 * @return the mContext
 	 */
-	public Context getmContext() {
+	private Context getmContext() {
 		return mContext;
 	}
 
@@ -70,14 +69,14 @@ public class RecorderDetector {
 	 */
 	public void ChangeRecPosition(boolean on) {
 		recOn = false;
-		mEditor = preferences.edit();
+		Editor mEditor = preferences.edit();
 
-		if (on == true) {
+		if (on) {
 			recOn = true;
 			mEditor.putBoolean("isrecording", true).commit();
 			Log.d(TAG, "Recording");
 		}
-		if (on == false) {
+		if (!on) {
 			recOn = false;
 			mEditor.putBoolean("isrecording", false).commit();
 			Log.d(TAG, "No recording");
@@ -102,11 +101,10 @@ public class RecorderDetector {
 	 * 
 	 * @return
 	 */
-	private SharedPreferences _initPreferences() {
+	private void _initPreferences() {
 		if (preferences == null) {
 			preferences = this.mContext.getSharedPreferences("RECoN", 0);
 		}
-		return preferences;
 
 	}
 }

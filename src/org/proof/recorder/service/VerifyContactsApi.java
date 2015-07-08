@@ -1,15 +1,5 @@
 package org.proof.recorder.service;
 
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.service.ProofService;
-import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.OsHandler;
-import org.proof.recorder.utils.Log.Console;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ContentValues;
@@ -20,6 +10,16 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.IBinder;
 import android.provider.ContactsContract.CommonDataKinds;
+
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.service.ProofService;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.OsHandler;
 
 /**
  * @author devel.machine
@@ -49,11 +49,11 @@ public class VerifyContactsApi extends ProofService {
 
 	private static Cursor mCursor;
 
-	private static Uri mUri = Uri.withAppendedPath(
+	private static final Uri mUri = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "records");
 
 	// Proof Contacts database 'projection'
-	private static String[] proofProjection = new String[] {
+	private static final String[] proofProjection = new String[]{
 		ProofDataBase.COLUMNRECODINGAPP_ID,
 		ProofDataBase.COLUMN_CONTRACT_ID,
 		ProofDataBase.COLUMN_TELEPHONE};
@@ -76,7 +76,7 @@ public class VerifyContactsApi extends ProofService {
 	/**
 	 * @return the mExternalStorageAvailable
 	 */
-	public static boolean isExternalStorageAvailable() {
+	private static boolean isExternalStorageAvailable() {
 		return mExternalStorageAvailable;
 	}
 
@@ -90,14 +90,14 @@ public class VerifyContactsApi extends ProofService {
 	/**
 	 * @return the toProcess
 	 */
-	public static boolean isToProcess() {
+	private static boolean isToProcess() {
 		return toProcess;
 	}
 
 	/**
 	 * @param toProcess the toProcess to set
 	 */
-	public static void setToProcess(boolean toProcess) {
+	private static void setToProcess(boolean toProcess) {
 		VerifyContactsApi.toProcess = toProcess;
 	}
 	
@@ -254,7 +254,7 @@ public class VerifyContactsApi extends ProofService {
 						}
 					}
 
-					if( pCur != null && !pCur.isClosed() ) {
+					if (!pCur.isClosed()) {
 						pCur.close();
 					}						
 				}				

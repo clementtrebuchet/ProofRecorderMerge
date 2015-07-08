@@ -1,13 +1,5 @@
 package org.proof.recorder.adapter.phone;
 
-import java.io.InputStream;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.database.support.ProofDataBase;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -23,11 +15,18 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-public class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.database.support.ProofDataBase;
+
+import java.io.InputStream;
+
+class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
 		SectionIndexer {
 
-	private static final String TAG = "RecorderListDossiersAdapter";
-	private TextView hideId;
+	private static final String TAG = "RecListDossiersAda";
 
 	public RecorderListDossiersAdapter(Context context, int layout, Cursor c,
 			String[] from, int[] to, int flag) {
@@ -69,6 +68,7 @@ public class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
 	 * End of Separator Logic
 	 */
 
+	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
 
@@ -81,7 +81,7 @@ public class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
 
 		TextView phTxt = (TextView) view.findViewById(R.id.numberDossier);
 		TextView nomUtilisateur = (TextView) view.findViewById(R.id.nomDossier);
-		hideId = (TextView) view.findViewById(R.id.idrecordDossier);
+		TextView hideId = (TextView) view.findViewById(R.id.idrecordDossier);
 
 		ImageView imageView = (ImageView) view
 				.findViewById(R.id.list_imageDossier);
@@ -104,7 +104,7 @@ public class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
 
 		} else {
 			if (Settings.isDebug())
-				Log.v(TAG, "Image is read");
+				Log.v(TAG, "image read");
 
 			Bitmap bitmap = BitmapFactory.decodeStream(input);
 			imageView.setImageBitmap(bitmap);

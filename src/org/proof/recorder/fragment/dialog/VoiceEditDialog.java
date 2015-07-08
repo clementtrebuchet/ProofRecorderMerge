@@ -1,10 +1,5 @@
 package org.proof.recorder.fragment.dialog;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.receivers.AudioRecorderReceiver;
-import org.proof.recorder.service.DataPersistanceManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,30 +11,31 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.receivers.AudioRecorderReceiver;
+import org.proof.recorder.service.DataPersistanceManager;
+
 public class VoiceEditDialog extends ProofFragmentActivity {
-	
-	private static String DEFAULT_TITLE;
+
 	private static Context mContext = null;
 	private static boolean isSaved = false;
-	
-	private Button mEdit, mLater;
+
 	private TextView mTitleNote;
 	
 	private String mTitle;
-	
-	private DataPersistanceManager dpm = null;
 
 	/**
 	 * @return the mContext
 	 */
-	public static Context getHoldContext() {
+	private static Context getHoldContext() {
 		return mContext;
 	}
 
 	/**
 	 * @param mContext the mContext to set
 	 */
-	public static void setHoldContext(Context mContext) {
+	private static void setHoldContext(Context mContext) {
 		VoiceEditDialog.mContext = mContext;
 	}
 
@@ -54,16 +50,16 @@ public class VoiceEditDialog extends ProofFragmentActivity {
 		setContentView(R.layout.voice_edit_dialog);
 		
 		setHoldContext(this);
-		
-		DEFAULT_TITLE = getHoldContext().getString(
+
+		String DEFAULT_TITLE = getHoldContext().getString(
 				R.string.default_note_title);
 		
 		mTitle = DEFAULT_TITLE;
 		
 		mTitleNote = (TextView) findViewById(R.id.mEdit);
-		
-		mEdit = (Button) findViewById(R.id.mBtnEdit);
-		mLater = (Button) findViewById(R.id.mBtnLater);
+
+		Button mEdit = (Button) findViewById(R.id.mBtnEdit);
+		Button mLater = (Button) findViewById(R.id.mBtnLater);
 		
 		mEdit.setOnClickListener(editVoiceAction);
 		mLater.setOnClickListener(laterAction);
@@ -132,12 +128,12 @@ public class VoiceEditDialog extends ProofFragmentActivity {
 	}
 	
 	private void notifyAndSave() {
-		
-		dpm = new DataPersistanceManager();		
-    	
-    	if(!dpm.isProcessing()) {
-    		
-    		Intent audioService = new Intent(this, AudioRecorderReceiver.class);	    	
+
+		DataPersistanceManager dpm = new DataPersistanceManager();
+
+		if (!dpm.isProcessing()) {
+
+			Intent audioService = new Intent(this, AudioRecorderReceiver.class);
 	    	
 	    	Bundle extras = new Bundle();
 	    	

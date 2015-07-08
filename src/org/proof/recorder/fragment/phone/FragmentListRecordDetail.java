@@ -1,5 +1,15 @@
 package org.proof.recorder.fragment.phone;
 
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.util.Log;
+
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.adapter.phone.RecorderDetailAdapter;
@@ -10,29 +20,17 @@ import org.proof.recorder.fragment.notes.FragmentNoteTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
 
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.util.Log;
-import android.widget.CursorAdapter;
-
 public class FragmentListRecordDetail extends ProofFragmentActivity {
 	
 	//private static final String TAG = "FragmentListRecordDetail";
-	/** Called when the activity is first created. */
-	static Bundle b;
 	private static String id;
 	static String Id_record;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		b = getIntent().getExtras();
+		/* Called when the activity is first created. */
+		Bundle b = getIntent().getExtras();
 		// setContentView(R.layout.fragmentdroitdet);
 		FragmentManager fm = getSupportFragmentManager();
 
@@ -67,7 +65,7 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 		private static final String TAG = "KnownContactsLoader->FragmentPhoneCallDetail";
 		boolean mDualPane;
 		int mCursorPos = -1;
-		String[] from = new String[] { ProofDataBase.COLUMNRECODINGAPP_ID,
+		final String[] from = new String[]{ProofDataBase.COLUMNRECODINGAPP_ID,
 				ProofDataBase.COLUMN_TELEPHONE, ProofDataBase.COLUMN_SENS,
 				ProofDataBase.COLUMN_FILE, ProofDataBase.COLUMN_TAILLE,
 				ProofDataBase.COLUMN_HTIME };
@@ -89,8 +87,8 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 					R.id.mDateOfCall };
 
 			mAdapter = new RecorderDetailAdapter(getActivity(),
-					R.layout.record_detail, null, from, to,
-					CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+					R.layout.record_detail, null, from, to
+			);
 
 			setListAdapter(mAdapter);
 			setListShown(true);
@@ -118,9 +116,8 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 			Uri uri = Uri.withAppendedPath(
 					PersonnalProofContentProvider.CONTENT_URI, "record_id/"
 							+ id);
-			CursorLoader cursorLoader = new CursorLoader(getActivity(), uri,
+			return new CursorLoader(getActivity(), uri,
 					from, null, null, null);
-			return cursorLoader;
 		}
 
 		@Override

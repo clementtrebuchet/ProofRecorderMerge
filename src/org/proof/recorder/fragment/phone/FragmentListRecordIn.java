@@ -1,8 +1,14 @@
 package org.proof.recorder.fragment.phone;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.ListView;
 
 import org.proof.recorder.R;
 import org.proof.recorder.adapters.RecordAdapter;
@@ -13,19 +19,13 @@ import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.ApproxRecordTime;
+import org.proof.recorder.utils.Log.Console;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ListView;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentListRecordIn extends ProofFragment {		
 
@@ -84,7 +84,7 @@ public class FragmentListRecordIn extends ProofFragment {
 		}
 
 		private void getContacts() {
-			Uri uri = null;
+			Uri uri;
 			Cursor cursor = null;
 
 			if(objects != null)
@@ -240,9 +240,8 @@ public class FragmentListRecordIn extends ProofFragment {
 		}
 
 		@Override
-		protected Long _doInBackground(Void... params) {
+		protected void _doInBackground(Void... params) {
 			getContacts();
-			return null;
 		}
 
 		@Override

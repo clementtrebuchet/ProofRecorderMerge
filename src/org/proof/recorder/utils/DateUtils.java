@@ -1,10 +1,10 @@
 package org.proof.recorder.utils;
 
-import java.util.Calendar;
+import android.content.Context;
 
 import org.proof.recorder.R;
 
-import android.content.Context;
+import java.util.Calendar;
 
 public class DateUtils {
 	
@@ -88,7 +88,7 @@ public class DateUtils {
 	
 	public static String reOrderDate(Context _context, String unOrdered) {
 		mContext = _context;
-		String ordered = "";
+		String ordered;
 		String[] parts = unOrdered.split("-");
 		ordered = parts[2] + " " + getMonthFromInt(Integer.parseInt(parts[1])) + " " + parts[0];
 		return ordered;

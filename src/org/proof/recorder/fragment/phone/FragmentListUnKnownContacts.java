@@ -1,17 +1,5 @@
 package org.proof.recorder.fragment.phone;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.proof.recorder.R;
-import org.proof.recorder.adapters.ContactAdapter;
-import org.proof.recorder.bases.fragment.ProofFragment;
-import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
-import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
-import org.proof.recorder.utils.MenuActions;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +9,18 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.actionbarsherlock.view.MenuInflater;
+
+import org.proof.recorder.R;
+import org.proof.recorder.adapters.ContactAdapter;
+import org.proof.recorder.bases.fragment.ProofFragment;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.MenuActions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentListUnKnownContacts extends ProofFragment {
 
@@ -61,9 +61,9 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 
 			super.onListItemClick(list, view, position, id);	
 
-			if(!multiSelectEnabled) {				
-				Contact mContact = (Contact) objects.get(position);					
-				MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), "phone", getActivity());
+			if(!multiSelectEnabled) {
+				Contact mContact = (Contact) objects.get(position);
+				MenuActions.displayCallsFolderDetails(mContact.getPhoneNumber(), getActivity());
 			}
 			else {
 				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
@@ -90,9 +90,8 @@ public class FragmentListUnKnownContacts extends ProofFragment {
 		}
 
 		@Override
-		protected Long _doInBackground(Void... params) {
+		protected void _doInBackground(Void... params) {
 			getContacts();
-			return null;
 		}
 
 		@Override

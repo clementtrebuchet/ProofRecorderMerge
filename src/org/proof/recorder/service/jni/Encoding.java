@@ -32,21 +32,20 @@ public enum Encoding {
 
 	    public enum Format
 	    {
-	        PCM, ULAW, ALAW;
-	    }
+			PCM, ULAW, ALAW
+		}
 
 	    private final boolean signed;
 	    private final int bits;
 	    private final boolean floatingPoint;
 	    private final Format format;
 
-	    private Encoding(boolean signed, int bits, boolean isFloatingPoint)
-	    {
-	        this(signed, bits, isFloatingPoint, Format.PCM);
+	Encoding(boolean signed, int bits, boolean isFloatingPoint) {
+		this(signed, bits, isFloatingPoint, Format.PCM);
 	    }
-	    private Encoding(boolean signed, int bits, boolean isFloatingPoint, Format format)
-	    {
-	        this.signed = signed;
+
+	Encoding(boolean signed, int bits, boolean isFloatingPoint, Format format) {
+		this.signed = signed;
 	        this.bits = bits;
 	        this.floatingPoint = isFloatingPoint;
 	        this.format = format;

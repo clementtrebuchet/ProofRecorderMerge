@@ -1,18 +1,18 @@
 package org.proof.recorder.receivers.holders;
 
+import android.content.Context;
+import android.net.Uri;
+
 import org.proof.recorder.database.models.PhoneRecord;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.service.DataPersistanceManager;
 
-import android.content.Context;
-import android.net.Uri;
-
 public class PhoneRecordHolder {
-	
-	public static Uri INSERT_VOICE_URI = Uri.withAppendedPath(
+
+	public static final Uri INSERT_VOICE_URI = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "records");
-	
-	public static Uri INSERT_VNOTE_URI = Uri.withAppendedPath(
+
+	public static final Uri INSERT_VNOTE_URI = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "notes");
 	
 	private PhoneRecord currentRecord = null;
@@ -39,7 +39,6 @@ public class PhoneRecordHolder {
 	}
 
 	/**
-	 * @param resolver the resolver to set
 	 */
 	private static void setContext(Context context) {
 		PhoneRecordHolder.context = context;

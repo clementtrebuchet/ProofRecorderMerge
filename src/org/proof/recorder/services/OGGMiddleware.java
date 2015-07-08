@@ -1,13 +1,5 @@
 package org.proof.recorder.services;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.proof.recorder.R;
-import org.proof.recorder.utils.PlugMiddleware;
-import org.proof.recorder.utils.Log.Console;
-import org.proofs.recorder.codec.ogg.utils.IServiceRecorderOggCx;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +7,14 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+
+import org.proof.recorder.R;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.PlugMiddleware;
+import org.proofs.recorder.codec.ogg.utils.IServiceRecorderOggCx;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class OGGMiddleware extends Service implements PlugMiddleware {
 
@@ -34,11 +34,10 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	private Method mSetForeground;
 	private Method mStartForeground;
 	private Method mStopForeground;
-	private Object[] mSetForegroundArgs = new Object[1];
-	private Object[] mStartForegroundArgs = new Object[2];
-	private Object[] mStopForegroundArgs = new Object[1];
-	private Notification lNotif;
-	private int NOTIFICATION_ID = 66611454;
+	private final Object[] mSetForegroundArgs = new Object[1];
+	private final Object[] mStartForegroundArgs = new Object[2];
+	private final Object[] mStopForegroundArgs = new Object[1];
+	private final int NOTIFICATION_ID = 66611454;
 
 	@Override
 	public void onCreate() {
@@ -72,9 +71,9 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
-		
 
-		lNotif = mNotification();
+
+		Notification lNotif = mNotification();
 		mInitNotification(lNotif);
 		startForegroundCompat(NOTIFICATION_ID , lNotif);
 		
@@ -163,12 +162,12 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	}
 
 	@Override
-	public void EncodeRawFileAsynchronously(int message) {
+	public void EncodeRawFileAsynchronously() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	void invokeMethod(Method method, Object[] args) {
+	private void invokeMethod(Method method, Object[] args) {
 		try {
 			method.invoke(OGGMiddleware.this, args);
 		} catch (InvocationTargetException e) {
@@ -184,10 +183,10 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	 * MP3Middleware.this is a wrapper around the new startForeground method, using the older
 	 * APIs if it is not available.
 	 */
-	void startForegroundCompat(int id, Notification notification) {
+	private void startForegroundCompat(int id, Notification notification) {
 		// If we have the new startForeground API, then use it.
 		if (mStartForeground != null) {
-			mStartForegroundArgs[0] = Integer.valueOf(id);
+			mStartForegroundArgs[0] = id;
 			mStartForegroundArgs[1] = notification;
 			invokeMethod(mStartForeground, mStartForegroundArgs);
 			return;
@@ -203,7 +202,7 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	 * MP3Middleware.this is a wrapper around the new stopForeground method, using the older
 	 * APIs if it is not available.
 	 */
-	void stopForegroundCompat(int id) {
+	private void stopForegroundCompat(int id) {
 		// If we have the new stopForeground API, then use it.
 		if (mStopForeground != null) {
 			mStopForegroundArgs[0] = Boolean.TRUE;
@@ -222,15 +221,14 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
-	public Notification mNotification(){
-		Notification note=new Notification(R.drawable.navigationrefresh,
-                getString(R.string.notification_ogg_title),
-                System.currentTimeMillis());
-		return note;
+	private Notification mNotification() {
+		return new Notification(R.drawable.navigationrefresh,
+				getString(R.string.notification_ogg_title),
+				System.currentTimeMillis());
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void mInitNotification(Notification N) {
+	private void mInitNotification(Notification N) {
 
 		Intent intent = new Intent();
 

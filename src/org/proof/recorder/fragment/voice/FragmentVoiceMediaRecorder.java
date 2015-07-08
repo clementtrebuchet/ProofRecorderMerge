@@ -1,13 +1,5 @@
 package org.proof.recorder.fragment.voice;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.bases.fragment.ProofFragment;
-import org.proof.recorder.receivers.AudioRecorderReceiver;
-import org.proof.recorder.service.DataPersistanceManager;
-import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -23,6 +15,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.bases.fragment.ProofFragment;
+import org.proof.recorder.receivers.AudioRecorderReceiver;
+import org.proof.recorder.service.DataPersistanceManager;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.QuickActionDlg;
 
 
 public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {	
@@ -108,9 +108,10 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 			else {
 				setNoRecordScene();
 			}
-			
-		}		
 
+		}
+
+		@SuppressWarnings("UnusedAssignment")
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -136,9 +137,9 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 			backG.setImageDrawable(getResources().getDrawable(R.drawable.voicing));
     		textI.setText(getString(R.string.stop_recording));		
 		}
-		
-		private OnClickListener playCallBack = new OnClickListener() {
-	        @Override
+
+		private final OnClickListener playCallBack = new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 	        	if(!onRecord) {
 	        		dpm = new DataPersistanceManager();
@@ -161,10 +162,10 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	    	    	}
 	        	}
 	        }
-	    }; 
-	    
-	    private OnClickListener stopCallBack = new OnClickListener() {
-	        @Override
+		};
+
+		private final OnClickListener stopCallBack = new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 	        	if(onRecord) {
 	        		dpm = new DataPersistanceManager();

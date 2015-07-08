@@ -1,16 +1,16 @@
 package org.proof.recorder.database.models;
 
-import java.io.Serializable;
-import java.util.Locale;
-
-import org.proof.recorder.Settings;
-
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
+
+import org.proof.recorder.Settings;
+
+import java.io.Serializable;
+import java.util.Locale;
 
 public abstract class BasePhoneNumber implements Serializable {
 	
@@ -38,70 +38,70 @@ public abstract class BasePhoneNumber implements Serializable {
 	
 	// Constants Attributes
 
-	protected final static String NULL = "null";
-	protected final static Locale _platformLocale = Locale.getDefault();
-	protected final static internalType _type = internalType.BASIS;
+	private final static String NULL = "null";
+	private final static Locale _platformLocale = Locale.getDefault();
+	private final static internalType _type = internalType.BASIS;
 	
 	// Private Attributes
 
 
-	protected PhoneNumberUtil _libHelper;
-	protected PhoneNumberOfflineGeocoder _geocoder;
-	
-	protected com.google.i18n.phonenumbers.Phonenumber.PhoneNumber _nativeModel;
+	private PhoneNumberUtil _libHelper;
+	private PhoneNumberOfflineGeocoder _geocoder;
 
-	protected String _originalNumber;
+	private com.google.i18n.phonenumbers.Phonenumber.PhoneNumber _nativeModel;
 
-	protected String _shortName;
-	protected String _fullName;
-	protected String _countryCode;
-	protected String _nationalNumber;
-	
-	protected boolean isFormatted;
-	protected boolean isFilled;
+	private String _originalNumber;
+
+	private String _shortName;
+	private String _fullName;
+	private String _countryCode;
+	private String _nationalNumber;
+
+	private boolean isFormatted;
+	private boolean isFilled;
 	
 	// Initialization
-	
-	public boolean isFilled() {
+
+	private boolean isFilled() {
 		return isFilled;
 	}
 
-	public void setFilled(boolean isFilled) {
+	private void setFilled(boolean isFilled) {
 		this.isFilled = isFilled;
 	}
 
-	protected void initialize() {
+	void initialize() {
 		this._initialize();		
 	}
-	
-	protected void initialize(String phoneNumber) {
+
+	void initialize(String phoneNumber) {
 		this._initialize();
 		this.fillAttributesFromNumberStr(phoneNumber);
 		
 	}
-	
-	protected void _initialize() {
+
+	private void _initialize() {
 		
 		this.set_countryCode(NULL);
 		this.set_fullName(NULL);
 		this._nationalNumber = NULL;
-		this.set_shortName(NULL);
-		
-		this.setFilled(false);		
-		this.setFormatted(false);
+		this.set_shortName();
+
+		this.setFilled(false);
+		this.setFormatted();
 		
 		this._libHelper = PhoneNumberUtil.getInstance();
 		this._geocoder = PhoneNumberOfflineGeocoder.getInstance();
 	}
 	
 	// Logging wrapping
-	
-	protected void print(String message) {
+
+	private void print(String message) {
 		if(Settings.isDebug())
 			Log.d(this.getClass().getName(), message);
 	}
-	
-	protected void print_exception(String message) {
+
+	private void print_exception(String message) {
 		Log.e(this.getClass().getName(), message);
 	}	
 	
@@ -144,7 +144,7 @@ public abstract class BasePhoneNumber implements Serializable {
 		return _type;
 	}
 
-	public String get_originalNumber() {
+	private String get_originalNumber() {
 		return PhoneNumberUtils.stripSeparators(_originalNumber);
 	}
 
@@ -173,12 +173,12 @@ public abstract class BasePhoneNumber implements Serializable {
 	}
 
 
-	public String get_shortName() {
+	String get_shortName() {
 		return _shortName;
 	}
 
 
-	public String get_fullName() {
+	String get_fullName() {
 		return _fullName;
 	}
 
@@ -208,17 +208,17 @@ public abstract class BasePhoneNumber implements Serializable {
 	}
 
 
-	public void set_shortName(String _shortName) {
-		this._shortName = _shortName;
+	private void set_shortName() {
+		this._shortName = BasePhoneNumber.NULL;
 	}
 
 
-	public void set_fullName(String _fullName) {
+	private void set_fullName(String _fullName) {
 		this._fullName = _fullName;
 	}
 
 
-	public void set_countryCode(String _countryCode) {
+	private void set_countryCode(String _countryCode) {
 		this._countryCode = _countryCode;
 	}
 
@@ -230,8 +230,8 @@ public abstract class BasePhoneNumber implements Serializable {
 	}
 
 
-	public void setFormatted(boolean isFormatted) {
-		this.isFormatted = isFormatted;
+	private void setFormatted() {
+		this.isFormatted = false;
 	}
 
 }

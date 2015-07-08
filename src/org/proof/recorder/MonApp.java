@@ -6,8 +6,6 @@ import org.proof.recorder.utils.Log.Console;
 
 
 public class MonApp extends android.app.Application {
-	
-	private ACRAConfiguration mACRA;
 
 	@Override
     public void onCreate() {
@@ -19,7 +17,7 @@ public class MonApp extends android.app.Application {
 		try {
 			
 		ACRA.init(this);
-		mACRA = ACRA.getNewDefaultConfig(this);
+			ACRAConfiguration mACRA = ACRA.getNewDefaultConfig(this);
 		mACRA.setFormKey("dEdhREpjQThYVXNVakltRmhFSGktRmc6MQ");
 		ACRA.setConfig(mACRA);
 		

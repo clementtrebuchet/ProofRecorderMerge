@@ -1,20 +1,20 @@
 package org.proof.recorder.apis.soundcloud;
 
-import java.io.File;
-import java.io.IOException;
+import com.soundcloud.api.ApiWrapper;
+import com.soundcloud.api.Token;
 
 import org.proof.recorder.utils.Log.Console;
 
-import com.soundcloud.api.ApiWrapper;
-import com.soundcloud.api.Token;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Creates an API wrapper instance, obtains an access token and serialises the wrapper to disk.
  * The serialised wrapper can then be used for subsequent access to resources without reauthenticating
- * @see GetResource
+ *
  */
-public class CreateWrapper {
-	
+class CreateWrapper {
+
     public File WRAPPER_SER = null;    
     
     public CreateWrapper(String wrapperFileName) {

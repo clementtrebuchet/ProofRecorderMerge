@@ -1,8 +1,5 @@
 package org.proof.recorder.bases.activity;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.utils.SetStaticContext;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,13 +9,16 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.utils.SetStaticContext;
+
 public class ProofPreferenceActivity extends SherlockPreferenceActivity {
 	
 	private Context internalContext = null;
-	protected volatile boolean screenLocked = false;
-	
-	protected ProgressDialog progressDlg;
-	protected int progressDlgText;
+	private volatile boolean screenLocked = false;
+
+	private ProgressDialog progressDlg;
+	private int progressDlgText;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,8 @@ public class ProofPreferenceActivity extends SherlockPreferenceActivity {
 		super.onResume();
 		this.initialize();
 	}
-	
-	protected void initialize() {
+
+	private void initialize() {
 		SetStaticContext.setConsoleTagName(this.getClass().getSimpleName());
 		SetStaticContext.setStaticsContext(this, 1);
 		this.setInternalContext(this);
@@ -66,28 +66,27 @@ public class ProofPreferenceActivity extends SherlockPreferenceActivity {
 				this.getInternalContext().getText(
 						this.progressDlgText == 0 ? R.string.loading : this.progressDlgText));
 	}
-	
-	protected void displayProgress() {
+
+	void displayProgress() {
 		if(!this.progressDlg.isShowing())
 			this.progressDlg.show();
 	}
-	
-	protected void hideProgress() {
+
+	void hideProgress() {
 		if(this.progressDlg.isShowing())
 			this.progressDlg.hide();
 	}
 	
 	private void destroyProgress() {
 		if(this.progressDlg != null) {
-			if(this.progressDlg instanceof ProgressDialog) {
-				this.hideProgress();
-				this.progressDlg.cancel();
-				this.progressDlg = null;
-			}
-		}		
+			this.hideProgress();
+			this.progressDlg.cancel();
+			this.progressDlg = null;
+		}
 	}
-	
-	@SuppressLint("InlinedApi") protected void lockScreenOrientation() {
+
+	@SuppressLint("InlinedApi")
+	void lockScreenOrientation() {
 
 		if(!this.screenLocked) {
 			switch (this.getResources().getConfiguration().orientation) {
@@ -123,7 +122,7 @@ public class ProofPreferenceActivity extends SherlockPreferenceActivity {
 		}	
 	}
 
-	protected void unlockScreenOrientation() {
+	void unlockScreenOrientation() {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		this.screenLocked = false;
 	}

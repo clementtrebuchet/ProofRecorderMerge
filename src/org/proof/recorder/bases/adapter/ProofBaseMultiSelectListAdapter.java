@@ -1,11 +1,11 @@
 package org.proof.recorder.bases.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+
+import java.util.List;
 
 public abstract class ProofBaseMultiSelectListAdapter extends ProofBaseListAdapter {
 	
@@ -21,28 +21,28 @@ public abstract class ProofBaseMultiSelectListAdapter extends ProofBaseListAdapt
 	/**
 	 * @param multiModeEnabled the multiModeEnabled to set
 	 */
-	protected void setMultiModeEnabled(boolean multiModeEnabled) {
+	private void setMultiModeEnabled(boolean multiModeEnabled) {
 		this.multiModeEnabled = multiModeEnabled;
 	}
 
-	public ProofBaseMultiSelectListAdapter(Context context, Object[] objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+	protected ProofBaseMultiSelectListAdapter(Context context, Object[] objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
 		super(context, objects, layoutResourceId, broadcastName);
 		setMultiModeEnabled(multiModeEnabled);
 	}
 
-	public ProofBaseMultiSelectListAdapter(Context context, List<Object> objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+	protected ProofBaseMultiSelectListAdapter(Context context, List<Object> objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
 		super(context, objects, layoutResourceId, broadcastName);
 		setMultiModeEnabled(multiModeEnabled);
 	}
 
-	public ProofBaseMultiSelectListAdapter(Context context, int resource,
-			int textViewResourceId, Object[] objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+	protected ProofBaseMultiSelectListAdapter(Context context, int resource,
+											  int textViewResourceId, Object[] objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
 		super(context, resource, textViewResourceId, objects, layoutResourceId, broadcastName);
 		setMultiModeEnabled(multiModeEnabled);
 	}
 
-	public ProofBaseMultiSelectListAdapter(Context context, int resource,
-			int textViewResourceId, List<Object> objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
+	protected ProofBaseMultiSelectListAdapter(Context context, int resource,
+											  int textViewResourceId, List<Object> objects, int layoutResourceId, boolean multiModeEnabled, String broadcastName) {
 		super(context, resource, textViewResourceId, objects, layoutResourceId, broadcastName);
 		setMultiModeEnabled(multiModeEnabled);
 	}

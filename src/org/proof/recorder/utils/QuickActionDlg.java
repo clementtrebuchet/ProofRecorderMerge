@@ -1,7 +1,14 @@
 package org.proof.recorder.utils;
 
-import java.io.IOException;
-import java.util.List;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
+import com.actionbarsherlock.view.SubMenu;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
@@ -14,22 +21,12 @@ import org.proof.recorder.quick.action.ActionItem;
 import org.proof.recorder.quick.action.QuickAction;
 import org.proof.recorder.utils.Log.Console;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
-
-import com.actionbarsherlock.view.SubMenu;
+import java.util.List;
 
 public class QuickActionDlg {
 
 	private final static String TAG = "QUICK_ACTION_DLG";
 	private static final String BR  = "\n";
-
-	private static boolean bTitled, bUntitled, bKnown, bUnknown;
 
 	/**
 	 * QUICK_ACTION_DLG IDS
@@ -80,8 +77,6 @@ public class QuickActionDlg {
 	 * 
 	 * @param context
 	 * @param v
-	 * @param outAdapter
-	 * @param inAdapter
 	 * @param record
 	 */
 	public static void showPhoneOptionsDlg(final Context context, View v,
@@ -148,8 +143,6 @@ public class QuickActionDlg {
 	 * @param view
 	 * @param voice
 	 * @param adapter
-	 * @param lm
-	 * @param voiceListLoader
 	 */
 	public static void showTitledVoiceOptionsDlg(
 			final Context context,
@@ -191,13 +184,7 @@ public class QuickActionDlg {
 				case ID_DELETE:
 					MenuActions.deleteItem(voice.getId(), mType,
 							innerCollection, (ProofBaseMultiSelectListAdapter) adapter, voice);
-					try {
-						OsHandler.deleteFileFromDisk(voice.getFilePath());
-					} catch (IOException e) {
-						Console.print_exception(
-									"showVoiceOptionsDlg()->ID_DELETE : "
-											+ e.getMessage());
-					}
+					OsHandler.deleteFileFromDisk(voice.getFilePath());
 					break;
 
 				default:
@@ -284,8 +271,7 @@ public class QuickActionDlg {
 			View view,
 			final Voice voice,
 			final Object listAdapter,
-			final List<Object> innerCollection,
-			final Settings.mType mType) {
+			final List<Object> innerCollection) {
 
 		mContext = context;
 		MenuActions.setVoiceAdapter(listAdapter);
@@ -319,18 +305,14 @@ public class QuickActionDlg {
 				case ID_DELETE:
 					
 					MenuActions.deleteItem(
-							voice.getId(), 
-							mType, 
+							voice.getId(),
+							Settings.mType.VOICE_UNTITLED,
 							innerCollection, 
 							(ProofBaseMultiSelectListAdapter) listAdapter, 
 							voice
 					);
-					
-					try {
-						OsHandler.deleteFileFromDisk(voice.getFilePath());
-					} catch (IOException e) {
-						Console.print_exception(e);
-					}
+
+					OsHandler.deleteFileFromDisk(voice.getFilePath());
 					break;
 
 				default:
@@ -492,15 +474,11 @@ public class QuickActionDlg {
 
 			Console.print_debug("TITLED: " + titled + " " + "UNTITLED: " + untitled);
 
-			if (titled > 0) {
-				bTitled = true;
-			} else
-				bTitled = false;
+			boolean bTitled;
+			bTitled = titled > 0;
 
-			if (untitled > 0) {
-				bUntitled = true;
-			} else
-				bUntitled = false;
+			boolean bUntitled;
+			bUntitled = untitled > 0;
 
 			if (!bTitled && !bUntitled) {
 
@@ -526,15 +504,11 @@ public class QuickActionDlg {
 
 			Console.print_debug("TITLED: " + known + " " + "UNTITLED: " + unknown);
 
-			if (known > 0) {
-				bKnown = true;
-			} else
-				bKnown = false;
+			boolean bKnown;
+			bKnown = known > 0;
 
-			if (unknown > 0) {
-				bUnknown = true;
-			} else
-				bUnknown = false;
+			boolean bUnknown;
+			bUnknown = unknown > 0;
 
 			if (!bKnown && !bUnknown) {
 
@@ -571,14 +545,14 @@ public class QuickActionDlg {
 	/**
 	 * @return the hasSearch
 	 */
-	public static boolean hasSearch() {
+	private static boolean hasSearch() {
 		return hasSearch;
 	}
 
 	/**
 	 * @param hasSearch the hasSearch to set
 	 */
-	public static void setHasSearch(boolean hasSearch) {
+	private static void setHasSearch(boolean hasSearch) {
 		QuickActionDlg.hasSearch = hasSearch;
 	}
 }

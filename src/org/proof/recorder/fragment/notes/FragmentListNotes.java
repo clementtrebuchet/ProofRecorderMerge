@@ -1,12 +1,5 @@
 package org.proof.recorder.fragment.notes;
 
-import java.util.Date;
-
-import org.proof.recorder.R;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,11 +17,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.Date;
+
 public class FragmentListNotes extends Fragment {
 
-	static Bundle mBundle;
-	static String id;
-	
+	private static Bundle mBundle;
+
 	private static final String[] from = new String[] {
 			ProofDataBase.COLUMN_TITLE, 
 			ProofDataBase.COLUMN_NOTE,
@@ -36,10 +35,9 @@ public class FragmentListNotes extends Fragment {
 			ProofDataBase.COLUMNNOTES_ID 
 	};
 
-	EditText mTitre;
-	EditText mNote;
-	TextView mCreation; 
-	String idNote;
+	private EditText mTitre;
+	private EditText mNote;
+	private String idNote;
 	int i;
 
 	@Override
@@ -61,8 +59,8 @@ public class FragmentListNotes extends Fragment {
 		registerForContextMenu(getView());
 		mTitre = (EditText) getView().findViewById(R.id.titreNotes);
 		mNote = (EditText) getView().findViewById(R.id.notesContenu);
-		mCreation = (TextView) getView().findViewById(R.id.notesCreation);
-		id = (String) mBundle.get("id");
+		TextView mCreation = (TextView) getView().findViewById(R.id.notesCreation);
+		String id = (String) mBundle.get("id");
 		
 		Console.print_debug("<<PHONE's NOTE NUMERO>>" + id);
 		
@@ -114,7 +112,8 @@ public class FragmentListNotes extends Fragment {
 			return false;
 		}
 	};
-	
+
+	@SuppressWarnings("UnusedAssignment")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -147,7 +146,7 @@ public class FragmentListNotes extends Fragment {
 		return super.onContextItemSelected(item);
 	}
 
-	public void enregistrerNote() {
+	private void enregistrerNote() {
 
 		ContentValues valuesNote = new ContentValues();
 		final String titre = mTitre.getText().toString();

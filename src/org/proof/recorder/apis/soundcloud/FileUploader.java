@@ -1,14 +1,5 @@
 package org.proof.recorder.apis.soundcloud;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.json.JSONException;
-import org.proof.recorder.services.SoundCloudBgUploader;
-import org.proof.recorder.utils.Log.Console;
-
 import android.os.Environment;
 
 import com.soundcloud.api.ApiWrapper;
@@ -16,6 +7,15 @@ import com.soundcloud.api.Endpoints;
 import com.soundcloud.api.Http;
 import com.soundcloud.api.Params;
 import com.soundcloud.api.Request;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.json.JSONException;
+import org.proof.recorder.services.SoundCloudBgUploader;
+import org.proof.recorder.utils.Log.Console;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Upload single/multiple file(s) to SoundCloud.
@@ -35,14 +35,14 @@ public final class FileUploader {
 	/**
 	 * @return the mExternalStorageAvailable
 	 */
-	public static boolean isExternalStorageAvailable() {
+	private static boolean isExternalStorageAvailable() {
 		return mExternalStorageAvailable;
 	}
 
 	/**
 	 * @return the mExternalStorageWriteable
 	 */
-	public static boolean isExternalStorageWriteable() {
+	private static boolean isExternalStorageWriteable() {
 		return mExternalStorageWriteable;
 	}
 	

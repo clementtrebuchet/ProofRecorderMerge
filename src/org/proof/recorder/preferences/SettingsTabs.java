@@ -1,7 +1,5 @@
 package org.proof.recorder.preferences;
 
-import org.proof.recorder.R;
-
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +10,10 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-@SuppressWarnings("deprecation")
+import org.proof.recorder.R;
+
+
+@SuppressWarnings("ALL")
 public class SettingsTabs extends TabActivity {
 	
 	/*private FragmentTabHost mTabHost;
@@ -84,11 +85,11 @@ public class SettingsTabs extends TabActivity {
 
 	    tabHost.setCurrentTab(0);
 	}
-	
-	
-	public static View prepareTabView(Context context, String text, int mRid) {
-        View view = LayoutInflater.from(context).inflate(
-                R.layout.tab_indicator, null);
+
+
+	private static View prepareTabView(Context context, String text, int mRid) {
+		View view = LayoutInflater.from(context).inflate(
+				R.layout.tab_indicator, null);
         TextView tv = (TextView) view.findViewById(R.id.tabIndicatorTextView);
         ImageView img = (ImageView) view.findViewById(R.id.fakeNativeTabImageView);
         img.setBackgroundResource(mRid);

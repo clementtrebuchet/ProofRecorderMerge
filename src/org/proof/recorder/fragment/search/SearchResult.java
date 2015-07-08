@@ -1,22 +1,5 @@
 package org.proof.recorder.fragment.search;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
-import org.proof.recorder.database.collections.VoicesList;
-import org.proof.recorder.database.models.Record;
-import org.proof.recorder.database.models.Voice;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.MenuActions;
-import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.StaticIntents;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -30,6 +13,23 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
+
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
+import org.proof.recorder.database.collections.VoicesList;
+import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.models.Voice;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.MenuActions;
+import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.StaticIntents;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchResult extends ProofFragmentActivity {
 
@@ -78,9 +78,10 @@ public class SearchResult extends ProofFragmentActivity {
 
 	public static class SearchListLoader extends ProofListFragmentWithQuickAction {
 
+		@SuppressWarnings("StatementWithEmptyBody")
 		private void getItems() {
 
-			String mByDateQuery = null;
+			String mByDateQuery;
 			Uri uri = null;
 
 			if (mCalls) {
@@ -137,6 +138,7 @@ public class SearchResult extends ProofFragmentActivity {
 
 			try {
 
+				assert uri != null;
 				cursor = getInternalContext().getContentResolver().query(
 						uri, null, null, null, null);
 
@@ -188,6 +190,7 @@ public class SearchResult extends ProofFragmentActivity {
 			}			
 		}
 
+		@SuppressWarnings("StatementWithEmptyBody")
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);		
@@ -406,23 +409,19 @@ public class SearchResult extends ProofFragmentActivity {
 			else if(mVoices) {
 				MenuActions.deleteVoices(recordIds, recordPaths);
 				getActivity().startActivity(StaticIntents.goVoice(getInternalContext()));
+			} else {
 			}
-			else
-				return;			
 			
 		}
 
 		@Override
 		protected boolean itemChecked(Object item) {
 
-			if(mCalls)
+			if (mCalls)
 				return ((Record) item).isChecked();
 
-			else if(mVoices)
-				return ((Voice) item).isChecked();
-
 			else
-				return false;
+				return mVoices && ((Voice) item).isChecked();
 		}
 
 		@Override
@@ -430,9 +429,9 @@ public class SearchResult extends ProofFragmentActivity {
 			if(mCalls)
 				((Record) item).setChecked(false);
 			else if(mVoices)
-				((Voice) item).setChecked(false);			
-			else
-				return;
+				((Voice) item).setChecked(false);
+			else {
+			}
 		}
 
 		@Override
@@ -441,8 +440,8 @@ public class SearchResult extends ProofFragmentActivity {
 				((Record) item).setChecked(checked);
 			else if(mVoices)
 				((Voice) item).setChecked(checked);
-			else
-				return;
+			else {
+			}
 		}
 
 		@Override
@@ -489,9 +488,8 @@ public class SearchResult extends ProofFragmentActivity {
 		}
 
 		@Override
-		protected Long _doInBackground(Void... params) {
+		protected void _doInBackground(Void... params) {
 			getItems();
-			return null;
 		}
 
 		@Override

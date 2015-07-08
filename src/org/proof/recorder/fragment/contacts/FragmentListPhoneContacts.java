@@ -1,16 +1,5 @@
 package org.proof.recorder.fragment.contacts;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import org.proof.recorder.R;
-import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
-import org.proof.recorder.bases.fragment.ProofListFragmentWithAsyncLoader;
-import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +15,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.bases.fragment.ProofListFragmentWithAsyncLoader;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class FragmentListPhoneContacts extends Fragment {
 	
 	@Override
@@ -35,7 +35,7 @@ public class FragmentListPhoneContacts extends Fragment {
 
 	public static class PhoneContactsLoader extends ProofListFragmentWithAsyncLoader {
 
-		private SparseBooleanArray selectedContacts = new SparseBooleanArray();
+		private final SparseBooleanArray selectedContacts = new SparseBooleanArray();
 		
 		private void sendEventToExcludedList(Contact c) {
 			Console.print_debug("Broadcasting message");
@@ -46,8 +46,8 @@ public class FragmentListPhoneContacts extends Fragment {
 			  intent.putExtra("contactObj", c);
 			  LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
 			}
-		
-		private ProofBroadcastReceiver eventListExcludedReceiver = new ProofBroadcastReceiver() {
+
+		private final ProofBroadcastReceiver eventListExcludedReceiver = new ProofBroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				// Get extra data included in the Intent
@@ -84,7 +84,7 @@ public class FragmentListPhoneContacts extends Fragment {
 
 		public class ContactAdapter extends ArrayAdapter<Object> {
 
-			private ArrayList<Object> items;
+			private final ArrayList<Object> items;
 
 			public ContactAdapter(Context context, int textViewResourceId,
 					ArrayList<Object> items) {
@@ -107,9 +107,7 @@ public class FragmentListPhoneContacts extends Fragment {
 
 					nameCheckBox.setChecked(selectedContacts.get(position));
 
-					if (nameCheckBox != null) {
-						nameCheckBox.setText(contact.getContactName());
-					}
+					nameCheckBox.setText(contact.getContactName());
 
 					nameCheckBox.setOnClickListener(new OnItemClickListener(
 							position, nameCheckBox.getText(), nameCheckBox));
@@ -121,7 +119,7 @@ public class FragmentListPhoneContacts extends Fragment {
 		}
 
 		private class OnItemClickListener implements OnClickListener {
-			private int position;
+			private final int position;
 			// private CharSequence text;
 			@SuppressWarnings("unused")
 			private CheckBox checkBox;
@@ -199,9 +197,8 @@ public class FragmentListPhoneContacts extends Fragment {
 		}
 
 		@Override
-		protected Long _doInBackground(Void... params) {
+		protected void _doInBackground(Void... params) {
 			getContacts();
-			return null;
 		}
 
 		@Override

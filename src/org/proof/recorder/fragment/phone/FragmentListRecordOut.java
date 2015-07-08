@@ -1,7 +1,12 @@
 package org.proof.recorder.fragment.phone;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.ListView;
 
 import org.proof.recorder.R;
 import org.proof.recorder.adapters.RecordAdapter;
@@ -10,17 +15,12 @@ import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
+import org.proof.recorder.utils.Log.Console;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentListRecordOut extends ProofFragment {		
 
@@ -162,9 +162,8 @@ public class FragmentListRecordOut extends ProofFragment {
 		}
 
 		@Override
-		protected Long _doInBackground(Void... params) {
+		protected void _doInBackground(Void... params) {
 			getContacts();
-			return null;
 		}
 
 		@Override

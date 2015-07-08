@@ -1,12 +1,12 @@
 package org.proof.recorder.database.models;
 
-import java.io.Serializable;
+import android.content.ContentResolver;
 
 import org.proof.recorder.utils.DateUtils;
 import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.ServiceAudioHelper;
 
-import android.content.ContentResolver;
+import java.io.Serializable;
 
 public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	
@@ -108,7 +108,7 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	
 	public static void setResolver(ContentResolver _resolver) {
 		Voice._resolver = _resolver;
-		setHasResolver(true);
+		setHasResolver();
 		Note.setResolver(_resolver);
 	}
 	
@@ -116,8 +116,8 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 		return Voice._hasDataLayer;
 	}
 
-	private static void setHasResolver(boolean _hasDataLayer) {
-		Voice._hasDataLayer = _hasDataLayer;
+	private static void setHasResolver() {
+		Voice._hasDataLayer = true;
 	}
 	
 	private String _id;
@@ -184,7 +184,7 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	/**
 	 * @param _id the _id to set
 	 */
-	public void setId(String _id) {
+	private void setId(String _id) {
 		this._id = _id;
 		
 		if(_id != null)
@@ -199,7 +199,7 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	/**
 	 * @param _humanTime the _humanTime to set
 	 */
-	public void setHumanTime(String _humanTime) {
+	private void setHumanTime(String _humanTime) {
 		this._humanTime = _humanTime;
 	}
 	/**
@@ -255,7 +255,7 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	/**
 	 * @param _note the _note to set
 	 */
-	public void setNote(Note _note) {
+	private void setNote(Note _note) {
 		this._note = _note;
 	}
 	

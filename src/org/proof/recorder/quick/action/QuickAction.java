@@ -1,10 +1,5 @@
 package org.proof.recorder.quick.action;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.proof.recorder.R;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -21,6 +16,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * QuickAction dialog.
  * 
@@ -32,24 +32,24 @@ import android.widget.TextView;
 public class QuickAction extends PopupWindows implements OnDismissListener {
 	private ImageView mArrowUp;
 	private ImageView mArrowDown;
-	private Animation mTrackAnim;
-	private LayoutInflater inflater;
+	private final Animation mTrackAnim;
+	private final LayoutInflater inflater;
 	private ViewGroup mTrack;
 	private OnActionItemClickListener mItemClickListener;
 	private OnDismissListener mDismissListener;
-	
-	private List<ActionItem> mActionItemList = new ArrayList<ActionItem>();
+
+	private final List<ActionItem> mActionItemList = new ArrayList<ActionItem>();
 	
 	private boolean mDidAction;
 	private boolean mAnimateTrack;
 	
 	private int mChildPos;    
     private int mAnimStyle;
-    
-	public static final int ANIM_GROW_FROM_LEFT = 1;
-	public static final int ANIM_GROW_FROM_RIGHT = 2;
-	public static final int ANIM_GROW_FROM_CENTER = 3;
-	public static final int ANIM_AUTO = 4;
+
+	private static final int ANIM_GROW_FROM_LEFT = 1;
+	private static final int ANIM_GROW_FROM_RIGHT = 2;
+	private static final int ANIM_GROW_FROM_CENTER = 3;
+	private static final int ANIM_AUTO = 4;
 	
 	/**
 	 * Constructor.
@@ -73,8 +73,8 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	            return 1.2f - inner * inner;
 	        }
 		});
-	        
-		setRootViewId(R.layout.quickaction);
+
+		setRootViewId();
 		
 		mAnimStyle		= ANIM_AUTO;
 		mAnimateTrack	= true;
@@ -88,17 +88,16 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
      * 
      * @return  Action Item at the position
      */
-    public ActionItem getActionItem(int index) {
-        return mActionItemList.get(index);
-    }
+	private ActionItem getActionItem(int index) {
+		return mActionItemList.get(index);
+	}
     
 	/**
 	 * Set root view.
-	 * 
-	 * @param id Layout resource id
+	 *
 	 */
-	public void setRootViewId(int id) {
-		mRootView	= inflater.inflate(id, null);
+	private void setRootViewId() {
+		mRootView = inflater.inflate(R.layout.quickaction, null);
 		mTrack 		= (ViewGroup) mRootView.findViewById(R.id.tracks);
 
 		mArrowDown 	= (ImageView) mRootView.findViewById(R.id.arrow_down);
@@ -319,7 +318,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 *
 	 */
 	public interface OnActionItemClickListener {
-		public abstract void onItemClick(QuickAction source, int pos, int actionId);
+		void onItemClick(QuickAction source, int pos, int actionId);
 	}
 	
 	/**
@@ -327,6 +326,6 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * 
 	 */
 	public interface OnDismissListener {
-		public abstract void onDismiss();
+		void onDismiss();
 	}
 }

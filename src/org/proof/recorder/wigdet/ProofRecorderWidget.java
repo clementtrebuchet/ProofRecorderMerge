@@ -1,8 +1,5 @@
 package org.proof.recorder.wigdet;
 
-import org.proof.recorder.ProofRecorderActivity;
-import org.proof.recorder.R;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -23,34 +20,32 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import org.proof.recorder.ProofRecorderActivity;
+import org.proof.recorder.R;
+
 public class ProofRecorderWidget extends AppWidgetProvider {
 
 	private final static String TAG = ProofRecorderWidget.class.getName();
-	private final String UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE";
-	public final static String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_ENABLE_SERVICE";
-	public final String ACTION_DISABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_DISABLE_SERVICE";
-	public final static String SET_FORMAT = "org.proof.recorder.wigdet.ProofRecorderWidget.SET_FORMAT";
-	private static final String START_ACTION = "android.intent.action.START_AUDIO_RECORDER";
-	private static final String STOP_ACTION = "android.intent.action.STOP_AUDIO_RECORDER";
-	public final static String REC = "org.proof.recorder.wigdet.ProofRecorderWidget.REC";
-	public final static String SP = "org.proof.recorder.wigdet.ProofRecorderWidget.SPEAKER";
-	private SharedPreferences mSharedPreferences = null;
-	private Editor mEditor = null;
-	public final static String ACTION_UPDATE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_UPDATE_SERVICE";
-	public boolean isEnable;
-	public boolean recOn;
-	public boolean isrecording;
-	private SharedPreferences preferences;
-	private Editor mRecEditor;
-	private boolean speakerOn;
-	private static Long defaultTimerInMinutes = (long) (3);
-	public RecorderDetector mRecorderDetector = null;
-	private static int mAppWId = 0;
-	public static boolean mForbbidenChFormat;
+    private final static String ACTION_ENABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_ENABLE_SERVICE";
+    private final static String SET_FORMAT = "org.proof.recorder.wigdet.ProofRecorderWidget.SET_FORMAT";
+    private static final String START_ACTION = "android.intent.action.START_AUDIO_RECORDER";
+    private static final String STOP_ACTION = "android.intent.action.STOP_AUDIO_RECORDER";
+    private final static String REC = "org.proof.recorder.wigdet.ProofRecorderWidget.REC";
+    private final static String SP = "org.proof.recorder.wigdet.ProofRecorderWidget.SPEAKER";
+    private SharedPreferences mSharedPreferences = null;
+    private Editor mEditor = null;
+    private final static String ACTION_UPDATE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_UPDATE_SERVICE";
+    private boolean isEnable;
+    private boolean recOn;
+    private SharedPreferences preferences;
+    private Editor mRecEditor;
+    private boolean speakerOn;
+    private RecorderDetector mRecorderDetector = null;
+    private static int mAppWId = 0;
 
-	/**
-	 * @return the mAppWId
-	 */
+    /**
+     * @return the mAppWId
+     */
 	public static int getmAppWId() {
 		Log.d(TAG, "getmAppWId() : " + ProofRecorderWidget.mAppWId);
 		return ProofRecorderWidget.mAppWId;
@@ -80,8 +75,9 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	 */
 	private static long mRefreshInterval() {
 
-		return defaultTimerInMinutes * 60 * 1000;
-	}
+        Long defaultTimerInMinutes = (long) (3);
+        return defaultTimerInMinutes * 60 * 1000;
+    }
 
 	/**
 	 * 
@@ -135,25 +131,25 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 			int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		testIfmRecorderDetector(context);// reconnect or connect the observers
-		for (int i = 0; i < appWidgetIds.length; i++) {
-			if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
-				Log.d(TAG,
-						"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID:"
-								+ appWidgetIds[i] + "--"
-								+ AppWidgetManager.INVALID_APPWIDGET_ID);
-				// buildUpdate(context, appWidgetManager, appWidgetIds[i]);
-				serviceUpdateView(context, appWidgetIds[i]);
-				setAlarm(context, false, appWidgetIds[i],
-						AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-			} else {
-				Log.d(TAG,
-						"appWidgetIds[i] == AppWidgetManager.INVALID_APPWIDGET_ID:"
-								+ appWidgetIds[i] + "--"
-								+ AppWidgetManager.INVALID_APPWIDGET_ID);
-			}
+        for (int appWidgetId : appWidgetIds) {
+            if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                Log.d(TAG,
+                        "appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID:"
+                                + appWidgetId + "--"
+                                + AppWidgetManager.INVALID_APPWIDGET_ID);
+                // buildUpdate(context, appWidgetManager, appWidgetIds[i]);
+                serviceUpdateView(context, appWidgetId);
+                setAlarm(context, false, appWidgetId
+                );
+            } else {
+                Log.d(TAG,
+                        "appWidgetIds[i] == AppWidgetManager.INVALID_APPWIDGET_ID:"
+                                + appWidgetId + "--"
+                                + AppWidgetManager.INVALID_APPWIDGET_ID);
+            }
 
-		}
-		Log.d(TAG, "Finnih method onUpdate OK");
+        }
+        Log.d(TAG, "Finnih method onUpdate OK");
 
 	}
 
@@ -174,8 +170,9 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	 * 
 	 * @author clement service class@MBuildUpdate
 	 */
-	public static class MBuildUpdate extends Service {
-		int appWidgetIds;
+    @SuppressLint(value = "Assert")
+    public static class MBuildUpdate extends Service {
+        int appWidgetIds;
 		private final String TAG = MBuildUpdate.class.getName();
 
 		public int onStartCommand(Intent intent, int flags, int startId) {
@@ -194,7 +191,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		}
 
 		public RemoteViews buildRemoteView(Context context) {
-			RemoteViews updateView = null;
+            RemoteViews updateView;
 
 			updateView = new RemoteViews(context.getPackageName(),
 					R.layout.widget_layout);
@@ -279,16 +276,15 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	 * @param mRemoteViews
 	 * @return
 	 */
-	public static PendingIntent getControlIntent(Context mContext,
-			int mAppWidgetId, String mCommand, RemoteViews mRemoteViews) {
-		Intent commandIntent = new Intent(mContext, ProofRecorderWidget.class);
-		commandIntent.setAction(mCommand);
+    private static PendingIntent getControlIntent(Context mContext,
+                                                  int mAppWidgetId, String mCommand, RemoteViews mRemoteViews) {
+        Intent commandIntent = new Intent(mContext, ProofRecorderWidget.class);
+        commandIntent.setAction(mCommand);
 		commandIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 				mAppWidgetId);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext,
-				mAppWidgetId, commandIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		return pendingIntent;
-	}
+        return PendingIntent.getBroadcast(mContext,
+                mAppWidgetId, commandIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 
 	/**
 	 * 
@@ -296,16 +292,15 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	 * @param aCommand
 	 * @return
 	 */
-	public static PendingIntent getControlIntent(Context aContext,
-			String aCommand, int appWidgetId) {
-		Intent commandIntent = new Intent(aContext, ProofRecorderWidget.class);
-		commandIntent.setAction(aCommand);
+    private static PendingIntent getControlIntent(Context aContext,
+                                                  String aCommand, int appWidgetId) {
+        Intent commandIntent = new Intent(aContext, ProofRecorderWidget.class);
+        commandIntent.setAction(aCommand);
 		commandIntent
 				.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(aContext, 0,
-				commandIntent, 0);
-		return pendingIntent;
-	}
+        return PendingIntent.getBroadcast(aContext, 0,
+                commandIntent, 0);
+    }
 
 	/*
 	 * 
@@ -329,9 +324,10 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		final String action = intent.getAction();
 		super.onReceive(context, intent);
 		try {
-			if (mRecorderDetector != null) {
-				mForbbidenChFormat = mRecorderDetector.isRecOn();
-				Log.d(TAG, "mRecorderDetector was not null");
+            boolean mForbbidenChFormat;
+            if (mRecorderDetector != null) {
+                mForbbidenChFormat = mRecorderDetector.isRecOn();
+                Log.d(TAG, "mRecorderDetector was not null");
 			} else {
 				testIfmRecorderDetector(context);
 				mForbbidenChFormat = mRecorderDetector.isRecOn();
@@ -348,16 +344,16 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 							"appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID:"
 									+ appWidgetId + "--"
 									+ AppWidgetManager.INVALID_APPWIDGET_ID
-									+ "--" + action.toString());
-					onDeleted(context, new int[] { appWidgetId });
-				} else {
+                                    + "--" + action);
+                    onDeleted(context, new int[]{appWidgetId});
+                } else {
 					Log.d(TAG,
 							"appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID:"
 									+ appWidgetId + "--"
 									+ AppWidgetManager.INVALID_APPWIDGET_ID
-									+ "--" + action.toString());
-				}
-			} else {
+                                    + "--" + action);
+                }
+            } else {
 
 				if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
 
@@ -367,18 +363,20 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 					/*
 					 * check action @ToDo
 					 */
-					if (action.equals(ACTION_ENABLE_SERVICE)) {
-						if (isEnable) {
-							mEditor.putBoolean("INCALL", false);
+                    String UPDATE = "org.proof.recorder.wigdet.ProofRecorderWidget.UPDATE";
+                    String ACTION_DISABLE_SERVICE = "org.proof.recorder.wigdet.ProofRecorderWidget.ACTION_DISABLE_SERVICE";
+                    if (action.equals(ACTION_ENABLE_SERVICE)) {
+                        if (isEnable) {
+                            mEditor.putBoolean("INCALL", false);
 							mEditor.putBoolean("OUTCALL", false);
 							isEnable = false;
-							Log.d(TAG, "ACTION_ENABLE_SERVICE :" + isEnable);
-						} else {
-							mEditor.putBoolean("INCALL", true);
+                            Log.d(TAG, "ACTION_ENABLE_SERVICE :" + false);
+                        } else {
+                            mEditor.putBoolean("INCALL", true);
 							mEditor.putBoolean("OUTCALL", true);
 							isEnable = true;
-							Log.d(TAG, "ACTION_ENABLE_SERVICE :" + isEnable);
-						}
+                            Log.d(TAG, "ACTION_ENABLE_SERVICE :" + true);
+                        }
 
 						mCommit();
 
@@ -390,9 +388,9 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 						Log.d(TAG,
 								"action.equals(SET_FORMAT) mForbbidenChFormat ? :"
 										+ mForbbidenChFormat);
-						if (mForbbidenChFormat == false) {
-							Intent mActivity = new Intent(context,
-									WidgetPreferenceFormat.class);
+                        if (!mForbbidenChFormat) {
+                            Intent mActivity = new Intent(context,
+                                    WidgetPreferenceFormat.class);
 							mActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 							context.startActivity(mActivity);
 							Log.d(TAG, "Start format dialog mActivity");
@@ -488,9 +486,9 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 							"appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID:"
 									+ appWidgetId + "--"
 									+ AppWidgetManager.INVALID_APPWIDGET_ID
-									+ "--" + action.toString());
-				}
-			}
+                                    + "--" + action);
+                }
+            }
 		} catch (java.lang.NullPointerException e) {
 			Log.d(TAG, "appWidgetId is **null**, doing nothing...");
 		}
@@ -508,9 +506,9 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		super.onDeleted(context, appWidgetIds);
 		try {
 			for (int e : appWidgetIds) {
-				setAlarm(context, true, e,
-						AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-				Log.d(TAG, "onDeleted still remain in appWidgetIds: " + e);
+                setAlarm(context, true, e
+                );
+                Log.d(TAG, "onDeleted still remain in appWidgetIds: " + e);
 
 			}
 			mSharedPreferences = null;
@@ -561,28 +559,19 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 				if (preferences == null) {
 					preferences = context.getSharedPreferences("RECoN", 0);
 				}
-				isrecording = preferences.getBoolean("isrecording", false);
-				if (isrecording == true) {
-					recOn = true;
-				}
-				if (isrecording == false) {
-					recOn = false;
-				}
+                boolean isrecording = preferences.getBoolean("isrecording", false);
+                if (isrecording) {
+                    recOn = true;
+                }
+                if (!isrecording) {
+                    recOn = false;
+                }
 
 				sp = mSharedPreferences.getBoolean("SPEAK", true);
-				if (incall || outcall) {
-
-					isEnable = true;
-				} else {
-					isEnable = false;
-				}
-				if (sp) {
-					speakerOn = true;
-				} else {
-					speakerOn = false;
-				}
-				Log.d(TAG, "isrecording : " + isrecording + " recOn : " + recOn
-						+ " InitMshPref OK, isEnable = " + isEnable);
+                isEnable = incall || outcall;
+                speakerOn = sp;
+                Log.d(TAG, "isrecording : " + isrecording + " recOn : " + recOn
+                        + " InitMshPref OK, isEnable = " + isEnable);
 
 			}
 
@@ -633,19 +622,15 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	}
 
 	/**
-	 * 
-	 * @param aContext
-	 * @param mCancel
-	 * @param appWidgetId
-	 * @param mAppWidgetId
-	 * @param mCommand
-	 * @param mRemoteViews
-	 */
-	private static void setAlarm(Context aContext, boolean mCancel,
-			int appWidgetId, String mCommand) {
-		PendingIntent refreshTestIntent = getControlIntent(aContext, mCommand,
-				appWidgetId);
-		ProofRecorderWidget.resetAppWId();
+     *  @param aContext
+     * @param mCancel
+     * @param appWidgetId
+     */
+    private static void setAlarm(Context aContext, boolean mCancel,
+                                 int appWidgetId) {
+        PendingIntent refreshTestIntent = getControlIntent(aContext, AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+                appWidgetId);
+        ProofRecorderWidget.resetAppWId();
 		ProofRecorderWidget.setmAppWId(appWidgetId);
 		AlarmManager alarms = (AlarmManager) aContext
 				.getSystemService(Context.ALARM_SERVICE);

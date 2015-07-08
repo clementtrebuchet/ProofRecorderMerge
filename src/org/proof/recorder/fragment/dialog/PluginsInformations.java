@@ -1,15 +1,5 @@
 package org.proof.recorder.fragment.dialog;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.utils.AlertDialogHelper;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,9 +10,19 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.utils.AlertDialogHelper;
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 public class PluginsInformations extends ProofFragmentActivity {
 
-	protected static final String GPLAY = "market://search?q=pname:";
+	private static final String GPLAY = "market://search?q=pname:";
 	private static ListView plugs;
 
 	/**

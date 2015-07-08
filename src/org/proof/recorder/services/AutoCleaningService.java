@@ -1,15 +1,13 @@
 package org.proof.recorder.services;
 
+import android.content.Intent;
+import android.os.IBinder;
+
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.service.ProofFrontService;
 import org.proof.recorder.database.collections.RecordsList;
 
-import android.content.Intent;
-import android.os.IBinder;
-
 public class AutoCleaningService extends ProofFrontService {
-	
-	private String periodic = "NEVER";
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -21,7 +19,7 @@ public class AutoCleaningService extends ProofFrontService {
 	protected void _onStartCommand(Intent intent, int flags, int startId) {
 		
 		// get the config var.
-		periodic = Settings.getPersistantData("auto_clean");
+		String periodic = Settings.getPersistantData("auto_clean");
 		
 		// Instantiate Collection.
 		RecordsList collection = new RecordsList();

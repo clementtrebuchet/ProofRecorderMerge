@@ -1,10 +1,5 @@
 package org.proof.recorder.adapter.voice;
 
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.utils.ServiceAudioHelper;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,17 +11,21 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.utils.ServiceAudioHelper;
+
 public class VoiceDetailAdapter extends SimpleCursorAdapter {
 
 	private static final String TAG = "VoiceDetailAdpater";
 	
 	private static Context mcontext;
-	private ImageView B;
 	private String f;
 
 	public VoiceDetailAdapter(Context context, int layout, Cursor c,
-			String[] from, int[] to, int flag, int recId) {
-		super(context, layout, c, from, to, flag);
+							  String[] from, int[] to, int recId) {
+		super(context, R.layout.voice_detail, null, from, to, android.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		mcontext = context;
 	}
 
@@ -49,20 +48,20 @@ public class VoiceDetailAdapter extends SimpleCursorAdapter {
 				.getColumnIndex(ProofDataBase.COLUMN_VOICE_FILE));
 		
 		if(Settings.isDebug())
-			Log.v(TAG, f.toString());
+			Log.v(TAG, f);
 		
 		Uri wav = Uri.parse("content://" + f);
-		B = (ImageView) view.findViewById(R.id.mPlayVoiceImage);
-		B.setOnClickListener(ButtonOnClickListener);
+		ImageView b = (ImageView) view.findViewById(R.id.mPlayVoiceImage);
+		b.setOnClickListener(ButtonOnClickListener);
 		
 		if(Settings.isDebug())
 			Log.v(TAG, wav.toString());
 		
 	}
-	
-	
-	public  OnClickListener ButtonOnClickListener = new OnClickListener() {
-        @Override
+
+
+	private final OnClickListener ButtonOnClickListener = new OnClickListener() {
+		@Override
 		public void onClick(View v) {
         	Log.v(TAG, "button click");
         	Uri wav = Uri.parse("file://" + f);

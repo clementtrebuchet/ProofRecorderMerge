@@ -21,20 +21,14 @@ public class ViewPagerOnSwipeOff extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!this.disabled) {
-            return super.onTouchEvent(event);
-        }
-  
-        return false;
+        return !this.disabled && super.onTouchEvent(event);
+
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (!this.disabled) {
-            return super.onInterceptTouchEvent(event);
-        }
- 
-        return false;
+        return !this.disabled && super.onInterceptTouchEvent(event);
+
     }
  
     public void disablePaging(boolean enabled) {

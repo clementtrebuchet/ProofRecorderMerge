@@ -1,15 +1,5 @@
 package org.proof.recorder.fragment.dialog;
 
-import java.io.File;
-import java.util.Locale;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.database.models.Record;
-import org.proof.recorder.utils.OsInfo;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,12 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.database.models.Record;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.OsInfo;
+
+import java.io.File;
+import java.util.Locale;
+
 public class AboutApps extends ProofFragmentActivity {
 	
 	private ListView mListView;
-	private TextView mAboutApp;
-	
-	private String[] mLinks;
 
 	private String fullAppName;
 	
@@ -42,11 +39,11 @@ public class AboutApps extends ProofFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about_apps_dialog);
-		
-		mAboutApp = (TextView) findViewById(R.id.txt_app);
-		mAboutApp.setText(Html.fromHtml((String) getText(R.string.about_app)));		
-		
-		mLinks = new String[3];		
+
+		TextView mAboutApp = (TextView) findViewById(R.id.txt_app);
+		mAboutApp.setText(Html.fromHtml((String) getText(R.string.about_app)));
+
+		String[] mLinks = new String[3];
 					
 		mLinks[0] = (String) getText(R.string.contact_uri);
 		mLinks[1] = (String) getText(R.string.site_uri);
@@ -64,8 +61,8 @@ public class AboutApps extends ProofFragmentActivity {
 		
 		mListView.setAdapter(
 				new ArrayAdapter<String>(
-						this, 
-						android.R.layout.simple_list_item_1, 
+						this,
+						android.R.layout.simple_list_item_1,
 						mLinks)
 						);
 		
@@ -144,8 +141,8 @@ public class AboutApps extends ProofFragmentActivity {
 								size = 5 * 2 * 24 * i;
 							else 
 								size = 5 * 2 * 12 * i;
-							
-							Record rec = new Record("" + size, fileName, "+33951593045", directionCall);						
+
+							Record rec = new Record("" + size, fileName, directionCall);
 							rec.save();
 							
 							try {

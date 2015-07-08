@@ -1,22 +1,20 @@
 package org.proof.recorder.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import org.proof.recorder.Settings;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
-import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OsHandler {
-	
-	private static List<Record> calls, voices;
-	
+
 	private static List<String> filesListVoices, filesListCalls;
 	
 	/**
@@ -47,7 +45,8 @@ public class OsHandler {
 	 * @param mFileName
 	 * @throws IOException
 	 */
-	public static void deleteFileFromDisk(String mFileName) throws IOException {
+	@SuppressWarnings("ResultOfMethodCallIgnored")
+	public static void deleteFileFromDisk(String mFileName) {
 		File file = new File(mFileName);
 		file.delete();
 	}
@@ -77,11 +76,10 @@ public class OsHandler {
 	        		{
 	        			filesListCalls.add(f.getPath());
 	        			print("Call file: "	+ f.getPath());
-	        		}
-	        		else
-	        			continue;
-	        	}
-	        }
+					} else {
+					}
+				}
+			}
 		}		
 	}
 	
@@ -92,18 +90,13 @@ public class OsHandler {
 	private static void evaluateContext(String absolutePath) {
 		
 		int count = PersonnalProofContentProvider.isRecordInDb(
-				absolutePath, 
-				Settings.mType.CALL);
+				absolutePath
+		);
 		
 		if(count <= 0)
 		{
-			try {
-				deleteFileFromDisk(absolutePath);
-				print("deleteFileFromDisk(): " + absolutePath);
-			} catch (IOException e) {
-				print_exception("checkDirectoriesStructureIntegrity(): "
-									+ e.getMessage());
-			}
+			deleteFileFromDisk(absolutePath);
+			print("deleteFileFromDisk(): " + absolutePath);
 		}
 	}
 
@@ -139,11 +132,11 @@ public class OsHandler {
 	 * @param mContext
 	 */
 	public static void checkDirectoriesStructureIntegrity(Context mContext) {
-		
-		File tmp = null;
-		String mFile = "";
-		
-		calls = PersonnalProofContentProvider
+
+		File tmp;
+		String mFile;
+
+		List<Record> calls = PersonnalProofContentProvider
 				.getRecordsFilesList(Settings.mType.CALL);
 		
 		for (Record call : calls) {
@@ -156,7 +149,7 @@ public class OsHandler {
 			}
 		}
 
-		voices = PersonnalProofContentProvider
+		List<Record> voices = PersonnalProofContentProvider
 				.getRecordsFilesList(Settings.mType.VOICE_TITLED);
 		
 		for (Record voice : voices) {

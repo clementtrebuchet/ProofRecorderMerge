@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection, AndroidDomInspection -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.proof.recorder"
     
@@ -6,7 +6,7 @@
     android:versionName="1.2.5" >
     <!-- android:installLocation="preferExternal" -->
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" >
@@ -68,11 +68,14 @@
     <!-- <permission android:name="org.proof.recorder.XFBSIMPLE" android:protectionLevel="signature"></permission> -->
     <!-- <uses-permission android:name="org.proof.recorder.XFBSIMPLE"></uses-permission> -->
 
-    <permission android:name="org.proof.recorder.DBPERM" android:label="Provider Permissions" 
-        		android:protectionLevel="signature"></permission>
-    <uses-permission android:name="org.proof.recorder.DBPERM"></uses-permission>
-    
-    <uses-permission android:name="org.proofs.recorder.codec.ogg.OGG_SECURE_PG"></uses-permission>
+    <permission
+        android:name="org.proof.recorder.DBPERM"
+        android:label="Provider Permissions"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="org.proof.recorder.DBPERM" />
+
+    <uses-permission android:name="org.proofs.recorder.codec.ogg.OGG_SECURE_PG" />
 
 
     <application
@@ -131,17 +134,17 @@
                 <category android:name="android.intent.category.VoiceEditDialog" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".fragment.dialog.ShareIntentChooser"
-            android:configChanges="orientation|keyboardHidden"
-            android:label="@string/share_intent_chooser_title"
-            android:theme="@style/Theme.Sherlock" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!--<activity-->
+        <!--android:name=".fragment.dialog.ShareIntentChooser"-->
+        <!--android:configChanges="orientation|keyboardHidden"-->
+        <!--android:label="@string/share_intent_chooser_title"-->
+        <!--android:theme="@style/Theme.Sherlock" >-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.ShareIntentChooser" />
-            </intent-filter>
-        </activity>
+        <!--<category android:name="android.intent.category.ShareIntentChooser" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
             android:name=".fragment.dialog.Search"
             android:configChanges="orientation|keyboardHidden"
@@ -217,16 +220,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".fragment.dialog.ApplicationInformations"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <!-- <activity
+             android:name=".fragment.dialog.ApplicationInformations"
+             android:label="@string/app_name"
+             android:theme="@style/Theme.Sherlock" >
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.ApplicationInformations" />
-            </intent-filter>
-        </activity>
+                 <category android:name="android.intent.category.ApplicationInformations" />
+             </intent-filter>
+         </activity>-->
         <activity
             android:name=".preferences.SettingsTabs"
             android:label="@string/app_name"
@@ -304,16 +307,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".fragment.voice.FragmentVoiceTabs"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock.Light" >
-            <intent-filter>
-                <action android:name="android.intent.action.FragmentVoiceTabs" />
+        <!--  <activity
+              android:name=".fragment.voice.FragmentVoiceTabs"
+              android:label="@string/app_name"
+              android:theme="@style/Theme.Sherlock.Light" >
+              <intent-filter>
+                  <action android:name="android.intent.action.FragmentVoiceTabs" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>
+          </activity>-->
         <activity
             android:name=".fragment.voice.FragmentListVoiceDetail"
             android:label="@string/app_name"
@@ -366,15 +369,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".fragment.notes.FragmentNotes"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.FragmentNotesEditor" />
+        <!--  <activity
+              android:name=".fragment.notes.FragmentNotes"
+              android:label="@string/app_name" >
+              <intent-filter>
+                  <action android:name="android.intent.action.FragmentNotesEditor" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                  <category android:name="android.intent.category.LAUNCHER" />
+              </intent-filter>
+          </activity>-->
         <activity
             android:name=".fragment.notes.FragmentNoteTabs"
             android:label="@string/app_name"
@@ -385,15 +388,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".fragment.notes.FragmentNotesEditor"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.NotesEditorFragment" />
+        <!-- <activity
+             android:name=".fragment.notes.FragmentNotesEditor"
+             android:label="@string/app_name" >
+             <intent-filter>
+                 <action android:name="android.intent.action.NotesEditorFragment" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>-->
         <activity
             android:name=".fragment.voice.notes.FragmentListVoiceNotes"
             android:label="@string/app_name" >
@@ -403,15 +406,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".fragment.voice.notes.FragmentVoiceNotes"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.FragmentVoiceNotesEditor" />
+        <!--        <activity
+                    android:name=".fragment.voice.notes.FragmentVoiceNotes"
+                    android:label="@string/app_name" >
+                    <intent-filter>
+                        <action android:name="android.intent.action.FragmentVoiceNotesEditor" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                        <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+                </activity>-->
         <activity
             android:name=".fragment.voice.notes.FragmentVoiceNoteTabs"
             android:label="@string/app_name"
@@ -422,15 +425,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".fragment.voice.notes.FragmentVoiceNotesEditor"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.VoiceNotesEditorFragment" />
+        <!--       <activity
+                   android:name=".fragment.voice.notes.FragmentVoiceNotesEditor"
+                   android:label="@string/app_name" >
+                   <intent-filter>
+                       <action android:name="android.intent.action.VoiceNotesEditorFragment" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                       <category android:name="android.intent.category.LAUNCHER" />
+                   </intent-filter>
+               </activity>-->
         <activity
             android:name=".fragment.contacts.FragmentListPhoneContactsTabs"
             android:label="@string/app_name"
@@ -463,12 +466,12 @@
             </intent-filter>
         </activity>
         <!-- Services -->
-        <service
-            android:name=".service.ServiceAudioRecord"
-            android:enabled="true" />
-        <service
-            android:name=".service.ServiceSchd"
-            android:enabled="true" />
+        <!-- <service
+             android:name=".service.ServiceAudioRecord"
+             android:enabled="true" />
+         <service
+             android:name=".service.ServiceSchd"
+             android:enabled="true" />-->
 
         <!--
         <service
@@ -483,9 +486,9 @@
         <service
             android:name=".service.VerifyContactsApi"
             android:enabled="true" />
-        <service
-            android:name=".service.jni.Converter"
-            android:enabled="true" />
+        <!--    <service
+                android:name=".service.jni.Converter"
+                android:enabled="true" />-->
         <service
             android:name=".services.ServiceIntentRecorder3gp"
             android:enabled="true" />

@@ -1,9 +1,9 @@
 package org.proof.recorder.database.models;
 
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-
 import android.content.ContentResolver;
 import android.net.Uri;
+
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
 public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterface {
 
@@ -15,8 +15,8 @@ public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterfa
 	// Attributes
 	
 	private static ContentResolver resolver;
-	
-	private static Uri uri = Uri.withAppendedPath(
+
+	private static final Uri uri = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, "phone_numbers");
 	
 	// Constructors
@@ -60,7 +60,7 @@ public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterfa
 	/**
 	 * @return the resolver
 	 */
-	public static ContentResolver getResolver() {
+	private static ContentResolver getResolver() {
 		return resolver;
 	}
 

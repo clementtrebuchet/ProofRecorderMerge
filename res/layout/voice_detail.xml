@@ -7,7 +7,7 @@
 <RelativeLayout
 	android:id="@+id/mLayout"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="wrap_content">
 <RadioGroup
 	android:id="@+id/mWrapper"
 	android:layout_width="fill_parent"
@@ -41,7 +41,7 @@
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:src="@drawable/quick_play"
-	android:layout_gravity="right" />
+	android:layout_gravity="end" />
 <RadioGroup
 	android:id="@+id/mTextViewWrapper"
 	android:layout_width="fill_parent"
@@ -60,7 +60,7 @@
 	android:text="TextView"
 	android:textStyle="bold"
 	android:textColor="#ff20d3cf"
-	android:layout_gravity="right" />
+	android:layout_gravity="end" />
 </RadioGroup>
 <TextView
 	android:id="@+id/mId"

@@ -1,12 +1,5 @@
 package org.proof.recorder.fragment.voice;
 
-import org.proof.recorder.R;
-import org.proof.recorder.adapter.voice.VoiceDetailAdapter;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.QuickActionDlg;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +8,13 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.widget.CursorAdapter;
+
+import org.proof.recorder.R;
+import org.proof.recorder.adapter.voice.VoiceDetailAdapter;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.QuickActionDlg;
 
 public class FragmentListVoiceDetail extends ProofFragmentActivity {
 
@@ -52,8 +51,8 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 
 		boolean mDualPane;
 		int mCursorPos = -1;
-		
-		String[] from = new String[] { 
+
+		final String[] from = new String[]{
 				ProofDataBase.COLUMNVOICE_ID,
 				ProofDataBase.COLUMN_VOICE_FILE, 
 				ProofDataBase.COLUMN_VOICE_TAILLE,
@@ -75,7 +74,7 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 
 			mAdapter = new VoiceDetailAdapter(getActivity(),
 					R.layout.voice_detail, null, from, to,
-					CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER, Integer.parseInt(FragmentListVoice.ID));
+					Integer.parseInt(FragmentListVoice.ID));
 
 			setListAdapter(mAdapter);
 			setListShown(true);
@@ -94,9 +93,8 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 			
 			Uri uri = Uri.withAppendedPath(
 					PersonnalProofContentProvider.CONTENT_URI, "voice_id/" + FragmentListVoice.ID);
-			CursorLoader cursorLoader = new CursorLoader(getActivity(), uri,
+			return new CursorLoader(getActivity(), uri,
 					from, null, null, null);
-			return cursorLoader;
 		}
 
 		@Override

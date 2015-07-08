@@ -1,5 +1,11 @@
 package org.proof.recorder.broadcastr.phone;
 
+import android.content.Context;
+import android.content.Intent;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.widget.Toast;
+
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.utils.SetStaticContext;
 import org.proof.recorder.database.models.Contact;
@@ -7,13 +13,7 @@ import org.proof.recorder.receivers.PhoneRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
-import android.content.Intent;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
-import android.widget.Toast;
-
-public class ObservateurTelephone extends PhoneStateListener {
+class ObservateurTelephone extends PhoneStateListener {
 
 	public static String DIRECTION_CALL;
 
@@ -28,7 +28,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 
 	private static Context _context = null;
 
-	protected TelephonyManager _monManagerTel;
+	private TelephonyManager _monManagerTel;
 
 	private DataPersistanceManager dpm = null;
 
@@ -42,8 +42,6 @@ public class ObservateurTelephone extends PhoneStateListener {
 	}
 
 	/**
-	 * @param IS_EXCLUDED
-	 *            the IS_EXCLUDED to set
 	 */
 	private void setExcluded(boolean isExcluded) {
 		ObservateurTelephone.IS_EXCLUDED = isExcluded;
@@ -69,7 +67,6 @@ public class ObservateurTelephone extends PhoneStateListener {
 	}
 
 	/**
-	 * @param AUDIO_FORMAT the AUDIO_FORMAT to set
 	 */
 	public static void setAudioFormat(String _audioFormat) {
 		ObservateurTelephone.AUDIO_FORMAT = _audioFormat;
@@ -112,7 +109,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 			Contact.setResolver(
 					getContext().getApplicationContext().getContentResolver());
 
-			boolean excluded = false;
+			boolean excluded;
 			Contact contact = new Contact();
 
 			try {
@@ -222,7 +219,7 @@ public class ObservateurTelephone extends PhoneStateListener {
 	}
 
 
-	public void stopRecording() {
+	private void stopRecording() {
 		
 		boolean hasStarted;
 		

@@ -1,14 +1,14 @@
 package org.proof.recorder.database.models;
 
-import java.io.Serializable;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.Log.Console;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.net.Uri;
+import java.io.Serializable;
 
 public class Note implements DataLayerInterface, Serializable {
 
@@ -28,22 +28,22 @@ public class Note implements DataLayerInterface, Serializable {
 		ProofDataBase.COLUMNVOICE_DATE_CREATION,
 		ProofDataBase.COLUMN_ISYNC_NOV
 	};
-	
-	public static ContentResolver getResolver() {
+
+	private static ContentResolver getResolver() {
 		return Note._resolver;
 	}
 	
 	public static void setResolver(ContentResolver _resolver) {
 		Note._resolver = _resolver;
-		setHasResolver(true);
+		setHasResolver();
 	}
-	
-	public static boolean hasResolver() {
+
+	private static boolean hasResolver() {
 		return Note._hasDataLayer;
 	}
 
-	private static void setHasResolver(boolean _hasDataLayer) {
-		Note._hasDataLayer = _hasDataLayer;
+	private static void setHasResolver() {
+		Note._hasDataLayer = true;
 	}
 	
 	/* (non-Javadoc)
@@ -132,9 +132,8 @@ public class Note implements DataLayerInterface, Serializable {
 		initialize();
 	}
 	/**
-	 * @param _id
 	 */
-	protected Note(String _recordId) {
+	Note(String _recordId) {
 		super();
 		
 		this._id = null;

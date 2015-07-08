@@ -1,18 +1,18 @@
 package org.proof.recorder.utils.Log;
 
-import org.proof.recorder.Settings;
-
 import android.util.Log;
+
+import org.proof.recorder.Settings;
 
 public class Console {
 	
 	private static final boolean isDebug = Settings.isDebug();
-	public static String tagName = null;
+	private static String tagName = null;
 
 	/**
 	 * @return the tagName
 	 */
-	public static String getTagName() {
+	private static String getTagName() {
 		return tagName;
 	}
 

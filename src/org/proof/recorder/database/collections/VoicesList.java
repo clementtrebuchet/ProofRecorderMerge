@@ -1,13 +1,13 @@
 package org.proof.recorder.database.collections;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.database.Cursor;
 
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.utils.Log.Console;
 
-import android.database.Cursor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VoicesList {
 	
@@ -25,16 +25,16 @@ public class VoicesList {
 		super();
 		fillCollection(cursor);
 	}
-	
-	private Voice createVoice(String _id, String _humanTime, String _fileSize,
-			String _timestamp, String _filePath) {
+
+	private void createVoice(String _id, String _humanTime, String _fileSize,
+							 String _timestamp, String _filePath) {
 		Voice voice = new Voice(_id, _humanTime, _fileSize, _timestamp, _filePath);
 		
 		if(this.getCollection() == null)
 			this.setCollection(new ArrayList<Object>());
 
 		this.getCollection().add(voice);
-		return voice;
+
 	}
 
 	/**
@@ -55,14 +55,14 @@ public class VoicesList {
 	/**
 	 * @param _collection the _collection to set
 	 */
-	public void setCollection(List<Object> _collection) {
+	private void setCollection(List<Object> _collection) {
 		this._collection = _collection;
 	}
 	
 	/**
 	 * 
 	 */
-	public void fillCollection(Cursor dataCursor) {
+	private void fillCollection(Cursor dataCursor) {
 		
 		try {
 

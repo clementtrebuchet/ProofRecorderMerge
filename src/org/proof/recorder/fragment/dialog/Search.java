@@ -1,11 +1,5 @@
 package org.proof.recorder.fragment.dialog;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.fragment.search.SearchResult;
-import org.proof.recorder.utils.DateUtils;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -27,6 +21,12 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.fragment.search.SearchResult;
+import org.proof.recorder.utils.DateUtils;
+import org.proof.recorder.utils.Log.Console;
+
 public class Search extends ProofFragmentActivity {
 
 	private final static String BR = "\n";
@@ -37,7 +37,6 @@ public class Search extends ProofFragmentActivity {
 	private CheckBox mSearchByDate;
 	private TextView mSelectedDate;
 	private ProgressBar mPgBar;
-	private Button mBtnSearch;
 
 	private RadioButton mRBtnVoices;
 	private RadioButton mRBtnCalls;
@@ -72,7 +71,7 @@ public class Search extends ProofFragmentActivity {
 		mSearchByDate = (CheckBox) findViewById(R.id.cbByDateSearch);
 		mSelectedDate = (TextView) findViewById(R.id.selected_date);
 		mPgBar = (ProgressBar) findViewById(R.id.pgBarSearch);
-		mBtnSearch = (Button) findViewById(R.id.btnSearch);
+		Button mBtnSearch = (Button) findViewById(R.id.btnSearch);
 
 		mRBtnCalls.setChecked(true);
 		mSelectedDate.setVisibility(View.GONE);	
@@ -97,8 +96,8 @@ public class Search extends ProofFragmentActivity {
 				
 				int mInputType = mAocSearchText.getInputType();
 				mAocSearchText.setText("");
-				
-				if (mPhone != "" && mPhone != null) {
+
+				if (!mPhone.equals("") && mPhone != null) {
 					mAocSearchText.setText(mPhone);
 				}				
 				
@@ -130,8 +129,8 @@ public class Search extends ProofFragmentActivity {
 			public boolean onTouch(View v, MotionEvent event) {
 				
 				mAocSearchText.setText("");
-				
-				if (mPhone != "" && mPhone != null) {
+
+				if (!mPhone.equals("") && mPhone != null) {
 					mAocSearchText.setText(mPhone);
 				}
 				if(mRBtnCalls.isChecked())
@@ -167,7 +166,7 @@ public class Search extends ProofFragmentActivity {
 			public void onClick(View arg0) {
 				onSearch();
 			}
-			
+
 		});
 	}
 
@@ -229,10 +228,9 @@ public class Search extends ProofFragmentActivity {
             if (resultCode == RESULT_OK) {
             	
             	boolean mPreciseDate, mStartingDate, mEndingDate, mAtLeastOne;
-            	String mData = "", tmp = "";            	
-            	
-                try
-                {
+				String mData = "", tmp;
+
+				try {
                 	tmp = data.getStringExtra("preciseDate");                	
                 	if(tmp != null)
                 	{
@@ -304,11 +302,11 @@ public class Search extends ProofFragmentActivity {
                 	mSearchByDate.setChecked(true);
                 	mSelectedDate.setVisibility(View.INVISIBLE);                	
                 	mDatePicked = true;
-                	
-                	String mDate  = "NOT INITIALIZED!";
-                	
-                	try {
-                		String[] parts = mData.split(BR);
+
+					String mDate;
+
+					try {
+						String[] parts = mData.split(BR);
                 		mDate  = "Période sélectionnée: " + BR;
                 		mDate 		+= "Date de début: " + DateUtils.reOrderDate(mContext, parts[0]) + BR;
                 		mDate 		+= "Date de fin: " + DateUtils.reOrderDate(mContext, parts[1]);

@@ -1,7 +1,5 @@
 package org.proofs.recorder.codec.mp3.utils;
 
-import org.proof.recorder.services.MP3Middleware;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +8,12 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import org.proof.recorder.services.MP3Middleware;
+
 public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 
 	private IServiceIntentRecorderMP3 service;
-	private IBinder mBoundService;
-	private String TAG = IServiceIntentRecorderMP3Cx.class.getName();
+	private final String TAG = IServiceIntentRecorderMP3Cx.class.getName();
 	private final MP3Middleware parent;
 	/**
 	 * 
@@ -29,7 +28,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 	 */
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder boundService) {
-		this.mBoundService = boundService;
+		IBinder mBoundService = boundService;
 		this.service = IServiceIntentRecorderMP3.Stub.asInterface(mBoundService);
 		Log.d(TAG, "onServiceConnected() connected service is " + this.service);
 		this.parent.callWhenReady();
@@ -161,7 +160,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 					"The Service is already connected (safelyEncodeRawFile) -> querying the message.");
 			try {
 				service.encodeFile();
-				parent.EncodeRawFileAsynchronously(0);
+				parent.EncodeRawFileAsynchronously();
 			} catch (RemoteException e) {
 				Log.e(TAG, "An error occured during the call (safelyEncodeRawFile).");
 			}

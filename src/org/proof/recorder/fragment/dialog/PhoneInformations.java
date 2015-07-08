@@ -1,12 +1,5 @@
 package org.proof.recorder.fragment.dialog;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.utils.ConnectivityInfo;
-import org.proof.recorder.utils.DeviceInfo;
-import org.proof.recorder.utils.OsInfo;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -17,16 +10,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.utils.ConnectivityInfo;
+import org.proof.recorder.utils.DeviceInfo;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.OsInfo;
+
 public class PhoneInformations extends ProofFragmentActivity {
 
 	private static final String TAG = "CapabilitiesDashBoard";
 	private static final String BREAK = "\n";
-	
-	private static DeviceInfo mDeviceInfo;
-	private static OsInfo mOsInfo;
+
 	private static TextView dlgmenu_battery_state;
-	
-	private static BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver(){
+
+	private static final BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
 		int scale = -1;
         int level = -1;
         int voltage = -1;
@@ -55,12 +53,12 @@ public class PhoneInformations extends ProofFragmentActivity {
     	
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.dashboard_dialog);
-        registerReceiver(mBatInfoReceiver, 
-			    new IntentFilter(Intent.ACTION_BATTERY_CHANGED));  
-        
-        mOsInfo = new OsInfo();
+		registerReceiver(mBatInfoReceiver,
+				new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+		OsInfo mOsInfo = new OsInfo();
 		ConnectivityInfo mConnexionState = new ConnectivityInfo(this);
-		mDeviceInfo = new DeviceInfo(mConnexionState, mOsInfo, this);
+		DeviceInfo mDeviceInfo = new DeviceInfo(mConnexionState, mOsInfo, this);
 		
         ContentResolver cr = getContentResolver();
         

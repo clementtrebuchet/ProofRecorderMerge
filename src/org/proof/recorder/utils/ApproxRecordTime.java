@@ -1,18 +1,19 @@
 package org.proof.recorder.utils;
 
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.IOException;
-
-import org.proof.recorder.utils.Log.Console;
-// import java.util.ArrayList;
-
 import android.annotation.TargetApi;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.Log;
+
+import org.proof.recorder.utils.Log.Console;
+
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+// import java.util.ArrayList;
 
 
 /**
@@ -23,20 +24,18 @@ import android.util.Log;
 public class ApproxRecordTime {
 	
 	// public static ArrayList<MSong> MSongs;
-	
-	private File mFile;
-	private MediaPlayer mPlayer;	
+
+	private final File mFile;
 	// private ArrayList<String> MSongsParam;
 	// private MSong mSong;
-	private String TAG = ApproxRecordTime.class.getName();
+	private final String TAG = ApproxRecordTime.class.getName();
 	private String mFormat;
-	private int mEnd = 3;
 
 	public String getmFormat() {
 		return mFormat;
 	}
 
-	public void setmFormat(String mFormat) {
+	private void setmFormat(String mFormat) {
 		this.mFormat = mFormat;
 	}
 	/**
@@ -49,19 +48,16 @@ public class ApproxRecordTime {
 		
 	}
 	
-	public ApproxRecordTime(File song, Boolean txt) {
-		this.mFile = song;
-		_getMFormat();
-		
-	}
+
 	
 	private void _getMFormat() {
 		
 		int length = this.mFile.getAbsolutePath().length();
+		int mEnd = 3;
 		if(length <= mEnd){
 			setmFormat(this.mFile.getAbsolutePath());
 		}
-		int startIndex = length-mEnd;
+		int startIndex = length - mEnd;
 		setmFormat(this.mFile.getAbsolutePath().substring(startIndex));
 		Log.v(TAG, "this.mFormat:"+this.mFormat);
 		
@@ -254,8 +250,7 @@ public class ApproxRecordTime {
 			
 			Log.e(TAG, "mFormat equal ogg, humm file goto MediaPlayer :(");
 			try {
-				String out = oldGetDuration();
-				return out;
+				return oldGetDuration();
 			} catch (IllegalArgumentException e) {
 				Console.print_exception(e);
 			} catch (IllegalStateException e) {
@@ -289,7 +284,7 @@ public class ApproxRecordTime {
 		Log.v(TAG, "" + seconds);
 		String minutes = String.valueOf(dur / 60000) ;
 		Log.v(TAG, "" + minutes);
-		String out = "";
+		String out;
 		if (seconds.length() == 1 && minutes.length() == 1) {
 			out = "00:0" + minutes + ":0" + seconds;
 			Log.d(TAG, "seconds.length() == 1 0" + minutes + ":0" + seconds);
@@ -325,53 +320,52 @@ public class ApproxRecordTime {
 	private String convertToHours(int minutes, int seconds) {
 		float hoursminutes = (float) minutes / 60;// 258(m)/60=4.3
 		int hour = minutes / 60;// 258(m)/60 = 4
-		float realMinutes = (float) (hoursminutes - Float.parseFloat(String
+		float realMinutes = (hoursminutes - Float.parseFloat(String
 				.valueOf(hour))) * 60;// (4.3 - 4.0) * 60
 		int minute = Math.round(realMinutes);
-		int second = seconds;
 		Log.d(TAG,
 				"hoursminutes:" + hoursminutes
 						+ " Float.parseFloat(String.valueOf(hour)): "
 						+ Float.parseFloat(String.valueOf(hour)));
-		if (hour < 10 && minute < 10 && second < 10) {
-			return "0" + hour + ":0" + minute + ":0" + second + "";
+		if (hour < 10 && minute < 10 && seconds < 10) {
+			return "0" + hour + ":0" + minute + ":0" + seconds + "";
 		}
 
-		if (hour < 10 && second < 10 && minute > 10) {
+		if (hour < 10 && seconds < 10 && minute > 10) {
 
-			return "0" + hour + ":" + minute + ":0" + second + "";
+			return "0" + hour + ":" + minute + ":0" + seconds + "";
 		}
 
-		if (hour < 10 && second > 10 && minute < 10) {
+		if (hour < 10 && seconds > 10 && minute < 10) {
 
-			return "0" + hour + ":0" + minute + ":" + second + "";
+			return "0" + hour + ":0" + minute + ":" + seconds + "";
 		}
 
-		if (hour < 10 && second > 10 && minute > 10) {
+		if (hour < 10 && seconds > 10 && minute > 10) {
 
-			return "0" + hour + ":" + minute + ":" + second + "";
+			return "0" + hour + ":" + minute + ":" + seconds + "";
 		}
 		//
-		if (hour > 10 && minute < 10 && second < 10) {
-			return "" + hour + ":0" + minute + ":0" + second + "";
+		if (hour > 10 && minute < 10 && seconds < 10) {
+			return "" + hour + ":0" + minute + ":0" + seconds + "";
 		}
 
-		if (hour > 10 && second < 10 && minute > 10) {
+		if (hour > 10 && seconds < 10 && minute > 10) {
 
-			return "" + hour + ":" + minute + ":0" + second + "";
+			return "" + hour + ":" + minute + ":0" + seconds + "";
 		}
 
-		if (hour > 10 && second > 10 && minute < 10) {
+		if (hour > 10 && seconds > 10 && minute < 10) {
 
-			return "" + hour + ":0" + minute + ":" + second + "";
+			return "" + hour + ":0" + minute + ":" + seconds + "";
 		}
 
-		if (hour > 10 && second > 10 && minute > 10) {
+		if (hour > 10 && seconds > 10 && minute > 10) {
 
-			return "" + hour + ":" + minute + ":" + second + "";
+			return "" + hour + ":" + minute + ":" + seconds + "";
 		}
 
-		return " " + hour + ":" + minute + ":" + second + "";
+		return " " + hour + ":" + minute + ":" + seconds + "";
 
 	}
 	/**
@@ -383,7 +377,7 @@ public class ApproxRecordTime {
 	 */
 	private String oldGetDuration() throws IllegalArgumentException,
 			IllegalStateException, IOException {
-		mPlayer = new MediaPlayer();
+		MediaPlayer mPlayer = new MediaPlayer();
 		FileInputStream fs;
 		FileDescriptor fd;
 		fs = new FileInputStream(this.mFile);
@@ -391,7 +385,7 @@ public class ApproxRecordTime {
 		mPlayer.setDataSource(fd);
 		mPlayer.prepare(); // might be optional
 		int length = mPlayer.getDuration();
-		long dur = Long.valueOf(length);
+		long dur = (long) length;
 		/*
 		 * @avoid
 		 * http://stackoverflow.com/questions/9609479/android-mediaplayer-

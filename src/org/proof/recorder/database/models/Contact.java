@@ -1,16 +1,16 @@
 package org.proof.recorder.database.models;
 
-import java.io.Serializable;
-
-import org.proof.recorder.Settings;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+
+import org.proof.recorder.Settings;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+
+import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Contact implements Serializable, DataLayerInterface, Cloneable {
@@ -71,11 +71,11 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 
 	private static final String DEFAULT_VALUE = "null";
 
-	private static Uri mUri = Uri.withAppendedPath(
+	private static final Uri mUri = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI,
 			"excluded_contacts");
 
-	private static Uri mUriByPhone = Uri.withAppendedPath(
+	private static final Uri mUriByPhone = Uri.withAppendedPath(
 			PersonnalProofContentProvider.CONTENT_URI, 
 			"excluded_contact_phone/");
 
@@ -106,7 +106,7 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 		setChecked(!this.isChecked);		
 	}
 
-	public void toConsole() {
+	private void toConsole() {
 		print(toString());
 	}
 
@@ -168,12 +168,11 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 
 	@Override
 	public String toString(){
-		String contactStr = "Id: " + this.getId() + 
-				" ContractId: " + this.getContractId() + 
-				" ContactName: " + this.getContactName() + 
-				" PhoneNumber: " + this.getContactName() + 
+		return "Id: " + this.getId() +
+				" ContractId: " + this.getContractId() +
+				" ContactName: " + this.getContactName() +
+				" PhoneNumber: " + this.getContactName() +
 				" PhoneNumber (Object): " + this.getsPhoneNumber();
-		return contactStr;
 	}
 
 	/**
@@ -362,21 +361,20 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	/**
 	 * @return the hasDataHandler
 	 */
-	public static boolean hasDataHandler() {
+	private static boolean hasDataHandler() {
 		return hasDataHandler;
 	}
 
 	/**
-	 * @param hasDataHandler the hasDataHandler to set
 	 */
-	public static void setHasDataHandler(boolean hasDataHandler) {
-		Contact.hasDataHandler = hasDataHandler;
+	private static void setHasDataHandler() {
+		Contact.hasDataHandler = true;
 	}
 
 	/**
 	 * @return
 	 */
-	public static ContentResolver getResolver() {
+	private static ContentResolver getResolver() {
 		return resolver;
 	}
 
@@ -385,7 +383,7 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	 */
 	public static void setResolver(ContentResolver resolver) {
 		Contact.resolver = resolver;
-		setHasDataHandler(true);
+		setHasDataHandler();
 	}
 
 	@Override

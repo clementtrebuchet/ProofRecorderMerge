@@ -3,9 +3,6 @@
  */
 package org.proof.recorder;
 
-import org.proof.recorder.service.DataPersistanceManager;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +13,11 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.AudioFormat;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+
+import org.proof.recorder.service.DataPersistanceManager;
+import org.proof.recorder.utils.Log.Console;
+
+import java.util.Arrays;
 
 /**
  * @author namgyal.brisson
@@ -39,9 +41,9 @@ public final class Settings {
 	public final static String APP_SECRET = "9t0wm8zrp7kwlu4";
 	public final static String BREAK = "\n";
 
-	public static String mBasePath = Environment.getExternalStorageDirectory()
+	private static final String mBasePath = Environment.getExternalStorageDirectory()
 			.getAbsolutePath();
-	public static String[] DEFAULT_FILE_PATHS = new String[] {
+	public static final String[] DEFAULT_FILE_PATHS = new String[]{
 		mBasePath + "/proofRecorder/", 
 		mBasePath + "/proofRecorder/calls/",
 		mBasePath + "/proofRecorder/voices/",
@@ -52,15 +54,15 @@ public final class Settings {
 
 	public static String mAppPath = mBasePath + "/proofRecorder/";
 
-	public static enum mFormat {
-		THREE_GP, WAV, MP3, OGG;
+	public enum mFormat {
+		THREE_GP, WAV, MP3, OGG
 	}
 
-	public static enum mType {
+	public enum mType {
 		CALL, VOICE, VOICE_TITLED, VOICE_UNTITLED
 	}
 
-	public static enum mSampleRate {
+	public enum mSampleRate {
 
 		SAMPLERATE;
 
@@ -142,7 +144,7 @@ public final class Settings {
 	 * 
 	 */
 
-	private static enum FORMULA {
+	private enum FORMULA {
 		BASIC, MEDIUM, FULL
 	}
 
@@ -157,9 +159,8 @@ public final class Settings {
 	public static int defaultQuality = 7;
 
 	public static String methodCALL = "call";
-	public static String methodVOICE = "voice";	
+	public static String methodVOICE = "voice";
 
-	private static boolean mNOTIFICATIONS = false;
 	private static boolean mUAC_ASSISTED = false;
 	private static boolean NOT_LICENSED = false;
 	
@@ -223,9 +224,9 @@ public final class Settings {
 		editor.commit();
 	}
 
-	private static void setSharedPrefs(String key, int value) {
+	private static void setSharedPrefs(int value) {
 		Editor editor = mSharedPreferences.edit();
-		editor.putInt(key, value);
+		editor.putInt("recordsCount", value);
 		editor.commit();
 	}
 
@@ -247,16 +248,14 @@ public final class Settings {
 	}
 
 	/**
-	 * @param mContext
 	 * @return Integer 0 means no post encoding & 1 means post encoding active.
 	 * @TODO: Enforce post encoding process before reactivation (Uncomment).
 	 */
 	public static int getPostEncoding() {
 
 		initSharedPreferences();
-		int postEncode = Integer.parseInt(
+		return Integer.parseInt(
 				mSharedPreferences.getString("post_encode",	"0"));
-		return postEncode;
 
 		//return 0; // Quick & Simple fix
 	}
@@ -314,9 +313,8 @@ public final class Settings {
 	 */
 	public static int getMP3Hertz() {
 		initSharedPreferences();
-		int quality = Integer.parseInt(mSharedPreferences.getString("MP3QHH",
+		return Integer.parseInt(mSharedPreferences.getString("MP3QHH",
 				"8000"));
-		return quality;
 	}
 
 	public static float getOGGQual() {
@@ -327,7 +325,8 @@ public final class Settings {
 
 		String quality = mSharedPreferences.getString("OGGQUAL", "Bonne");
 		float qual = 0.4f;
-		if (quality.equals("Bonne") || quality.equals("Good")) {
+		assert quality != null;
+		if ((quality != null && quality.equals("Bonne")) || quality.equals("Good")) {
 			qual = 0.4f;
 		}
 		if (quality.equals("Très Bonne") || quality.equals("Very Good")) {
@@ -386,7 +385,7 @@ public final class Settings {
 			info = manager.getPackageInfo(plugIntent, 0);
 			Console.print_debug("PackageName = " + info.packageName + "\nVersionCode = "
 					+ info.versionCode + "\nVersionName = "
-					+ info.versionName + "\nPermissions = " + info.permissions);		
+					+ info.versionName + "\nPermissions = " + Arrays.toString(info.permissions));
 
 			return info.versionCode;
 		} catch (NameNotFoundException e) {
@@ -425,7 +424,7 @@ public final class Settings {
 				Console.print_debug("Pluguin exist :" + plugIntent);
 				return true;
 			}
-			Console.print_debug("Pluguin dont't exist :" + plugIntent + " Intent:" + mIntent);
+			Console.print_debug("Pluguin dont't exist :" + plugIntent + " Intent:" + null);
 			return false;
 		} catch (Exception e) {
 			Console.print_debug("Pluguin dont't exist :" + plugIntent);
@@ -460,7 +459,7 @@ public final class Settings {
 	 */
 	public static boolean showNotifications() {
 		initSharedPreferences();
-		mNOTIFICATIONS = mSharedPreferences.getBoolean("NOTIFICATION", true);
+		boolean mNOTIFICATIONS = mSharedPreferences.getBoolean("NOTIFICATION", true);
 		return mNOTIFICATIONS;
 	}
 
@@ -477,11 +476,12 @@ public final class Settings {
 		initSharedPreferences();
 		
 		String format = mSharedPreferences.getString("audio_format", "3GP");
-		
-		if(format.equals("MP3") && !assertPlugExist(0)) {
+
+		if ((format != null && format.equals("MP3")) && !assertPlugExist(0)) {
 			format = "3GP";
 		}
-		
+
+		assert format != null;
 		if(format.equals("OGG") && !assertPlugExist(1)) {
 			format = "3GP";
 		}
@@ -540,20 +540,20 @@ public final class Settings {
 		NOT_LICENSED = nOT_LICENSED;
 	}
 
-	public static boolean isOverrideMode() {		
+	private static boolean isOverrideMode() {
 		initSharedPreferences();		
 		return mSharedPreferences.getBoolean(OVERRIDE_MODE, true);
 	}
 
-	public static void setOverrideMode(boolean b) {
-		setSharedPrefs(OVERRIDE_MODE, b);
+	private static void setOverrideMode() {
+		setSharedPrefs(OVERRIDE_MODE, true);
 	}
 
 	public static boolean isAlarm() {
 
 		if(!isOverrideMode()) {	
 			setAlarm(false);
-			setOverrideMode(true);
+			setOverrideMode();
 		}
 
 		initSharedPreferences();
@@ -570,13 +570,13 @@ public final class Settings {
 	}
 
 	public static void setRecordsCount(int count) {
-		setSharedPrefs("recordsCount", count);
+		setSharedPrefs(count);
 	}	
 
 	/**
 	 * @return the settingscontext
 	 */
-	public static Context getSettingscontext() {
+	private static Context getSettingscontext() {
 		return SettingsContext;
 	}
 

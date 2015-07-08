@@ -1,11 +1,11 @@
 package org.proof.recorder.bases.fragment;
 
-import org.proof.recorder.bases.utils.SetStaticContext;
-
 import android.content.Context;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragment;
+
+import org.proof.recorder.bases.utils.SetStaticContext;
 
 public class ProofFragment extends SherlockFragment {
 	
@@ -16,8 +16,8 @@ public class ProofFragment extends SherlockFragment {
         super.onCreate(icicle);
         initialize();
     }
-	
-	protected void initialize() {
+
+	private void initialize() {
 		SetStaticContext.setConsoleTagName(this.getClass().getSimpleName());
 		SetStaticContext.setStaticsContext(getActivity(), 1);
 		setInternalContext(getActivity());

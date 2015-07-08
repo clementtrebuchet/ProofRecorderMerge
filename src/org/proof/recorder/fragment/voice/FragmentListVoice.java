@@ -1,7 +1,13 @@
 package org.proof.recorder.fragment.voice;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ListView;
 
 import org.proof.recorder.R;
 import org.proof.recorder.adapters.VoiceAdapter;
@@ -11,18 +17,12 @@ import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.collections.VoicesList;
 import org.proof.recorder.database.models.Voice;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.Log.Console;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentListVoice extends ProofFragment {
 	
@@ -40,7 +40,7 @@ public class FragmentListVoice extends ProofFragment {
 		private void getVoices() {
 			
 			Uri uri;
-			String mQuery = null;
+			String mQuery;
 			
 			if(isNotify) {
 				uri = Uri.withAppendedPath(
@@ -55,7 +55,7 @@ public class FragmentListVoice extends ProofFragment {
 						throw new Exception();
 					
 					uri = Uri.withAppendedPath(
-							PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + mQuery);
+							PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + null);
 				}
 				catch(Exception e) {
 					
@@ -224,9 +224,8 @@ public class FragmentListVoice extends ProofFragment {
 		}
 
 		@Override
-		protected Long _doInBackground(Void... params) {
+		protected void _doInBackground(Void... params) {
 			getVoices();
-			return null;
 		}
 
 		@Override

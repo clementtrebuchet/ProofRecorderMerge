@@ -1,15 +1,5 @@
 package org.proof.recorder.adapters;
 
-import java.io.InputStream;
-import java.util.List;
-
-import org.proof.recorder.R;
-import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
-import org.proof.recorder.database.models.Contact;
-import org.proof.recorder.database.models.Record;
-import org.proof.recorder.database.support.AndroidContactsHelper;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -25,6 +15,16 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.adapter.ProofBaseMultiSelectListAdapter;
+import org.proof.recorder.database.models.Contact;
+import org.proof.recorder.database.models.Record;
+import org.proof.recorder.database.support.AndroidContactsHelper;
+import org.proof.recorder.utils.Log.Console;
+
+import java.io.InputStream;
+import java.util.List;
+
 public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
@@ -32,8 +32,6 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param resource
 	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
@@ -48,8 +46,6 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	 * @param resource
 	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
@@ -61,11 +57,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
 	 * @param context
-	 * @param actionProvider 
-	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */
@@ -76,10 +68,7 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
 	 * @param context
-	 * @param textViewResourceId
 	 * @param objects
-	 * @param selectedObjects
-	 * @param reflectClassName
 	 * @param layoutResourceId
 	 * @param multiModeEnabled
 	 */

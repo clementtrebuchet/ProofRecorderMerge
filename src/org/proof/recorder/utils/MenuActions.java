@@ -1,7 +1,14 @@
 package org.proof.recorder.utils;
 
-import java.io.File;
-import java.util.List;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
@@ -17,15 +24,8 @@ import org.proof.recorder.fragment.voice.notes.FragmentVoiceNoteTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.Log.Console;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import java.io.File;
+import java.util.List;
 
 public final class MenuActions {
 
@@ -66,8 +66,8 @@ public final class MenuActions {
 				+ mDeletedContacts + ") !!");
 	}
 
-	public static void displayCallsFolderDetails(String mPhone, String mWhere,
-			Context mContext) {
+	public static void displayCallsFolderDetails(String mPhone,
+												 Context mContext) {
 		
 		Console.print_exception(mPhone);
 
@@ -97,7 +97,6 @@ public final class MenuActions {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							return;
 						}
 					});
 
@@ -272,9 +271,6 @@ public final class MenuActions {
 	/**
 	 * @param mId
 	 * @param mType
-	 * @param objects
-	 * @param mOutAdapter
-	 * @param mInAdapter
 	 * @param mItem
 	 */
 
@@ -297,7 +293,6 @@ public final class MenuActions {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							return;
 						}
 					});
 

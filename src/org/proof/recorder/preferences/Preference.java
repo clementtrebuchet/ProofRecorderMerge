@@ -1,11 +1,5 @@
 package org.proof.recorder.preferences;
 
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.activity.ProofAsyncPreferenceActivity;
-import org.proof.recorder.database.collections.RecordsList;
-import org.proof.recorder.utils.Log.Console;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -14,6 +8,12 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofAsyncPreferenceActivity;
+import org.proof.recorder.database.collections.RecordsList;
+import org.proof.recorder.utils.Log.Console;
 
 public class Preference extends ProofAsyncPreferenceActivity {
 
@@ -87,8 +87,8 @@ public class Preference extends ProofAsyncPreferenceActivity {
 			}
 		});
 	}
-	
-	private OnPreferenceClickListener micClick = new OnPreferenceClickListener() {
+
+	private final OnPreferenceClickListener micClick = new OnPreferenceClickListener() {
 
 		@Override
 		public boolean onPreferenceClick(
@@ -124,14 +124,13 @@ public class Preference extends ProofAsyncPreferenceActivity {
 	}
 
 	@Override
-	protected Long _doInBackground(Void... params) {
+	protected void _doInBackground(Void... params) {
 		
 		String periodic = Settings.getPersistantData("auto_clean");
 		
 		RecordsList list = new RecordsList();		
 		list.autoClean(periodic);
-		
-		return null;
+
 	}
 		
 }

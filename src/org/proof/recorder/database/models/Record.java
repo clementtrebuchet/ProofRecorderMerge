@@ -1,16 +1,16 @@
 package org.proof.recorder.database.models;
 
-import java.io.Serializable;
+import android.content.ContentResolver;
+import android.net.Uri;
+import android.telephony.PhoneNumberUtils;
 
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.DateUtils;
-import org.proof.recorder.utils.OsInfo;
 import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.OsInfo;
 
-import android.content.ContentResolver;
-import android.net.Uri;
-import android.telephony.PhoneNumberUtils;
+import java.io.Serializable;
 
 public class Record implements DataLayerInterface, Serializable, Cloneable {
 
@@ -105,15 +105,15 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		return mTimeStamp;
 	}
 
-	public void setmTimeStamp(String mTimeStamp) {
+	private void setmTimeStamp(String mTimeStamp) {
 		this.mTimeStamp = mTimeStamp;
 	}
 
-	public String getmSize() {
+	private String getmSize() {
 		return mSize;
 	}
 
-	public void setmSize(String mSize) {
+	private void setmSize(String mSize) {
 		this.mSize = mSize;
 	}
 
@@ -121,7 +121,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		return mUriRecords;
 	}
 
-	public static boolean hasDataLayer() {
+	private static boolean hasDataLayer() {
 		return hasDataLayer;
 	}
 
@@ -129,16 +129,16 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		Record.mUriRecords = mUriRecords;
 	}
 
-	public static void setHasDataLayer(boolean hasDataLayer) {
-		Record.hasDataLayer = hasDataLayer;
+	private static void setHasDataLayer() {
+		Record.hasDataLayer = true;
 	}
 
 	public Record () {
 		this.initialize("-1", "null");
 	}
-	
-	public Record (String size, String fileName, String phone, String sense) {
-		this.initialize("-1", fileName, phone);
+
+	public Record(String size, String fileName, String sense) {
+		this.initialize("-1", fileName, "+33951593045");
 		this.setmSense(sense);
 		this.setmSize(size);
 	}
@@ -160,9 +160,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		this.initialize(id, fileName);
 	}
 	
-	public Record (String id, String fileName, String phone) {
-		this.initialize(id, fileName, phone);
-	}
+
 	
 	public Record (String id, 
 				   String fileName, 
@@ -206,7 +204,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		return mDataNumber;
 	}
 
-	public static ContentResolver getResolver() {
+	private static ContentResolver getResolver() {
 		return mResolver;
 	}
 
@@ -218,18 +216,18 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		Record.mResolver = mResolver;
 		Contact.setResolver(mResolver);
 		DataPhoneNumber.setResolver(mResolver);
-		setHasDataLayer(true);
+		setHasDataLayer();
 	}
 
-	public void setmHtime(String mHtime) {
+	private void setmHtime(String mHtime) {
 		this.mHtime = mHtime;
 	}
 
-	public String getmSense() {
+	private String getmSense() {
 		return mSense.trim();
 	}
 
-	public void setmSense(String mSense) {
+	private void setmSense(String mSense) {
 		this.mSense = mSense;
 	}
 
@@ -273,7 +271,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	/**
 	 * @param mPhone the mPhone to set
 	 */
-	public void setmPhone(String mPhone) {			
+	private void setmPhone(String mPhone) {
 		this.mPhone = PhoneNumberUtils.stripSeparators(mPhone);
 		
 		if(hasDataLayer()) {
@@ -285,7 +283,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	/**
 	 * @return the mAndroidId
 	 */
-	public String getmAndroidId() {
+	private String getmAndroidId() {
 		if(mAndroidId != null)
 			return mAndroidId.trim();
 		return "null";
@@ -294,7 +292,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	/**
 	 * @param mAndroidId the mAndroidId to set
 	 */
-	public void setmAndroidId(String mAndroidId) {
+	private void setmAndroidId(String mAndroidId) {
 		this.mAndroidId = mAndroidId;
 	}
 
@@ -302,7 +300,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		return mContact;
 	}
 
-	public void setmContact(Contact mContact) {
+	private void setmContact(Contact mContact) {
 		this.mContact = mContact;
 	}
 	

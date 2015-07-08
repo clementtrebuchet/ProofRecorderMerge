@@ -1,28 +1,22 @@
 package org.proof.recorder.fragment.voice.notes;
 
-import org.proof.recorder.R;
-import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.fragment.voice.FragmentListVoiceDetail;
-import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.TabsPagerAdapter;
-
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.TabHost;
 
 import com.actionbarsherlock.app.ActionBar;
 
+import org.proof.recorder.R;
+import org.proof.recorder.bases.activity.ProofFragmentActivity;
+import org.proof.recorder.fragment.voice.FragmentListVoiceDetail;
+import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.TabsPagerAdapter;
+
 public class FragmentVoiceNoteTabs extends ProofFragmentActivity {
 
 	//private static final String TAG = "FragmentVoiceNoteTabs";
-	
-	public static String id;
 
 	private TabHost mTabHost;
-	private ViewPager mViewPager;
-	private TabsPagerAdapter mTabsAdapter;
-	
-	private Bundle extraData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +29,19 @@ public class FragmentVoiceNoteTabs extends ProofFragmentActivity {
 		mBar.setHomeButtonEnabled(true);
 
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+		ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
 		mTabHost.setup();
-		extraData = getIntent().getExtras();
-		id = (String) extraData.get("id");
-		
-		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
+		Bundle extraData = getIntent().getExtras();
+		String id = (String) extraData.get("id");
+
+		TabsPagerAdapter mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
 
 		mTabsAdapter.addTab(
 				mBar.newTab().setText(this.getString(R.string.noteTabDetail)),
-				FragmentListVoiceDetail.CustomLoader.class, null);
+				FragmentListVoiceDetail.CustomLoader.class);
 		mTabsAdapter.addTab(
 				mBar.newTab().setText(this.getString(R.string.noteTabNote)),
-				FragmentListVoiceNotes.class, null);
+				FragmentListVoiceNotes.class);
 
 		if (savedInstanceState != null) {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));

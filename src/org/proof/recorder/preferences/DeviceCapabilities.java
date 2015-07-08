@@ -1,15 +1,5 @@
 package org.proof.recorder.preferences;
 
-import java.util.ArrayList;
-
-import org.proof.recorder.R;
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.activity.ProofPreferenceActivity;
-import org.proof.recorder.graphics.ManipulateUi;
-import org.proof.recorder.service.BestAudioConfiguration;
-import org.proof.recorder.service.TestDevice;
-import org.proof.recorder.utils.QuickActionDlg;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -20,12 +10,20 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.proof.recorder.R;
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.activity.ProofPreferenceActivity;
+import org.proof.recorder.graphics.ManipulateUi;
+import org.proof.recorder.service.BestAudioConfiguration;
+import org.proof.recorder.service.TestDevice;
+import org.proof.recorder.utils.QuickActionDlg;
+
+import java.util.ArrayList;
+
 public class DeviceCapabilities extends ProofPreferenceActivity {
 	
 	private static final String TAG = "DeviceCapabilities";
-	public Bundle OPTIONS;
-	public Bundle BESTOPTION;
-	boolean isInit;
+	private Bundle OPTIONS;
 	private CheckBoxPreference mic;
 	private CheckBoxPreference voice_up;
 	private CheckBoxPreference voice_down;
@@ -33,17 +31,8 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 	private CheckBoxPreference cam;
 	private CheckBoxPreference voice_reco;
 	private CheckBoxPreference voice_com;
-	private CheckBoxPreference B;
-	private ListPreference mFormat;
 	private ListPreference mCompression;
 	private ListPreference mQual;
-	private ListPreference postEncode;
-	
-	//private ListPreference mChan;
-	private String bestOption;
-
-	// SharedPreferences pref;
-	private Editor prefEdit;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -63,16 +52,16 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 				"VOICE_RECO");
 		voice_com = (CheckBoxPreference) getPreferenceScreen().findPreference(
 				"VOICE_COM");
-		B = (CheckBoxPreference) getPreferenceScreen().findPreference(
+		CheckBoxPreference b = (CheckBoxPreference) getPreferenceScreen().findPreference(
 				"BESTCONF");
-		mFormat = (ListPreference) getPreferenceScreen().findPreference(
+		ListPreference mFormat = (ListPreference) getPreferenceScreen().findPreference(
 				"audio_format");
 		mCompression = (ListPreference) getPreferenceScreen().findPreference(
 				"MP3QUALITY");
 		mQual = (ListPreference) getPreferenceScreen()
 				.findPreference("OGGQUAL");
-		
-		postEncode = (ListPreference) getPreferenceScreen()
+
+		ListPreference postEncode = (ListPreference) getPreferenceScreen()
 				.findPreference("post_encode");
 		
 		/*mChan = (ListPreference) getPreferenceScreen().findPreference(
@@ -86,7 +75,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 		cam.setOnPreferenceClickListener(micClick);
 		voice_reco.setOnPreferenceClickListener(micClick);
 		voice_com.setOnPreferenceClickListener(micClick);
-		B.setOnPreferenceClickListener(micClick);
+		b.setOnPreferenceClickListener(micClick);
 		mFormat.setOnPreferenceClickListener(spinClick);
 		
 		
@@ -101,13 +90,13 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 		}
 		mFormat.setEntries(entries);
 		mFormat.setEntryValues(entryValues);
-		
-		postEncode.setEntries(new String[] {
+
+		postEncode.setEntries(new String[]{
 				getString(R.string.encode_while),
-				getString(R.string.encode_after)				
+				getString(R.string.encode_after)
 		});
-		
-		postEncode.setEntryValues(new String[] {
+
+		postEncode.setEntryValues(new String[]{
 				"0",
 				"1"
 		});
@@ -160,10 +149,10 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 		showSourceOptions();
 		SharedPreferences preferences = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		isInit = preferences.getBoolean("BESTCONF", true);
+		boolean isInit = preferences.getBoolean("BESTCONF", true);
 		if (isInit) {
-			BESTOPTION = BestAudioConfiguration.bestCapabilities(OPTIONS);
-			bestOption = BESTOPTION.getString("key");
+			Bundle BESTOPTION = BestAudioConfiguration.bestCapabilities(OPTIONS);
+			String bestOption = BESTOPTION.getString("key");
 			onBestConf(bestOption);
 			Log.e(TAG, "Meilleur valeur car BESTCONF est enabled :"
 					+ bestOption);
@@ -179,12 +168,12 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 		}
 	}
 
-	private OnPreferenceClickListener spinClick = new OnPreferenceClickListener() {
+	private final OnPreferenceClickListener spinClick = new OnPreferenceClickListener() {
 		@Override
 		public boolean onPreferenceClick(
 				android.preference.Preference preference) {
 			if (Settings.isDebug())
-				Log.e(TAG, "" + preference.getKey().toString());
+				Log.e(TAG, "" + preference.getKey());
 			if (preference.getKey().contains("Plugin")) {
 				preference.setEnabled(false);
 			}
@@ -192,14 +181,14 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 
 		}
 	};
-	private OnPreferenceClickListener micClick = new OnPreferenceClickListener() {
+	private final OnPreferenceClickListener micClick = new OnPreferenceClickListener() {
 
 		@Override
 		public boolean onPreferenceClick(
 				android.preference.Preference preference) {
 			ManipulateUi uI = new ManipulateUi();
 			if (Settings.isDebug())
-				Log.e(TAG, "" + preference.getKey().toString());
+				Log.e(TAG, "" + preference.getKey());
 
 			if (preference.getKey().contains("MIC")) {
 
@@ -290,51 +279,51 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 		}
 	};
 
-	private final void showSourceOptions() {
+	private void showSourceOptions() {
 		/*
 		 * all = {mic, voice_up, voice_down, voice_call,cam,
 		 * voice_reco,voice_com}
 		 */
 
-		if (OPTIONS.getBoolean("mic") == false) {
+		if (!OPTIONS.getBoolean("mic")) {
 			mic.setEnabled(false);
 
 			if (Settings.isDebug())
 				Log.e(TAG, "Preference mic false");
 		}
 
-		if (OPTIONS.getBoolean("voice_up") == false) {
+		if (!OPTIONS.getBoolean("voice_up")) {
 			voice_up.setEnabled(false);
 
 		}
 
-		if (OPTIONS.getBoolean("voice_down") == false) {
+		if (!OPTIONS.getBoolean("voice_down")) {
 			voice_down.setEnabled(false);
 
 		}
 
-		if (OPTIONS.getBoolean("voice_call") == false) {
+		if (!OPTIONS.getBoolean("voice_call")) {
 			voice_call.setEnabled(false);
 
 		}
 
-		if (OPTIONS.getBoolean("cam") == false) {
+		if (!OPTIONS.getBoolean("cam")) {
 			cam.setEnabled(false);
 
 		}
 
-		if (OPTIONS.getBoolean("voice_reco") == false) {
+		if (!OPTIONS.getBoolean("voice_reco")) {
 			voice_reco.setEnabled(false);
 
 		}
 
-		if (OPTIONS.getBoolean("voice_com") == false) {
+		if (!OPTIONS.getBoolean("voice_com")) {
 			voice_com.setEnabled(false);
 		}
 
 	}
 
-	public void onBestConf(String c) {
+	private void onBestConf(String c) {
 		/*
 		 * disable all
 		 */
@@ -344,7 +333,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 		uI.disableArrayChk(chk);
 		uI.noCheckedArrayChk(chk);
 
-		prefEdit = getSharedPreferences(c, 0).edit();
+		Editor prefEdit = getSharedPreferences(c, 0).edit();
 
 		if (c.contains("voice_call")) {
 			prefEdit.putBoolean("VOICE_CALL", true);

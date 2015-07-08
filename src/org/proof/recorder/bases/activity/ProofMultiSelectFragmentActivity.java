@@ -1,11 +1,5 @@
 package org.proof.recorder.bases.activity;
 
-import org.proof.recorder.R;
-import org.proof.recorder.utils.QuickActionDlg;
-import org.proof.recorder.utils.StaticIntents;
-import org.proof.recorder.utils.TabsPagerAdapter;
-import org.proof.recorder.utils.ViewPagerOnSwipeOff;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,19 +8,28 @@ import android.widget.TabHost;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
+import org.proof.recorder.R;
+import org.proof.recorder.utils.QuickActionDlg;
+import org.proof.recorder.utils.StaticIntents;
+import org.proof.recorder.utils.TabsPagerAdapter;
+import org.proof.recorder.utils.ViewPagerOnSwipeOff;
+
 public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActivity {
 
-	protected static enum KIND { BASE, VOICE, CALL, CONTACT };
+	protected enum KIND {BASE, VOICE, CALL, CONTACT}
 
 	protected abstract KIND getKind();
 
-	protected static ViewPagerOnSwipeOff mViewPager;	
+	private static ViewPagerOnSwipeOff mViewPager;
 
-	protected static ActionBar mBar;
-	protected static int savedPosition;
-	protected static Tab tabOne, tabSecond;
+	private static ActionBar mBar;
+	private static int savedPosition;
+	private static Tab tabOne;
+	private static Tab tabSecond;
 
-	protected static boolean hasOne, hasSecond, isNotify;
+	protected static boolean hasOne;
+	protected static boolean hasSecond;
+	private static boolean isNotify;
 
 	protected Bundle extraData = null;
 
@@ -35,9 +38,6 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 
 	protected static String _id;
 
-	protected TabHost mTabHost;
-	protected TabsPagerAdapter mTabsAdapter;
-	
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -57,7 +57,6 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	}
 
 	/**
-	 * @param voiceId the voiceId to set
 	 */
 	private static void setId(String id) {
 		ProofMultiSelectFragmentActivity._id = id;
@@ -83,7 +82,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 		mBar.setHomeButtonEnabled(true);
 		mBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+		TabHost mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 		mViewPager = (ViewPagerOnSwipeOff) findViewById(R.id.pager);
 		mTabHost.setup();
 
@@ -91,7 +90,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 			mTabHost.setCurrentTabByTag(savedInstance.getString("tab"));
 		}
 
-		mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
+		TabsPagerAdapter mTabsAdapter = new TabsPagerAdapter(this, mViewPager);
 
 		tabOne = mBar.newTab().setText(getString(tabOneResourceId()));
 		tabSecond = mBar.newTab().setText(getString(tabSecondResourceId()));
@@ -126,9 +125,9 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 			}
 			else {
 				throw new Exception("UNDEFINED KIND!");
-			}		
+			}
 
-			mTabsAdapter.addTab(mBar.newTab().setText(mTabTitle), classOne, null);
+			mTabsAdapter.addTab(mBar.newTab().setText(mTabTitle), classOne);
 		}
 		catch(Exception e) {
 
@@ -141,25 +140,23 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 
 				mTabsAdapter.addTab(
 						tabOne,
-						classOne, null);
+						classOne);
 			}
 
 			else if (!hasOne && hasSecond) {	
 
 				mTabsAdapter.addTab(
 						tabSecond,
-						classSecond, null);
-			}
-
-			else if (hasOne && hasSecond) {				
+						classSecond);
+			} else if (hasOne) {
 
 				mTabsAdapter.addTab(
 						tabOne,
-						classOne, null);
+						classOne);
 
 				mTabsAdapter.addTab(
 						tabSecond,
-						classSecond, null);	
+						classSecond);
 			}
 
 			else {
@@ -199,11 +196,11 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 
 		if (hasOne && hasSecond && !isNotify) {
 
-			mBar.removeAllTabs();			
-			mBar.addTab(savedPosition == 0 ? tabOne : tabSecond, 0);			
+			mBar.removeAllTabs();
+			mBar.addTab(savedPosition == 0 ? tabOne : tabSecond, 0);
 
-			hasOne = savedPosition == 0 ? true : false;
-			hasSecond = savedPosition == 1 ? true : false;
+			hasOne = savedPosition == 0;
+			hasSecond = savedPosition == 1;
 
 			mViewPager.disablePaging(false);
 		}
@@ -249,7 +246,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	/**
 	 * @param isNotify the isNotify to set
 	 */
-	protected static void setNotify(boolean isNotify) {
+	private static void setNotify(boolean isNotify) {
 		ProofMultiSelectFragmentActivity.isNotify = isNotify;
 	}
 }

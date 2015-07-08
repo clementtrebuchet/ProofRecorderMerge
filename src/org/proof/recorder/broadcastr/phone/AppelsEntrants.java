@@ -1,9 +1,5 @@
 package org.proof.recorder.broadcastr.phone;
 
-import org.proof.recorder.Settings;
-import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,14 +10,16 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
+import org.proof.recorder.Settings;
+import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
+import org.proof.recorder.utils.Log.Console;
+
 public class AppelsEntrants extends ProofBroadcastReceiver {
 
-	public boolean INCALL;
-	public boolean SPEAKERON;
-	
-	ObservateurTelephone customPhoneListener = null;
+	private boolean INCALL;
+	private boolean SPEAKERON;
 
-	private static String phoneNumber = "";
+	private ObservateurTelephone customPhoneListener = null;
 
 	private void getPreferences(Context context) {
 
@@ -30,10 +28,7 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 		INCALL = preferences.getBoolean("INCALL", true);
 
 		try {
-			if (customPhoneListener.isExcluded()) {
-				SPEAKERON = false;
-			} else
-				SPEAKERON = preferences.getBoolean("SPEAK", false);
+			SPEAKERON = !customPhoneListener.isExcluded() && preferences.getBoolean("SPEAK", false);
 		} catch (Exception e) {
 			SPEAKERON = preferences.getBoolean("SPEAK", false);
 		}
@@ -50,13 +45,13 @@ public class AppelsEntrants extends ProofBroadcastReceiver {
 		if (null == bundle)
 			return;
 
-		phoneNumber = bundle.getString("incoming_number");
+		String phoneNumber = bundle.getString("incoming_number");
 		
 		customPhoneListener = new ObservateurTelephone(context);
 		
 		getPreferences(context);
 
-		if (INCALL == false) {
+		if (!INCALL) {
 			
 			Console.print_debug(
 					"BROADCASTRECEVEIVER ACTIF INCALL OFF");
