@@ -109,7 +109,7 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 		
 		LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);			
-		view = vi.inflate(this.layoutResourceId, viewGroup);
+		view = vi.inflate(this.layoutResourceId, null);
 		
 		if(this.objects != null) {
 			this.handleView(position, view);
