@@ -376,7 +376,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 
 		}
 		//prefEdit.commit();
-		prefEdit.commit();
+		prefEdit.apply();
 
 	}
 }
