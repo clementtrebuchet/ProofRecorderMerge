@@ -1,5 +1,6 @@
 package org.proof.recorder.quick.action;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -96,6 +97,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * Set root view.
 	 *
 	 */
+	@SuppressLint("InflateParams")
 	private void setRootViewId() {
 		mRootView = inflater.inflate(R.layout.quickaction, null);
 		mTrack 		= (ViewGroup) mRootView.findViewById(R.id.tracks);
@@ -326,6 +328,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * 
 	 */
 	public interface OnDismissListener {
+		@SuppressWarnings("EmptyMethod")
 		void onDismiss();
 	}
 }

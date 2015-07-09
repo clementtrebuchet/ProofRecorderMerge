@@ -1,5 +1,6 @@
 package org.proof.recorder.services;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.IBinder;
 
@@ -7,6 +8,7 @@ import org.proof.recorder.Settings;
 import org.proof.recorder.bases.service.ProofFrontService;
 import org.proof.recorder.database.collections.RecordsList;
 
+@SuppressLint("Registered")
 public class AutoCleaningService extends ProofFrontService {
 
 	@Override

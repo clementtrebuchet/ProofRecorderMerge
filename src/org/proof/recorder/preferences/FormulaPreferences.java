@@ -81,6 +81,7 @@ public class FormulaPreferences extends ProofPreferenceActivity {
 		return QuickActionDlg.mainActionsMenuHandler(item);
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	private void onSettings() {
 
 	}
@@ -171,6 +172,7 @@ public class FormulaPreferences extends ProofPreferenceActivity {
 		}
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

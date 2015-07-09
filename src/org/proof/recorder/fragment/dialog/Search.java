@@ -47,6 +47,7 @@ public class Search extends ProofFragmentActivity {
 	private static Intent mDataResult;
 	private static String mPhone = null;
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -216,6 +217,7 @@ public class Search extends ProofFragmentActivity {
 		startActivity(mDataResult);
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();

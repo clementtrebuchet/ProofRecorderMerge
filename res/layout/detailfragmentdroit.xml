@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
@@ -34,10 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnaillon"
         android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"
         android:textColor="#040404"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/username"
@@ -45,23 +48,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/id"
         android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"
         android:textColor="#040404"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/tel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/id"
+        android:layout_alignStart="@+id/id"
         android:layout_below="@+id/username"
         android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"
         android:paddingTop="15dip"
         android:textColor="#040404"
         android:textSize="18dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/se"
@@ -69,11 +77,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tel"
         android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"
         android:paddingTop="15dip"
         android:textColor="#040404"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
     <ImageView
         android:id="@+id/sensImage"
@@ -81,6 +91,7 @@
         android:layout_height="47dip"
         android:layout_alignTop="@+id/se"
         android:layout_marginLeft="152dip"
+        android:layout_marginStart="152dip"
         android:contentDescription="@string/list_details_image_cd"
         android:paddingBottom="15dip"
         android:src="@drawable/incoming_call" />
@@ -90,7 +101,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/sensImage"
-        android:layout_toRightOf="@+id/thumbnaillon" />
+        android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"/>
 
     <TextView
         android:id="@+id/file"
@@ -98,11 +110,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/lireFlu"
         android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"
         android:paddingTop="15dip"
         android:textColor="#040404"
         android:textSize="9dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/taille"
@@ -111,12 +125,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/file"
         android:layout_marginLeft="160dip"
+        android:layout_marginStart="160dip"
         android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"
         android:paddingTop="15dip"
         android:textColor="#10bcc9"
         android:textSize="13dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/htime"
@@ -124,10 +141,12 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/taille"
         android:layout_toRightOf="@+id/thumbnaillon"
+        android:layout_toEndOf="@+id/thumbnaillon"
         android:paddingTop="15dip"
         android:textColor="#040404"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
 </RelativeLayout>

@@ -66,7 +66,7 @@ public class OsHandler {
 	        if (files != null) 
 	        {
 	        	for(File f : files) {
-	        		
+
 	        		if(f.isFile() && (i == 3 || i == 4))
 	        		{
 	        			filesListVoices.add(f.getPath());
@@ -76,7 +76,6 @@ public class OsHandler {
 	        		{
 	        			filesListCalls.add(f.getPath());
 	        			print("Call file: "	+ f.getPath());
-					} else {
 					}
 				}
 			}

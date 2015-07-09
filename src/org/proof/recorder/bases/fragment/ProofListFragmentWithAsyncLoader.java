@@ -44,7 +44,9 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 	protected volatile Object listAdapter = null;
 	protected volatile ArrayList<Object> objects = null;
 	
+	@SuppressWarnings("EmptyMethod")
 	protected abstract void _onPreExecute();
+	@SuppressWarnings("EmptyMethod")
 	protected abstract void _onProgressUpdate(Integer... progress);
 	protected abstract void _onPostExecute(Long result);
 
@@ -61,11 +63,13 @@ public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragment
 		initializeTask();	
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onPause() {
 		super.onPause();
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onResume() {
 		super.onResume();

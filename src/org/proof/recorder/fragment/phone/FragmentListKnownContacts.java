@@ -25,6 +25,7 @@ import java.util.List;
 
 public class FragmentListKnownContacts extends ProofFragment {
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

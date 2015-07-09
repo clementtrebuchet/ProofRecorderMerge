@@ -30,6 +30,7 @@ import java.util.Comparator;
 
 public class FragmentListExcludedContacts extends Fragment {
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,12 +96,13 @@ public class FragmentListExcludedContacts extends Fragment {
 
 			private final ArrayList<Object> items;
 
-			public ContactAdapter(Context context, int textViewResourceId,
-					ArrayList<Object> items) {
-				super(context, textViewResourceId, items);
+			public ContactAdapter(Context context,
+								  ArrayList<Object> items) {
+				super(context, R.layout.custom_contacts_list, items);
 				this.items = items;
 			}
 
+			@SuppressWarnings("EmptyMethod")
 			@Override
 			public void notifyDataSetChanged() {
 				super.notifyDataSetChanged();
@@ -112,7 +114,7 @@ public class FragmentListExcludedContacts extends Fragment {
 				if (view == null) {
 					LayoutInflater vi = (LayoutInflater) getActivity()
 							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.custom_contacts_list, null);
+					view = vi.inflate(R.layout.custom_contacts_list, parent);
 				}
 				Contact contact = (Contact) items.get(position);
 				if (contact != null) {
@@ -209,7 +211,7 @@ public class FragmentListExcludedContacts extends Fragment {
 		@Override
 		protected void _onPostExecute(Long result) {
 			listAdapter = new ContactAdapter(getActivity(),
-					R.layout.custom_contacts_list, objects);			
+					objects);
 		}
 
 		@Override

@@ -40,7 +40,7 @@ import java.util.Locale;
  * @author devel.machine
  *
  */
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "NullableProblems"})
 public class PersonnalProofContentProvider extends
 
 		SearchRecentSuggestionsProvider {
@@ -1917,7 +1917,8 @@ public class PersonnalProofContentProvider extends
 	/**
 	 * @return the authority
 	 */
-    private static String getAuthority() {
+    @SuppressWarnings("SameReturnValue")
+	private static String getAuthority() {
         return AUTHORITY;
     }
 

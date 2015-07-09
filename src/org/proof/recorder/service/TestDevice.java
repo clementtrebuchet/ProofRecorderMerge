@@ -96,9 +96,8 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 					Settings.RECORDER_AUDIO_ENCODING, bufferSize);
 			
 			recorder.startRecording();
-			
-			resultat = true;
-            BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source - 1], true);
+
+			BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source - 1], true);
 
             print("position : " + toStr[source - 1] + " capabilitie : " + true);
 
@@ -111,8 +110,7 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 
 			print_exception("Capabilitie for " + toStr[source-1] + " : " + e);
 
-			resultat = false;
-            BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source - 1], false);
+			BUNDLECONFIGURATIONAUDIO.putBoolean(toStr[source - 1], false);
 
             if (recorder != null) {
                 try {
@@ -125,7 +123,7 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 		}
 	}
 
-    private void testAll(boolean[] res) {
+    private void testAll() {
 
         recorder(capabiltiesHw.all[0]);
         recorder(capabiltiesHw.all[1]);
@@ -168,7 +166,7 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 		
 		if(isToProcess()) {
             makeDirectoriesStructure();
-            testAll(all);
+            testAll();
             setToProcess();
         }
 

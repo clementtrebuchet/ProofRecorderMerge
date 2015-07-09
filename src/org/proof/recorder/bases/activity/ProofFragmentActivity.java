@@ -1,5 +1,6 @@
 package org.proof.recorder.bases.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -7,6 +8,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import org.proof.recorder.bases.utils.SetStaticContext;
 
+@SuppressLint("Registered")
 public class ProofFragmentActivity  extends SherlockFragmentActivity {
 	
 	private Context internalContext = null;
@@ -14,7 +16,6 @@ public class ProofFragmentActivity  extends SherlockFragmentActivity {
 	@Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-		Bundle savedInstance = icicle;
 		initialize();
 	}
 	

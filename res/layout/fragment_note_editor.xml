@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingBottom="3dip"
     android:paddingLeft="6dip"
     android:paddingRight="6dip"
-     android:background="@+drawable/back" >
+    android:background="@+drawable/back"
+    android:baselineAligned="false">
 
     <!-- Include Header -->
 

@@ -280,7 +280,7 @@
 		        &lt;li&gt;&lt;u&gt;Associate&lt;/u&gt; a note and title to each record of any kind.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
 		        &lt;li&gt;&lt;u&gt;Filter&lt;/u&gt; recorder service based on your own Contacts list.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
 	        &lt;/ul&gt;
-	        And more ...
+	        And more …
         &lt;/p&gt;
 
     ]]></string>
@@ -680,7 +680,7 @@
         <item name="android:indeterminate">true</item>
     </style>
     <style name="ActionBarCompatSeparator">
-        <item name="android:layout_width">2px</item>
+        <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:background">@drawable/actionbar_compat_separator</item>
     </style>

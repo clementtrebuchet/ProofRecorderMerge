@@ -326,7 +326,7 @@ public final class Settings {
 		String quality = mSharedPreferences.getString("OGGQUAL", "Bonne");
 		float qual = 0.4f;
 		assert quality != null;
-		if ((quality != null && quality.equals("Bonne")) || quality.equals("Good")) {
+		if ((quality.equals("Bonne")) || quality.equals("Good")) {
 			qual = 0.4f;
 		}
 		if (quality.equals("Très Bonne") || quality.equals("Very Good")) {
@@ -459,8 +459,7 @@ public final class Settings {
 	 */
 	public static boolean showNotifications() {
 		initSharedPreferences();
-		boolean mNOTIFICATIONS = mSharedPreferences.getBoolean("NOTIFICATION", true);
-		return mNOTIFICATIONS;
+		return mSharedPreferences.getBoolean("NOTIFICATION", true);
 	}
 
 //	public static String getUsername(Context mContext) {
@@ -532,6 +531,7 @@ public final class Settings {
 	/**
 	 * @return the notLicensed
 	 */
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean isNotLicensed() {
 		return NOT_LICENSED;
 	}

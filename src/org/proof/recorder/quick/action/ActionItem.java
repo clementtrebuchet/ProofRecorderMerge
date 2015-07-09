@@ -132,6 +132,7 @@ public class ActionItem {
     /**
      * @return  true if button is sticky, menu stays visible after press
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isSticky() {
         return sticky;
     }

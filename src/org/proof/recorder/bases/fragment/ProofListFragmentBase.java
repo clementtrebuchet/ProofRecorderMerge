@@ -45,6 +45,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 	private int alertDlgCancelBtn = 0;
 	private int alertDlgOkBtn = 0;
 
+	@SuppressWarnings("EmptyMethod")
 	protected abstract void alertDlgCancelAction(DialogInterface dialog, int which);
 	protected abstract void handleOnReceive(Context context, Intent intent);
 	protected abstract void alertDlgOkAction(DialogInterface dialog, int which);
@@ -115,7 +116,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		int progressDlgTextId = 0;
 		progressDlg.setMessage(preProgressDlgText +
 				getInternalContext().getText(
-						progressDlgTextId == 0 ? R.string.loading : progressDlgTextId) +
+						R.string.loading) +
 				postProgressDlgText);
 	}
 	
@@ -265,6 +266,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		super.onDestroy();
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

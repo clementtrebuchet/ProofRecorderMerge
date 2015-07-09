@@ -72,6 +72,7 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 
 		private RecorderDetailAdapter mAdapter;
 
+		@SuppressWarnings("EmptyMethod")
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -87,7 +88,7 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 					R.id.mDateOfCall };
 
 			mAdapter = new RecorderDetailAdapter(getActivity(),
-					R.layout.record_detail, null, from, to
+					R.layout.record_detail, from, to
 			);
 
 			setListAdapter(mAdapter);

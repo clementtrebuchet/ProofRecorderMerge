@@ -58,6 +58,7 @@ class PopupWindows {
 	/**
 	 * On show
 	 */
+	@SuppressWarnings("EmptyMethod")
 	private void onShow() {
 	}
 

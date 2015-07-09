@@ -714,11 +714,13 @@ public class ProofRecorderActivity extends SherlockActivity {
 	 * MediaRecorder, is therefore not recreated and keep recording on
 	 * Orientation Changes
 	 */
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	protected void onDestroy() {
 		//mChecker.onDestroy();

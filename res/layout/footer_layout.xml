@@ -1,6 +1,7 @@
+<!--suppress ALL -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/FooterBar" >
-    <TextView android:text="@+string/footer"
+    <TextView android:text=""
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#606060"

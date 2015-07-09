@@ -1,4 +1,8 @@
+<!--suppress ALL -->
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/ActionBarCompatible" >
  
     <ImageView
@@ -18,7 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:clickable="false"
-        android:textColor="#333333" />
+        android:textColor="#333333"
+        tools:ignore="SpUsage" />
     
     <ImageView
         android:id="@+id/dlgdashboard"

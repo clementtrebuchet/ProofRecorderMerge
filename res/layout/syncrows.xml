@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#f8f9fe"
@@ -12,7 +15,8 @@
         android:textColor="#040404"
         android:textSize="15dip"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        tools:ignore="SpUsage" />
 
     <!-- android:id="@+id/number" -->
 
@@ -25,7 +29,8 @@
         android:text="@+string/tableNumero"
         android:textColor="#343434"
         android:textSize="18dip"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/senssync"
@@ -34,7 +39,8 @@
         android:layout_below="@+id/numbersync"
         android:textColor="#10bcc9"
         android:textSize="13dip"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="SpUsage" />
     <!-- @+id/timehumanreadable -->
 
     <TextView
@@ -42,12 +48,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/idrecordsync"
+        android:layout_marginEnd="5dip"
         android:layout_marginRight="5dip"
-        android:gravity="right"
+        android:gravity="end"
         android:text="@+string/tableHeure"
         android:textColor="#10bcc9"
         android:textSize="16dip"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="SpUsage" />
 
 </RelativeLayout>

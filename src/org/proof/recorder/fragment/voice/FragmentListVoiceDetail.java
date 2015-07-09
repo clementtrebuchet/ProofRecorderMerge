@@ -61,6 +61,7 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 
 		private VoiceDetailAdapter mAdapter;
 
+		@SuppressWarnings("EmptyMethod")
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 					R.id.mDate };
 
 			mAdapter = new VoiceDetailAdapter(getActivity(),
-					R.layout.voice_detail, null, from, to,
+					R.layout.voice_detail, from, to,
 					Integer.parseInt(FragmentListVoice.ID));
 
 			setListAdapter(mAdapter);

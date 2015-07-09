@@ -25,6 +25,7 @@ import java.util.List;
 public class FragmentListRecordOut extends ProofFragment {		
 
 	/** Called when the activity is first created. */
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

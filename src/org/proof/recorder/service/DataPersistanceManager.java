@@ -2,6 +2,8 @@ package org.proof.recorder.service;
 
 import org.proof.recorder.Settings;
 
+import java.util.Locale;
+
 /**
  * @author Namgyal Brisson
  *
@@ -24,7 +26,7 @@ public class DataPersistanceManager {
 	 * @param mAudioFormat the mAudioFormat to set
 	 */
 	public void setAudioFormat(String mAudioFormat) {
-		this.mAudioFormat = mAudioFormat.toLowerCase();
+		this.mAudioFormat = mAudioFormat.toLowerCase(Locale.getDefault());
 	}
 	
 	/**

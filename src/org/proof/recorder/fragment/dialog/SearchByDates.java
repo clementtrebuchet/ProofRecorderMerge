@@ -41,6 +41,7 @@ public class SearchByDates extends ProofFragmentActivity {
 
 	private boolean mPrecise, mStarting, mEnding;
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -55,11 +56,9 @@ public class SearchByDates extends ProofFragmentActivity {
 			Console.print_debug("The date is " + dayOfMonth + "/" + month + "/"
 					+ year + " pointeur(ref): " + arg0);
 
-			int mDay = dayOfMonth;
 			int mMonth = month + 1;
-			int mYear = year;
-			
-			String mSqlDate = mYear + "-" + mMonth + "-" + mDay;
+
+			String mSqlDate = year + "-" + mMonth + "-" + dayOfMonth;
 			
 			String selectedDate = getString(R.string.search_selected_date) + ": " + DateUtils.reOrderDate(mContext, mSqlDate);
 

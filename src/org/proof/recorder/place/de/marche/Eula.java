@@ -19,16 +19,18 @@ public class Eula {
 	SharedPreferences preference;
 	private static CheckBoxPreference eu;
 	private static Eula mSingleTon;
-	private static Eula getYnique(){
+	@SuppressWarnings("UnusedReturnValue")
+	private static Eula getSingleton(){
 		if(null == mSingleTon)
 		mSingleTon= new Eula();
 		
 			return mSingleTon;
 		
 	}
-	public static void setEulaBox(CheckBoxPreference CB){getYnique();eu = CB;}
+	public static void setEulaBox(CheckBoxPreference CB){
+		getSingleton();eu = CB;}
 	public  static void showEULA(final Activity activity) {
-		getYnique();
+		getSingleton();
 		Log.e(TAG, "" + activity.toString());
 		final SharedPreferences preference = PreferenceManager
 				.getDefaultSharedPreferences(activity.getApplicationContext());
@@ -44,7 +46,7 @@ public class Eula {
 						public void onClick(DialogInterface dialog, int which) {
 						preference.edit()
 									.putBoolean("PREFERENCE_EULA_ACCEPTED", true)
-									.commit();
+									.apply();
 									if (eu != null)eu.setChecked(true);
 									des();
 
@@ -57,7 +59,7 @@ public class Eula {
 						public void onClick(DialogInterface dialog, int which) {
 							preference.edit()
 							.putBoolean("PREFERENCE_EULA_ACCEPTED", false)
-							.commit();
+							.apply();
 							//android.os.Process.killProcess(android.os.Process.myPid());
 							
 							activity.finish();
@@ -72,7 +74,7 @@ public class Eula {
 				public void onCancel(DialogInterface dialog) {
 					preference.edit()
 					.putBoolean("PREFERENCE_EULA_ACCEPTED", false)
-					.commit();
+					.apply();
 					//android.os.Process.killProcess(android.os.Process.myPid());
 					activity.finish();
 					des();
@@ -81,17 +83,17 @@ public class Eula {
 
 				}
 			});
-			builder.setMessage(readFile(activity, R.raw.eula));
+			builder.setMessage(readFile(activity));
 			builder.create().show();
 			Log.e(TAG, "" + activity.toString());
 		
 
 	}
 
-	private  static CharSequence readFile(Activity activity, int eula) {
+	private static CharSequence readFile(Activity activity) {
 
 		try {
-			InputStream in_s = activity.getResources().openRawResource(eula);
+			InputStream in_s = activity.getResources().openRawResource(R.raw.eula);
 			byte[] b = new byte[in_s.available()];
 			//noinspection ResultOfMethodCallIgnored
 			in_s.read(b);
@@ -105,7 +107,7 @@ public class Eula {
 	}
 	private static void des(){
 		try {
-			mSingleTon.finalize();
+			if(!mSingleTon.equals(null)) mSingleTon = null;
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -269,6 +269,7 @@ public class VerifyContactsApi extends ProofService {
 
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onCreate() {
 		super.onCreate();

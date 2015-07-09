@@ -28,8 +28,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 	 */
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder boundService) {
-		IBinder mBoundService = boundService;
-		this.service = IServiceIntentRecorderMP3.Stub.asInterface(mBoundService);
+		this.service = IServiceIntentRecorderMP3.Stub.asInterface(boundService);
 		Log.d(TAG, "onServiceConnected() connected service is " + this.service);
 		this.parent.callWhenReady();
 

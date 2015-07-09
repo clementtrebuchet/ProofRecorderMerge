@@ -39,7 +39,7 @@
 			android:id="@+id/btn3"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="right"
+			android:layout_gravity="end"
 			android:text="Button 3" />
 
 	</LinearLayout>

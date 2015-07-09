@@ -160,7 +160,7 @@ public class StaticNotifications {
 
 	public static void show(Context context, Class<?> destination, Bundle b,
 							CharSequence title, CharSequence info, CharSequence text,
-							ICONS opt, boolean autoCancel, boolean flashLight) {
+							ICONS opt, boolean autoCancel) {
 
 		if (Settings.showNotifications()) {
 			if (Settings.isDebug())

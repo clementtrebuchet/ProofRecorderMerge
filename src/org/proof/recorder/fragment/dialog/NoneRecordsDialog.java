@@ -14,6 +14,7 @@ public class NoneRecordsDialog extends ProofFragmentActivity {
 //	private final static String TAG = "CUSTOM_SEARCH_MODULE";
 //	private final static String BR = "\n";
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);

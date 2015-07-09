@@ -25,8 +25,7 @@ public class IServiceRecorderOggCx implements ServiceConnection{
 
 	@Override
 	public void onServiceConnected(ComponentName name, IBinder boundService) {
-		IBinder mBoundService = boundService;
-		this.service = IServiceRecorderOgg.Stub.asInterface(mBoundService);
+		this.service = IServiceRecorderOgg.Stub.asInterface(boundService);
 		Log.d(TAG, "onServiceConnected() connected service is " + this.service);
 		this.parent.callWhenReady();
 		

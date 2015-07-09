@@ -92,20 +92,19 @@ public class ManipulateUi {
 	/**
 	 * @param chk
 	 * @param mCont
-	 * @param position (true or false)
 	 * @category valoriser un tableau (String optionsName true OR false)
 	 */
-	public void setArrayBoolean(String[] chk ,Context mCont, boolean position){
+	public void setArrayBoolean(String[] chk, Context mCont){
 		Editor prefEdit = PreferenceManager.getDefaultSharedPreferences(mCont).edit();
 		int i;
 		for (i=0; i < chk.length; i++){
 			
-			prefEdit.putBoolean(chk[i], position);
+			prefEdit.putBoolean(chk[i], false);
 			if(Settings.isDebug())
-			Log.e(TAG, "préférence : "+chk[i]+" mise a : "+position);
+			Log.e(TAG, "préférence : "+chk[i]+" mise a : "+ false);
 		
 		}
-		prefEdit.commit();
+		prefEdit.apply();
 	}
 	
 }

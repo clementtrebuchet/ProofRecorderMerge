@@ -23,7 +23,7 @@ public class VoiceDetailAdapter extends SimpleCursorAdapter {
 	private static Context mcontext;
 	private String f;
 
-	public VoiceDetailAdapter(Context context, int layout, Cursor c,
+	public VoiceDetailAdapter(Context context, int layout,
 							  String[] from, int[] to, int recId) {
 		super(context, R.layout.voice_detail, null, from, to, android.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		mcontext = context;

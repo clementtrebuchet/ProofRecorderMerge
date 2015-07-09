@@ -382,6 +382,7 @@ public class QuickActionDlg {
 	 * @param menu
 	 * @return boolean
 	 */
+	@SuppressWarnings("SameReturnValue")
 	@SuppressLint("InlinedApi")
 	public static boolean mainUiMenuHandler(com.actionbarsherlock.view.Menu menu) {
 

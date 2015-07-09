@@ -409,7 +409,6 @@ public class SearchResult extends ProofFragmentActivity {
 			else if(mVoices) {
 				MenuActions.deleteVoices(recordIds, recordPaths);
 				getActivity().startActivity(StaticIntents.goVoice(getInternalContext()));
-			} else {
 			}
 			
 		}
@@ -430,8 +429,7 @@ public class SearchResult extends ProofFragmentActivity {
 				((Record) item).setChecked(false);
 			else if(mVoices)
 				((Voice) item).setChecked(false);
-			else {
-			}
+
 		}
 
 		@Override
@@ -440,8 +438,7 @@ public class SearchResult extends ProofFragmentActivity {
 				((Record) item).setChecked(checked);
 			else if(mVoices)
 				((Voice) item).setChecked(checked);
-			else {
-			}
+
 		}
 
 		@Override

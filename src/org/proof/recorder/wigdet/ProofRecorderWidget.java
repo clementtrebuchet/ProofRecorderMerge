@@ -23,6 +23,7 @@ import android.widget.Toast;
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 
+@SuppressWarnings("NullableProblems")
 public class ProofRecorderWidget extends AppWidgetProvider {
 
 	private final static String TAG = ProofRecorderWidget.class.getName();
@@ -289,13 +290,12 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	/**
 	 * 
 	 * @param aContext
-	 * @param aCommand
 	 * @return
 	 */
     private static PendingIntent getControlIntent(Context aContext,
-                                                  String aCommand, int appWidgetId) {
+												  int appWidgetId) {
         Intent commandIntent = new Intent(aContext, ProofRecorderWidget.class);
-        commandIntent.setAction(aCommand);
+        commandIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 		commandIntent
 				.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         return PendingIntent.getBroadcast(aContext, 0,
@@ -628,8 +628,8 @@ public class ProofRecorderWidget extends AppWidgetProvider {
      */
     private static void setAlarm(Context aContext, boolean mCancel,
                                  int appWidgetId) {
-        PendingIntent refreshTestIntent = getControlIntent(aContext, AppWidgetManager.ACTION_APPWIDGET_UPDATE,
-                appWidgetId);
+        PendingIntent refreshTestIntent = getControlIntent(aContext,
+				appWidgetId);
         ProofRecorderWidget.resetAppWId();
 		ProofRecorderWidget.setmAppWId(appWidgetId);
 		AlarmManager alarms = (AlarmManager) aContext

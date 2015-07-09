@@ -359,6 +359,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 		return false;
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	public void delete() {
 		// TODO Auto-generated method stub
 		

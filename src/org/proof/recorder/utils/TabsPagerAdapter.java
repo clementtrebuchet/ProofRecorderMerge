@@ -28,9 +28,9 @@ ActionBar.TabListener, ViewPager.OnPageChangeListener {
 		private final Class<?> clss;
 		private final Bundle args;
 
-		TabInfo(Class<?> _class, Bundle _args) {
+		TabInfo(Class<?> _class) {
 			clss = _class;
-			args = _args;
+			args = null;
 		}
 	}
 
@@ -44,7 +44,7 @@ ActionBar.TabListener, ViewPager.OnPageChangeListener {
 	}
 
 	public void addTab(Tab tab, Class<?> clss) {
-		TabInfo info = new TabInfo(clss, null);
+		TabInfo info = new TabInfo(clss);
 		tab.setTag(info);
 		tab.setTabListener(this);
 		mTabs.add(info);

@@ -17,6 +17,7 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	
 	protected abstract void handleView(final int item, View view);
 	protected abstract void handleEmptyView(final int item, View view);
+	@SuppressWarnings("EmptyMethod")
 	protected abstract void handleEventIntent(Intent intent);
 	
 	protected void sendEvent() {
@@ -108,7 +109,7 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 		
 		LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);			
-		view = vi.inflate(this.layoutResourceId, null);		
+		view = vi.inflate(this.layoutResourceId, viewGroup);
 		
 		if(this.objects != null) {
 			this.handleView(position, view);

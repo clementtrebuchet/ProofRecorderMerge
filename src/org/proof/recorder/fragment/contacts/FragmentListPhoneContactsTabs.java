@@ -71,6 +71,7 @@ public class FragmentListPhoneContactsTabs extends ProofFragmentActivity {
 	 * MediaRecorder, is therefore not recreated and keep recording on
 	 * Orientation Changes
 	 */
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);

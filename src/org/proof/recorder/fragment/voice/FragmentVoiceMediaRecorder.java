@@ -68,7 +68,8 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	     * stop the recreation of the activity on Orientation Change
 	     * the MediaRecorder, is therefore not recreated and keep recording on Orientation Changes
 	     */
-	    @Override 
+	    @SuppressWarnings("EmptyMethod")
+		@Override
 	    public void onConfigurationChanged(Configuration newConfig) { 
 	        super.onConfigurationChanged(newConfig);
 	    }

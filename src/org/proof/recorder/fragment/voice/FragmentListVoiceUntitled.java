@@ -26,6 +26,7 @@ import java.util.List;
 
 public class FragmentListVoiceUntitled extends ProofFragment {
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

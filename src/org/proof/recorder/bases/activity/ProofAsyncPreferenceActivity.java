@@ -33,8 +33,11 @@ public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivi
 		this.collectionLoader = new AsyncLoader();
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	protected abstract void _onPreExecute();
+	@SuppressWarnings("EmptyMethod")
 	protected abstract void _onProgressUpdate(Integer... progress);
+	@SuppressWarnings("EmptyMethod")
 	protected abstract void _onPostExecute(Long result);
 
 	protected abstract void _doInBackground(Void... params);
@@ -50,6 +53,7 @@ public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivi
 		super.onPause();
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onResume() {
 		super.onResume();

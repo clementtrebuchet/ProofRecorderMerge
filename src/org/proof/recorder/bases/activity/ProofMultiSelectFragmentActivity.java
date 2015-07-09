@@ -38,6 +38,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 
 	protected static String _id;
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -51,6 +52,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 		setUpTabsClasses();
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -68,6 +70,7 @@ public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActi
 	protected abstract void setUpTabsClasses();
 	protected abstract void setUpTabsCount();
 	protected abstract boolean isMulti();
+	@SuppressWarnings("SameReturnValue")
 	protected abstract int innerContentView();
 
 	@Override

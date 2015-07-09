@@ -180,6 +180,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		initialize();
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -514,6 +515,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 	/* (non-Javadoc)
 	 * @see com.actionbarsherlock.app.SherlockFragment#onPrepareOptionsMenu(com.actionbarsherlock.view.Menu)
 	 */
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onPrepareOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 		// TODO Auto-generated method stub

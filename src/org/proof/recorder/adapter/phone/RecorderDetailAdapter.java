@@ -27,6 +27,7 @@ import org.proof.recorder.utils.ServiceAudioHelper;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Locale;
 
 public class RecorderDetailAdapter extends SimpleCursorAdapter {
 
@@ -34,7 +35,7 @@ public class RecorderDetailAdapter extends SimpleCursorAdapter {
 	private String f;
 	private static Context mcontext;
 
-	public RecorderDetailAdapter(Context context, int layout, Cursor c,
+	public RecorderDetailAdapter(Context context, int layout,
 								 String[] from, int[] to) {
 		super(context, R.layout.record_detail, null, from, to, android.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		mcontext = context;
@@ -158,7 +159,7 @@ public class RecorderDetailAdapter extends SimpleCursorAdapter {
 		if (Settings.isDebug())
 			Log.v(TAG, "HumanReadableSens-> " + HumanReadableSens);
 
-		if (HumanReadableSens.toLowerCase().contains("s")) {
+		if (HumanReadableSens.toLowerCase(Locale.getDefault()).contains("s")) {
 			return "Appel Sortant";
 		} else {
 			return "Appel Entrant";

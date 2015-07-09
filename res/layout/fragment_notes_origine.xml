@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/list_selector"
@@ -18,13 +19,14 @@
         android:inputType="text"
         android:scrollHorizontally="true"
         android:textSize="15dip"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="SpUsage" />
 
     <EditText
         android:id="@+id/notesContenu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:inputType="textMultiLine"
         android:lines="5"
         android:maxWidth="5.0dip"
@@ -37,7 +39,8 @@
         android:layout_height="wrap_content"
          android:textColor="#10bcc9"
         android:textSize="16dip"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        tools:ignore="SpUsage" />
 
     <!-- <Button -->
     <!-- android:id="@+id/enregistreNoteButton" -->

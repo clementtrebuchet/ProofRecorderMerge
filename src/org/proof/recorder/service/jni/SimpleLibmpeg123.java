@@ -6,7 +6,7 @@ import org.proof.recorder.Settings;
 
 import android.util.Log;
 
-public class SimpleLibmpeg123 extends MP3Decoder{
+class SimpleLibmpeg123 extends MP3Decoder{
 
 	private static final String TAG = "SimpleLibmpeg123";
 	public SimpleLibmpeg123(String filename) {

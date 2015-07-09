@@ -113,7 +113,6 @@ public class PhoneRecord {
 		setSavedId(Long.parseLong(rowId.toString()));
 		if(getSavedId() != -1) {
 			getResolver().insert(PhoneRecordHolder.INSERT_VNOTE_URI, toValues(rowId.toString()));
-			saved = true;
 		}
 
 	}

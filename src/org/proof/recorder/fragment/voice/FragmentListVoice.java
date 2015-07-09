@@ -30,6 +30,7 @@ public class FragmentListVoice extends ProofFragment {
 	private static boolean isNotify = false;
 	private static String voiceId = null;
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		

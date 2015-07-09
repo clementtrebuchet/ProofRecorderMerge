@@ -69,7 +69,7 @@ public class AlertDialogHelper {
 		
 		try {
 			progressDialog.setMessage(getContext().getText(
-					(Object) R.string.encoding_data != null ? (Integer) R.string.encoding_data : R.string.loading));
+					(Integer) R.string.encoding_data));
 			
 			progressDialog.setIndeterminate(true);
 			progressDialog.setCancelable(false);

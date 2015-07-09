@@ -393,7 +393,6 @@ public class ApproxRecordTime {
 		 */
 		mPlayer.reset();
 		mPlayer.release();
-		mPlayer = null;
 		String result = mParseTime(dur);
 		Log.v(TAG, "" + result);
 		return result;

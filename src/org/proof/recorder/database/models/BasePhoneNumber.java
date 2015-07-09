@@ -62,6 +62,7 @@ public abstract class BasePhoneNumber implements Serializable {
 	
 	// Initialization
 
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	private boolean isFilled() {
 		return isFilled;
 	}

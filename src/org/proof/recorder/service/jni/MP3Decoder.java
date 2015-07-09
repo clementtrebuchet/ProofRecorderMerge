@@ -208,8 +208,9 @@ public class MP3Decoder {
         }
     }
     
-    @Override
-	public void finalize()
+
+	@SuppressWarnings("FinalizeDoesntCallSuperFinalize")
+    public void finalize()
     {
         dispose();
     }

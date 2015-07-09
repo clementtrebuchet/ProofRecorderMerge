@@ -40,12 +40,10 @@ public class ConnectivityInfo {
 				// notify user you are online
 				WIFI = true;
 				TROISG = false;
-				NONETWORK = false;
 				Log.e(TAG, "CONNECTIVITE WIFI");
 			} else {
 				WIFI = false;
 				TROISG = false;
-				NONETWORK = true;
 				Log.e(TAG, "PAS DE CONNECTIVITE!!!");
 			}
 		} else if (mobile.isAvailable()) {
@@ -56,18 +54,15 @@ public class ConnectivityInfo {
 				// notify user you are online
 				WIFI = false;
 				TROISG = true;
-				NONETWORK = false;
 				Log.e(TAG, "CONNECTIVITE TROISG");
 			} else {
 				WIFI = false;
 				TROISG = false;
-				NONETWORK = true;
 				Log.e(TAG, "PAS DE CONNECTIVITE!!!");
 			}
 		} else {
 			WIFI = false;
 			TROISG = false;
-			NONETWORK = true;
 			Log.e(TAG, "<<<<PAS DE RESEAU POSSIBLE PAS DE DEVICE PAS DE CONNECTIVITE>>>>");
 		}
 

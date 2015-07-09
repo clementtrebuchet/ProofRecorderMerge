@@ -83,8 +83,8 @@ public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 					+ getInternalContext().getString(R.string.notifyEndOfCallTwo);
 			
 		StaticNotifications.show(getInternalContext(), destination, extraNotification,
-				title, info, text, StaticNotifications.ICONS.DEFAULT, true,
-				true);
+				title, info, text, StaticNotifications.ICONS.DEFAULT, true
+		);
 	}
 	
 	private Bundle prepareExtras() {

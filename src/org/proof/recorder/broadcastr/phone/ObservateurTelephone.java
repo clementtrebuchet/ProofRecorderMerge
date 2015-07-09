@@ -37,6 +37,7 @@ class ObservateurTelephone extends PhoneStateListener {
 	/**
 	 * @return the IS_EXCLUDED
 	 */
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public boolean isExcluded() {
 		return IS_EXCLUDED;
 	}
@@ -127,14 +128,7 @@ class ObservateurTelephone extends PhoneStateListener {
 			Console.print_debug("***********************************************");			
 
 			if (excluded) {
-
 				resetDpm();
-
-				try {
-					this.finalize();
-				} catch (Throwable e) {
-					Console.print_exception(e);
-				}
 				return;
 			}
 

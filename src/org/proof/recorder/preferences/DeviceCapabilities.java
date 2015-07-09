@@ -198,7 +198,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 						"VOICE_RECO", "VOICE_COM" };
 				CheckBoxPreference[] chkB = { voice_up, voice_down, voice_call,
 						cam, voice_reco, voice_com };
-				uI.setArrayBoolean(chk, getApplicationContext(), false);
+				uI.setArrayBoolean(chk, getApplicationContext());
 				uI.noCheckedArrayChk(chkB);
 			}
 
@@ -208,7 +208,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 						"VOICE_RECO", "VOICE_COM" };
 				CheckBoxPreference[] chkB = { mic, voice_down, voice_call, cam,
 						voice_reco, voice_com };
-				uI.setArrayBoolean(chk, getApplicationContext(), false);
+				uI.setArrayBoolean(chk, getApplicationContext());
 				uI.noCheckedArrayChk(chkB);
 
 			}
@@ -219,7 +219,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 						"VOICE_RECO", "VOICE_COM" };
 				CheckBoxPreference[] chkB = { mic, voice_up, voice_call, cam,
 						voice_reco, voice_com };
-				uI.setArrayBoolean(chk, getApplicationContext(), false);
+				uI.setArrayBoolean(chk, getApplicationContext());
 				uI.noCheckedArrayChk(chkB);
 
 			}
@@ -230,7 +230,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 						"VOICE_RECO", "VOICE_COM" };
 				CheckBoxPreference[] chkB = { mic, voice_up, voice_down, cam,
 						voice_reco, voice_com };
-				uI.setArrayBoolean(chk, getApplicationContext(), false);
+				uI.setArrayBoolean(chk, getApplicationContext());
 				uI.noCheckedArrayChk(chkB);
 
 			}
@@ -241,7 +241,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 						"VOICE_RECO", "VOICE_COM" };
 				CheckBoxPreference[] chkB = { mic, voice_up, voice_down,
 						voice_call, voice_reco, voice_com };
-				uI.setArrayBoolean(chk, getApplicationContext(), false);
+				uI.setArrayBoolean(chk, getApplicationContext());
 				uI.noCheckedArrayChk(chkB);
 
 			}
@@ -252,7 +252,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 						"CAM", "VOICE_COM" };
 				CheckBoxPreference[] chkB = { mic, voice_up, voice_down,
 						voice_call, cam, voice_com };
-				uI.setArrayBoolean(chk, getApplicationContext(), false);
+				uI.setArrayBoolean(chk, getApplicationContext());
 				uI.noCheckedArrayChk(chkB);
 
 			}
@@ -263,7 +263,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 						"CAM", "VOICE_RECO" };
 				CheckBoxPreference[] chkB = { mic, voice_up, voice_down,
 						voice_call, cam, voice_reco };
-				uI.setArrayBoolean(chk, getApplicationContext(), false);
+				uI.setArrayBoolean(chk, getApplicationContext());
 				uI.noCheckedArrayChk(chkB);
 
 			}
@@ -375,6 +375,7 @@ public class DeviceCapabilities extends ProofPreferenceActivity {
 							R.string.extra_checkbox_INFORMATION));
 
 		}
+		//prefEdit.commit();
 		prefEdit.commit();
 
 	}

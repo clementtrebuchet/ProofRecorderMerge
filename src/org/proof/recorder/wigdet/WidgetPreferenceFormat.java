@@ -75,6 +75,7 @@ public class WidgetPreferenceFormat extends SherlockPreferenceActivity {
 		}
 
 	}
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
@@ -83,6 +84,7 @@ public class WidgetPreferenceFormat extends SherlockPreferenceActivity {
 	
 	
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

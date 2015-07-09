@@ -39,6 +39,7 @@ public class VoiceEditDialog extends ProofFragmentActivity {
 		VoiceEditDialog.mContext = mContext;
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -51,10 +52,8 @@ public class VoiceEditDialog extends ProofFragmentActivity {
 		
 		setHoldContext(this);
 
-		String DEFAULT_TITLE = getHoldContext().getString(
+		mTitle = getHoldContext().getString(
 				R.string.default_note_title);
-		
-		mTitle = DEFAULT_TITLE;
 		
 		mTitleNote = (TextView) findViewById(R.id.mEdit);
 
