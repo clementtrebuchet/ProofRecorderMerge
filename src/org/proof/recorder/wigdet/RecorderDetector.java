@@ -73,12 +73,12 @@ public class RecorderDetector {
 
 		if (on) {
 			recOn = true;
-			mEditor.putBoolean("isrecording", true).commit();
+			mEditor.putBoolean("isrecording", true).apply();
 			Log.d(TAG, "Recording");
 		}
 		if (!on) {
 			recOn = false;
-			mEditor.putBoolean("isrecording", false).commit();
+			mEditor.putBoolean("isrecording", false).apply();
 			Log.d(TAG, "No recording");
 		}
 		

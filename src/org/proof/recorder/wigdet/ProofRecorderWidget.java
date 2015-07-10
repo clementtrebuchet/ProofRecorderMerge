@@ -590,10 +590,12 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 		if (mSharedPreferences != null) {
 			mEditor = mSharedPreferences.edit();
 			mRecEditor = preferences.edit();
+            mEditor.apply();
 		} else {
 			initMshPref(context);
 			mEditor = mSharedPreferences.edit();
 			mRecEditor = preferences.edit();
+            mEditor.apply();
 		}
 
 	}

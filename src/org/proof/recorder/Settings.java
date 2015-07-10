@@ -201,33 +201,33 @@ public final class Settings {
 	private static void setSharedPrefs(String key, String value) {
 		Editor editor = mSharedPreferences.edit();
 		editor.putString(key, value);
-		editor.commit();
+		editor.apply();
 	}
 
 	private static void setSharedPrefs(String key, boolean value) {
 		Editor editor = mSharedPreferences.edit();
 		editor.putBoolean(key, value);
-		editor.commit();
+		editor.apply();
 	}
 
 	@SuppressWarnings("unused")
 	private static void setSharedPrefs(String key, float value) {
 		Editor editor = mSharedPreferences.edit();
 		editor.putFloat(key, value);
-		editor.commit();
+		editor.apply();
 	}
 
 	@SuppressWarnings("unused")
 	private static void setSharedPrefs(String key, long value) {
 		Editor editor = mSharedPreferences.edit();
 		editor.putLong(key, value);
-		editor.commit();
+		editor.apply();
 	}
 
 	private static void setSharedPrefs(int value) {
 		Editor editor = mSharedPreferences.edit();
 		editor.putInt("recordsCount", value);
-		editor.commit();
+		editor.apply();
 	}
 
 	/**
