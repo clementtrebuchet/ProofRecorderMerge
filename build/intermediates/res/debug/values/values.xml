@@ -286,19 +286,25 @@
     ]]></string>
     <string name="about_some_links">Some links:</string>
     <string name="about_us">About Us</string>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/abs__string.xml -->
     <eat-comment/>
     <string name="abs__action_bar_home_description">Navigate home</string>
     <string name="abs__action_bar_up_description">Navigate up</string>
     <string name="abs__action_menu_overflow_description">More options</string>
     <string name="abs__action_mode_done">Done</string>
-    <string name="abs__activity_chooser_view_see_all">See all...</string>
+    <string name="abs__activity_chooser_view_dialog_title_default">Select activity</string>
+    <string name="abs__activity_chooser_view_see_all">See all…</string>
     <string name="abs__activitychooserview_choose_application">Choose an application</string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
+    <eat-comment/>
     <string name="abs__searchview_description_clear">Clear query</string>
     <string name="abs__searchview_description_query">Search query</string>
     <string name="abs__searchview_description_search">Search</string>
     <string name="abs__searchview_description_submit">Submit query</string>
     <string name="abs__searchview_description_voice">Voice search</string>
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/abs__string.xml -->
+    <eat-comment/>
+    <string name="abs__share_action_provider_share_with">Share with…</string>
     <string name="abs__shareactionprovider_share_with">Share with</string>
     <string name="abs__shareactionprovider_share_with_application">Share with <ns1:g example="Bluetooth" id="application_name">%s</ns1:g></string>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/strings.xml -->

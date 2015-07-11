@@ -1,5 +1,6 @@
 package org.proof.recorder.bases.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -104,7 +105,8 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	}
 	
 	@Override
-	public View getView(final int position, View view, ViewGroup parent) {
+    @SuppressLint("ViewHolder")
+    public View getView(final int position, View view, ViewGroup parent) {
 		
 		viewGroup = parent;
 		

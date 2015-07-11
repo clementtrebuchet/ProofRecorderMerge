@@ -465,7 +465,8 @@
  		<activity
             android:name=".wigdet.WidgetPreferenceFormat"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock">
+            android:theme="@style/Theme.Sherlock"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.WidgetPreferenceFormat" />
 
@@ -538,6 +539,7 @@
             </intent-filter>
         </receiver>
         <!-- Google Analytics -->
+        <!--suppress ExportedPreferenceActivity -->
         <receiver
             android:name="com.google.android.apps.analytics.AnalyticsReceiver"
             android:exported="true" >
