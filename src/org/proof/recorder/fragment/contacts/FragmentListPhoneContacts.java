@@ -99,7 +99,7 @@ public class FragmentListPhoneContacts extends Fragment {
 				if (view == null) {
 					LayoutInflater vi = (LayoutInflater) getActivity()
 							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.custom_contacts_list, parent);
+					view = vi.inflate(R.layout.custom_contacts_list, null);
 				}
 				Contact contact = (Contact) items.get(position);
 				if (contact != null) {
