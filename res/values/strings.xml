@@ -392,6 +392,8 @@
     <string name="SyncronUi_49">La restaurations des données des notes des enregistrement vocaux à échouée\r\n</string>
     <string name="SyncronUi_54">Bienvenue\r\n</string>
     <!-- END SYNCRON -->
+    <string name="start">start</string>
+    <string name="stop">stop</string>
     <string name="billing_not_supported_title">Can\'t make purchases</string>
     <string name="billing_not_supported_message">The Market billing
      service is not available at this time.  You can continue to use this app but you
