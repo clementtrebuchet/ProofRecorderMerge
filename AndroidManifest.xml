@@ -245,7 +245,8 @@
         <activity
             android:name=".preferences.Preference"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock.Light" >
+            android:theme="@style/Theme.Sherlock.Light"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -255,7 +256,8 @@
         <activity
             android:name=".preferences.DeviceCapabilities"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock.Light" >
+            android:theme="@style/Theme.Sherlock.Light"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -279,7 +281,8 @@
         <activity
             android:name=".preferences.FormulaPreferences"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock.Light" >
+            android:theme="@style/Theme.Sherlock.Light"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -448,7 +451,8 @@
         <activity
             android:name=".fragment.phone.FragmentListRecordTabs"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock.Light">
+            android:theme="@style/Theme.Sherlock.Light"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.FragmentListRecordTabs" />
 
@@ -525,7 +529,7 @@
             </intent-filter>
         </receiver>
         <!-- Outgoing Calls -->
-        <receiver android:name=".broadcastr.phone.AppelsSortants" >
+        <receiver android:name=".broadcastr.phone.AppelsSortants" android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
