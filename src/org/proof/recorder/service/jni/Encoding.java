@@ -1,5 +1,6 @@
 package org.proof.recorder.service.jni;
 
+@SuppressWarnings("unused")
 public enum Encoding {
 	 ULAW_8(false, 8, false, Format.ULAW),
 	    ALAW_8(false, 8, false, Format.ALAW),
@@ -14,7 +15,8 @@ public enum Encoding {
 	    PCM_FLOAT_32(true, 32, true),
 	    PCM_FLOAT_64(true, 64, true);
 	 
-	    public interface Ordinals
+	    @SuppressWarnings("unused")
+		public interface Ordinals
 	    {
 	        byte ULAW_8 = 0;
 	        byte ALAW_8 = 1;
@@ -30,7 +32,8 @@ public enum Encoding {
 	        byte PCM_FLOAT_64 = 11;
 	    }
 
-	    public enum Format
+	    @SuppressWarnings("unused")
+		public enum Format
 	    {
 			PCM, ULAW, ALAW
 		}

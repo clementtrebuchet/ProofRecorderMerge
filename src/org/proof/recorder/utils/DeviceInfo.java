@@ -5,6 +5,7 @@ import android.content.Context;
 
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
+@SuppressWarnings("unused")
 public class DeviceInfo {
 
 	private final ConnectivityInfo mNetwork;
@@ -65,10 +66,11 @@ public class DeviceInfo {
 	 * Get the commercial status of the App -> ??
 	 * @return String
 	 */
+	@SuppressWarnings("SameReturnValue")
 	public String getCommercialStatusOfApp() {
 		// @TODO : think about to make it!
-		return null;		
+		return null;
 	}
-	
+
 	
 }

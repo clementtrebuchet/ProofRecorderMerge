@@ -13,14 +13,15 @@ import org.proof.recorder.utils.Log.Console;
 import java.util.Locale;
 
 //Database open/upgrade helper
+@SuppressWarnings("unused")
 public class ProofDataBaseHelper extends SQLiteOpenHelper {
 
-    public ProofDataBaseHelper(Context context, String name, 
+    public ProofDataBaseHelper(Context context, String name,
             CursorFactory factory,
             int version) {
         super(context, name, factory, version);
     }
-    
+
     private static final String DATABASE_NAME = "proofdatabase.db";
 	private static final int DATABASE_VERSION = 18;
 	

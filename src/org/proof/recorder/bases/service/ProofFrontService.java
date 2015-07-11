@@ -3,7 +3,6 @@ package org.proof.recorder.bases.service;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.util.Log;
 
@@ -12,6 +11,7 @@ import org.proof.recorder.R;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+@SuppressWarnings("unused")
 public abstract class ProofFrontService extends ProofService {
 
 	// ForGround Service Mechanic
@@ -46,13 +46,7 @@ public abstract class ProofFrontService extends ProofService {
 
 		Intent intent = new Intent();
 
-		if(pendingIntent != null) {
-			intent.setComponent(
-					new ComponentName(pendingIntentPackage, pendingIntent));			  
-		}
-		else {
-			intent.setClass(this, org.proof.recorder.ProofRecorderActivity.class);
-		}
+		intent.setClass(this, org.proof.recorder.ProofRecorderActivity.class);
 
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
 				Intent.FLAG_ACTIVITY_NEW_TASK|

@@ -3,6 +3,7 @@ package org.proof.recorder.fragment.phone;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -15,191 +16,190 @@ import org.proof.recorder.bases.fragment.ProofFragment;
 import org.proof.recorder.bases.fragment.ProofListFragmentWithQuickAction;
 import org.proof.recorder.database.models.Record;
 import org.proof.recorder.fragment.contacts.utils.ContactsDataHelper;
-import org.proof.recorder.utils.Log.Console;
 import org.proof.recorder.utils.MenuActions;
 import org.proof.recorder.utils.QuickActionDlg;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentListRecordOut extends ProofFragment {		
+public class FragmentListRecordOut extends ProofFragment {
 
-	/** Called when the activity is first created. */
-	@SuppressWarnings("EmptyMethod")
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
+    /**
+     * Called when the activity is first created.
+     */
+    @SuppressWarnings("EmptyMethod")
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-	public static class OutGoingCallsLoader extends ProofListFragmentWithQuickAction
-	{
-		@SuppressWarnings("unchecked")
-		@Override
-		public void onListItemClick(ListView l, final View view, int position,
-				long id) {
+    public static class OutGoingCallsLoader extends ProofListFragmentWithQuickAction {
+        @SuppressWarnings("unchecked")
+        @Override
+        public void onListItemClick(ListView l, final View view, int position,
+                                    long id) {
 
-			super.onListItemClick(l, view, position, id);	
+            super.onListItemClick(l, view, position, id);
 
-			if(!multiSelectEnabled) {				
-				Record mRecord = (Record) objects.get(position);				
-				QuickActionDlg.showPhoneOptionsDlg(
-						getActivity(), 
-						view, 
-						(ArrayAdapter<Object>) 
-						listAdapter, 
-						mRecord);
-			}
-			else {
-				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
-				checkbox.toggle();
-			}
-		}
+            if (!multiSelectEnabled) {
+                Record mRecord = (Record) objects.get(position);
+                QuickActionDlg.showPhoneOptionsDlg(
+                        getActivity(),
+                        view,
+                        (ArrayAdapter<Object>)
+                                listAdapter,
+                        mRecord);
+            } else {
+                CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
+                checkbox.toggle();
+            }
+        }
 
-		@Override
-		protected void initOnOptionsItemSelected() {
-			ProofMultiSelectFragmentActivity.removeUnusedTab();			
-		}
+        @Override
+        protected void initOnOptionsItemSelected() {
+            ProofMultiSelectFragmentActivity.removeUnusedTab();
+        }
 
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);		
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
 
-			MenuActions.setInternalContext(getActivity());
-			
-			reverseCollection = true;
-			
-			fillCollectionRunnable = new Runnable() {
-				@Override
-				public void run() {
-					getContacts();
-				}
-			};
-			
-			startAsyncLoader();
-		}
+            MenuActions.setInternalContext(getActivity());
 
-		private void getContacts() {
-			try {
-				String mIdOrTelephone = extraData.getString("mIdOrTelephone");
-				objects = (ArrayList<Object>) ContactsDataHelper.getOutGoingCalls(getActivity(), mIdOrTelephone);
-			} catch (Exception e) {				
-				Console.print_exception(e);
-			}
-		}
+            reverseCollection = true;
 
-		@Override
-		protected void DoneAction() {
-			ProofMultiSelectFragmentActivity.readdUnusedTab();			
-		}
+            fillCollectionRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    getContacts();
+                }
+            };
 
-		@Override
-		protected void DeleteAllAction() {
-			MenuActions.deleteCalls(recordIds, recordPaths);
-			ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());			
-		}
+            startAsyncLoader();
+        }
 
-		@Override
-		protected void preDeleteAndShareAction() {
-			int iter = 0;					
+        private void getContacts() {
+            try {
+                String mIdOrTelephone = extraData.getString("mIdOrTelephone");
+                objects = (ArrayList<Object>) ContactsDataHelper.getOutGoingCalls(getActivity(), mIdOrTelephone);
+            } catch (Exception e) {
+                Log.d(this.getClass().getName(), e.getMessage());
 
-			for (Object item : objects) {
-				Record lcRecord = (Record) item;
+            }
+        }
 
-				if(lcRecord.isChecked()) {
-					try {						
-						recordIds[iter] = lcRecord.getmId();
-						recordPaths[iter] = lcRecord.getmFilePath();
+        @Override
+        protected void DoneAction() {
+            ProofMultiSelectFragmentActivity.readdUnusedTab();
+        }
 
-						iter++;
-					}
-					catch (Exception e) {
-						Console.print_exception(e);
-					}	
-				}							
-			}			
-		}
+        @Override
+        protected void DeleteAllAction() {
+            MenuActions.deleteCalls(recordIds, recordPaths);
+            ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());
+        }
 
-		@Override
-		protected void DeleteAction() {
+        @Override
+        protected void preDeleteAndShareAction() {
+            int iter = 0;
 
-			MenuActions.deleteCalls(recordIds, recordPaths);
+            for (Object item : objects) {
+                Record lcRecord = (Record) item;
 
-			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
+                if (lcRecord.isChecked()) {
+                    try {
+                        recordIds[iter] = lcRecord.getmId();
+                        recordPaths[iter] = lcRecord.getmFilePath();
 
-			for(Object item : objects) {
-				Record lcRecord = (Record) item;
+                        iter++;
+                    } catch (Exception e) {
+                        Log.d(this.getClass().getName(), e.getMessage());
+                    }
+                }
+            }
+        }
 
-				if(lcRecord.isChecked()) {					
-					toBeProcessed.add(lcRecord);			
-				}					
-			}
+        @Override
+        protected void DeleteAction() {
 
-			for(Object item : toBeProcessed) {
-				((RecordAdapter)listAdapter).remove(item);
-				objects.remove(item);
-			}
+            MenuActions.deleteCalls(recordIds, recordPaths);
 
-			((RecordAdapter)listAdapter).notifyDataSetChanged();		
-		}
+            ArrayList<Object> toBeProcessed = new ArrayList<Object>();
 
-		@Override
-		protected boolean itemChecked(Object item) {
-			return ((Record) item).isChecked();
-		}
+            for (Object item : objects) {
+                Record lcRecord = (Record) item;
 
-		@Override
-		protected void _onPreExecute() {
-			// TODO Auto-generated method stub			
-		}
+                if (lcRecord.isChecked()) {
+                    toBeProcessed.add(lcRecord);
+                }
+            }
 
-		@Override
-		protected void _onProgressUpdate(Integer... progress) {
-			// TODO Auto-generated method stub			
-		}
+            for (Object item : toBeProcessed) {
+                ((RecordAdapter) listAdapter).remove(item);
+                objects.remove(item);
+            }
 
-		@Override
-		protected void _onPostExecute(Long result) {
-			initAdapter(getActivity(), objects, R.layout.listfragmentdroit, multiSelectEnabled);			
-		}
+            ((RecordAdapter) listAdapter).notifyDataSetChanged();
+        }
 
-		@Override
-		protected void _doInBackground(Void... params) {
-			getContacts();
-		}
+        @Override
+        protected boolean itemChecked(Object item) {
+            return ((Record) item).isChecked();
+        }
 
-		@Override
-		protected int collectionSorter(Object object1, Object object2) {
-			Record r1 = (Record) object1;
-			Record r2 = (Record) object2;
-			return (r1.getmTimeStamp().compareToIgnoreCase(r2.getmTimeStamp()));
-		}
+        @Override
+        protected void _onPreExecute() {
+            // TODO Auto-generated method stub
+        }
 
-		@Override
-		protected void initAdapter(Context context, List<Object> collection,
-				int layoutId, boolean multiSelectMode) {
-			listAdapter = null;
-			listAdapter = new RecordAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());
-		}
+        @Override
+        protected void _onProgressUpdate(Integer... progress) {
+            // TODO Auto-generated method stub
+        }
 
-		@Override
-		protected void uncheckItem(Object item) {
-			((Record) item).setChecked(false);	
-		}
+        @Override
+        protected void _onPostExecute(Long result) {
+            initAdapter(getActivity(), objects, R.layout.listfragmentdroit, multiSelectEnabled);
+        }
 
-		@Override
-		protected void toggleItem(Object item, boolean checked) {
-			((Record) item).setChecked(checked);
-		}
+        @Override
+        protected void _doInBackground(Void... params) {
+            getContacts();
+        }
 
-		@Override
-		protected Object getItemClone(Object item) {
-			return ((Record) item).clone();
-		}
+        @Override
+        protected int collectionSorter(Object object1, Object object2) {
+            Record r1 = (Record) object1;
+            Record r2 = (Record) object2;
+            return (r1.getmTimeStamp().compareToIgnoreCase(r2.getmTimeStamp()));
+        }
 
-		@Override
-		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
+        @Override
+        protected void initAdapter(Context context, List<Object> collection,
+                                   int layoutId, boolean multiSelectMode) {
+            listAdapter = null;
+            listAdapter = new RecordAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());
+        }
+
+        @Override
+        protected void uncheckItem(Object item) {
+            ((Record) item).setChecked(false);
+        }
+
+        @Override
+        protected void toggleItem(Object item, boolean checked) {
+            ((Record) item).setChecked(checked);
+        }
+
+        @Override
+        protected Object getItemClone(Object item) {
+            return ((Record) item).clone();
+        }
+
+        @Override
+        protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+            // TODO Auto-generated method stub
+
+        }
+    }
 }

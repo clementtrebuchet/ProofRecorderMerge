@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+@SuppressWarnings("unused")
 public class ConnectivityInfo {
 
 	private static final String TAG = "ConnectivityInfo";
@@ -21,6 +22,7 @@ public class ConnectivityInfo {
 		mContext = cont;
 	}
 
+	@SuppressWarnings("UnusedAssignment")
 	public static void informationConnectivity(Context cont) {
 		mContext = cont;
 		final ConnectivityManager connMgr = (ConnectivityManager) mContext

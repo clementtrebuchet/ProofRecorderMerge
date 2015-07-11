@@ -1,5 +1,6 @@
 package org.proof.recorder.service.jni;
 
+@SuppressWarnings("unused")
 class SimpleLame {
 	
 	private static final String TAG = "SimpleLame";
@@ -7,7 +8,7 @@ class SimpleLame {
 	
 	/**
 	 * Initialize LAME.
-	 * 
+	 *
 	 * @param inSamplerate
 	 *            input sample rate in Hz.
 	 * @param outChannel

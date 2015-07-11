@@ -63,13 +63,12 @@ public class IServiceRecorderOggCx implements ServiceConnection{
             }
     }
     /**
-     * 
-     * @param Filename
-     * @param mSampleRate
-     * @param mQuality
-     * @param audioSource
-     * @param notificationIntent
-     * @param notificationPkg
+     *
+	 * @param Filename the name of the file
+	 * @param mSampleRate the sample rate
+	 * @param audioSource audio source
+	 * @param notificationIntent the notification agent
+	 * @param notificationPkg the notification for package action
      */
 	public void safelyPassParameters(String Filename, int mSampleRate,
 			float mQuality, int audioSource,

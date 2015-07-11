@@ -25,8 +25,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
+@SuppressWarnings("unused")
 public final class ContactsDataHelper {
 
+	@SuppressWarnings("unused")
 	private static class DupeContactComparator implements Comparator<Object>{
 
 		@Override
@@ -37,6 +39,7 @@ public final class ContactsDataHelper {
 		}           
     }
 
+	@SuppressWarnings("unused")
 	private enum type {
 		EXCLUDED, 
 		PHONE, 
@@ -434,15 +437,15 @@ public final class ContactsDataHelper {
 	}
 	
 	public static boolean isExcluded(Context context, String phoneNumber) {
-		
-		mContext = context;	
-		
+
+		mContext = context;
+
 		SimplePhoneNumber _phoneNumber = new SimplePhoneNumber(phoneNumber);
-		_phoneNumber.toConsole();		
-		
+		_phoneNumber.toConsole();
+
 		_getExcludedContact(
 				PhoneNumberUtils.stripSeparators(phoneNumber));
-		
+
 		return mExcludedContacts.size() > 0;
 	}
 

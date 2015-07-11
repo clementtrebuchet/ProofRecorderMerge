@@ -23,6 +23,7 @@ import org.proof.recorder.database.support.ProofDataBase;
 
 import java.io.InputStream;
 
+@SuppressWarnings("unused")
 class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
 		SectionIndexer {
 
@@ -41,7 +42,7 @@ class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
 	 * private static final int ITEM_VIEW_TYPE_VIDEO = 0; private static final
 	 * int ITEM_VIEW_TYPE_SEPARATOR = 1; private static final int
 	 * ITEM_VIEW_TYPE_COUNT = 2;
-	 * 
+	 *
 	 * private Date convertTimeStampToDate(String timeStamp) { Date date = new
 	 * Date(Long.parseLong(timeStamp)); return date; }
 	 */
@@ -117,7 +118,7 @@ class RecorderListDossiersAdapter extends SimpleCursorAdapter implements
 		 * intent.putExtras(b); intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		 * v.getContext().startActivity(intent); Log.e(TAG, "TAPPED ON ARROW");
 		 * } catch (Exception e) { Log.e(TAG, e.getMessage()); } } };
-		 * 
+		 *
 		 * ImageView img =
 		 * (ImageView)view.findViewById(R.id.arrow_record_detail);
 		 */

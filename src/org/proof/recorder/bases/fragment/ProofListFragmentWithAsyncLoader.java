@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+@SuppressWarnings("UnusedParameters")
 public abstract class ProofListFragmentWithAsyncLoader extends ProofListFragmentBase {
 	
 	private AsyncLoader collectionLoader;

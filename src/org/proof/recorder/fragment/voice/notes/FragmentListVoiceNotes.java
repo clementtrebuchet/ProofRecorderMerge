@@ -24,6 +24,7 @@ import org.proof.recorder.utils.Log.Console;
 
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class FragmentListVoiceNotes extends ProofFragment {
 
 	private static Bundle mBundle;

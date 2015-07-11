@@ -1,13 +1,14 @@
 package org.proof.recorder.services;
 
-import java.io.IOException;
+import android.content.Intent;
 
 import org.proof.recorder.R;
 import org.proof.recorder.apis.soundcloud.FileUploader;
 import org.proof.recorder.bases.service.ProofFrontService;
 
-import android.content.Intent;
+import java.io.IOException;
 
+@SuppressWarnings("unused")
 public class SoundCloudBgUploader extends ProofFrontService {
 	
 	protected static final int NOTIFICATION_ID = 552889171;
@@ -22,6 +23,7 @@ public class SoundCloudBgUploader extends ProofFrontService {
 
 	private int selectedCount = 0;
 	
+	@SuppressWarnings("unused")
 	class UploadingRunnable implements Runnable {
 		
 		// set this to true to stop the thread

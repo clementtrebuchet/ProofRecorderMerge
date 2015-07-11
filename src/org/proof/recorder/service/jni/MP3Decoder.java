@@ -2,8 +2,10 @@ package org.proof.recorder.service.jni;
 
 import java.nio.ShortBuffer;
 
+@SuppressWarnings("unused")
 public class MP3Decoder {
-	public interface Error
+	@SuppressWarnings("unused")
+    public interface Error
     {
         int DONE = -12;            // Message: Track ended. Stop decoding.
         int NEW_FORMAT = -11;      // Message: Output format will be different on next call. Note that some libmpg123 versions between 1.4.3 and 1.8.0 insist on you calling mpg123_getformat() after getting this message code. Newer verisons behave like advertised: You have the chance to call mpg123_getformat(), but you can also just continue decoding and get your data.
@@ -12,7 +14,7 @@ public class MP3Decoder {
         int OK = 0;                // Success
         int BAD_OUTFORMAT = 1;     // Unable to set up output format!
         int BAD_CHANNEL = 2;       // Invalid channel number specified.
-        int BAD_RATE = 3;          // Invalid sample rate specified. 
+        int BAD_RATE = 3;          // Invalid sample rate specified.
         int ERR_16TO8TABLE = 4;    // Unable to allocate memory for 16 to 8 converter table!
         int BAD_PARAM = 5;         // Bad parameter id!
         int BAD_BUFFER = 6;        // Bad buffer given -- invalid pointer or too small size.
@@ -51,12 +53,13 @@ public class MP3Decoder {
         int BAD_VALUE = 39;        // A bad value has been given, somewhere.
         int LSEEK_FAILED = 40;     // Low-level seek failed.
         int BAD_CUSTOM_IO = 41;    // Custom I/O not prepared.
-        int LFS_OVERFLOW = 42;     // Offset value overflow during translation of large file API calls -- your client program cannot handle that large file.        
+        int LFS_OVERFLOW = 42;     // Offset value overflow during translation of large file API calls -- your client program cannot handle that large file.
     }
     
     /**
      * Flag definitions for the features that can be queried for using getFeatures()
      */
+    @SuppressWarnings("unused")
     public enum Feature
     {
         ABI_UTF8OPEN,      // mpg123 expects path names to be given in UTF-8 encoding instead of plain native.
@@ -82,6 +85,7 @@ public class MP3Decoder {
         }
     }
     
+    @SuppressWarnings("unused")
     public interface Flags
     {
         /** Force playback of left channel only. */
@@ -172,7 +176,7 @@ public class MP3Decoder {
 
     /**
      * Opens the given file for mp3 decoding. Throws an IllegalArugmentException in case the file could not be opened.
-     * 
+     *
      * @param filename the filename
      */
     MP3Decoder(String filename)

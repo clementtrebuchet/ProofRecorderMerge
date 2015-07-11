@@ -9,18 +9,19 @@ import org.proof.recorder.utils.Log.Console;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class VoicesList {
 	
 	private List<Object> _collection = null;	
 
 	/**
-	 * 
+	 *
 	 */
 	public VoicesList() {
 		super();
-		
+
 	}
-	
+
 	public VoicesList(Cursor cursor) {
 		super();
 		fillCollection(cursor);
@@ -50,7 +51,7 @@ public class VoicesList {
 	public List<Object> getCollectionAsObjects() {
 		return _collection;
 	}
-	
+
 	
 	/**
 	 * @param _collection the _collection to set

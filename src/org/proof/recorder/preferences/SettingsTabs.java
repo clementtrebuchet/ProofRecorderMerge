@@ -13,7 +13,7 @@ import android.widget.TextView;
 import org.proof.recorder.R;
 
 
-@SuppressWarnings("ALL")
+@SuppressWarnings({"ALL", "unused"})
 public class SettingsTabs extends TabActivity {
 	
 	/*private FragmentTabHost mTabHost;

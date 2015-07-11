@@ -50,135 +50,136 @@ import java.io.OutputStream;
 import java.util.Calendar;
 
 
+@SuppressWarnings("unused")
 public class ProofRecorderActivity extends SherlockActivity {
-	public static final String TAG = "ProofRecorderActivity";
-	private static final String BR  = "\n";
+    public static final String TAG = "ProofRecorderActivity";
+    private static final String BR = "\n";
 
-	// private static boolean initTestDevice = true;
+    // private static boolean initTestDevice = true;
 
-	private static boolean checkLicsenceOk;
+    private static boolean checkLicsenceOk;
 
-	static final int PICK_CONTACT_REQUEST = 0;
-	//private static final String BASE64_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlJHQPCfccFjpEBQPG29jnh18AWwDqovEKOOZ4ms2aYWvoUUabaJT3NPCJ9XlgQYhB7wsC9ZYt9jHZBYX+WbMJ1XJs14EoNbWIJYK2urIbNTYGd2yjH4bE0irf7AYmLchuOfO3AJzdUi0LYbY7A+LS+CGSOSTCNGlRFzsWAEqF0phQudbYE4rzyPNxs8wj192sI188GYiPhTAv77yVcqI8ppnaaVCDpq7XY+g4IunoltTg9Xtz6h5m/Upr44kLmjB1FPM0rvAe75EW2uXXjImXQKCxLhZy6Q07uMqSwXpc6shnLr9OifzbQI3zpxfPStoTmmcc3MmfuMdLIoueShPwIDAQAB";
-	
-	// Generate your own 20 random bytes, and put them here.
+    static final int PICK_CONTACT_REQUEST = 0;
+    //private static final String BASE64_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzlJHQPCfccFjpEBQPG29jnh18AWwDqovEKOOZ4ms2aYWvoUUabaJT3NPCJ9XlgQYhB7wsC9ZYt9jHZBYX+WbMJ1XJs14EoNbWIJYK2urIbNTYGd2yjH4bE0irf7AYmLchuOfO3AJzdUi0LYbY7A+LS+CGSOSTCNGlRFzsWAEqF0phQudbYE4rzyPNxs8wj192sI188GYiPhTAv77yVcqI8ppnaaVCDpq7XY+g4IunoltTg9Xtz6h5m/Upr44kLmjB1FPM0rvAe75EW2uXXjImXQKCxLhZy6Q07uMqSwXpc6shnLr9OifzbQI3zpxfPStoTmmcc3MmfuMdLIoueShPwIDAQAB";
+
+    // Generate your own 20 random bytes, and put them here.
 //	private static final byte[] SALT = new byte[] { -46, 65, 30, -128, -103,
 //		-57, 74, -64, 51, 88, -95, -12, 77, -107, -36, -113, -11, 32, -64,
 //		89 };
-	/*LicenseCheckerCallback mLicenseCheckerCallback;
+    /*LicenseCheckerCallback mLicenseCheckerCallback;
 	LicenseChecker mChecker;*/
-	// A handler on the UI thread.
-	Handler mHandler;
+    // A handler on the UI thread.
+    Handler mHandler;
 
-	private static Context mContext;
+    private static Context mContext;
 
-	public static boolean bTitled, bUntitled, bKnown, bUnknown;
+    public static boolean bTitled, bUntitled, bKnown, bUnknown;
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(0, 1, 0, getString(R.string.search_hint))
-		.setIcon(R.drawable.ic_action_search)
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.add(0, 1, 0, getString(R.string.search_hint))
+                .setIcon(R.drawable.ic_action_search)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		SubMenu sub = menu.addSubMenu("+");
-		sub.add(0, 2, 1, getString(R.string.info_phone));
+        SubMenu sub = menu.addSubMenu("+");
+        sub.add(0, 2, 1, getString(R.string.info_phone));
 
-		sub.add(0, 4, 3, getString(R.string.about_us));
+        sub.add(0, 4, 3, getString(R.string.about_us));
 
-		sub.getItem().setShowAsAction(
-				MenuItem.SHOW_AS_ACTION_ALWAYS
-				| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        sub.getItem().setShowAsAction(
+                MenuItem.SHOW_AS_ACTION_ALWAYS
+                        | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	protected void onNewIntent(Intent intent) {
+    @Override
+    protected void onNewIntent(Intent intent) {
 
-		if (Settings.isDebug()) {
-			Log.e(TAG, "onNewIntent()->IntentAction: " + intent.getAction());
-		}			
+        if (Settings.isDebug()) {
+            Log.e(TAG, "onNewIntent()->IntentAction: " + intent.getAction());
+        }
 
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		setIntent(intent);
-	}
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        setIntent(intent);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (Settings.isDebug()) {
-			String msg = "=== ITEM INFO ===" + BR;
-			msg += "STRING: " + item.toString() + BR;
-			msg += "ID    : " + item.getItemId() + BR;
-			msg += "GROUP : " + item.getGroupId() + BR;
+        if (Settings.isDebug()) {
+            String msg = "=== ITEM INFO ===" + BR;
+            msg += "STRING: " + item.toString() + BR;
+            msg += "ID    : " + item.getItemId() + BR;
+            msg += "GROUP : " + item.getGroupId() + BR;
 
-			Log.d(TAG, msg);
-		}			
+            Log.d(TAG, msg);
+        }
 
-		switch (item.getItemId()) {
-		case 0:
-			return false;
+        switch (item.getItemId()) {
+            case 0:
+                return false;
 
-		case 1:
-			if (!Settings.isNotLicensed()) {
-				StaticIntents intent = StaticIntents.create(
-						ProofRecorderActivity.this, Search.class);
-				startActivity(intent);
-			}
-			return true;
+            case 1:
+                if (!Settings.isNotLicensed()) {
+                    StaticIntents intent = StaticIntents.create(
+                            ProofRecorderActivity.this, Search.class);
+                    startActivity(intent);
+                }
+                return true;
 
-		case 2:
-			if (!Settings.isNotLicensed()) {
-				Intent intent = new Intent(ProofRecorderActivity.this,
-						PhoneInformations.class);
-				startActivity(intent);
-			}
-			return true;
+            case 2:
+                if (!Settings.isNotLicensed()) {
+                    Intent intent = new Intent(ProofRecorderActivity.this,
+                            PhoneInformations.class);
+                    startActivity(intent);
+                }
+                return true;
 
-		case 4:
-			if (!Settings.isNotLicensed()) {
-				Intent intent = new Intent(ProofRecorderActivity.this,
-						AboutApps.class);
-				startActivity(intent);
-			}
-			return true;
+            case 4:
+                if (!Settings.isNotLicensed()) {
+                    Intent intent = new Intent(ProofRecorderActivity.this,
+                            AboutApps.class);
+                    startActivity(intent);
+                }
+                return true;
 
-		default:
-			return false;
-		}
-	}
+            default:
+                return false;
+        }
+    }
 
-	// private static final int ACTIVITY_RECORD_SOUND = 1;
+    // private static final int ACTIVITY_RECORD_SOUND = 1;
 
-	private static void refreshVoicesAndCalls(Context context) {
-		
-		int known, unknown, titled, untitled;
+    private static void refreshVoicesAndCalls(Context context) {
 
-		known = AndroidContactsHelper.getKnownFolderContactsCount();
-		unknown = AndroidContactsHelper.getUnKnownFolderContactsCount();
-		
-		titled = AndroidContactsHelper.getTitledVoiceCount(context);
-		untitled = AndroidContactsHelper.getUnTitledVoiceCount(context);
+        int known, unknown, titled, untitled;
 
-		bKnown = known > 0;
+        known = AndroidContactsHelper.getKnownFolderContactsCount();
+        unknown = AndroidContactsHelper.getUnKnownFolderContactsCount();
 
-		bUnknown = unknown > 0;
+        titled = AndroidContactsHelper.getTitledVoiceCount(context);
+        untitled = AndroidContactsHelper.getUnTitledVoiceCount(context);
 
-		bTitled = titled > 0;
+        bKnown = known > 0;
 
-		bUntitled = untitled > 0;
-	}
-	
-	// DEBUG MODE TO COPY DATABASE TO SDCARD
+        bUnknown = unknown > 0;
 
-	@SuppressWarnings("ResultOfMethodCallIgnored")
-	public static void copyDatabase(Context c, String DATABASE_NAME) {
+        bTitled = titled > 0;
+
+        bUntitled = untitled > 0;
+    }
+
+    // DEBUG MODE TO COPY DATABASE TO SDCARD
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void copyDatabase(Context c, String DATABASE_NAME) {
         String databasePath = c.getDatabasePath(DATABASE_NAME).getPath();
         File f = new File(databasePath);
         OutputStream myOutput = null;
         InputStream myInput = null;
-        
+
         Log.d("testing", " testing db path " + databasePath);
         Log.d("testing", " testing db exist " + f.exists());
 
@@ -200,76 +201,78 @@ public class ProofRecorderActivity extends SherlockActivity {
                 }
 
                 myOutput.flush();
-			} catch (Exception ignored) {
-			} finally {
-				try {
+            } catch (Exception ignored) {
+            } finally {
+                try {
                     if (myOutput != null) {
                         myOutput.close();
-					}
-					if (myInput != null) {
-						myInput.close();
-					}
-				} catch (Exception ignored) {
-				}
-			}
+                    }
+                    if (myInput != null) {
+                        myInput.close();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
         }
     }
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		mContext = this;
-		Settings.setSettingscontext(this);
-		AlertDialogHelper.setContext(this);
-		
-		refreshVoicesAndCalls(this);
-	}
 
-	/** Called when the activity is first created. */
-	@SuppressLint("NewApi")
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onResume() {
+        super.onResume();
+        mContext = this;
+        Settings.setSettingscontext(this);
+        AlertDialogHelper.setContext(this);
 
-		mContext = this;
-		
-		Settings.setSettingscontext(this);
-		AlertDialogHelper.setContext(this);
-		
-		refreshVoicesAndCalls(this);
-		
-		Settings.assertPlugVersion();		
-		
-		//copyDatabase(this, "proofdatabase.db");
+        refreshVoicesAndCalls(this);
+    }
 
+    /**
+     * Called when the activity is first created.
+     */
+    @SuppressLint("NewApi")
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-			.permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-		}
-		
-		// TODO: SpyRecorder.
-		// TODO: Remove if not really needed for free App, 
-		// TODO: might be used for later version?
-		
-		//new SpyRecorder().startIntercepting();
-		
-		
-		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView(R.layout.main);
-		
-		ConnectivityInfo.informationConnectivity(this);	
+        mContext = this;
+
+        Settings.setSettingscontext(this);
+        AlertDialogHelper.setContext(this);
+
+        refreshVoicesAndCalls(this);
+
+        Settings.assertPlugVersion();
+
+        //copyDatabase(this, "proofdatabase.db");
 
 
-		if (ConnectivityInfo.WIFI || ConnectivityInfo.TROISG) {
-			AnalyticsRecorderProof trackerd = new AnalyticsRecorderProof(
-					getApplicationContext());
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
-			trackerd.execute();
-			TestDevice bt = new TestDevice();
-			bt.execute();
+        // TODO: SpyRecorder.
+        // TODO: Remove if not really needed for free App,
+        // TODO: might be used for later version?
+
+        //new SpyRecorder().startIntercepting();
+
+
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setContentView(R.layout.main);
+
+        ConnectivityInfo.informationConnectivity(this);
+
+
+        if (ConnectivityInfo.WIFI || ConnectivityInfo.TROISG) {
+            AnalyticsRecorderProof trackerd = new AnalyticsRecorderProof(
+                    getApplicationContext());
+
+            trackerd.execute();
+            TestDevice bt = new TestDevice();
+            bt.execute();
 
 			/*mHandler = new Handler();
 			
@@ -309,85 +312,91 @@ public class ProofRecorderActivity extends SherlockActivity {
 					BASE64_PUBLIC_KEY);
 
 			doCheck();*/
-			
-			 //* Ckeck eula at the end
-			
-			// TODO: change licence words like 'COMPANY_NAME', etc ...
-			// TODO: Ensure license process works fine.
-			// TODO: Hide 3 options in share intent chooser
-			// That's all Folks !
-			 
 
-		}
-		SharedPreferences pre = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		
-		if (!pre.getBoolean("FIRSTINSTALL", false)) {
-			
-			Eula.showEULA(ProofRecorderActivity.this);
-			pre.edit().putBoolean("FIRSTINSTALL", true).commit();
-			
-		} else {
-			
-			eulaChecker();
-		}
-		
-		StaticNotifications.cancelNotification(this);		
+            //* Ckeck eula at the end
 
-		// Microphone DashBoard Icon
-		ImageButton recordVoice = (ImageButton) findViewById(R.id.recordVoice);
-		// recordVoice.setImageResource(R.drawable.microphone);
+            // TODO: change licence words like 'COMPANY_NAME', etc ...
+            // TODO: Ensure license process works fine.
+            // TODO: Hide 3 options in share intent chooser
+            // That's all Folks !
 
-		// Green Book DashBoard Icon
-		ImageButton voiceList = (ImageButton) findViewById(R.id.voiceList);
 
-		// Blue Book DashBoard Icon
-		ImageButton phoneCallList = (ImageButton) findViewById(R.id.phoneCallList);
+        }
+        SharedPreferences pre = PreferenceManager
+                .getDefaultSharedPreferences(this);
 
-		// preferences DashBoard Icon
-		ImageButton settings = (ImageButton) findViewById(R.id.settings);
+        if (!pre.getBoolean("FIRSTINSTALL", false)) {
 
-		// excluded contacts DashBoard Icon
-		ImageButton excludedContacts = (ImageButton) findViewById(R.id.excludedFromRecordingList);
+            Eula.showEULA(ProofRecorderActivity.this);
+            pre.edit().putBoolean("FIRSTINSTALL", true).apply();
 
-		// excluded contacts DashBoard Icon
-		ImageButton dashBoardPerformances = (ImageButton) findViewById(R.id.dashBoardPerformances);
+        } else {
 
-		dashBoardPerformances.setOnClickListener(new OnClickListener() {
+            eulaChecker();
+        }
 
-			@Override
-			public void onClick(View paramView) {
-				mContext.startActivity(StaticIntents.goPlugins(mContext));
-			}
+        try {
+            StaticNotifications.cancelNotification(this);
+        } catch (Exception e) {
 
-		});
+            Log.d(TAG, e.getMessage()+":"+e.getClass());
+        }
 
-		voiceList.setOnClickListener(new OnClickListener() {
+        // Microphone DashBoard Icon
+        ImageButton recordVoice = (ImageButton) findViewById(R.id.recordVoice);
+        // recordVoice.setImageResource(R.drawable.microphone);
 
-			@Override
-			public void onClick(View paramView) {			
+        // Green Book DashBoard Icon
+        ImageButton voiceList = (ImageButton) findViewById(R.id.voiceList);
 
-				if (!bTitled && !bUntitled) {
-					AlertDialogHelper.openNoneRecordsDialog();
-				}
+        // Blue Book DashBoard Icon
+        ImageButton phoneCallList = (ImageButton) findViewById(R.id.phoneCallList);
 
-				else {
+        // preferences DashBoard Icon
+        ImageButton settings = (ImageButton) findViewById(R.id.settings);
 
-					if (!Settings.isNotLicensed()) {
-						Intent intent = new Intent(ProofRecorderActivity.this,
-								FragmentListVoiceTabs.class);
-						startActivity(intent);
-					}
+        // excluded contacts DashBoard Icon
+        ImageButton excludedContacts = (ImageButton) findViewById(R.id.excludedFromRecordingList);
 
-				}
-			}
+        // excluded contacts DashBoard Icon
+        ImageButton dashBoardPerformances = (ImageButton) findViewById(R.id.dashBoardPerformances);
 
-		});
+        //noinspection unused
+        dashBoardPerformances.setOnClickListener(new OnClickListener() {
 
-		recordVoice.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View paramView) {
+                mContext.startActivity(StaticIntents.goPlugins(mContext));
+            }
 
-			@Override
-			public void onClick(View paramView) {
+        });
+
+        //noinspection unused
+        voiceList.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View paramView) {
+
+                if (!bTitled && !bUntitled) {
+                    AlertDialogHelper.openNoneRecordsDialog();
+                } else {
+
+                    if (!Settings.isNotLicensed()) {
+                        Intent intent = new Intent(ProofRecorderActivity.this,
+                                FragmentListVoiceTabs.class);
+                        startActivity(intent);
+                    }
+
+                }
+            }
+
+        });
+
+        //noinspection unused
+        recordVoice.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View paramView) {
 
 				/*
 				 * Intent intent = new
@@ -395,132 +404,131 @@ public class ProofRecorderActivity extends SherlockActivity {
 				 * startActivityForResult(intent, ACTIVITY_RECORD_SOUND);
 				 */
 
-				if (!Settings.isNotLicensed()) {
-					Intent intentPrefs = new Intent(ProofRecorderActivity.this,
-							FragmentVoiceMediaRecorder.class);
-					startActivity(intentPrefs);
-				}
+                if (!Settings.isNotLicensed()) {
+                    Intent intentPrefs = new Intent(ProofRecorderActivity.this,
+                            FragmentVoiceMediaRecorder.class);
+                    startActivity(intentPrefs);
+                }
 
-			}
+            }
 
-		});
+        });
 
-		excludedContacts.setOnClickListener(new OnClickListener() {
+        //noinspection unused
+        excludedContacts.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View paramView) {
+            @Override
+            public void onClick(View paramView) {
 				/*
 				 * Uri uri = Uri.parse("content://contacts/people/");
 				 * startActivityForResult( new Intent(Intent.ACTION_PICK, uri),
 				 * PICK_CONTACT_REQUEST);
 				 */
 
-				if (!Settings.isNotLicensed()) {
-					Intent intent = new Intent(ProofRecorderActivity.this,
-							FragmentListPhoneContactsTabs.class);
-					startActivity(intent);
-				}
+                if (!Settings.isNotLicensed()) {
+                    Intent intent = new Intent(ProofRecorderActivity.this,
+                            FragmentListPhoneContactsTabs.class);
+                    startActivity(intent);
+                }
 
-			}
+            }
 
-		});
+        });
 
-		settings.setOnClickListener(new OnClickListener() {
+        //noinspection unused
+        settings.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View paramView) {
+            @Override
+            public void onClick(View paramView) {
 
-				if (!Settings.isNotLicensed()) {
-					Intent intentPrefs = new Intent(ProofRecorderActivity.this,
-							SettingsTabs.class);
-					startActivity(intentPrefs);
-				}
-			}
+                if (!Settings.isNotLicensed()) {
+                    Intent intentPrefs = new Intent(ProofRecorderActivity.this,
+                            SettingsTabs.class);
+                    startActivity(intentPrefs);
+                }
+            }
 
-		});
+        });
 
-		phoneCallList.setOnClickListener(new OnClickListener() {
+        //noinspection unused
+        phoneCallList.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View paramView) {		
+            @Override
+            public void onClick(View paramView) {
 
-				if (!bKnown && !bUnknown) {
-					AlertDialogHelper.openNoneRecordsDialog();
-				}
+                if (!bKnown && !bUnknown) {
+                    AlertDialogHelper.openNoneRecordsDialog();
+                } else {
 
-				else {
+                    if (!Settings.isNotLicensed()) {
+                        Intent intent = new Intent(ProofRecorderActivity.this,
+                                FragmentListRecordFoldersTabs.class);
+                        startActivity(intent);
+                    }
 
-					if (!Settings.isNotLicensed()) {
-						Intent intent = new Intent(ProofRecorderActivity.this,
-								FragmentListRecordFoldersTabs.class);
-						startActivity(intent);
-					}
+                }
+            }
+        });
 
-				}
-			}
-		});	
+        if (!Settings.isAlarm()) {
 
-		if(!Settings.isAlarm()) {
-			
-			Console.print("Alarm for Contacts Api checks is not set");
-			
-			final boolean isTesting = false;
-			
-			Intent alarmIntent = new Intent(mContext, VerifyContactsApiReceiver.class);
-			
-			PendingIntent pendingIntent = PendingIntent.getBroadcast(
-					mContext, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			
-			AlarmManager alarmManager = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
-			
-			Calendar date = Calendar.getInstance();
-			date.setTimeInMillis(System.currentTimeMillis());
+            Console.print("Alarm for Contacts Api checks is not set");
 
-			Calendar midnight = Calendar.getInstance();
+            final boolean isTesting = false;
 
-			//noinspection ConstantConditions
-			if(isTesting)
-				midnight.set(
-						date.get(Calendar.YEAR), 
-						date.get(Calendar.MONTH), 
-						date.get(Calendar.DAY_OF_MONTH),
-						19, 
-						33
-				);
-			else
-				midnight.set(
-						date.get(Calendar.YEAR), 
-						date.get(Calendar.MONTH), 
-						date.get(Calendar.DAY_OF_MONTH), 
-						23,
-						59
-				);
-			
-			midnight.add(Calendar.MINUTE, 1);
-			
-			if(date.equals(midnight)) {
-				midnight.add(Calendar.MINUTE, 6);
-			}
+            Intent alarmIntent = new Intent(mContext, VerifyContactsApiReceiver.class);
 
-			long minutesBetween = 0;  
-			while (date.before(midnight)) {
-				date.add(Calendar.MINUTE, 1);
-				minutesBetween++;
-			}
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    mContext, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-			if(Settings.isDebug())
-				Console.print("Count of minutes from now to midnight: " + minutesBetween);
-			
-			alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
+            AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 
-			Settings.setAlarm(true);
-		}
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(System.currentTimeMillis());
 
-		else {
-			Console.print("Alarm for Contacts Api checks is set!");
-		}
+            Calendar midnight = Calendar.getInstance();
 
-	}
+            //noinspection ConstantConditions
+            if (isTesting)
+                midnight.set(
+                        date.get(Calendar.YEAR),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.DAY_OF_MONTH),
+                        19,
+                        33
+                );
+            else
+                midnight.set(
+                        date.get(Calendar.YEAR),
+                        date.get(Calendar.MONTH),
+                        date.get(Calendar.DAY_OF_MONTH),
+                        23,
+                        59
+                );
+
+            midnight.add(Calendar.MINUTE, 1);
+
+            if (date.equals(midnight)) {
+                midnight.add(Calendar.MINUTE, 6);
+            }
+
+            long minutesBetween = 0;
+            while (date.before(midnight)) {
+                date.add(Calendar.MINUTE, 1);
+                minutesBetween++;
+            }
+
+            if (Settings.isDebug())
+                Console.print("Count of minutes from now to midnight: " + minutesBetween);
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
+
+            Settings.setAlarm(true);
+        } else {
+            Console.print("Alarm for Contacts Api checks is set!");
+        }
+
+    }
 
 	/*
 	 * @Override protected void onActivityResult(int requestCode, int
@@ -560,22 +568,22 @@ public class ProofRecorderActivity extends SherlockActivity {
 		return account;
 	}*/
 
-	private void eulaChecker() {
+    private void eulaChecker() {
 
-		if (checkLicsenceOk) {
-			Console.print("Passe la vérification des conditions utilisateurs.");
-			SharedPreferences preferences = PreferenceManager
-					.getDefaultSharedPreferences(getApplicationContext());
-			Console.print("" + preferences.getBoolean(
-									"PREFERENCE_EULA_ACCEPTED", false));
-			if (!preferences.getBoolean("PREFERENCE_EULA_ACCEPTED", false)) {
-				Console.print("Les conditions utilisateurs ne sont pas valides.");
-				Eula.showEULA(ProofRecorderActivity.this);
-			} else {
-				Console.print("Les conditions utilisateurs  sont  valides.");
-			}
-		}
-	}
+        if (checkLicsenceOk) {
+            Console.print("Passe la vérification des conditions utilisateurs.");
+            SharedPreferences preferences = PreferenceManager
+                    .getDefaultSharedPreferences(getApplicationContext());
+            Console.print("" + preferences.getBoolean(
+                    "PREFERENCE_EULA_ACCEPTED", false));
+            if (!preferences.getBoolean("PREFERENCE_EULA_ACCEPTED", false)) {
+                Console.print("Les conditions utilisateurs ne sont pas valides.");
+                Eula.showEULA(ProofRecorderActivity.this);
+            } else {
+                Console.print("Les conditions utilisateurs  sont  valides.");
+            }
+        }
+    }
 
 	/*
 	 * Licence --> Market
@@ -709,23 +717,24 @@ public class ProofRecorderActivity extends SherlockActivity {
 	/*
 	 * 
 	 */
-	/**
-	 * stop the recreation of the activity on Orientation Change the
-	 * MediaRecorder, is therefore not recreated and keep recording on
-	 * Orientation Changes
-	 */
-	@SuppressWarnings("EmptyMethod")
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-	}
 
-	@SuppressWarnings("EmptyMethod")
-	@Override
-	protected void onDestroy() {
-		//mChecker.onDestroy();
-		super.onDestroy();
+    /**
+     * stop the recreation of the activity on Orientation Change the
+     * MediaRecorder, is therefore not recreated and keep recording on
+     * Orientation Changes
+     */
+    @SuppressWarnings("EmptyMethod")
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
-		// Stop the tracker when it is no longer needed.
-	}
+    @SuppressWarnings("EmptyMethod")
+    @Override
+    protected void onDestroy() {
+        //mChecker.onDestroy();
+        super.onDestroy();
+
+        // Stop the tracker when it is no longer needed.
+    }
 }

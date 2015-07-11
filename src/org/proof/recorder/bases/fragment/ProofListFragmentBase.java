@@ -21,6 +21,7 @@ import org.proof.recorder.R;
 import org.proof.recorder.bases.broadcast.ProofBroadcastReceiver;
 import org.proof.recorder.bases.utils.SetStaticContext;
 
+@SuppressWarnings("unused")
 public abstract class ProofListFragmentBase extends SherlockListFragment {
 
 	private final ProofBroadcastReceiver listEventSender = new ProofBroadcastReceiver() {
@@ -102,6 +103,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		setupProgressDlg();
 	}
 	
+	@SuppressWarnings("UnusedAssignment")
 	private void setupProgressDlg() {
 		
 		destroyProgress();
@@ -124,7 +126,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		if(!progressDlg.isShowing())
 			progressDlg.show();
 	}
-	
+
 	protected void refreshProgress() {
 		setupProgressDlg();
 	}
@@ -163,6 +165,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 		alertDlg.setTitle(getInternalContext().getString(alertDlgTitle));
 		alertDlg.setMessage(getInternalContext().getString(alertDlgText));
 
+		//noinspection unused
 		alertDlg.setNegativeButton(
 				getInternalContext().getString(alertDlgCancelBtn),
 				new DialogInterface.OnClickListener() {
@@ -172,6 +175,7 @@ public abstract class ProofListFragmentBase extends SherlockListFragment {
 					}
 				});
 
+		//noinspection unused
 		alertDlg.setPositiveButton(
 				getInternalContext().getString(alertDlgOkBtn),
 				new DialogInterface.OnClickListener() {

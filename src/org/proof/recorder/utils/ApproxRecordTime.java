@@ -21,6 +21,7 @@ import java.io.IOException;
  * @author clement
  *
  */
+@SuppressWarnings("unused")
 public class ApproxRecordTime {
 	
 	// public static ArrayList<MSong> MSongs;
@@ -40,7 +41,8 @@ public class ApproxRecordTime {
 	}
 	/**
 	 * 
-	 * @param song
+	 * @param song the file song
+	 *
 	 */
 	public ApproxRecordTime(File song) {
 		this.mFile = song;
@@ -241,7 +243,7 @@ public class ApproxRecordTime {
 
 	/**
 	 * 
-	 * @return
+	 * @return the duration for a record
 	 */
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
 	private String getDuration() {
@@ -313,9 +315,9 @@ public class ApproxRecordTime {
 	}
 	/**
 	 * 
-	 * @param minutes
-	 * @param seconds
-	 * @return
+	 * @param minutes the minutes for the song
+	 * @param seconds the seconds for the song
+	 * @return a representation for ui of the song duration
 	 */
 	private String convertToHours(int minutes, int seconds) {
 		float hoursminutes = (float) minutes / 60;// 258(m)/60=4.3
@@ -370,7 +372,7 @@ public class ApproxRecordTime {
 	}
 	/**
 	 * 
-	 * @return
+	 * @return the string representation of a song duration (ogg)
 	 * @throws IllegalArgumentException
 	 * @throws IllegalStateException
 	 * @throws IOException

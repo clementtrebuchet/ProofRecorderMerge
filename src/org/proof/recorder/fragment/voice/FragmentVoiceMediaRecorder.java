@@ -54,6 +54,7 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 	    return QuickActionDlg.mainActionsMenuHandler(item);
 	}
 	
+	@SuppressWarnings("unused")
 	public static class VoiceRecorderFragment extends ProofFragment {
 	    private static boolean onRecord;
 	    
@@ -121,12 +122,12 @@ public class FragmentVoiceMediaRecorder extends ProofFragmentActivity {
 			return view;
 		}
 
-		public void setRecordButton(int image) {		
+		public void setRecordButton(int image) {
 			Drawable replacer = getResources().getDrawable(image);
 			btnStartRecorder.setImageDrawable(replacer);
 			btnStartRecorder.invalidate();
 		}
-		
+
 		private void setOnRecordScene() {			
 			onRecord = true;
     		backG.setImageDrawable(getResources().getDrawable(R.drawable.voicingrec));

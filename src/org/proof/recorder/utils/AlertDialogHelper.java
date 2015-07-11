@@ -11,6 +11,7 @@ import org.proof.recorder.fragment.dialog.NoneRecordsDialog;
 import org.proof.recorder.fragment.dialog.VoiceEditDialog;
 import org.proof.recorder.utils.Log.Console;
 
+@SuppressWarnings("unused")
 public class AlertDialogHelper {
 
 	private static ProgressDialog progressDialog = null;
@@ -23,7 +24,7 @@ public class AlertDialogHelper {
 		getContext().startActivity(mIntent);
 	}
 	
-	public static void openVoiceEditDialog(Bundle bundle) {		
+	public static void openVoiceEditDialog(Bundle bundle) {
 		Intent mIntent = new Intent(getContext(), VoiceEditDialog.class);
 		if(bundle != null) {
 			mIntent.putExtras(bundle);
@@ -69,7 +70,7 @@ public class AlertDialogHelper {
 		
 		try {
 			progressDialog.setMessage(getContext().getText(
-					(Integer) R.string.encoding_data));
+					R.string.encoding_data));
 			
 			progressDialog.setIndeterminate(true);
 			progressDialog.setCancelable(false);

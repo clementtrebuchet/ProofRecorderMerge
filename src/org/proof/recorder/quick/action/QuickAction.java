@@ -30,6 +30,7 @@ import java.util.List;
  * Contributors:
  * - Kevin Peck <kevinwpeck@gmail.com>
  */
+@SuppressWarnings("unused")
 public class QuickAction extends PopupWindows implements OnDismissListener {
 	private ImageView mArrowUp;
 	private ImageView mArrowDown;
@@ -63,7 +64,8 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		inflater 	= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		mTrackAnim 	= AnimationUtils.loadAnimation(context, R.anim.rail);
-		
+
+		//noinspection unused
 		mTrackAnim.setInterpolator(new Interpolator() {
 			@Override
 			public float getInterpolation(float t) {
@@ -115,16 +117,16 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	
 	/**
 	 * Animate track.
-	 * 
+	 *
 	 * @param mAnimateTrack flag to animate track
 	 */
 	public void mAnimateTrack(boolean mAnimateTrack) {
 		this.mAnimateTrack = mAnimateTrack;
 	}
-	
+
 	/**
 	 * Set animation style.
-	 * 
+	 *
 	 * @param mAnimStyle animation style, default is set to ANIM_AUTO
 	 */
 	public void setAnimStyle(int mAnimStyle) {
@@ -142,7 +144,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		String title 	= action.getTitle();
 		Drawable icon 	= action.getIcon();
 		
-		View container	= inflater.inflate(R.layout.action_item, null);
+		@SuppressLint("InflateParams") View container	= inflater.inflate(R.layout.action_item, null);
 		
 		ImageView img 	= (ImageView) container.findViewById(R.id.iv_icon);
 		TextView text 	= (TextView) container.findViewById(R.id.tv_title);
@@ -174,7 +176,8 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
                 	
                 	//workaround for transparent background bug
                 	//thx to Roman Wozniak <roman.wozniak@gmail.com>
-                	v.post(new Runnable() {
+					//noinspection unused
+					v.post(new Runnable() {
                         @Override
                         public void run() {
                             dismiss();
@@ -319,6 +322,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * Listener for item click
 	 *
 	 */
+	@SuppressWarnings("unused")
 	public interface OnActionItemClickListener {
 		void onItemClick(QuickAction source, int pos, int actionId);
 	}
@@ -327,6 +331,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	 * Listener for window dismiss
 	 * 
 	 */
+	@SuppressWarnings("unused")
 	public interface OnDismissListener {
 		@SuppressWarnings("EmptyMethod")
 		void onDismiss();

@@ -19,6 +19,7 @@ import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+@SuppressWarnings("unused")
 public class MP3Middleware extends Service implements PlugMiddleware  {
 
 	private IServiceIntentRecorderMP3 mService;
@@ -236,7 +237,7 @@ public class MP3Middleware extends Service implements PlugMiddleware  {
 	}
 	/**
 	 * 
-	 * @return
+	 * @return the notification for mp3 service running
 	 */
 	@SuppressWarnings("deprecation")
 	private Notification mNotification() {

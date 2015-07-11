@@ -23,12 +23,13 @@ import java.util.Arrays;
  * @author namgyal.brisson
  * 
  */
+@SuppressWarnings("unused")
 public final class Settings {
 
 	/**
 	 * CONSTANTES COMMUNES A L'ENSEMBLE DE L'APPLICATION @PUBLIC
 	 * 
-	 * @author appconceptlab
+	 * @author appconceptlab author
 	 *
 	 */
 
@@ -54,14 +55,17 @@ public final class Settings {
 
 	public static String mAppPath = mBasePath + "/proofRecorder/";
 
+	@SuppressWarnings("unused")
 	public enum mFormat {
 		THREE_GP, WAV, MP3, OGG
 	}
 
+	@SuppressWarnings("unused")
 	public enum mType {
 		CALL, VOICE, VOICE_TITLED, VOICE_UNTITLED
 	}
 
+	@SuppressWarnings("unused")
 	public enum mSampleRate {
 
 		SAMPLERATE;
@@ -144,6 +148,7 @@ public final class Settings {
 	 * 
 	 */
 
+	@SuppressWarnings("unused")
 	private enum FORMULA {
 		BASIC, MEDIUM, FULL
 	}
@@ -185,8 +190,8 @@ public final class Settings {
 	}
 
 	/**
-	 * @param key
-	 * @param value
+	 * @param key the key
+	 * @param value the value
 	 */
 	public static void setPersistantData(String key, String value) {		
 			initSharedPreferences();
@@ -581,7 +586,7 @@ public final class Settings {
 	}
 
 	/**
-	 * @return the settingscontext
+	 * @set the settingscontext
 	 */
 	public static void setSettingscontext(Context _Context) {
 		

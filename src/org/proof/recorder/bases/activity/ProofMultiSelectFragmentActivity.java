@@ -16,6 +16,7 @@ import org.proof.recorder.utils.ViewPagerOnSwipeOff;
 
 public abstract class ProofMultiSelectFragmentActivity extends ProofFragmentActivity {
 
+	@SuppressWarnings("unused")
 	protected enum KIND {BASE, VOICE, CALL, CONTACT}
 
 	protected abstract KIND getKind();

@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
+@SuppressWarnings("unused")
 public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterface {
 
 	/**
@@ -32,11 +33,13 @@ public class DataPhoneNumber extends BasePhoneNumber implements DataLayerInterfa
 	
 	// Initializing
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	void initialize() {
 		super.initialize();
 	}
 	
+	@SuppressWarnings("EmptyMethod")
 	@Override
 	void initialize(String phoneNumber) {
 		super.initialize(phoneNumber);

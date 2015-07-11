@@ -16,6 +16,7 @@ import org.proofs.recorder.codec.ogg.utils.IServiceRecorderOggCx;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+@SuppressWarnings("unused")
 public class OGGMiddleware extends Service implements PlugMiddleware {
 
 	private IServiceRecorderOggCx remotePlugCnx;
@@ -218,7 +219,7 @@ public class OGGMiddleware extends Service implements PlugMiddleware {
 	}
 	/**
 	 * 
-	 * @return
+	 * @return the notification for the ogg service running
 	 */
 	@SuppressWarnings("deprecation")
 	private Notification mNotification() {

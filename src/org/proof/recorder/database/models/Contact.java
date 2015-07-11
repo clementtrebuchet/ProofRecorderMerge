@@ -12,7 +12,7 @@ import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unused"})
 public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	
 	/* (non-Javadoc)
@@ -103,7 +103,7 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 	
 	public void toggle() {
-		setChecked(!this.isChecked);		
+		setChecked(!this.isChecked);
 	}
 
 	private void toConsole() {
@@ -119,7 +119,7 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	private static boolean hasDataHandler = false;
 
 	/**
-	 * @return
+	 * @return a boolean of an excluded contact
 	 */
 	public boolean isExcluded() {
 		int count = 0;
@@ -183,21 +183,21 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 
 	/**
-	 * @param phone
+	 * @param phone the phone number for a contact
 	 */
 	public Contact(String phone){
 		this.fullInit(null, null, null, phone);
 	}
 
 	/**
-	 * @param id
-	 * @param apiId
-	 * @param name
-	 * @param phone
+	 * @param id the contact id
+	 * @param apiId the api id
+	 * @param name the name for the contact
+	 * @param phone the phone number for the contact
 	 */
-	public Contact(String id, 
-			String apiId, 
-			String name, 
+	public Contact(String id,
+			String apiId,
+			String name,
 			String phone){
 		this.fullInit(id, apiId, name, phone);
 	}
@@ -210,10 +210,10 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 
 	/**
-	 * @param id
-	 * @param apiId
-	 * @param name
-	 * @param phone
+	 * @param id the contact id
+	 * @param apiId the api id
+	 * @param name the name for the contact
+	 * @param phone the phone number for the contact
 	 */
 	private void fullInit(
 			String id, 
@@ -237,37 +237,37 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 
 	/**
-	 * @return
+	 * @return the name of the contact
 	 */
 	public String getContactName() {
 		return contactName;
 	}
 	/**
-	 * @param contactName
+	 * @param contactName the name of the contact
 	 */
 	public void setContactName(String contactName) {
 		this.contactName = contactName;
 	}
 	/**
-	 * @return
+	 * @return the id for a contact
 	 */
 	public String getId() {
 		return id;
 	}
 	/**
-	 * @param id
+	 * @param id the id for a contact
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 	/**
-	 * @return
+	 * @return the phone number for a contact
 	 */
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 	/**
-	 * @param phoneNumber
+	 * @param phoneNumber the phone number for a contact
 	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = PhoneNumberUtils.stripSeparators(phoneNumber);
@@ -317,14 +317,14 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 
 	/**
-	 * @return
+	 * @return the contract id
 	 */
 	public String getContractId() {
 		return contractId;
 	}
 
 	/**
-	 * @return
+	 * @return the contract id
 	 */
 	public long getLongContractId() {
 		long id;
@@ -337,14 +337,14 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 
 	/**
-	 * @param contractId
+	 * @param contractId the contract id
 	 */
 	public void setContractId(String contractId) {
 		this.contractId = contractId != null ? contractId : "null";
 	}
 
 	/**
-	 * @param message
+	 * @param message the message to print
 	 */
 	private void print(String message) {
 		if(Settings.isDebug())
@@ -352,7 +352,7 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 
 	/**
-	 * @param message
+	 * @param message the message to print
 	 */
 	private void print_exception(String message) {
 		Log.e(this.getClass().getName(), message);
@@ -372,14 +372,14 @@ public class Contact implements Serializable, DataLayerInterface, Cloneable {
 	}
 
 	/**
-	 * @return
+	 * @return the ContentResolver
 	 */
 	private static ContentResolver getResolver() {
 		return resolver;
 	}
 
 	/**
-	 * @param resolver
+	 * @param resolver the ContentResolver
 	 */
 	public static void setResolver(ContentResolver resolver) {
 		Contact.resolver = resolver;

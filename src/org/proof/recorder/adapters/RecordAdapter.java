@@ -25,15 +25,16 @@ import org.proof.recorder.utils.Log.Console;
 import java.io.InputStream;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 
 	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param resource the ressource
+	 * @param textViewResourceId the view id
+	 * @param objects object
+	 * @param layoutResourceId the layer id
+	 * @param multiModeEnabled is multi mode enabled ?
 	 */
 	public RecordAdapter(Context context, int resource,
 			int textViewResourceId, List<Object> objects,
@@ -42,12 +43,12 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param resource the ressource
+	 * @param textViewResourceId the view id
+	 * @param objects object
+	 * @param layoutResourceId the layer id
+	 * @param multiModeEnabled is multi mode enabled ?
 	 */
 	public RecordAdapter(Context context, int resource,
 			int textViewResourceId, Object[] objects, int layoutResourceId,
@@ -56,10 +57,10 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	/**
-	 * @param context
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param objects object
+	 * @param layoutResourceId the layer id
+	 * @param multiModeEnabled is multi mode enabled ?
 	 */
 	public RecordAdapter(Context context, List<Object> objects, int layoutResourceId,
 			boolean multiModeEnabled, String broadcastName) {
@@ -67,10 +68,10 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	/**
-	 * @param context
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param objects object
+	 * @param layoutResourceId the layer id
+	 * @param multiModeEnabled is multi mode enabled ?
 	 */
 	public RecordAdapter(Context context, Object[] objects, int layoutResourceId,
 			boolean multiModeEnabled, String broadcastName) {
@@ -139,7 +140,8 @@ public class RecordAdapter extends ProofBaseMultiSelectListAdapter {
 				checkbox.setVisibility(View.VISIBLE);
 				
 				checkbox.setChecked(record.isChecked());
-				
+
+				//noinspection unused
 				checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override

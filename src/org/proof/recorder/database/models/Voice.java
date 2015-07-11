@@ -8,6 +8,7 @@ import org.proof.recorder.utils.ServiceAudioHelper;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	
 	/* (non-Javadoc)
@@ -105,7 +106,7 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	public static ContentResolver getResolver() {
 		return Voice._resolver;
 	}
-	
+
 	public static void setResolver(ContentResolver _resolver) {
 		Voice._resolver = _resolver;
 		setHasResolver();
@@ -145,11 +146,11 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 	}
 	
 	public void toggle() {
-		setChecked(!this.isChecked);		
+		setChecked(!this.isChecked);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public Voice() {
 		super();
@@ -160,11 +161,11 @@ public class Voice implements DataLayerInterface, Serializable, Cloneable {
 		this._filePath = null;
 	}
 	/**
-	 * @param _id
-	 * @param _humanTime
-	 * @param _fileSize
-	 * @param _timestamp
-	 * @param _filePath
+	 * @param _id id
+	 * @param _humanTime human readable time format
+	 * @param _fileSize size for the file
+	 * @param _timestamp time stamp
+	 * @param _filePath path for the file
 	 */
 	public Voice(String _id, String _humanTime, String _fileSize,
 			String _timestamp, String _filePath) {

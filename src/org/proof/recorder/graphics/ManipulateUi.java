@@ -13,6 +13,7 @@ import org.proof.recorder.Settings;
  * @author clement
  *
  */
+@SuppressWarnings("unused")
 public class ManipulateUi {
 	
 	private static final String TAG = "ManipulateUi";
@@ -85,13 +86,13 @@ public class ManipulateUi {
 			if(Settings.isDebug())
 			Log.e(TAG, "coches : "+CB);
 		}
-		
+
 	}
 
 	
 	/**
-	 * @param chk
-	 * @param mCont
+	 * @param chk the checked item
+	 * @param mCont the context
 	 * @category valoriser un tableau (String optionsName true OR false)
 	 */
 	public void setArrayBoolean(String[] chk, Context mCont){

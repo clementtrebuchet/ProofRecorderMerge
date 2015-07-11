@@ -12,6 +12,7 @@ import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import org.proof.recorder.R;
 import org.proof.recorder.bases.utils.SetStaticContext;
 
+@SuppressWarnings("unused")
 @SuppressLint("Registered")
 public class ProofPreferenceActivity extends SherlockPreferenceActivity {
 	

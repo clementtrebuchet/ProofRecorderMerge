@@ -8,6 +8,7 @@ import org.proof.recorder.bases.utils.SetStaticContext;
 
 public class ProofBroadcastReceiver extends BroadcastReceiver {
 	
+	@SuppressWarnings("unused")
 	protected class ProofBroadcastReceiverException extends Exception {
 
 		/**

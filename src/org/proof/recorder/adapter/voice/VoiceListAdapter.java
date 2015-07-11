@@ -2,12 +2,6 @@ package org.proof.recorder.adapter.voice;
 
 //import java.util.Date;
 
-import org.proof.recorder.R;
-import org.proof.recorder.database.support.ProofDataBase;
-import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
-import org.proof.recorder.utils.ServiceAudioHelper;
-import org.proof.recorder.utils.Log.Console;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,6 +12,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.proof.recorder.R;
+import org.proof.recorder.database.support.ProofDataBase;
+import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
+import org.proof.recorder.utils.Log.Console;
+import org.proof.recorder.utils.ServiceAudioHelper;
+
+@SuppressWarnings("unused")
 public class VoiceListAdapter extends SimpleCursorAdapter {
 
 	public VoiceListAdapter(Context context, int layout, Cursor c,

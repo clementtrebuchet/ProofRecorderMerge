@@ -40,7 +40,7 @@ import java.util.Locale;
  * @author devel.machine
  *
  */
-@SuppressWarnings({"ConstantConditions", "NullableProblems"})
+@SuppressWarnings({"ConstantConditions", "NullableProblems", "unused"})
 public class PersonnalProofContentProvider extends
 
 		SearchRecentSuggestionsProvider {
@@ -117,7 +117,8 @@ public class PersonnalProofContentProvider extends
 
 	// ///////////////////////////////////////////////////////////
 
-	interface searchModule {
+	@SuppressWarnings("unused")
+    interface searchModule {
         String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/" + SearchManager.SUGGEST_URI_PATH_QUERY;
 
@@ -147,7 +148,8 @@ public class PersonnalProofContentProvider extends
 		// + "/suggestions";
 	}
 
-	interface enregistrements {
+	@SuppressWarnings("unused")
+    interface enregistrements {
 
         String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/records";
@@ -179,7 +181,8 @@ public class PersonnalProofContentProvider extends
                 + "/record_distinct_unknown_contacts/";
     }
 
-	interface priseDeNotes {
+	@SuppressWarnings("unused")
+    interface priseDeNotes {
 
         String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/notes";
@@ -194,7 +197,8 @@ public class PersonnalProofContentProvider extends
                 + "/note_sync/";
     }
 
-	interface VoiceNotes {
+	@SuppressWarnings("unused")
+    interface VoiceNotes {
 
         String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/vnotes";
@@ -206,7 +210,8 @@ public class PersonnalProofContentProvider extends
                 + "/vnote_sync/";
     }
 
-	interface enregistrementsVocal {
+	@SuppressWarnings("unused")
+    interface enregistrementsVocal {
 
         String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/voices";
@@ -221,7 +226,8 @@ public class PersonnalProofContentProvider extends
                 + "/voice_sync/";
     }
 
-	interface excludedContacts {
+	@SuppressWarnings("unused")
+    interface excludedContacts {
 
         String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/excluded_contacts";
@@ -492,19 +498,18 @@ public class PersonnalProofContentProvider extends
 
 
 	/**
-	 * @param mPhone
-	 * @return
+	 * @param mPhone the phone number
+	 * @return integer
 	 */
 	public static int deleteContactsFolder(String mPhone) {
 		int mDeletedRows = -1;
-		Cursor dataCursor = null;
 		
 		SQLiteDatabase databaseAccess = databaseHelper.getReadableDatabase();
 		
 		try {
 			databaseAccess.execSQL(" PRAGMA foreign_keys = ON ");			
 			mDeletedRows = databaseAccess.delete("recordsproof", "telephone=?",
-					new String[] { mPhone.trim() });
+                    new String[]{mPhone.trim()});
 		}
 		catch(Exception e) {
 			Console.print_exception(e);
@@ -517,8 +522,8 @@ public class PersonnalProofContentProvider extends
 	}
 	
 	/**
-	 * @param type
-	 * @return
+	 * @param type the type
+	 * @return a record list
 	 */
 	public static List<Record> getRecordsFilesList(Settings.mType type) {
 		List<Record> list = new ArrayList<Record>();
@@ -590,9 +595,9 @@ public class PersonnalProofContentProvider extends
 
 
 	/**
-	 * @param uriType
-	 * @param mId
-	 * @return
+	 * @param uriType the uri type
+	 * @param mId the id
+	 * @return the uri
 	 */
 	public static Uri deleteItem(String uriType, String mId) {
 		
@@ -1011,13 +1016,13 @@ public class PersonnalProofContentProvider extends
 	}
 	
 	/**
-	 * @param queryBuilder
-	 * @param uri
-	 * @param projection
-	 * @param selection
-	 * @param selectionArgs
-	 * @param sortOrder
-	 * @return
+	 * @param queryBuilder the query builder
+	 * @param uri the uri
+	 * @param projection the projection
+	 * @param selection the selection
+	 * @param selectionArgs arguments for the selection
+	 * @param sortOrder the sort order
+	 * @return a cursor on data table
 	 */
 	private Cursor searchRecordVoicesByDate(SQLiteQueryBuilder queryBuilder, Uri uri,
 			String[] projection, String selection, String[] selectionArgs,
@@ -1136,14 +1141,16 @@ public class PersonnalProofContentProvider extends
 	
 	
 	/**
-	 * @param queryBuilder
-	 * @param uri
-	 * @param projection
-	 * @param selection
-	 * @param selectionArgs
-	 * @param sortOrder
-	 * @return
-	 */
+	 * @param queryBuilder the query builder
+	 * @param uri the uri
+	 * @param projection the projection
+	 * @param selection the selection
+	 * @param selectionArgs arguments for the selection
+	 * @param sortOrder the sort order
+	 * @return a cursor on data table
+	 *
+	 * */
+
 	private Cursor searchRecordVoices(SQLiteQueryBuilder queryBuilder, Uri uri,
 			String[] projection, String selection, String[] selectionArgs,
 			String sortOrder) {
@@ -1178,13 +1185,13 @@ public class PersonnalProofContentProvider extends
 	}
 
 	/**
-	 * @param queryBuilder
-	 * @param uri
-	 * @param projection
-	 * @param selection
-	 * @param selectionArgs
-	 * @param sortOrder
-	 * @return
+	 * @param queryBuilder the query builder
+	 * @param uri uri
+	 * @param projection projection
+	 * @param selection selection
+	 * @param selectionArgs selectionArgs
+	 * @param sortOrder sortOrder
+	 * @return Cursor
 	 */
 	private Cursor searchRecordTel(
 			SQLiteQueryBuilder queryBuilder, Uri uri, String[] projection, String selection,
@@ -1272,7 +1279,8 @@ public class PersonnalProofContentProvider extends
     }
 	
 	
-	private Cursor deleteOlderRecordsByDate(SQLiteQueryBuilder queryBuilder,
+	@SuppressWarnings("SameReturnValue")
+    private Cursor deleteOlderRecordsByDate(SQLiteQueryBuilder queryBuilder,
 										    Uri uri, 
 										    String[] projection, 
 										    String selection,
@@ -1284,13 +1292,13 @@ public class PersonnalProofContentProvider extends
 	
 	
 	/**
-	 * @param queryBuilder
-	 * @param uri
-	 * @param projection
-	 * @param selection
-	 * @param selectionArgs
-	 * @param sortOrder
-	 * @return The Matching query Cursor object.
+     * @param queryBuilder the query builder
+     * @param uri the uri
+     * @param projection the projection
+     * @param selection the selection
+     * @param selectionArgs arguments for the selection
+     * @param sortOrder the sort order
+     * @return a cursor on data table
 	 */
 	private Cursor searchRecordTelByDate(
 			SQLiteQueryBuilder queryBuilder, Uri uri, String[] projection, String selection,
@@ -1854,7 +1862,7 @@ public class PersonnalProofContentProvider extends
 	}
 
 	/**
-	 * @param projection
+	 * @param projection the projection
 	 */
 	private void checkColumns(String[] projection) {
 		String[] available = {
@@ -1928,8 +1936,8 @@ public class PersonnalProofContentProvider extends
 
 
 	/**
-	 * @param mQuery
-	 * @return
+	 * @param mQuery the query
+	 * @return total item count
 	 */
 	public static int getItemsCount(String mQuery) {
 
@@ -2000,7 +2008,7 @@ public class PersonnalProofContentProvider extends
 	}*/
 
 	/**
-	 * @return
+	 * @return total song count
 	 */
 	public static String[] getVoicesAndCallsCount() {
 		
@@ -2055,8 +2063,8 @@ public class PersonnalProofContentProvider extends
 	}
 
 	/**
-	 * @param cr
-	 * @return
+	 * @param cr the contact resolver
+	 * @return the resolved contact
 	 */
 	public static String[] getExContactsAndNotCount(ContentResolver cr) {
 
@@ -2113,11 +2121,11 @@ public class PersonnalProofContentProvider extends
 
 
 	/**
-	 * @param type
-	 * @return
+	 * @param type the type
+	 * @return a list of record
 	 */
 	public static List<Record> getRecordsFilesList1(Settings.mType type) {
-		
+
 		SQLiteDatabase databaseAccess = null;
         Cursor dataCursor;
 
@@ -2137,11 +2145,11 @@ public class PersonnalProofContentProvider extends
 		default:
 			break;
 		}
-		
+
 		try {
-			databaseAccess = databaseHelper.getReadableDatabase();		
+			databaseAccess = databaseHelper.getReadableDatabase();
 			dataCursor = databaseAccess.rawQuery(query, null);
-			
+
 			try {
 				while (dataCursor != null && dataCursor.moveToNext()) {
 					Record mRecord = new Record();
@@ -2188,9 +2196,9 @@ public class PersonnalProofContentProvider extends
 		finally {
 			if(databaseAccess != null) {
 				databaseAccess.close();
-			}			
-		}	
-		
+			}
+		}
+
 		return list;
 	}
 

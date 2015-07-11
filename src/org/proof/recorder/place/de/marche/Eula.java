@@ -12,6 +12,7 @@ import org.proof.recorder.R;
 
 import java.io.InputStream;
 
+@SuppressWarnings("unused")
 public class Eula {
 
 
@@ -38,7 +39,8 @@ public class Eula {
 					activity);
 			builder.setTitle(R.string.eula_title);
 			builder.setCancelable(true);
-			builder.setPositiveButton(R.string.eula_accept,
+		//noinspection unused
+		builder.setPositiveButton(R.string.eula_accept,
 					new DialogInterface.OnClickListener() {
 
 						
@@ -52,7 +54,8 @@ public class Eula {
 
 						}
 					});
-			builder.setNegativeButton(R.string.eula_refuse,
+		//noinspection unused
+		builder.setNegativeButton(R.string.eula_refuse,
 					new DialogInterface.OnClickListener() {
 
 						@Override
@@ -68,7 +71,8 @@ public class Eula {
 
 						}
 					});
-			builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+		//noinspection unused
+		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
 				@Override
 				public void onCancel(DialogInterface dialog) {
@@ -107,7 +111,7 @@ public class Eula {
 	}
 	private static void des(){
 		try {
-			if(!mSingleTon.equals(null)) mSingleTon = null;
+			if(mSingleTon != null) mSingleTon = null;
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

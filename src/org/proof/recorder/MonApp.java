@@ -5,6 +5,7 @@ import org.acra.ACRAConfiguration;
 import org.proof.recorder.utils.Log.Console;
 
 
+@SuppressWarnings("unused")
 public class MonApp extends android.app.Application {
 
 	@Override
@@ -24,7 +25,7 @@ public class MonApp extends android.app.Application {
 			
 		}
 		catch(Exception e) {
-			Console.print_exception(e);
+			Console.print_exception(e.getMessage());
 		}        
     }
 }

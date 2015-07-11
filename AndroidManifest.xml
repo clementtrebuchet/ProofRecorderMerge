@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.proof.recorder"
 
     android:versionCode="9"
@@ -7,7 +8,8 @@
     <!-- android:installLocation="preferExternal" -->
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="17"
+        tools:ignore="OldTargetApi" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" >
     </uses-permission>
@@ -519,6 +521,7 @@
         <receiver
             android:name=".scheduling.VerifyContactsApiReceiver"
             android:process=":remote" >
+            <!--suppress AndroidElementNotAllowed -->
             <action android:name="android.intent.action.CHECK_CONTACTS_ALARM" />
         </receiver>
 

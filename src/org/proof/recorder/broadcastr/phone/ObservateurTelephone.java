@@ -13,6 +13,7 @@ import org.proof.recorder.receivers.PhoneRecorderReceiver;
 import org.proof.recorder.service.DataPersistanceManager;
 import org.proof.recorder.utils.Log.Console;
 
+@SuppressWarnings("unused")
 class ObservateurTelephone extends PhoneStateListener {
 
 	public static String DIRECTION_CALL;

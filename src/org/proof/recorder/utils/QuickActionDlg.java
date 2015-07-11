@@ -23,6 +23,7 @@ import org.proof.recorder.utils.Log.Console;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class QuickActionDlg {
 
 	private final static String TAG = "QUICK_ACTION_DLG";
@@ -61,7 +62,7 @@ public class QuickActionDlg {
 	/**
 	 * Set the context used in all methods is to be set at first !
 	 * 
-	 * @param mContext
+	 * @param mContext the context
 	 */
 	public static void setmContext(Context mContext) {
 		QuickActionDlg.mContext = mContext;
@@ -75,9 +76,9 @@ public class QuickActionDlg {
 	/**
 	 * Calls List Quick Actions Dialog
 	 * 
-	 * @param context
-	 * @param v
-	 * @param record
+	 * @param context the context
+	 * @param v the view
+	 * @param record the record
 	 */
 	public static void showPhoneOptionsDlg(final Context context, View v,
 			final ArrayAdapter<Object> adpater, final Record record) {
@@ -90,6 +91,7 @@ public class QuickActionDlg {
 
 		injectQuickDlgMenu(context);
 
+		//noinspection unused
 		mQuickAction
 		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
 			@Override
@@ -139,10 +141,10 @@ public class QuickActionDlg {
 	/**
 	 * Voice List Quick Actions Dialog
 	 * 
-	 * @param context
-	 * @param view
-	 * @param voice
-	 * @param adapter
+	 * @param context the context
+	 * @param view the view
+	 * @param voice the voice record
+	 * @param adapter the adapter
 	 */
 	public static void showTitledVoiceOptionsDlg(
 			final Context context,
@@ -160,6 +162,7 @@ public class QuickActionDlg {
 
 		injectQuickDlgMenu(context);
 		// Set listener for action item clicked
+		//noinspection unused
 		mQuickAction
 		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
 			@Override
@@ -281,6 +284,7 @@ public class QuickActionDlg {
 
 		injectQuickDlgMenu(context);
 		// Set listener for action item clicked
+		//noinspection unused
 		mQuickAction
 		.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
 			@Override
@@ -337,7 +341,7 @@ public class QuickActionDlg {
 	/**
 	 * Quick Actions Bar facility
 	 * 
-	 * @param context
+	 * @param context the context
 	 */
 	private static void injectQuickDlgMenu(Context context) {
 
@@ -366,8 +370,9 @@ public class QuickActionDlg {
 					mContext.getString(R.string.search_quick_dlg_msg),
 					mContext.getResources().getDrawable(R.drawable.search));
 			mQuickAction.addActionItem(search);
-		}		
+		}
 
+		//noinspection unused
 		mQuickAction.setOnDismissListener(new QuickAction.OnDismissListener() {
 			@Override
 			public void onDismiss() {
@@ -379,7 +384,7 @@ public class QuickActionDlg {
 	/**
 	 * SherlockActionBar Wrapper for displaying the main Menu & Search facility
 	 * 
-	 * @param menu
+	 * @param menu the menu
 	 * @return boolean
 	 */
 	@SuppressWarnings("SameReturnValue")
@@ -426,7 +431,7 @@ public class QuickActionDlg {
 
 	/**
 	 * 
-	 * @param item
+	 * @param item the item
 	 * @return boolean
 	 */
 	public static boolean mainActionsMenuHandler(

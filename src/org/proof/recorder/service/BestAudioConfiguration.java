@@ -6,13 +6,14 @@ import android.os.Bundle;
  * @author clement
  *
  */
+@SuppressWarnings("unused")
 public class BestAudioConfiguration {
 
 
 	public BestAudioConfiguration() {
 
 	}
-	
+
 	/**
 	 * @param capabilities (Bundle)
 	 * @return best capabilities

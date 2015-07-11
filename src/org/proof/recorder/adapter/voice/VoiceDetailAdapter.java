@@ -16,6 +16,7 @@ import org.proof.recorder.Settings;
 import org.proof.recorder.database.support.ProofDataBase;
 import org.proof.recorder.utils.ServiceAudioHelper;
 
+@SuppressWarnings("UnusedParameters")
 public class VoiceDetailAdapter extends SimpleCursorAdapter {
 
 	private static final String TAG = "VoiceDetailAdpater";
@@ -23,6 +24,7 @@ public class VoiceDetailAdapter extends SimpleCursorAdapter {
 	private static Context mcontext;
 	private String f;
 
+	@SuppressWarnings("SameParameterValue")
 	public VoiceDetailAdapter(Context context, int layout,
 							  String[] from, int[] to, int recId) {
 		super(context, R.layout.voice_detail, null, from, to, android.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);

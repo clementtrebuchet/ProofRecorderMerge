@@ -544,8 +544,10 @@
     <string name="site_uri">Phone &amp; voice Recorder</string>
     <string name="songtime">00:00 mn/s</string>
     <string name="soundopt">Qualitée d\'enregistrement</string>
+    <string name="start">start</string>
     <string name="start_recording">Starting Recording</string>
     <string name="stats">Usage Stats</string>
+    <string name="stop">stop</string>
     <string name="stop_recording">Stopping Recording</string>
     <string name="strABCallRecordDetail">Detail for </string>
     <string name="strABCallRecords">Calls Records</string>

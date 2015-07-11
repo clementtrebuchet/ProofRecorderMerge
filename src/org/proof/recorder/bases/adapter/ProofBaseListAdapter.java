@@ -13,6 +13,7 @@ import org.proof.recorder.utils.Log.Console;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	
 	protected abstract void handleView(final int item, View view);

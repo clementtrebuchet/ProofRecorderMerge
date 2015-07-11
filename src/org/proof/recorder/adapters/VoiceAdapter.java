@@ -20,17 +20,18 @@ import org.proof.recorder.utils.Log.Console;
 import java.io.File;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 
 	
 
 	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param resource the ressource
+	 * @param textViewResourceId the view id
+	 * @param objects the object
+	 * @param layoutResourceId the layout ressource id
+	 * @param multiModeEnabled is multi enable ?
 	 */
 	public VoiceAdapter(Context context, int resource,
 			int textViewResourceId, List<Object> objects,
@@ -39,12 +40,12 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	/**
-	 * @param context
-	 * @param resource
-	 * @param textViewResourceId
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param resource the ressource
+	 * @param textViewResourceId the view id
+	 * @param objects the object
+	 * @param layoutResourceId the layout ressource id
+	 * @param multiModeEnabled is multi enable ?
 	 */
 	public VoiceAdapter(Context context, int resource,
 			int textViewResourceId, Object[] objects, int layoutResourceId,
@@ -53,10 +54,10 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	/**
-	 * @param context
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param objects the object
+	 * @param layoutResourceId the layout ressource id
+	 * @param multiModeEnabled is multi enable ?
 	 */
 	public VoiceAdapter(Context context, List<Object> objects, int layoutResourceId,
 			boolean multiModeEnabled, String broadcastName) {
@@ -64,10 +65,10 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 	}
 
 	/**
-	 * @param context
-	 * @param objects
-	 * @param layoutResourceId
-	 * @param multiModeEnabled
+	 * @param context the context
+	 * @param objects the object
+	 * @param layoutResourceId the layout ressource id
+	 * @param multiModeEnabled is multi enable ?
 	 */
 	public VoiceAdapter(Context context, Object[] objects, int layoutResourceId,
 			boolean multiModeEnabled, String broadcastName) {
@@ -119,7 +120,8 @@ public class VoiceAdapter extends ProofBaseMultiSelectListAdapter {
 				checkbox.setVisibility(View.VISIBLE);
 				
 				checkbox.setChecked(voice.isChecked());
-				
+
+				//noinspection unused
 				checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override

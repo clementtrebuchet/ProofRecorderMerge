@@ -38,6 +38,7 @@ import org.proof.recorder.utils.OsHandler;
  *     by the user, our db must map info.
  *     
  */
+@SuppressWarnings("unused")
 public class VerifyContactsApi extends ProofService {
 
 	private static boolean toProcess = false;
@@ -59,7 +60,7 @@ public class VerifyContactsApi extends ProofService {
 		ProofDataBase.COLUMN_TELEPHONE};
 
 	/**
-	 * @return
+	 * @return boolean
 	 */
 	private boolean isRunning() {
 		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -86,7 +87,7 @@ public class VerifyContactsApi extends ProofService {
 	public static boolean isExternalStorageWriteable() {
 		return mExternalStorageWriteable;
 	}
-	
+
 	/**
 	 * @return the toProcess
 	 */
@@ -102,14 +103,14 @@ public class VerifyContactsApi extends ProofService {
 	}
 	
 	/**
-	 * @param count
+	 * @param count the number of count
 	 */
 	private void setNewCount(int count) {	      
 	      Settings.setRecordsCount(count);
 	}	
 
 	/**
-	 * @return
+	 * @return the previous count
 	 */
 	private int getPreviousCount() {
 		return Settings.getRecordsCount();
@@ -251,6 +252,7 @@ public class VerifyContactsApi extends ProofService {
 								getInternalContext().getContentResolver().delete(mUriById, null, null);
 							
 							Console.print_debug("Deleted!");
+							_cursor.close();
 						}
 					}
 

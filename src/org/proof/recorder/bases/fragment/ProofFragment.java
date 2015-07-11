@@ -7,6 +7,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import org.proof.recorder.bases.utils.SetStaticContext;
 
+@SuppressWarnings("unused")
 public class ProofFragment extends SherlockFragment {
 	
 	private Context internalContext = null;

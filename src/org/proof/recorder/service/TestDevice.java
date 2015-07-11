@@ -14,6 +14,7 @@ import java.io.File;
  * @author clement
  *
  */
+@SuppressWarnings("unused")
 public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 	
 	private static boolean toProcess = true;
@@ -26,13 +27,14 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
     private static boolean voice_down;
     private static boolean cam;
 
-    private static final boolean[] all = {
+    @SuppressWarnings("MismatchedReadAndWriteOfArray")
+	private static final boolean[] all = {
             mic,
             voice_up,
-		voice_down, 
+		voice_down,
 		voice_call,
-		cam, 
-		voice_reco, 
+		cam,
+		voice_reco,
 		voice_com
 	};
 
@@ -49,7 +51,7 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
     public static final Bundle BUNDLECONFIGURATIONAUDIO = new Bundle();
 
     /**
-     * @param message
+     * @param message the message
 	 */
 	private void print(String message) {
 		if(Settings.isDebug())
@@ -57,7 +59,7 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 	}
 
 	/**
-	 * @param message
+	 * @param message the message
 	 */
 	private void print_exception(String message) {
 		Log.e(this.getClass().getName(), "" + message);
@@ -81,7 +83,8 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 		}
 	}
 
-    private void recorder(int source) {
+    @SuppressWarnings("UnusedAssignment")
+	private void recorder(int source) {
 
         AudioRecord recorder = null;
 
@@ -139,7 +142,8 @@ public class TestDevice  extends AsyncTask<Void ,Integer, Void> {
 	 * @category Hardware abstraction
 	 * @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	 */
-	
+
+	@SuppressWarnings({"JavaDoc", "unused"})
 	interface capabiltiesHw {
 
         int mic = MediaRecorder.AudioSource.MIC;                        //1

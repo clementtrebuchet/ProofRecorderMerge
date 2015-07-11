@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -25,220 +26,221 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentListVoice extends ProofFragment {
-	
-	public static String ID;
-	private static boolean isNotify = false;
-	private static String voiceId = null;
-	
-	@SuppressWarnings("EmptyMethod")
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);		
-	}
 
-	public static class VoiceListLoader extends ProofListFragmentWithQuickAction {
-		
-		private void getVoices() {
-			
-			Uri uri;
-			String mQuery;
-			
-			if(isNotify) {
-				uri = Uri.withAppendedPath(
-						PersonnalProofContentProvider.CONTENT_URI, "voice_id/" + voiceId);
-			}
-			else {
-				try {
-					
-					mQuery = (String) extraData.get("search");
-					
-					if(mQuery != null)
-						throw new Exception();
-					
-					uri = Uri.withAppendedPath(
-							PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + null);
-				}
-				catch(Exception e) {
-					
-					uri = Uri.withAppendedPath(
-							PersonnalProofContentProvider.CONTENT_URI, "voices");
-				}
-			}			
-			
-			try {			
-				
-				Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-				
-				VoicesList mList = new VoicesList(cursor);
-				
-				objects = (ArrayList<Object>) mList.getCollection();
-				
-			} catch (Exception e) {				
-				Console.print_exception(e);
-				e.printStackTrace();
-			}
-		}	
+    public static String ID;
+    private static boolean isNotify = false;
+    private static String voiceId = null;
+    private static final String TAG = FragmentListVoice.class.getClass().getCanonicalName();
 
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			
-			Voice.setResolver(getActivity().getContentResolver());
-			
-			reverseCollection = true;
-			
-			isNotify = ProofMultiSelectFragmentActivity.isNotify();
-			voiceId = FragmentListVoiceTabs.getSavedId();
-			
-			startAsyncLoader();
+    @SuppressWarnings("EmptyMethod")
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-			fillCollectionRunnable = new Runnable() {
-				@Override
-				public void run() {
-					getVoices();
-				}
-			};						
-		}
+    public static class VoiceListLoader extends ProofListFragmentWithQuickAction {
 
-		@Override
-		public void onListItemClick(ListView l, View view, int position, long id) {			
-			super.onListItemClick(l, view, position, id);
-			
-			if (!multiSelectEnabled) {
-				Voice voice = (Voice) objects.get(position);
-				
-				QuickActionDlg.showTitledVoiceOptionsDlg(
-						getActivity(),
-						view, 
-						voice, 
-						listAdapter, 
-						objects, 
-						org.proof.recorder.Settings.mType.VOICE_TITLED
-				);
-			} else {
-				CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
-				checkbox.toggle();
-			}
-		}
+        private void getVoices() {
 
-		@Override
-		protected void initOnOptionsItemSelected() {
-			ProofMultiSelectFragmentActivity.removeUnusedTab();			
-		}
+            Uri uri;
+            String mQuery;
 
-		@Override
-		protected void DoneAction() {
-			ProofMultiSelectFragmentActivity.readdUnusedTab();			
-		}
+            if (isNotify) {
+                uri = Uri.withAppendedPath(
+                        PersonnalProofContentProvider.CONTENT_URI, "voice_id/" + voiceId);
+            } else {
+                try {
 
-		@Override
-		protected void DeleteAllAction() {
-			MenuActions.deleteVoices(recordIds, recordPaths);
-			ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());			
-		}
+                    mQuery = (String) extraData.get("search");
 
-		@Override
-		protected void preDeleteAndShareAction() {
-			int iter = 0;					
-			
-			for (Object item : objects) {
-				Voice lcVoice = (Voice) item;
-				
-				if(lcVoice.isChecked()) {
-					try {						
-						recordIds[iter] = lcVoice.getId();
-						recordPaths[iter] = lcVoice.getFilePath();
-						
-						iter++;
-					}
-					catch (Exception e) {
-						Console.print_exception(e);
-					}	
-				}							
-			}			
-		}
+                    if (mQuery != null)
+                        throw new Exception();
 
-		@Override
-		protected void DeleteAction() {
-			
-			MenuActions.deleteVoices(recordIds, recordPaths);
-			
-			ArrayList<Object> toBeProcessed = new ArrayList<Object>();
-			
-			for(Object item : objects) {
-				Voice lcVoice = (Voice) item;
-				
-				if(lcVoice.isChecked()) {
-					toBeProcessed.add(lcVoice);						
-				}				
-			}
-			
-			for(Object item : toBeProcessed) {
-				((VoiceAdapter)listAdapter).remove(item);
-				objects.remove(item);
-			}
-			
-			((VoiceAdapter)listAdapter).notifyDataSetChanged();			
-		}
+                    uri = Uri.withAppendedPath(
+                            PersonnalProofContentProvider.CONTENT_URI, "voices_by_title/" + null);
+                } catch (Exception e) {
 
-		@Override
-		protected boolean itemChecked(Object item) {
-			return ((Voice) item).isChecked();
-		}
-		
-		@Override
-		protected void initAdapter(Context context, List<Object> collection,
-				int layoutId, boolean multiSelectMode) {
-			listAdapter = new VoiceAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());
-		}
-		
-		@Override
-		protected void uncheckItem(Object item) {
-			((Voice) item).setChecked(false);	
-		}
+                    uri = Uri.withAppendedPath(
+                            PersonnalProofContentProvider.CONTENT_URI, "voices");
+                }
+            }
 
-		@Override
-		protected void toggleItem(Object item, boolean checked) {
-			((Voice) item).setChecked(checked);
-		}
-		
-		@Override
-		protected Object getItemClone(Object item) {
-			return ((Voice) item).clone();
-		}
+            try {
 
-		@Override
-		protected void _onPreExecute() {
-			// TODO Auto-generated method stub
-			
-		}
+                Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
 
-		@Override
-		protected void _onProgressUpdate(Integer... progress) {
-			// TODO Auto-generated method stub
-			
-		}
+                VoicesList mList = new VoicesList(cursor);
 
-		@Override
-		protected void _onPostExecute(Long result) {
-			initAdapter(getActivity(), objects, R.layout.listfragmentdroit, multiSelectEnabled);
-		}
+                objects = (ArrayList<Object>) mList.getCollection();
 
-		@Override
-		protected void _doInBackground(Void... params) {
-			getVoices();
-		}
+                cursor.close();
 
-		@Override
-		protected int collectionSorter(Object object1, Object object2) {
-			return ((Voice) object1).getTimestamp().compareToIgnoreCase(
-					((Voice) object2).getTimestamp());
-		}
+            } catch (Exception e) {
 
-		@Override
-		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
+                Log.d(TAG, e.getMessage());
+
+            }
+
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            Voice.setResolver(getActivity().getContentResolver());
+
+            reverseCollection = true;
+
+            isNotify = ProofMultiSelectFragmentActivity.isNotify();
+            voiceId = FragmentListVoiceTabs.getSavedId();
+
+            startAsyncLoader();
+
+            fillCollectionRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    getVoices();
+                }
+            };
+        }
+
+        @Override
+        public void onListItemClick(ListView l, View view, int position, long id) {
+            super.onListItemClick(l, view, position, id);
+
+            if (!multiSelectEnabled) {
+                Voice voice = (Voice) objects.get(position);
+
+                QuickActionDlg.showTitledVoiceOptionsDlg(
+                        getActivity(),
+                        view,
+                        voice,
+                        listAdapter,
+                        objects,
+                        org.proof.recorder.Settings.mType.VOICE_TITLED
+                );
+            } else {
+                CheckBox checkbox = (CheckBox) view.findViewById(R.id.cb_select_item);
+                checkbox.toggle();
+            }
+        }
+
+        @Override
+        protected void initOnOptionsItemSelected() {
+            ProofMultiSelectFragmentActivity.removeUnusedTab();
+        }
+
+        @Override
+        protected void DoneAction() {
+            ProofMultiSelectFragmentActivity.readdUnusedTab();
+        }
+
+        @Override
+        protected void DeleteAllAction() {
+            MenuActions.deleteVoices(recordIds, recordPaths);
+            ProofMultiSelectFragmentActivity.removeCurrentTab(getInternalContext());
+        }
+
+        @Override
+        protected void preDeleteAndShareAction() {
+            int iter = 0;
+
+            for (Object item : objects) {
+                Voice lcVoice = (Voice) item;
+
+                if (lcVoice.isChecked()) {
+                    try {
+                        recordIds[iter] = lcVoice.getId();
+                        recordPaths[iter] = lcVoice.getFilePath();
+
+                        iter++;
+                    } catch (Exception e) {
+                        Console.print_exception(e);
+                    }
+                }
+            }
+        }
+
+        @Override
+        protected void DeleteAction() {
+
+            MenuActions.deleteVoices(recordIds, recordPaths);
+
+            ArrayList<Object> toBeProcessed = new ArrayList<Object>();
+
+            for (Object item : objects) {
+                Voice lcVoice = (Voice) item;
+
+                if (lcVoice.isChecked()) {
+                    toBeProcessed.add(lcVoice);
+                }
+            }
+
+            for (Object item : toBeProcessed) {
+                ((VoiceAdapter) listAdapter).remove(item);
+                objects.remove(item);
+            }
+
+            ((VoiceAdapter) listAdapter).notifyDataSetChanged();
+        }
+
+        @Override
+        protected boolean itemChecked(Object item) {
+            return ((Voice) item).isChecked();
+        }
+
+        @Override
+        protected void initAdapter(Context context, List<Object> collection,
+                                   int layoutId, boolean multiSelectMode) {
+            listAdapter = new VoiceAdapter(context, collection, layoutId, multiSelectMode, getBroadcastName());
+        }
+
+        @Override
+        protected void uncheckItem(Object item) {
+            ((Voice) item).setChecked(false);
+        }
+
+        @Override
+        protected void toggleItem(Object item, boolean checked) {
+            ((Voice) item).setChecked(checked);
+        }
+
+        @Override
+        protected Object getItemClone(Object item) {
+            return ((Voice) item).clone();
+        }
+
+        @Override
+        protected void _onPreExecute() {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        protected void _onProgressUpdate(Integer... progress) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        protected void _onPostExecute(Long result) {
+            initAdapter(getActivity(), objects, R.layout.listfragmentdroit, multiSelectEnabled);
+        }
+
+        @Override
+        protected void _doInBackground(Void... params) {
+            getVoices();
+        }
+
+        @Override
+        protected int collectionSorter(Object object1, Object object2) {
+            return ((Voice) object1).getTimestamp().compareToIgnoreCase(
+                    ((Voice) object2).getTimestamp());
+        }
+
+        @Override
+        protected void alertDlgCancelAction(DialogInterface dialog, int which) {
+            // TODO Auto-generated method stub
+
+        }
+    }
 }

@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public abstract class ProofBaseMultiSelectListAdapter extends ProofBaseListAdapter {
 	
 	protected boolean multiModeEnabled;

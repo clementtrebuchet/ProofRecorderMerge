@@ -56,9 +56,9 @@ public class FragmentListExcludedContacts extends Fragment {
 		private final ProofBroadcastReceiver eventListPhoneReceiver = new ProofBroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				
+
 				super.onReceive(context, intent);
-				
+
 				// Get extra data included in the Intent
 				String message = intent.getStringExtra("message");
 
@@ -134,6 +134,7 @@ public class FragmentListExcludedContacts extends Fragment {
 
 		}
 
+		@SuppressWarnings("unused")
 		private class OnItemClickListener implements OnClickListener {
 			private final int position;
 			// private CharSequence text;
@@ -185,7 +186,7 @@ public class FragmentListExcludedContacts extends Fragment {
 			LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
 					eventListPhoneReceiver,
 					new IntentFilter("eventOnContactAdded"));
-			
+
 			startAsyncLoader();
 		}
 
@@ -193,19 +194,19 @@ public class FragmentListExcludedContacts extends Fragment {
 		public void onDestroy() {
 			super.onDestroy();
 			LocalBroadcastManager.getInstance(getActivity())
-					.unregisterReceiver(eventListPhoneReceiver);		
+					.unregisterReceiver(eventListPhoneReceiver);
 		}
 
 		@Override
 		protected void _onPreExecute() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void _onProgressUpdate(Integer... progress) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -229,19 +230,19 @@ public class FragmentListExcludedContacts extends Fragment {
 		@Override
 		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void alertDlgOkAction(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void handleOnReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 }

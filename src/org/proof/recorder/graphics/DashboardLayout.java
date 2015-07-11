@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+@SuppressWarnings("unused")
 public class DashboardLayout extends ViewGroup {
 	private static final int UNEVEN_GRID_PENALTY_MULTIPLIER = 10;
 

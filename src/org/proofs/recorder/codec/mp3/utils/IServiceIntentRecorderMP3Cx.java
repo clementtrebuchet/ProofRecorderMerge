@@ -17,7 +17,7 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 	private final MP3Middleware parent;
 	/**
 	 * 
-	 * @param parent
+	 * @param parent the MP3Middleware parent Class
 	 */
 	public IServiceIntentRecorderMP3Cx(MP3Middleware parent){		
 		this.parent = parent;		
@@ -72,13 +72,13 @@ public class IServiceIntentRecorderMP3Cx implements ServiceConnection {
 	}
 	/**
 	 * 
-	 * @param Filename
-	 * @param mSampleRate
-	 * @param audioSource
-	 * @param outBitRate
-	 * @param postEcode
-	 * @param notificationIntent
-	 * @param notificationPkg
+	 * @param Filename the name of the file
+	 * @param mSampleRate the sample rate
+	 * @param audioSource audio source
+	 * @param outBitRate the out bit rate
+	 * @param postEcode the post encode parameter
+	 * @param notificationIntent the notification agent
+	 * @param notificationPkg the notification for package action
 	 */
 	public void safelyPassParameters(String Filename, int mSampleRate,
 			int audioSource, int outBitRate, int postEcode,

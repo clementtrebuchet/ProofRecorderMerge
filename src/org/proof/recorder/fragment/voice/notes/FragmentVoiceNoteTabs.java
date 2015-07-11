@@ -18,6 +18,7 @@ public class FragmentVoiceNoteTabs extends ProofFragmentActivity {
 
 	private TabHost mTabHost;
 
+	@SuppressWarnings("UnusedAssignment")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

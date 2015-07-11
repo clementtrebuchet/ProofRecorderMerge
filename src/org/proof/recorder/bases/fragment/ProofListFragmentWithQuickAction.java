@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public abstract class ProofListFragmentWithQuickAction extends ProofListFragmentWithAsyncLoader {
 
 	private final static int SELECT_ALL = 5;
@@ -56,6 +57,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 
 	private QuickActionMode quickActionMode;	
 
+	@SuppressWarnings("unused")
 	public final class QuickActionMode implements ActionMode.Callback {
 
 		@Override
@@ -106,7 +108,8 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			// Note that you can set/change the intent any time,
 			// say when the user has selected an image.				
 			enableItems(false);
-			
+
+			//noinspection unused
 			actionProvider.setOnShareTargetSelectedListener(new OnShareTargetSelectedListener() {
 				
 				@Override
@@ -201,6 +204,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 		getActivity().runOnUiThread(fillCollectionRunnable);
 
 		try {
+			//noinspection unused
 			Collections.sort(objects, new Comparator<Object>() {
 				@Override
 				public int compare(Object first, Object second) {
@@ -209,8 +213,8 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			});
 
 			initAdapter(
-					getActivity(), 
-					objects, 
+					getActivity(),
+					objects,
 					((ProofBaseListAdapter) listAdapter).getLayoutResourceId(),
 					multiSelectEnabled);
 
@@ -490,6 +494,7 @@ public abstract class ProofListFragmentWithQuickAction extends ProofListFragment
 			doneButton = getSherlockActivity().findViewById(doneButtonId);
 		}
 
+		//noinspection unused
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

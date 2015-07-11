@@ -12,6 +12,7 @@ import org.proof.recorder.utils.OsInfo;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class Record implements DataLayerInterface, Serializable, Cloneable {
 
 	/* (non-Javadoc)
@@ -83,9 +84,9 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	}
 	
 	public void toggle() {
-		setChecked(!this.isChecked);		
+		setChecked(!this.isChecked);
 	}
-	
+
 	// Logging wrapping
 	public void toConsole() {
 		Console.print_debug(this.toString());
@@ -159,7 +160,7 @@ public class Record implements DataLayerInterface, Serializable, Cloneable {
 	public Record (String id, String fileName) {
 		this.initialize(id, fileName);
 	}
-	
+
 
 	
 	public Record (String id, 

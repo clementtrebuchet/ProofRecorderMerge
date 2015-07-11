@@ -11,6 +11,7 @@ import org.proof.recorder.receivers.holders.VoiceRecordHolder;
 import org.proof.recorder.utils.DateUtils;
 import org.proof.recorder.utils.OsInfo;
 
+@SuppressWarnings("unused")
 public class VoiceRecord {
 	
 	private static final String NULL = "NULL";
@@ -174,7 +175,7 @@ public class VoiceRecord {
 	public String getTimeStamp() {
 		return timeStamp;
 	}
-	
+
 	/**
 	 * @return if the timeStamp is different from const NULL, true else false.
 	 */

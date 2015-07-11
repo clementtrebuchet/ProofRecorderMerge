@@ -26,8 +26,8 @@ public class PluginsInformations extends ProofFragmentActivity {
 	private static ListView plugs;
 
 	/**
-	 * @param str
-	 * @return
+	 * @param str the string to sanitize
+	 * @return the sanitized file
 	 */
 	private static String cleanString(String str) {
 		return str.replace(" ", "").trim().toLowerCase(

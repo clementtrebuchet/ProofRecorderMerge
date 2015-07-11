@@ -12,9 +12,11 @@ import android.util.Log;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 
+@SuppressWarnings("unused")
 public class StaticNotifications {
 
-	public enum ICONS {
+	@SuppressWarnings("unused")
+    public enum ICONS {
 		NONE, DEFAULT, CUSTOM
 	}
 
@@ -158,7 +160,8 @@ public class StaticNotifications {
 	 * METHODS (public)
 	 */
 
-	public static void show(Context context, Class<?> destination, Bundle b,
+	@SuppressWarnings("SameParameterValue")
+    public static void show(Context context, Class<?> destination, Bundle b,
 							CharSequence title, CharSequence info, CharSequence text,
 							ICONS opt, boolean autoCancel) {
 
@@ -199,9 +202,10 @@ public class StaticNotifications {
 		if (Settings.showNotifications()) {
 			try {
 				getmNM().cancel(_ID);
+
 			} catch (Exception e) {
 				if (Settings.isDebug())
-					Log.e(TAG, "" + e);
+					Log.e(TAG, e.getMessage());
 			}
 		}
 	}

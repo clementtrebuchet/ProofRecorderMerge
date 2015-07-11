@@ -1,5 +1,6 @@
 package org.proof.recorder.utils;
 
+@SuppressWarnings("unused")
 public interface PlugMiddleware {
 	
 	void callWhenReady();

@@ -24,6 +24,7 @@ import org.proofs.recorder.codec.mp3.utils.IServiceIntentRecorderMP3Cx;
 
 import java.util.Locale;
 
+@SuppressWarnings("unused")
 public class PhoneRecorderReceiver extends ProofBroadcastReceiver {
 	
 	private static final String START_ACTION = "android.intent.action.START_PHONE_RECORDER";

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+@SuppressWarnings("unused")
 public class ServiceIntentRecorderWav extends Service {
 	
 	private static final int NOTIFICATION_ID = 1234567890;
@@ -281,6 +282,7 @@ public class ServiceIntentRecorderWav extends Service {
 			isRecording = false;
 		}
 
+		//noinspection unused
 		recordingThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -351,6 +353,7 @@ public class ServiceIntentRecorderWav extends Service {
 			audioWav = null;
 			recordingThread = null;
 
+			//noinspection unused
 			new Thread(new Runnable() {
 
 				@Override
@@ -378,7 +381,7 @@ public class ServiceIntentRecorderWav extends Service {
 
 	/**
 	 * 
-	 * @return
+	 * @return the temp file name
 	 */
 	@SuppressWarnings("ResultOfMethodCallIgnored")
 	private String getTempFilename() {
@@ -401,7 +404,7 @@ public class ServiceIntentRecorderWav extends Service {
 
 	/**
 	 * 
-	 * @param inFilename
+	 * @param inFilename the input file name
 	 */
 	private void copyWaveFile(String inFilename) {
 
@@ -441,10 +444,10 @@ public class ServiceIntentRecorderWav extends Service {
 
 	/**
 	 * 
-	 * @param out
-	 * @param longSampleRate
-	 * @param channels
-	 * @param byteRate
+	 * @param out output file stream
+	 * @param longSampleRate sample rate
+	 * @param channels the channel
+	 * @param byteRate the bitrate
 	 * @throws IOException
 	 */
 	private void WriteWaveFileHeader(FileOutputStream out, long longSampleRate,

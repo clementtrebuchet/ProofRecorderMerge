@@ -24,6 +24,7 @@ import org.proof.recorder.utils.Log.Console;
 
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class FragmentListNotes extends Fragment {
 
 	private static Bundle mBundle;
@@ -47,6 +48,7 @@ public class FragmentListNotes extends Fragment {
 		Console.setTagName(this.getClass().getSimpleName());
 	}
 
+	@SuppressWarnings("UnusedAssignment")
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);

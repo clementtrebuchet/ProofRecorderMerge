@@ -1,6 +1,10 @@
 package org.proof.recorder.utils;
 
-import java.util.List;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.os.Bundle;
 
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.fragment.contacts.FragmentListPhoneContactsTabs;
@@ -10,12 +14,9 @@ import org.proof.recorder.fragment.voice.FragmentListVoiceTabs;
 import org.proof.recorder.fragment.voice.FragmentVoiceMediaRecorder;
 import org.proof.recorder.preferences.SettingsTabs;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.Bundle;
+import java.util.List;
 
+@SuppressWarnings("unused")
 public final class StaticIntents extends Intent {
 	
 	private static StaticIntents mIntent;
@@ -72,11 +73,11 @@ public final class StaticIntents extends Intent {
 		return create(origin, FragmentVoiceMediaRecorder.class);
 	}
 	
-	public static StaticIntents goPerfsDashBoard(Context origin) 
+	public static StaticIntents goPerfsDashBoard(Context origin)
 	{
 		return create(origin, FragmentVoiceMediaRecorder.class);
 	}
-	
+
 	public static StaticIntents goPlugins(Context origin) 
 	{
 		return create(origin, PluginsInformations.class);
@@ -90,7 +91,7 @@ public final class StaticIntents extends Intent {
 	            PackageManager.MATCH_DEFAULT_ONLY);
 	    return list.size() > 0;
 	}
-	
+
 	private StaticIntents() {}
 
 }

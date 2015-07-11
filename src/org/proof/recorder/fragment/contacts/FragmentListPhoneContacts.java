@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class FragmentListPhoneContacts extends Fragment {
-	
+
 	@SuppressWarnings("EmptyMethod")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,10 +37,10 @@ public class FragmentListPhoneContacts extends Fragment {
 	public static class PhoneContactsLoader extends ProofListFragmentWithAsyncLoader {
 
 		private final SparseBooleanArray selectedContacts = new SparseBooleanArray();
-		
+
 		private void sendEventToExcludedList(Contact c) {
 			Console.print_debug("Broadcasting message");
-			
+
 			  Intent intent = new Intent("eventOnContactAdded");
 			  // You can also include some extra data.
 			  intent.putExtra("message", "Contact: " + c + " added to excluded List!");
@@ -53,9 +53,9 @@ public class FragmentListPhoneContacts extends Fragment {
 			public void onReceive(Context context, Intent intent) {
 				// Get extra data included in the Intent
 				String message = intent.getStringExtra("message");
-				
+
 				Console.print_debug("Got message: " + message);
-				
+
 				try
 				{
 					Contact contactObj = (Contact) intent.getSerializableExtra("contactObj");
@@ -69,15 +69,15 @@ public class FragmentListPhoneContacts extends Fragment {
 				    });
 					c.notifyDataSetChanged();
 				}
-				catch (Exception e) {					
+				catch (Exception e) {
 					Console.print_exception(e);
 				}
 			}
 		};
 
 		public void getContacts() {
-			try {				
-				objects = ContactsDataHelper.getPhoneList(getActivity());				
+			try {
+				objects = ContactsDataHelper.getPhoneList(getActivity());
 			} catch (Exception e) {
 				Console.print_exception(e);
 			}
@@ -119,6 +119,7 @@ public class FragmentListPhoneContacts extends Fragment {
 
 		}
 
+		@SuppressWarnings("unused")
 		private class OnItemClickListener implements OnClickListener {
 			private final int position;
 			// private CharSequence text;
@@ -136,25 +137,25 @@ public class FragmentListPhoneContacts extends Fragment {
 			public void onClick(View arg0) {
 
 				selectedContacts.append(position, true);
-				
+
 				Contact.setResolver(
 						getActivity().getApplicationContext().getContentResolver());
-				
-				ContactAdapter contactAdapter = (ContactAdapter) getListAdapter();				
-				Contact contact = (Contact) objects.get(position);				
+
+				ContactAdapter contactAdapter = (ContactAdapter) getListAdapter();
+				Contact contact = (Contact) objects.get(position);
 
 				try {
-					
-					contact.save();					
+
+					contact.save();
 					sendEventToExcludedList(contact);
-					
+
 					contactAdapter.remove(contact);
 					objects.remove(contact);
 					selectedContacts.delete(position);
 					contactAdapter.notifyDataSetChanged();
 
-				} catch (IllegalArgumentException e) {					
-					Console.print_exception(e);	
+				} catch (IllegalArgumentException e) {
+					Console.print_exception(e);
 				}
 			}
 
@@ -165,30 +166,30 @@ public class FragmentListPhoneContacts extends Fragment {
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);	
+			super.onCreate(savedInstanceState);
 			LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
 					eventListExcludedReceiver, new IntentFilter("eventOnContactExcludedAdded"));
-			
+
 			startAsyncLoader();
 		}
-		
+
 		@Override
 		public void onDestroy() {
 			super.onDestroy();
 			LocalBroadcastManager.getInstance(getActivity())
-					.unregisterReceiver(eventListExcludedReceiver);		
+					.unregisterReceiver(eventListExcludedReceiver);
 		}
 
 		@Override
 		protected void _onPreExecute() {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void _onProgressUpdate(Integer... progress) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -212,19 +213,19 @@ public class FragmentListPhoneContacts extends Fragment {
 		@Override
 		protected void alertDlgCancelAction(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void alertDlgOkAction(DialogInterface dialog, int which) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		protected void handleOnReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 }

@@ -16,12 +16,6 @@
 
 package com.actionbarsherlock.widget;
 
-import android.os.Build;
-import com.actionbarsherlock.R;
-import com.actionbarsherlock.internal.widget.IcsLinearLayout;
-import com.actionbarsherlock.internal.widget.IcsListPopupWindow;
-import com.actionbarsherlock.view.ActionProvider;
-import com.actionbarsherlock.widget.ActivityChooserModel.ActivityChooserModelClient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,6 +24,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +37,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.actionbarsherlock.R;
+import com.actionbarsherlock.internal.widget.IcsLinearLayout;
+import com.actionbarsherlock.internal.widget.IcsListPopupWindow;
+import com.actionbarsherlock.view.ActionProvider;
+import com.actionbarsherlock.widget.ActivityChooserModel.ActivityChooserModelClient;
 
 /**
  * This class is a view for choosing an activity for handling a given {@link Intent}.
@@ -728,9 +729,10 @@ class ActivityChooserView extends ViewGroup implements ActivityChooserModelClien
             final int itemViewType = getItemViewType(position);
             switch (itemViewType) {
                 case ITEM_VIEW_TYPE_FOOTER:
-                    if (convertView == null || convertView.getId() != ITEM_VIEW_TYPE_FOOTER) {
+                    if (convertView == null || (int)convertView.getId() != ITEM_VIEW_TYPE_FOOTER) {
                         convertView = LayoutInflater.from(getContext()).inflate(
                                 R.layout.abs__activity_chooser_view_list_item, parent, false);
+
                         convertView.setId(ITEM_VIEW_TYPE_FOOTER);
                         TextView titleView = (TextView) convertView.findViewById(R.id.abs__title);
                         titleView.setText(mContext.getString(

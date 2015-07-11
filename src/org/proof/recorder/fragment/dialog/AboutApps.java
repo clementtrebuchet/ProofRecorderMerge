@@ -28,8 +28,8 @@ public class AboutApps extends ProofFragmentActivity {
 	private String fullAppName;
 	
 	/**
-	 * @param str
-	 * @return
+	 * @param str trim the string and make it lower case
+	 * @return return sanitized string
 	 */
 	private static String cleanString(String str) {
 		return str.replace(" ", "").trim().toLowerCase(Locale.getDefault());

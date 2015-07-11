@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
  * @author Lorensius W. L. T <lorenz@londatiga.net>
  *
  */
+@SuppressWarnings("unused")
 class PopupWindows {
 	private final Context mContext;
 	final PopupWindow mWindow;
@@ -33,6 +34,7 @@ class PopupWindows {
 		mContext	= context;
 		mWindow 	= new PopupWindow(context);
 
+		//noinspection unused
 		mWindow.setTouchInterceptor(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -52,9 +54,9 @@ class PopupWindows {
 	/**
 	 * On dismiss
 	 */
-	protected void onDismiss() {		
+	protected void onDismiss() {
 	}
-	
+
 	/**
 	 * On show
 	 */
@@ -88,7 +90,7 @@ class PopupWindows {
 
 	/**
 	 * Set background drawable.
-	 * 
+	 *
 	 * @param background Background drawable
 	 */
 	public void setBackgroundDrawable(Drawable background) {
@@ -108,19 +110,19 @@ class PopupWindows {
 
 	/**
 	 * Set content view.
-	 * 
+	 *
 	 * @param layoutResID Resource id
 	 */
 	public void setContentView(int layoutResID) {
 		LayoutInflater inflator = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
+
 		setContentView(inflator.inflate(layoutResID, null));
 	}
 
 	/**
 	 * Set listener on window dismissed.
 	 * 
-	 * @param listener
+	 * @param listener the listner
 	 */
 	void setOnDismissListener(PopupWindow.OnDismissListener listener) {
 		mWindow.setOnDismissListener(listener);  

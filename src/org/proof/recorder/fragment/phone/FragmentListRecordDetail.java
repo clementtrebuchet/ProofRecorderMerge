@@ -20,12 +20,14 @@ import org.proof.recorder.fragment.notes.FragmentNoteTabs;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 import org.proof.recorder.utils.QuickActionDlg;
 
+@SuppressWarnings("unused")
 public class FragmentListRecordDetail extends ProofFragmentActivity {
 	
 	//private static final String TAG = "FragmentListRecordDetail";
 	private static String id;
 	static String Id_record;
 
+	@SuppressWarnings("UnusedAssignment")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,11 +60,12 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 	    return QuickActionDlg.mainActionsMenuHandler(item);
 	}
 
+	@SuppressWarnings("unused")
 	public static class CustomLoader extends ListFragment implements
 			LoaderManager.LoaderCallbacks<Cursor> {
 
 		private static final int LIST_LOADE = 0x01;
-		private static final String TAG = "KnownContactsLoader->FragmentPhoneCallDetail";
+		private static final String TAG = "KnownCLoader->FragmentPDetail";
 		boolean mDualPane;
 		int mCursorPos = -1;
 		final String[] from = new String[]{ProofDataBase.COLUMNRECODINGAPP_ID,
@@ -99,8 +102,8 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 			id = FragmentNoteTabs.id;
 
 			if (Settings.isDebug()) {
-				Log.v(TAG, "PASS HERE");
-				Log.v(TAG, id);
+				Log.v("PASS HERE", TAG);
+				Log.v(id, TAG);
 			}
 			// Prepare the loader. Either re-connect with an existing one,
 			// or start a new one.
@@ -112,7 +115,7 @@ public class FragmentListRecordDetail extends ProofFragmentActivity {
 			id = FragmentNoteTabs.id;
 			// id = (String) b.get("id");
 			if (Settings.isDebug())
-				Log.v(TAG, id);
+				Log.v(id, TAG);
 
 			Uri uri = Uri.withAppendedPath(
 					PersonnalProofContentProvider.CONTENT_URI, "record_id/"

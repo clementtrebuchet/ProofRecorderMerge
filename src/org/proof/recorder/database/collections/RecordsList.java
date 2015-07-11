@@ -52,6 +52,9 @@ public class RecordsList {
 	
 	private void queryCursor() {
 		this.prepareSelection();
+		//noinspection ConstantConditions
+		assert this._resolver != null;
+		assert innerUri != null;
 		this._cursor = this._resolver.query(
 				innerUri, 
 				projection,  // projection
@@ -60,7 +63,7 @@ public class RecordsList {
 				sortOrder); // sortOrder		
 	}
 
-	@SuppressWarnings("StatementWithEmptyBody")
+	@SuppressWarnings({"StatementWithEmptyBody", "UnusedAssignment"})
 	private void prepareSelection() {
 		
 		Date beforeThat = null;

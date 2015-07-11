@@ -23,7 +23,7 @@ import android.widget.Toast;
 import org.proof.recorder.ProofRecorderActivity;
 import org.proof.recorder.R;
 
-@SuppressWarnings("NullableProblems")
+@SuppressWarnings({"NullableProblems", "unused"})
 public class ProofRecorderWidget extends AppWidgetProvider {
 
 	private final static String TAG = ProofRecorderWidget.class.getName();
@@ -72,7 +72,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	/**
 	 * 
-	 * @return
+	 * @return the refresh interval
 	 */
 	private static long mRefreshInterval() {
 
@@ -89,7 +89,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	/**
 	 * 
-	 * @param mContext
+	 * @param mContext the context
 	 */
 	private void testIfmRecorderDetector(Context mContext) {
 		try {
@@ -156,8 +156,8 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	/**
 	 * 
-	 * @param mContext
-	 * @param mAppWidgetId
+	 * @param mContext the context
+	 * @param mAppWidgetId the app widget id
 	 */
 	private void serviceUpdateView(Context mContext, int mAppWidgetId) {
 		Intent iService = new Intent(mContext, MBuildUpdate.class);
@@ -171,7 +171,8 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	 * 
 	 * @author clement service class@MBuildUpdate
 	 */
-    @SuppressLint(value = "Assert")
+    @SuppressWarnings("unused")
+	@SuppressLint(value = "Assert")
     public static class MBuildUpdate extends Service {
         int appWidgetIds;
 		private final String TAG = MBuildUpdate.class.getName();
@@ -247,7 +248,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 		/**
 		 * 
-		 * @param remoteView
+		 * @param remoteView the remote view
 		 */
 		private void pushUpdate(RemoteViews remoteView) {
 			ComponentName myWidget = new ComponentName(this,
@@ -271,11 +272,11 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	/**
 	 * 
-	 * @param mContext
-	 * @param mAppWidgetId
-	 * @param mCommand
-	 * @param mRemoteViews
-	 * @return
+	 * @param mContext the context
+	 * @param mAppWidgetId the app widget id
+	 * @param mCommand the command
+	 * @param mRemoteViews the remote view
+	 * @return the pending intent
 	 */
     private static PendingIntent getControlIntent(Context mContext,
                                                   int mAppWidgetId, String mCommand, RemoteViews mRemoteViews) {
@@ -289,8 +290,8 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	/**
 	 * 
-	 * @param aContext
-	 * @return
+	 * @param aContext the context
+	 * @return the pending intent
 	 */
     private static PendingIntent getControlIntent(Context aContext,
 												  int appWidgetId) {
@@ -546,7 +547,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	/**
 	 * 
-	 * @param context
+	 * @param context the context
 	 */
 	private void initMshPref(Context context) {
 		try {
@@ -584,7 +585,7 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 
 	/**
 	 * 
-	 * @param context
+	 * @param context the context
 	 */
 	private void initmEditor(Context context) {
 		if (mSharedPreferences != null) {
@@ -624,9 +625,9 @@ public class ProofRecorderWidget extends AppWidgetProvider {
 	}
 
 	/**
-     *  @param aContext
-     * @param mCancel
-     * @param appWidgetId
+     *  @param aContext the context
+     * @param mCancel the boolean cancel or not
+     * @param appWidgetId the app widget id
      */
     private static void setAlarm(Context aContext, boolean mCancel,
                                  int appWidgetId) {

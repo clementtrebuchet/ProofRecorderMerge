@@ -102,6 +102,7 @@ public class PhoneRecord {
 		return values;
 	}
 
+	@SuppressWarnings("UnusedAssignment")
 	public void save() {
 		
 		boolean saved = false;

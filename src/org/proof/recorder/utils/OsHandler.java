@@ -9,7 +9,6 @@ import org.proof.recorder.database.models.Record;
 import org.proof.recorder.personnal.provider.PersonnalProofContentProvider;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class OsHandler {
 	private static List<String> filesListVoices, filesListCalls;
 	
 	/**
-	 * @param message
+	 * @param message the message
 	 */
 	private static void print(String message) {
 		if(Settings.isDebug())
@@ -28,7 +27,7 @@ public class OsHandler {
 	}
 
 	/**
-	 * @param message
+	 * @param message the message
 	 */
 	private static void print_exception(String message) {
 		Log.e(OsHandler.class.getName(), "" + message);
@@ -42,8 +41,8 @@ public class OsHandler {
 	}
 
 	/**
-	 * @param mFileName
-	 * @throws IOException
+	 * @param mFileName the file name
+	 *
 	 */
 	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void deleteFileFromDisk(String mFileName) {
@@ -116,8 +115,8 @@ public class OsHandler {
 	}
 	
 	/**
-	 * @param mContext
-	 * @param uri
+	 * @param mContext the context
+	 * @param uri the uri
 	 */
 	private static void deleteFromUri(Context mContext, Uri uri) {
 		try {
@@ -128,7 +127,7 @@ public class OsHandler {
 	}
 
 	/**
-	 * @param mContext
+	 * @param mContext the context
 	 */
 	public static void checkDirectoriesStructureIntegrity(Context mContext) {
 

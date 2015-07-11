@@ -24,8 +24,8 @@ public class RecorderDetector {
 
 	/**
 	 * @@Singleton
-	 * @param c
-	 * @return
+	 * @param c the context
+	 * @return the recorder detector
 	 */
 	public static RecorderDetector getInstance(Context c) {
 		if (mInstance == null) {
@@ -41,7 +41,7 @@ public class RecorderDetector {
 
 	/**
 	 * 
-	 * @param c
+	 * @param c the context
 	 */
 	private RecorderDetector(Context c) {
 		this.mContext = c;
@@ -65,7 +65,7 @@ public class RecorderDetector {
 
 	/**
 	 * 
-	 * @param on
+	 * @param on the boolean on/off
 	 */
 	public void ChangeRecPosition(boolean on) {
 		recOn = false;
@@ -99,7 +99,7 @@ public class RecorderDetector {
 
 	/**
 	 * 
-	 * @return
+	 * @set the preferences object
 	 */
 	private void _initPreferences() {
 		if (preferences == null) {

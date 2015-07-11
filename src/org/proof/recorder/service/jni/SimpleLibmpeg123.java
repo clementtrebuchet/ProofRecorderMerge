@@ -1,11 +1,12 @@
 package org.proof.recorder.service.jni;
 
-import java.nio.ShortBuffer;
+import android.util.Log;
 
 import org.proof.recorder.Settings;
 
-import android.util.Log;
+import java.nio.ShortBuffer;
 
+@SuppressWarnings("unused")
 class SimpleLibmpeg123 extends MP3Decoder{
 
 	private static final String TAG = "SimpleLibmpeg123";

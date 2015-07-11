@@ -12,6 +12,7 @@ import org.proof.recorder.Settings;
 import java.io.Serializable;
 import java.util.Locale;
 
+@SuppressWarnings("unused")
 public abstract class BasePhoneNumber implements Serializable {
 	
 	/**
@@ -30,6 +31,7 @@ public abstract class BasePhoneNumber implements Serializable {
 	
 	// Enums
 	
+	@SuppressWarnings("unused")
 	protected enum internalType {
 		BASIS,
 		SIMPLE,
@@ -109,7 +111,7 @@ public abstract class BasePhoneNumber implements Serializable {
 	// Methods
 	
 	/**
-	 * @param phoneNumber
+	 * @param phoneNumber the phone number to process
 	 */
 	private void fillAttributesFromNumberStr(String phoneNumber) {
 		try {

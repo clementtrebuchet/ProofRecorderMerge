@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+    <string name="start">start</string>
+    <string name="stop">stop</string>
     <string name="songtime">00:00 mn/s</string>
     <string name="debutRec">Début d\'enregistrement</string>
     <string name="finRec">Fin de l\'enregistrement</string>

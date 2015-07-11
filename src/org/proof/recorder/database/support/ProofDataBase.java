@@ -9,6 +9,7 @@ import android.util.Log;
 
 import org.proof.recorder.Settings;
 
+@SuppressWarnings("unused")
 public class ProofDataBase {
 	/*
 	 * TABLE DE LA BASE DE DONNEE
@@ -75,7 +76,7 @@ public class ProofDataBase {
 
 	public ProofDataBase open() throws SQLException {
 		dbHelper = new ProofDataBaseHelper(this.context);
-		
+
 		database = dbHelper.getWritableDatabase();
 		return this;
 	}

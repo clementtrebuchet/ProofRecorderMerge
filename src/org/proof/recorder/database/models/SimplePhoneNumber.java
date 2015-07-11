@@ -1,5 +1,6 @@
 package org.proof.recorder.database.models;
 
+@SuppressWarnings("unused")
 public class SimplePhoneNumber extends BasePhoneNumber {
 
 	/**

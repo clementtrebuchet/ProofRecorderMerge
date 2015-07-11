@@ -10,6 +10,7 @@ import org.proof.recorder.utils.Log.Console;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class Note implements DataLayerInterface, Serializable {
 
 	/**
@@ -117,7 +118,7 @@ public class Note implements DataLayerInterface, Serializable {
 	private String _synced;	
 	
 	/**
-	 * 
+	 *
 	 */
 	protected Note() {
 		super();
@@ -128,7 +129,7 @@ public class Note implements DataLayerInterface, Serializable {
 		this._text = null;
 		this._creationTime = null;
 		this._synced = null;
-		
+
 		initialize();
 	}
 	/**
@@ -146,12 +147,12 @@ public class Note implements DataLayerInterface, Serializable {
 		initialize();
 	}
 	/**
-	 * @param _id
-	 * @param _recordId
-	 * @param _title
-	 * @param _text
-	 * @param _creationTime
-	 * @param _synced
+	 * @param _id the id
+	 * @param _recordId the record id
+	 * @param _title the record title
+	 * @param _text the record text
+	 * @param _creationTime the record creation time
+	 * @param _synced the boolean sync (not used anymore)
 	 */
 	protected Note(String _id, String _recordId, String _title, String _text,
 			String _creationTime, String _synced) {
@@ -163,10 +164,10 @@ public class Note implements DataLayerInterface, Serializable {
 		this._text = _text;
 		this._creationTime = _creationTime;
 		this._synced = _synced;
-		
+
 		initialize();
 	}
-	
+
 	private void initialize() {
 		Console.setTagName(this.getClass().getSimpleName());
 		
@@ -248,7 +249,7 @@ public class Note implements DataLayerInterface, Serializable {
 	public void setSynced(String _synced) {
 		this._synced = _synced;
 	}
-	
+
 	@Override
 	public boolean fillFromDataBase() {
 		

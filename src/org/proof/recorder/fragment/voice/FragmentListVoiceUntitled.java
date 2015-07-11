@@ -62,7 +62,7 @@ public class FragmentListVoiceUntitled extends ProofFragment {
 				
 				VoicesList mList = new VoicesList(cursor);
 				objects = (ArrayList<Object>) mList.getCollection();
-				
+				cursor.close();
 			} catch (Exception e) {				
 				Console.print_exception(e);
 			}

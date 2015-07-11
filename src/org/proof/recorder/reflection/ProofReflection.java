@@ -6,11 +6,13 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
 
+@SuppressWarnings("unused")
 class ProofReflection {
 	
+	@SuppressWarnings("unused")
 	public static class CCException extends Exception {
 		/**
-		 * 
+		 *
 		 */
 		protected CCException() {
 			super();
@@ -18,8 +20,8 @@ class ProofReflection {
 		}
 
 		/**
-		 * @param detailMessage
-		 * @param throwable
+		 * @param detailMessage the detail for the message
+		 * @param throwable rise ex
 		 */
 		CCException(String detailMessage, Throwable throwable) {
 			super(detailMessage, throwable);
@@ -27,7 +29,7 @@ class ProofReflection {
 		}
 
 		/**
-		 * @param detailMessage
+		 * @param detailMessage the detail for the message
 		 */
 		protected CCException(String detailMessage) {
 			super(detailMessage);
@@ -35,7 +37,7 @@ class ProofReflection {
 		}
 
 		/**
-		 * @param throwable
+		 * @param throwable rise ex
 		 */
 		protected CCException(Throwable throwable) {
 			super(throwable);
@@ -53,7 +55,7 @@ class ProofReflection {
 	 * Allow for instance call, avoiding certain class circular dependencies. <br />
 	 * Calls even private method if java Security allows it.
 	 * @param aninstance instance on which method is invoked (if null, static call)
-	 * @param classname name of the class containing the method 
+	 * @param classname name of the class containing the method
 	 * (can be null - ignored, actually - if instance if provided, must be provided if static call)
 	 * @param amethodname name of the method to invoke
 	 * @param parameterTypes array of Classes
@@ -63,12 +65,12 @@ class ProofReflection {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Object reflectionCall(
-			final Object aninstance, 
-			final String classname, 
-			final String amethodname, 
-			final Class[] parameterTypes, 
+			final Object aninstance,
+			final String classname,
+			final String amethodname,
+			final Class[] parameterTypes,
 			final Object[] parameters) throws CCException {
-		
+
 	    Object res;// = null;
 	    try {
 	    	Class aclass;// = null;
@@ -80,11 +82,12 @@ class ProofReflection {
 	    	{
 	    		aclass = aninstance.getClass();
 	    	}
-	    	
+
 	    //Class[] parameterTypes = new Class[]{String[].class};
-	    	
+
 	    final Method amethod = aclass.getDeclaredMethod(amethodname, parameterTypes);
-	    	AccessController.doPrivileged(new PrivilegedAction() {
+			//noinspection unused
+			AccessController.doPrivileged(new PrivilegedAction() {
 		@Override
 		public Object run() {
 	                amethod.setAccessible(true);
@@ -104,7 +107,7 @@ class ProofReflection {
 			throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_ACCESS_RESTRICTION", e);
 	    } catch (final InvocationTargetException e) {
 		throw new CCException("PROBLEM_TO_ACCESS " + classname + "#" + amethodname + " METHOD_INVOCATION_ISSUE", e);
-	    } 
+	    }
 	    return res;
 	}
 

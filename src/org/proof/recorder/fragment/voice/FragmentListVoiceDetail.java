@@ -44,6 +44,7 @@ public class FragmentListVoiceDetail extends ProofFragmentActivity {
 	    return QuickActionDlg.mainActionsMenuHandler(item);
 	}
 
+	@SuppressWarnings("unused")
 	public static class CustomLoader extends ListFragment implements
 			LoaderManager.LoaderCallbacks<Cursor> {
 

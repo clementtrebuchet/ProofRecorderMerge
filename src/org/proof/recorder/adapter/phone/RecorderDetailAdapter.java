@@ -29,12 +29,14 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
 
+@SuppressWarnings("UnusedParameters")
 public class RecorderDetailAdapter extends SimpleCursorAdapter {
 
 	private static final String TAG = "RecorderDetailAdpater";
 	private String f;
 	private static Context mcontext;
 
+	@SuppressWarnings("SameParameterValue")
 	public RecorderDetailAdapter(Context context, int layout,
 								 String[] from, int[] to) {
 		super(context, R.layout.record_detail, null, from, to, android.widget.CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);

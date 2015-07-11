@@ -3,6 +3,7 @@ package org.proof.recorder.bases.activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+@SuppressWarnings("unused")
 public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivity {
 	
 	private AsyncLoader collectionLoader;
@@ -65,6 +66,7 @@ public abstract class ProofAsyncPreferenceActivity extends ProofPreferenceActivi
 		stopAsyncLoader();
 	}
 
+	@SuppressWarnings("unused")
 	private class AsyncLoader extends AsyncTask<Void, Integer, Long> {
 
 		@Override

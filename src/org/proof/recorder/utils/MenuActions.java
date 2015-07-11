@@ -27,6 +27,7 @@ import org.proof.recorder.utils.Log.Console;
 import java.io.File;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public final class MenuActions {
 
 	private static Context mContext;
@@ -92,6 +93,7 @@ public final class MenuActions {
 
 			mDialog.setMessage(mContext.getString(R.string.strUACDeleteFolder));
 
+			//noinspection unused
 			mDialog.setNegativeButton(
 					mContext.getString(R.string.strUACCancelBtn),
 					new DialogInterface.OnClickListener() {
@@ -100,6 +102,7 @@ public final class MenuActions {
 						}
 					});
 
+			//noinspection unused
 			mDialog.setPositiveButton(
 					mContext.getString(R.string.strUACConfirmBtn),
 					new DialogInterface.OnClickListener() {
@@ -269,9 +272,9 @@ public final class MenuActions {
 	}
 
 	/**
-	 * @param mId
-	 * @param mType
-	 * @param mItem
+	 * @param mId the id
+	 * @param mType the type
+	 * @param mItem the item
 	 */
 
 	public static void deleteItem(
@@ -288,6 +291,7 @@ public final class MenuActions {
 
 			mDialog.setMessage(mContext.getString(R.string.strUACDeleteRecord));
 
+			//noinspection unused
 			mDialog.setNegativeButton(
 					mContext.getString(R.string.strUACCancelBtn),
 					new DialogInterface.OnClickListener() {
@@ -296,6 +300,7 @@ public final class MenuActions {
 						}
 					});
 
+			//noinspection unused
 			mDialog.setPositiveButton(
 					mContext.getString(R.string.strUACConfirmBtn),
 					new DialogInterface.OnClickListener() {
@@ -333,7 +338,7 @@ public final class MenuActions {
 		b.putString("id", c.getString(0));
 		displayItemDetails(intent, b);
 	}
-	
+
 	public static void displayItemVoiceDetails(String id) {
 
 		FragmentListVoice.ID = id;
@@ -383,7 +388,7 @@ public final class MenuActions {
 	/**
 	 * Array of Strings [0] : filePath
 	 * 
-	 * @param mDatas
+	 * @param mDatas data
 	 */
 	public static void sharingOptions(Context context, String[] mDatas) {
 		
