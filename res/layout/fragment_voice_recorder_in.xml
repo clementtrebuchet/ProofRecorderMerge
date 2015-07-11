@@ -56,7 +56,7 @@
             android:layout_gravity="end"
             android:contentDescription=""
             android:src="@drawable/play"
-            android:text="" />
+            android:text="@string/start" />
 
         <ImageButton
             android:id="@+id/stop"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:contentDescription=""
             android:src="@drawable/stop"
-            android:text="" />
+            android:text="@string/stop" />
     </LinearLayout>
 
 </RelativeLayout>
