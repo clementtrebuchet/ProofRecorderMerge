@@ -32,6 +32,9 @@ android {
         }
 	lintOptions {
         abortOnError false
+        checkAllWarnings false
+        warningsAsErrors false
+        xmlReport false
      }
     }
     compileSdkVersion 17
