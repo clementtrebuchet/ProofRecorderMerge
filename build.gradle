@@ -25,12 +25,12 @@ dependencies {
 
 android {
     signingConfigs {
-        keyStore {
+        release {
             keyPassword 'sonyaltec'
             storeFile file('key')
             storePassword 'sonyaltec'
-	    keyalias 'mesapplismaison'
-	    keypassword 'sonyaltec'	    
+            keyAlias 'mesapplismaison'
+
         }
     }
     buildTypes {
@@ -44,7 +44,7 @@ android {
         warningsAsErrors false
         xmlReport false
     }
-    
+
     compileSdkVersion 17
     buildToolsVersion '19.1.0'
     sourceSets {
