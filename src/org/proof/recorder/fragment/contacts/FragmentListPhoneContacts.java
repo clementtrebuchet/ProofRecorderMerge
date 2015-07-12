@@ -1,5 +1,6 @@
 package org.proof.recorder.fragment.contacts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -94,6 +95,7 @@ public class FragmentListPhoneContacts extends Fragment {
 			}
 
 			@Override
+			@SuppressLint("InflateParams")
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = convertView;
 				if (view == null) {

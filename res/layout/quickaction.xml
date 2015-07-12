@@ -10,6 +10,7 @@
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
         
@@ -35,7 +36,8 @@
         android:paddingLeft="1dip"
         android:paddingStart="1dip"
         android:background="@drawable/quickaction_slider_background"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        tools:ignore="RtlSymmetry">
 
         <LinearLayout
             android:id="@+id/tracks"

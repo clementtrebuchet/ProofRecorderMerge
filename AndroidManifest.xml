@@ -130,7 +130,7 @@
             android:name=".fragment.dialog.VoiceEditDialog"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/voice_edit_dialog_title"
-            android:theme="@style/Theme.Sherlock" >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -152,7 +152,7 @@
             android:name=".fragment.dialog.Search"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/search_dialog_title"
-            android:theme="@style/Theme.Sherlock" >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -163,7 +163,7 @@
             android:name=".fragment.dialog.SearchByDates"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/alert_dlg_datepicker_title"
-            android:theme="@style/Theme.Sherlock" >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -186,7 +186,7 @@
             android:name=".fragment.dialog.NoneRecordsDialog"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/none_records_dialog_title"
-            android:theme="@style/Theme.Sherlock" >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -196,7 +196,7 @@
         <activity
             android:name=".fragment.dialog.AboutApps"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock" >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -206,7 +206,7 @@
         <activity
             android:name=".fragment.dialog.PluginsInformations"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock" >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -216,7 +216,7 @@
         <activity
             android:name=".fragment.dialog.PhoneInformations"
             android:label="@string/dashboard_dialog_title"
-            android:theme="@style/Theme.Sherlock" >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.PhoneInformations" />
 
@@ -465,7 +465,7 @@
  		<activity
             android:name=".wigdet.WidgetPreferenceFormat"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Sherlock"
+            android:theme="@android:style/Theme.Dialog"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.WidgetPreferenceFormat" />
@@ -533,13 +533,13 @@
             </intent-filter>
         </receiver>
         <!-- Outgoing Calls -->
-        <receiver android:name=".broadcastr.phone.AppelsSortants" android:exported="false">
+        <receiver android:name=".broadcastr.phone.AppelsSortants">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
         <!-- Google Analytics -->
-        <!--suppress ExportedPreferenceActivity -->
+        <!--suppress ExportedPreferenceActivity ExportedReceiver-->
         <receiver
             android:name="com.google.android.apps.analytics.AnalyticsReceiver"
             android:exported="true" >

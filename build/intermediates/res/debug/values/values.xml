@@ -2,6 +2,10 @@
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/arrays.xml -->
     <eat-comment/>
+    <string-array name="audio_channel">
+        <item>MONO</item>
+        <item>STEREO</item>
+    </string-array>
     <string-array name="audio_format">
         <item>3GP</item>
         <item>WAV</item>
@@ -217,57 +221,8 @@
     <string name="ERROR900">Aucune donnée à synchroniser, merci.</string>
     <string name="Echantillonnage">Echantillonnage</string>
     <string name="FORRBIDEN">You can\'t change format during record !"</string>
-    <string name="FTPAUTHKO">L\'authentification a échouée !!</string>
-    <string name="FTPAUTHOK">L\'authentification a réussi, bienvenue.</string>
-    <string name="FTPCONOFF">Deconnection</string>
-    <string name="FTPCONON">Connection</string>
-    <string name="FTPDWKO">Le fichier ne peut pas être downloader !!</string>
-    <string name="FTPDWOK">Le fichier a été downloader avec succès</string>
-    <string name="FTPFATALERROR">Opération intérrompu, contacter le support technique, svp.</string>
-    <string name="FTPUPKO">Le fichier ne peut pas être uploader !!</string>
-    <string name="FTPUPOK">Le fichier a été uploader avec succès</string>
     <string name="Hz">Hz</string>
     <string name="REQUIRED">Plugin requis</string>
-    <string name="RESTOROK">Synchronisation Réussie !!</string>
-    <string name="STARTOP">Début des opérations de Synchronisation</string>
-    <string name="SyncronUi_13"/>
-    <string name="SyncronUi_14">Tips :\r\nVos données sont désynchronisées, faites une sauvegarde \!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
-    <string name="SyncronUi_15">Tips :\r\n Vos données sont deja synchronisées, sauvegarde inutile\!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
-    <string name="SyncronUi_16">Tips :\r\nVos données sont désynchronisées, l\'option force est désactivé\r\n</string>
-    <string name="SyncronUi_17">Vos données sont désynchronisées, l\'option force est désactivé</string>
-    <string name="SyncronUi_18">Erreur la checksum reste à sa valeur initial de 1000</string>
-    <string name="SyncronUi_19">Tips :\r\nVos données étaient désynchronisées,nous avons purger les données\r\nprésentent sur le serveur avant de les sauvegardées\r\n</string>
-    <string name="SyncronUi_20">Tips :\r\nVos données étaient désynchronisées, l\'option force est désactivé\r\n</string>
-    <string name="SyncronUi_21">Vos données sont désynchronisées, l\'option force est désactivé</string>
-    <string name="SyncronUi_22">Tips :\r\n Vos données étaient deja synchronisées\r\n</string>
-    <string name="SyncronUi_23">La sauvegarde des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_24">La sauvegarde des notes des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_25">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_26">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_27">La sauvegarde des appels est ok\r\n</string>
-    <string name="SyncronUi_28">La sauvegarde des notes des appels  est ok\r\n</string>
-    <string name="SyncronUi_29">La sauvegarde des enregistrement  est okr\r\n</string>
-    <string name="SyncronUi_30">La sauvegarde des notes des enregistrement  est ok\r\n</string>
-    <string name="SyncronUi_31">La sauvegarde des appels est ok\r\n</string>
-    <string name="SyncronUi_32">La sauvegarde des notes des appels  est ok\r\n</string>
-    <string name="SyncronUi_33">La sauvegarde des enregistrement  est okr\r\n</string>
-    <string name="SyncronUi_34">La sauvegarde des notes des enregistrement  est ok\r\n</string>
-    <string name="SyncronUi_35">Toutes les opérations ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_36">Toutes les mise à jour ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_37">La sauvegarde des données des appels à échouée\r\n</string>
-    <string name="SyncronUi_38">La sauvegarde des données des notes des appels à échouée\r\n</string>
-    <string name="SyncronUi_39">La sauvegarde des données des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_40">La sauvegarde des données des notes des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_41">La sauvegarde des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_42">La sauvegarde des notes des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_43">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_44">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_45">Toutes les restaurations de données ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_46">La restaurations des données des appels à échouée\r\n</string>
-    <string name="SyncronUi_47">La restaurations des donnéese des notes des appels à échouée\r\n</string>
-    <string name="SyncronUi_48">La restaurations des données des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_49">La restaurations des données des notes des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_54">Bienvenue\r\n</string>
     <string name="ab_contacts_list_icon_desc">Contacts icons</string>
     <string name="ab_contacts_list_text">Contacts\' List</string>
     <string name="ab_default_text">Frug\'n Frog\'s Apps :)</string>
@@ -295,7 +250,7 @@
     <string name="abs__activity_chooser_view_dialog_title_default">Select activity</string>
     <string name="abs__activity_chooser_view_see_all">See all…</string>
     <string name="abs__activitychooserview_choose_application">Choose an application</string>
-    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/build/intermediates/exploded-aar/ProofRecorderMerge/Sherlock/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/strings.xml -->
     <eat-comment/>
     <string name="abs__searchview_description_clear">Clear query</string>
     <string name="abs__searchview_description_query">Search query</string>
@@ -339,6 +294,7 @@
     <string name="btn_ok">OK</string>
     <string name="buy">Buy</string>
     <string name="buy_button">Upgrade</string>
+    <string name="call_direction">Sens de l\'appel</string>
     <string name="cannot_connect_message">This app cannot connect to Market.
      Your version of Market may be out of date.
      You can continue to use this app but you
@@ -371,6 +327,7 @@
     <string name="dashbord_dialog_network">Network used:</string>
     <string name="dashbord_dialog_non_excluded_contacts">Non-Excluded contacts:</string>
     <string name="dashbord_dialog_voices">Number or recorded voices:</string>
+    <string name="date_of_call">Date of Call</string>
     <string name="debutRec">Starting recording</string>
     <string name="dec">December</string>
     <string name="default_note_text">No text note for this record</string>
@@ -432,6 +389,7 @@
     <string name="input.button_done.label">I\'m done</string>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/strings.xml -->
     <eat-comment/>
+    <string name="item_quantity">1</string>
     <string name="items_for_sale">Items for sale</string>
     <string name="items_you_own">Items you own</string>
     <string name="jan">January</string>
@@ -441,6 +399,8 @@
     <string name="list_details_image">Contact</string>
     <string name="list_details_image_cd">Contact</string>
     <string name="loading">Fetching data, please wait…</string>
+    <string name="mChart">Chart</string>
+    <string name="mTextView">TextView</string>
     <string name="mar">March</string>
     <string name="may">May</string>
     <string name="mp3c">Séléction de la Compression</string>
@@ -505,6 +465,7 @@
     <string name="qaction_share_sc">SoundCloud</string>
     <string name="quit_button">Quit</string>
     <string name="recent_transactions">Recent activity</string>
+    <string name="record_detail_phone_number">Phone Number</string>
     <string name="record_on_recording">Impossible to run recording service \ntwice at the same time!</string>
     <string name="restoring_transactions">Restoring transactions</string>
     <string name="retry_button">new try</string>
@@ -548,6 +509,8 @@
     <string name="share_mail_desc">Sent this record with your default mail manager</string>
     <string name="share_mail_title">Mail</string>
     <string name="site_uri">Phone &amp; voice Recorder</string>
+    <string name="size_of_song">Size</string>
+    <string name="song_duration">Duration</string>
     <string name="songtime">00:00 mn/s</string>
     <string name="soundopt">Qualitée d\'enregistrement</string>
     <string name="start">start</string>
@@ -610,10 +573,6 @@
     <string name="summary_checkbox_VOICE_UP">Optimized Source:\nYour Voice</string>
     <string name="summary_checkbox_speaker">Needed for a good recording quality</string>
     <string name="summary_list_auto_clean">Set your phone calls auto-cleaning, then decreasing disk space usage</string>
-    <string name="syncronConnectionError">Connection Error, try later</string>
-    <string name="syncronDATA">Synchron DATA</string>
-    <string name="syncronTEL">Synchron All</string>
-    <string name="syncronVOX">Synchron Voice</string>
     <string name="tableHeure">Date</string>
     <string name="tableId">ID</string>
     <string name="tableNumero">Number</string>
@@ -640,6 +599,7 @@
     <string name="title_checkbox_VOICE_UP">Locale Voice (Tx)</string>
     <string name="title_checkbox_speaker">Speaker Active ?</string>
     <string name="title_list_auto_clean">Select period</string>
+    <string name="unknow_contact">Contact Inconnu</string>
     <string name="unknownContact">(Unknown Contact)</string>
     <string name="unlicensed_dialog_body">Your Licence has expired!</string>
     <string name="unlicensed_dialog_retry_body">Retry ?</string>

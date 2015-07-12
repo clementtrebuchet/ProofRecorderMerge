@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget50"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
@@ -14,7 +15,8 @@
             android:id="@+id/mWrapper"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_alignParentTop="true" >
+            android:layout_alignParentTop="true"
+            tools:ignore="UselessParent">
 
             <RadioGroup
                 android:id="@+id/mIvTvWrapper"
@@ -49,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="Contact Inconnu"
+                        android:text="@string/unknow_contact"
                         android:textColor="#ff010101"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -69,7 +71,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="Sens de l&apos;appel"
+                            android:text="@string/call_direction"
                             android:textSize="12sp"
                             android:textStyle="bold|italic" />
 
@@ -88,7 +90,7 @@
                         android:layout_gravity="center_horizontal"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:text="Phone Number"
+                        android:text="@string/record_detail_phone_number"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RadioGroup>
@@ -124,16 +126,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Date of Call"
+                    android:text="@string/date_of_call"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/mSizeOfFile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="end"
                     android:padding="10dp"
-                    android:text="Size"
+                    android:text="@string/size_of_song"
                     android:textColor="#ff07c5df"
                     android:textStyle="bold" />
             </RadioGroup>
@@ -142,16 +144,16 @@
                 android:id="@+id/mDurationOf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginTop="20dp"
-                android:gravity="right"
+                android:gravity="end"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/mDurationOfFile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Duration"
+                    android:text="@string/song_duration"
                     android:textColor="#ff07c5df"
                     android:textStyle="bold" />
             </RadioGroup>
@@ -160,14 +162,14 @@
                 android:id="@+id/mId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/mTextView"
                 android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/mFilePath"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/mTextView"
                 android:visibility="invisible" />
         </RadioGroup>
     </RelativeLayout>

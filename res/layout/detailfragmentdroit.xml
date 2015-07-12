@@ -10,8 +10,10 @@
         android:id="@+id/thumbnaillon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="5dip"
+        android:layout_marginEnd="5dip"
         android:background="@drawable/image_bg"
         android:padding="3dip" >
 

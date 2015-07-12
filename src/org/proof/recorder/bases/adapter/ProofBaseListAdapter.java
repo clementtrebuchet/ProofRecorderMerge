@@ -105,8 +105,8 @@ public abstract class ProofBaseListAdapter extends ArrayAdapter<Object> {
 	}
 	
 	@Override
-    @SuppressLint("ViewHolder")
-    public View getView(final int position, View view, ViewGroup parent) {
+	@SuppressLint("ViewHolder,InflateParams")
+	public View getView(final int position, View view, ViewGroup parent) {
 		
 		viewGroup = parent;
 		

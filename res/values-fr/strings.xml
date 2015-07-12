@@ -312,11 +312,6 @@
     <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
     <string name="abs__searchview_description_voice">Voice search</string>
     <!-- DEBUT SYNCRON -->
-    <string name="syncronTEL">Synchroniser sur le serveur</string>
-    <string name="syncronVOX">Synchroniser Voix</string>
-    <string name="syncronConnectionError">Erreur de connection</string>
-    <string name="syncronDATA">Synchroniser DATA</string>
-    <string name="syncronRESTORE">Synchroniser dans le téléphone</string>
     <!-- FIN SYNCRON -->
     <!-- GCM -->
     <string name="ic_stat_gcm"/>
@@ -348,68 +343,6 @@
     <string name="custom_intent_chooser_subject">Voice Proof Recorder Partage</string>
     <string name="custom_intent_chooser_text">Votre commentaire pour ce partage</string>
     <string name="share_intent_chooser_title">Partage</string>
-    <!-- FTP/** -->
-    <string name="FTPUPOK">Le fichier a été uploader avec succès</string>
-    <string name="FTPUPKO">Le fichier ne peut pas être uploader !!</string>
-    <string name="FTPDWOK">Le fichier a été downloader avec succès</string>
-    <string name="FTPDWKO">Le fichier ne peut pas être downloader !!</string>
-    <string name="FTPAUTHKO">L\'authentification a échouée !!</string>
-    <string name="FTPAUTHOK">L\'authentification a réussi, bienvenue.</string>
-    <string name="FTPCONOFF">Deconnection</string>
-    <string name="FTPCONON">Connection</string>
-    <string name="FTPFATALERROR">Opération intérrompu, contacter le support technique, svp.</string>
-    <string name="RESTOROK">Synchronisation Réussie !!</string>
-    <string name="STARTOP">Début des opérations de Synchronisation</string>
-    <string name="NOTIFYTITLE">Transfert d\'un fichier son</string>
-    <string name="NOTIFYINFO">Une opération de transfert est terminée!</string>
-    <!-- END FTP/** -->
-    <!-- Syncronui -->
-    <string name="SyncronUi_13"/>
-    <string name="SyncronUi_14">Tips :\r\nVos données sont désynchronisées, faites une sauvegarde \!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
-    <string name="SyncronUi_15">Tips :\r\n Vos données sont deja synchronisées, sauvegarde inutile\!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
-    <string name="SyncronUi_16">Tips :\r\nVos données sont désynchronisées, l\'option force est désactivé\r\n</string>
-    <string name="SyncronUi_17">Vos données sont désynchronisées, l\'option force est désactivé</string>
-    <string name="SyncronUi_18">Erreur la checksum reste à sa valeur initial de 1000</string>
-    <string name="SyncronUi_19">Tips :\r\nVos données étaient désynchronisées,nous avons purger les données\r\nprésentent sur le serveur avant de les sauvegardées\r\n</string>
-    <string name="SyncronUi_20">Tips :\r\nVos données étaient désynchronisées, l\'option force est désactivé\r\n</string>
-    <string name="SyncronUi_21">Vos données sont désynchronisées, l\'option force est désactivé</string>
-    <string name="SyncronUi_22">Tips :\r\n Vos données étaient deja synchronisées\r\n</string>
-    <string name="SyncronUi_23">La sauvegarde des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_24">La sauvegarde des notes des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_25">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_26">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_27">La sauvegarde des appels est ok\r\n</string>
-    <string name="SyncronUi_28">La sauvegarde des notes des appels  est ok\r\n</string>
-    <string name="SyncronUi_29">La sauvegarde des enregistrement  est okr\r\n</string>
-    <string name="SyncronUi_30">La sauvegarde des notes des enregistrement  est ok\r\n</string>
-    <string name="SyncronUi_31">La sauvegarde des appels est ok\r\n</string>
-    <string name="SyncronUi_32">La sauvegarde des notes des appels  est ok\r\n</string>
-    <string name="SyncronUi_33">La sauvegarde des enregistrement  est okr\r\n</string>
-    <string name="SyncronUi_34">La sauvegarde des notes des enregistrement  est ok\r\n</string>
-    <string name="SyncronUi_35">Toutes les opérations ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_36">Toutes les mise à jour ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_37">La sauvegarde des données des appels à échouée\r\n</string>
-    <string name="SyncronUi_38">La sauvegarde des données des notes des appels à échouée\r\n</string>
-    <string name="SyncronUi_39">La sauvegarde des données des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_40">La sauvegarde des données des notes des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_41">La sauvegarde des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_42">La sauvegarde des notes des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_43">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_44">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_45">Toutes les restaurations de données ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_46">La restaurations des données des appels à échouée\r\n</string>
-    <string name="SyncronUi_47">La restaurations des donnéese des notes des appels à échouée\r\n</string>
-    <string name="SyncronUi_48">La restaurations des données des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_49">La restaurations des données des notes des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_54">Bienvenue\r\n</string>
-    <string name="SyncronUi_55">Il y a plus d\'enregistrement téléponique sur le serveur\r\n</string>
-    <string name="SyncronUi_56">Il y a plus d\'enregistrement vocale sur le serveur\r\n</string>
-    <string name="SyncronUi_57">Il y a moins d\'enregistrement téléponique sur le serveur\r\n</string>
-    <string name="SyncronUi_58">Il y a moins d\'enregistrement vocale sur le serveur\r\n</string>
-    <string name="SyncronUi_59">Il y a plus d\'enregistrement téléponique et vocale sur le serveur\r\n</string>
-    <string name="SyncronUi_60">Il y a moins d\'enregistrement téléponique et vocale sur le serveur \r\n</string>
-    <!-- END SYNCRON -->
-    <string name="welcome">Welcome to the Sample store!</string>
     <string name="billing_not_supported_title">Can\'t make purchases</string>
     <string name="billing_not_supported_message">The Market billing
      service is not available at this time.  You can continue to use this app but you
@@ -501,4 +434,13 @@
     <string name="sc_upload_file_msg_plural">Upload des fichiers en cours…</string>
     <!-- WIDGET -->
     <string name="FORRBIDEN">Vous ne pouvez pas changer le format durant l\'enregistrement !"</string>
+    <string name="call_direction">Sens de l\'appel</string>
+    <string name="record_detail_phone_number">Phone Number</string>
+    <string name="date_of_call">Date of Call</string>
+    <string name="size_of_song">Size</string>
+    <string name="song_duration">Duration</string>
+    <string name="mTextView">TextView</string>
+    <string name="unknow_contact">Contact Inconnu</string>
+    <string name="item_quantity">1</string>
+    <string name="mChart">Chart</string>
 </resources>

@@ -1,5 +1,6 @@
 package org.proof.recorder.fragment.contacts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -108,13 +109,14 @@ public class FragmentListExcludedContacts extends Fragment {
 				super.notifyDataSetChanged();
 			}
 
+			@SuppressLint("InflateParams")
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = convertView;
 				if (view == null) {
 					LayoutInflater vi = (LayoutInflater) getActivity()
 							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					view = vi.inflate(R.layout.custom_contacts_list, parent);
+					view = vi.inflate(R.layout.custom_contacts_list, null);
 				}
 				Contact contact = (Contact) items.get(position);
 				if (contact != null) {

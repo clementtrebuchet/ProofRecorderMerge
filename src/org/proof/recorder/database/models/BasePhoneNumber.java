@@ -115,6 +115,8 @@ public abstract class BasePhoneNumber implements Serializable {
 	 */
 	private void fillAttributesFromNumberStr(String phoneNumber) {
 		try {
+			print_exception("Mphone number: " + phoneNumber);
+
 			//print(_platformLocale.getCountry());
 			
 			this._nativeModel = this._libHelper.parse(phoneNumber, 

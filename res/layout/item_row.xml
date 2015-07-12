@@ -18,6 +18,7 @@
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
     <TextView
@@ -27,7 +28,7 @@
         android:paddingLeft="10dip"
         android:layout_alignParentLeft="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="test" />
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
     <TextView
         android:id="@+id/item_quantity"
         android:layout_width="wrap_content"
@@ -37,5 +38,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="1"/>
+        android:text="@string/item_quantity"
+        tools:ignore="RtlSymmetry" />
 </RelativeLayout>

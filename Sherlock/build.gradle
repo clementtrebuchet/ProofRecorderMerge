@@ -9,7 +9,7 @@ android {
   buildToolsVersion '19.1.0'
   lintOptions {
         abortOnError false
-      quiet true
+    quiet true
     } 
 
   sourceSets {

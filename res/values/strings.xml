@@ -237,12 +237,6 @@
     <!-- Searchable -->
     <string name="search_hint">Quick Search</string>
     <!-- FIN Searchable -->
-    <!-- DEBUT SYNCRON -->
-    <string name="syncronTEL">Synchron All</string>
-    <string name="syncronVOX">Synchron Voice</string>
-    <string name="syncronConnectionError">Connection Error, try later</string>
-    <string name="syncronDATA">Synchron DATA</string>
-    <!-- FIN SYNCRON -->
     <!-- GCM -->
     <string name="ic_stat_gcm"/>
     <string name="gcm_recoverable_error"/>
@@ -339,59 +333,6 @@
     <string name="custom_intent_chooser_subject">Voice Proof Recorder Share</string>
     <string name="custom_intent_chooser_text">Write a comment with this share</string>
     <string name="share_intent_chooser_title">Share this record</string>
-    <!-- FTP/** -->
-    <string name="FTPUPOK">Le fichier a été uploader avec succès</string>
-    <string name="FTPUPKO">Le fichier ne peut pas être uploader !!</string>
-    <string name="FTPDWOK">Le fichier a été downloader avec succès</string>
-    <string name="FTPDWKO">Le fichier ne peut pas être downloader !!</string>
-    <string name="FTPAUTHKO">L\'authentification a échouée !!</string>
-    <string name="FTPAUTHOK">L\'authentification a réussi, bienvenue.</string>
-    <string name="FTPCONOFF">Deconnection</string>
-    <string name="FTPCONON">Connection</string>
-    <string name="FTPFATALERROR">Opération intérrompu, contacter le support technique, svp.</string>
-    <string name="RESTOROK">Synchronisation Réussie !!</string>
-    <string name="STARTOP">Début des opérations de Synchronisation</string>
-    <!-- END FTP/** -->
-    <!-- Syncronui -->
-    <string name="SyncronUi_13"/>
-    <string name="SyncronUi_14">Tips :\r\nVos données sont désynchronisées, faites une sauvegarde \!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
-    <string name="SyncronUi_15">Tips :\r\n Vos données sont deja synchronisées, sauvegarde inutile\!\!\r\n(Pour faire une sauvegarde appuyer de nouveaux sur le bouton)\r\n</string>
-    <string name="SyncronUi_16">Tips :\r\nVos données sont désynchronisées, l\'option force est désactivé\r\n</string>
-    <string name="SyncronUi_17">Vos données sont désynchronisées, l\'option force est désactivé</string>
-    <string name="SyncronUi_18">Erreur la checksum reste à sa valeur initial de 1000</string>
-    <string name="SyncronUi_19">Tips :\r\nVos données étaient désynchronisées,nous avons purger les données\r\nprésentent sur le serveur avant de les sauvegardées\r\n</string>
-    <string name="SyncronUi_20">Tips :\r\nVos données étaient désynchronisées, l\'option force est désactivé\r\n</string>
-    <string name="SyncronUi_21">Vos données sont désynchronisées, l\'option force est désactivé</string>
-    <string name="SyncronUi_22">Tips :\r\n Vos données étaient deja synchronisées\r\n</string>
-    <string name="SyncronUi_23">La sauvegarde des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_24">La sauvegarde des notes des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_25">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_26">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_27">La sauvegarde des appels est ok\r\n</string>
-    <string name="SyncronUi_28">La sauvegarde des notes des appels  est ok\r\n</string>
-    <string name="SyncronUi_29">La sauvegarde des enregistrement  est okr\r\n</string>
-    <string name="SyncronUi_30">La sauvegarde des notes des enregistrement  est ok\r\n</string>
-    <string name="SyncronUi_31">La sauvegarde des appels est ok\r\n</string>
-    <string name="SyncronUi_32">La sauvegarde des notes des appels  est ok\r\n</string>
-    <string name="SyncronUi_33">La sauvegarde des enregistrement  est okr\r\n</string>
-    <string name="SyncronUi_34">La sauvegarde des notes des enregistrement  est ok\r\n</string>
-    <string name="SyncronUi_35">Toutes les opérations ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_36">Toutes les mise à jour ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_37">La sauvegarde des données des appels à échouée\r\n</string>
-    <string name="SyncronUi_38">La sauvegarde des données des notes des appels à échouée\r\n</string>
-    <string name="SyncronUi_39">La sauvegarde des données des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_40">La sauvegarde des données des notes des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_41">La sauvegarde des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_42">La sauvegarde des notes des appels est déja à jour\r\n</string>
-    <string name="SyncronUi_43">La sauvegarde des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_44">La sauvegarde des notes des enregistrement vocaux est déja à jour\r\n</string>
-    <string name="SyncronUi_45">Toutes les restaurations de données ce sont déroulées avec succès\r\n</string>
-    <string name="SyncronUi_46">La restaurations des données des appels à échouée\r\n</string>
-    <string name="SyncronUi_47">La restaurations des donnéese des notes des appels à échouée\r\n</string>
-    <string name="SyncronUi_48">La restaurations des données des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_49">La restaurations des données des notes des enregistrement vocaux à échouée\r\n</string>
-    <string name="SyncronUi_54">Bienvenue\r\n</string>
-    <!-- END SYNCRON -->
     <string name="start">start</string>
     <string name="stop">stop</string>
     <string name="billing_not_supported_title">Can\'t make purchases</string>
@@ -481,4 +422,23 @@
     <string name="sc_upload_file_msg_plural">Uploading files…</string>
     <!-- WIDGET -->
     <string name="FORRBIDEN">You can\'t change format during record !"</string>
+    <!-- SearchView accessibility description for search button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_search">Search</string>
+    <!-- SearchView accessibility description for search text field [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_query">Search query</string>
+    <!-- SearchView accessibility description for clear button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_clear">Clear query</string>
+    <!-- SearchView accessibility description for submit button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_submit">Submit query</string>
+    <!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
+    <string name="abs__searchview_description_voice">Voice search</string>
+    <string name="call_direction">Sens de l\'appel</string>
+    <string name="record_detail_phone_number">Phone Number</string>
+    <string name="date_of_call">Date of Call</string>
+    <string name="size_of_song">Size</string>
+    <string name="song_duration">Duration</string>
+    <string name="mTextView">TextView</string>
+    <string name="unknow_contact">Contact Inconnu</string>
+    <string name="item_quantity">1</string>
+    <string name="mChart">Chart</string>
 </resources>

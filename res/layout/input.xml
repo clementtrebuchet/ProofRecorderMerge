@@ -18,34 +18,29 @@
             android:id="@+id/hostname"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Host Name"
-            />
+        tools:ignore="TextFields" />
     <EditText
             android:id="@+id/user"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="User Name"
-            />
+        tools:ignore="TextFields" />
     <EditText
             android:id="@+id/password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
             android:password="true"
-            tools:ignore="Deprecated" />
+        tools:ignore="Deprecated,TextFields" />
     <EditText
             android:id="@+id/remote_dir"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="/remote/dir/path/"
-            />
+        tools:ignore="TextFields" />
 
     <EditText
             android:id="@+id/local_dir"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="/path/after/DCIM"
-            />
+        tools:ignore="TextFields" />
 
 
 </LinearLayout>
