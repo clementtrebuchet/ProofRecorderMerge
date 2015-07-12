@@ -28,15 +28,23 @@ android {
         keyStore {
             keyPassword 'sonyaltec'
             storeFile file('key')
-            storePassword 'sonyaltec'	    
+            storePassword 'sonyaltec'
+	    keyalias 'mesapplismaison'
+	    keypassword 'sonyaltec'	    
         }
-	lintOptions {
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+    lintOptions {
         abortOnError false
         checkAllWarnings false
         warningsAsErrors false
         xmlReport false
-     }
     }
+    
     compileSdkVersion 17
     buildToolsVersion '19.1.0'
     sourceSets {
