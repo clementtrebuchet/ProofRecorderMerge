@@ -3,68 +3,66 @@
     android:id="@+id/layout_wid"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/myshape"
     android:fitsSystemWindows="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    android:background="@drawable/myshape">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="1dp" >
-
-        <ImageButton
-            android:id="@+id/imageButtonon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/action_item_btn"
-            android:padding="1dp"
-            android:src="@drawable/off" />
-
-        <ImageButton
-            android:id="@+id/imageSpeaker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/action_item_btn"
-            android:padding="1dp"
-            android:src="@drawable/avspeekearoff" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="1dp" >
-
-        <ImageButton
-            android:id="@+id/imageButtonbox"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/action_item_btn"
-            android:padding="1dp"
-            android:src="@drawable/avsong" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="1dp" >
+        android:orientation="horizontal"
+        android:padding="1dp"
+        android:paddingLeft="1dp"
+        android:paddingTop="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp"
+        android:weightSum="1">
 
         <ImageButton
             android:id="@+id/imageButtonrefresh"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:background="@drawable/action_item_btn"
             android:padding="1dp"
-            android:src="@drawable/auncher" />
+            android:src="@drawable/auncher"
+            android:layout_marginLeft="3dp" />
+
+        <ImageButton
+            android:id="@+id/imageSpeaker"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/avspeekearoff"
+            android:layout_weight="0.21"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp" />
+
+        <ImageButton
+            android:id="@+id/imageButtonon"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/off"
+            android:layout_weight="0.25"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp" />
+
+        <ImageButton
+            android:id="@+id/imageButtonbox"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/action_item_btn"
+            android:padding="1dp"
+            android:src="@drawable/avsong"
+            android:layout_marginLeft="3dp" />
 
         <ImageButton
             android:id="@+id/imageButtonstoprec"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/action_item_btn"
             android:padding="1dp"
             android:src="@drawable/avplay" />

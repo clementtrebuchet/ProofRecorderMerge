@@ -6,7 +6,6 @@
     android:paddingBottom="3dip"
     android:paddingLeft="6dip"
     android:paddingRight="6dip"
-    android:background="@+drawable/back"
     android:baselineAligned="false">
 
     <!-- Include Header -->
