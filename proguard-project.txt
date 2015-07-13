@@ -44,6 +44,7 @@
 -verbose
 
 -dontwarn org.apache.commons.**
+-dontwarn org.apache.http.**
 -dontwarn javax.management.**
 -dontwarn java.lang.management.**
 -dontwarn org.apache.log4j.**
@@ -51,6 +52,7 @@
 -dontwarn org.slf4j.**
 -dontwarn org.json.**
 
+-keep class org.apache.http.** { *; }
 -keep class android.support.v4.app.** { *; }
 -keep interface android.support.v4.app.** { *; }
 -keep class com.actionbarsherlock.** { *; }
