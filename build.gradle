@@ -30,6 +30,8 @@ android {
             storeFile file('key')
             storePassword 'sonyaltec'
             keyAlias 'mesapplismaison'
+            runProguard true
+            proguardFile getDefaultProguardFile('proguard-android.txt')
 
         }
     }
