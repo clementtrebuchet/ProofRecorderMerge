@@ -43,6 +43,7 @@
 -dontpreverify
 -verbose
 
+-dontwarn org.apache.commons.**
 -dontwarn javax.management.**
 -dontwarn java.lang.management.**
 -dontwarn org.apache.log4j.**
