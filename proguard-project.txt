@@ -41,9 +41,13 @@
 -dontshrink
 -dontoptimize
 -dontpreverify
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
 -verbose
 
 -dontwarn org.apache.commons.**
+-dontwarn com.soundcloud.api.**
+-dontwarn com.soundcloud.api.Request.**
 -dontwarn org.apache.http.**
 -dontwarn javax.management.**
 -dontwarn java.lang.management.**
@@ -51,13 +55,27 @@
 -dontwarn org.apache.commons.logging.**
 -dontwarn org.slf4j.**
 -dontwarn org.json.**
+-dontwarn android.support.v4.*
+-dontwarn android.support.v7.*
+-dontwarn android.support.v4.accessibilityservice.*
 
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
 
+-dontwarn org.apache.commons.**
 -keep class org.apache.http.** { *; }
+-dontwarn org.apache.http.**
+
+
 -keep class android.support.v4.app.** { *; }
 -keep interface android.support.v4.app.** { *; }
 -keep class com.actionbarsherlock.** { *; }
 -keep interface com.actionbarsherlock.** { *; }
+-keep class com.soundcloud.api.** { *; }
 
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -71,6 +89,10 @@
 -keep class javax.** { *; }
 -keep class org.** { *; }
 -keep class twitter4j.** { *; }
+-dontskipnonpubliclibraryclasses
+
+-injars      bin/classes
+-injars      lib
 
 -keepattributes *Annotation*
 
@@ -86,7 +108,24 @@
     public <init>(android.content.Context, android.util.AttributeSet, int);
 }
 
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
 -keepclassmembers enum * {
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+-keepclassmembers class android.support.* {
+  public protected *;
+  public static *;
+  private *;
+ }

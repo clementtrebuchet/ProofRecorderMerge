@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.proof.recorder"
 
-    android:versionCode="9"
-    android:versionName="1.2.6" >
+    android:versionCode="10"
+    android:versionName="1.2.7">
     <!-- android:installLocation="preferExternal" -->
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="17"
+        android:targetSdkVersion="20"
         tools:ignore="OldTargetApi" />
 
     <uses-permission android:name="android.permission.READ_CONTACTS" >

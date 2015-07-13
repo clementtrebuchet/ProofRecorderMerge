@@ -226,19 +226,13 @@
     <string name="ab_contacts_list_icon_desc">Contacts icons</string>
     <string name="ab_contacts_list_text">Contacts\' List</string>
     <string name="ab_default_text">Frug\'n Frog\'s Apps :)</string>
-    <string name="about_app"><![CDATA[
-
-        &lt;p&gt;
-	        This software allows you to:
-	        &lt;ul&gt;
-		        &lt;li&gt;&lt;u&gt;Record&lt;/u&gt; in different format (mp3, wav, ogg, …)&lt;br&gt; your phone calls or simply your voice.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
-		        &lt;li&gt;&lt;u&gt;Associate&lt;/u&gt; a note and title to each record of any kind.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
-		        &lt;li&gt;&lt;u&gt;Filter&lt;/u&gt; recorder service based on your own Contacts list.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
-	        &lt;/ul&gt;
-	        And more …
-        &lt;/p&gt;
-
-    ]]></string>
+    <string name="about_app">
+        This software allows you to:
+	    Record in different format (mp3, wav, ogg, …) your phone calls or simply your voice.
+        Associate a note and title to each record of any kind.
+        Filter recorder service based on your own Contacts list.
+        And more …
+</string>
     <string name="about_some_links">Some links:</string>
     <string name="about_us">About Us</string>
     <!-- From: file:/home/clement/git_dvl_clem_recordtime_free/ProofRecorderMerge/res/values/abs__string.xml -->
@@ -283,6 +277,7 @@
     <string name="apr">April</string>
     <string name="arrow_record">arrow image</string>
     <string name="audio_encoder_handler">Audio Encoding Handler</string>
+    <string name="audio_preference_title">Audio formats</string>
     <string name="aug">August</string>
     <string name="bad_mp3_version">Your MP3 plugin is outdated, please update!</string>
     <string name="bad_ogg_version">Your OGG plugin is outdated, please update!</string>
@@ -369,6 +364,9 @@
     <string name="finRec">Ending Recording</string>
     <string name="footer">Proof Recorder</string>
     <string name="foreground_service_started">Voice Media Recorder started!</string>
+    <string name="format_choice">Recording format choices.</string>
+    <string name="format_choice_title">Recording formats.></string>
+    <string name="format_select">Format selection.</string>
     <string name="ftpstore">Pluguin FTP (save on your own FTP)</string>
     <string name="gcm_deleted"/>
     <string name="gcm_error"/>

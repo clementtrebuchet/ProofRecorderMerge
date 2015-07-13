@@ -260,19 +260,13 @@
     <string name="stats">Usage Stats</string>
     <string name="about_us">About Us</string>
     <!-- About Us texts -->
-    <string name="about_app"><![CDATA[
-
-        &lt;p&gt;
-	        This software allows you to:
-	        &lt;ul&gt;
-		        &lt;li&gt;&lt;u&gt;Record&lt;/u&gt; in different format (mp3, wav, ogg, …)&lt;br&gt; your phone calls or simply your voice.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
-		        &lt;li&gt;&lt;u&gt;Associate&lt;/u&gt; a note and title to each record of any kind.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
-		        &lt;li&gt;&lt;u&gt;Filter&lt;/u&gt; recorder service based on your own Contacts list.&lt;/li&gt;&lt;br&gt;&lt;br&gt;
-	        &lt;/ul&gt;
-	        And more …
-        &lt;/p&gt;
-
-    ]]></string>
+    <string name="about_app">
+        This software allows you to:
+	    Record in different format (mp3, wav, ogg, …) your phone calls or simply your voice.
+        Associate a note and title to each record of any kind.
+        Filter recorder service based on your own Contacts list.
+        And more …
+</string>
     <string name="about_some_links">Some links:</string>
     <string name="contact_subject">Proof and Voice Recorder: A Question?</string>
     <string name="contact_body">Here your message…</string>
@@ -441,4 +435,8 @@
     <string name="unknow_contact">Contact Inconnu</string>
     <string name="item_quantity">1</string>
     <string name="mChart">Chart</string>
+    <string name="format_select">Format selection.</string>
+    <string name="format_choice">Recording format choices.</string>
+    <string name="format_choice_title">Recording formats.></string>
+    <string name="audio_preference_title">Audio formats</string>
 </resources>
