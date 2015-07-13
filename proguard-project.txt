@@ -52,6 +52,7 @@
 -dontwarn org.slf4j.**
 -dontwarn org.json.**
 
+
 -keep class org.apache.http.** { *; }
 -keep class android.support.v4.app.** { *; }
 -keep interface android.support.v4.app.** { *; }
@@ -66,6 +67,7 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 -keep public class com.android.vending.licensing.ILicensingService
+-keep class android.support.v7.widget.SearchView { *; }
 -keep class javax.** { *; }
 -keep class org.** { *; }
 -keep class twitter4j.** { *; }
