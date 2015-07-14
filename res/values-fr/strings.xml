@@ -441,4 +441,5 @@
     <string name="format_choice">Choix du format d\'enregistrement</string>
     <string name="format_choice_title">Format d\'enregistrement</string>
     <string name="audio_preference_title">Formats audio</string>
+    <string name="clement_mail">clement.trebuchet@gmail.com</string>
 </resources>

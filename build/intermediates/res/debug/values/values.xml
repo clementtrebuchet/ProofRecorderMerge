@@ -297,6 +297,7 @@
     <string name="cannot_connect_title">Can\'t connect to Market</string>
     <string name="checc">Séléction de l\'échantillonnage</string>
     <string name="checking_license">Checking Licence</string>
+    <string name="clement_mail">clement.trebuchet@gmail.com</string>
     <string name="cm_records_list_del_all_file_txt">Delete All</string>
     <string name="cm_records_list_del_file_txt">Delete</string>
     <string name="cm_records_list_details_txt">Display details</string>

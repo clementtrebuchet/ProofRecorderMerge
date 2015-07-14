@@ -14,11 +14,8 @@ import android.widget.TextView;
 import org.proof.recorder.R;
 import org.proof.recorder.Settings;
 import org.proof.recorder.bases.activity.ProofFragmentActivity;
-import org.proof.recorder.database.models.Record;
 import org.proof.recorder.utils.Log.Console;
-import org.proof.recorder.utils.OsInfo;
 
-import java.io.File;
 import java.util.Locale;
 
 public class AboutApps extends ProofFragmentActivity {
@@ -74,7 +71,7 @@ public class AboutApps extends ProofFragmentActivity {
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
 				String link = (String)mListView.getItemAtPosition(position);
 				String mLink = cleanString(link);
-				String phoneandvoice = "frugandfrog.com";
+				String phoneandvoice = getString(R.string.clement_mail);
 				String webMatch = "phone&voicerecorder";
 				
 				
@@ -83,8 +80,9 @@ public class AboutApps extends ProofFragmentActivity {
 				if(mLink.equals("contact")) {
 					
 					Console.print_debug("mLink clicked!");
-					
-					String email = mLink + "@" + phoneandvoice;
+
+					String email;
+					email = phoneandvoice;
 					String subject = getInternalContext().getString(R.string.contact_subject);
 					String body = getInternalContext().getString(R.string.contact_body);					
 					
@@ -104,11 +102,11 @@ public class AboutApps extends ProofFragmentActivity {
 					
 					Console.print_debug("mLink clicked!");
 					
-					Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www." + phoneandvoice));
-					startActivity(browserIntent);
+					/*Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www." + phoneandvoice));
+					startActivity(browserIntent);*/
 				}
 				
-				if(mLink.equals(cleanString(fullAppName))) {
+				/*if(mLink.equals(cleanString(fullAppName))) {
 					Record.setResolver(getContentResolver());					
 					
 					String directionCall, fileName;
@@ -153,7 +151,7 @@ public class AboutApps extends ProofFragmentActivity {
 							}
 						}						
 					}					
-				}
+				}*/
 			}
 		});
 	}
