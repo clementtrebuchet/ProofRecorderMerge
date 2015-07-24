@@ -206,10 +206,14 @@ class ObservateurTelephone extends PhoneStateListener {
 		}
 		
 		if(isPrepared) {
+		try {
 			getContext().sendBroadcast(audioService);			
 			
 			dpm.cacheRows("PhoneServicePrepared", "false");
 			dpm.cacheRows("PhoneServiceRunning", "true");
+		} catch (NullPointerExceptione){
+		    	Console.print_debug("Cant init recording avoiding crash: "+e.getMessage());
+		}
 		}	
 	}
 
